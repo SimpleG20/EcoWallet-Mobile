@@ -5,6 +5,9 @@ on:
     branches:
       - staging
 
+env:
+  FLUTTER_VERSION: '3.19.0'
+
 permissions:
   contents: write
 
@@ -25,7 +28,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.19.0'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
 
       - name: Install Cider (Versioning Tool)
         run: dart pub global activate cider
