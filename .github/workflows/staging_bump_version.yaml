@@ -35,7 +35,7 @@ jobs:
 
       - name: Bump Patch Version
         run: |
-          cider bump patch
+          cider bump patch --bump-build
           if [ $? -ne 0 ]; then
             echo "cider bump patch failed. Aborting version bump."
             exit 1
@@ -47,9 +47,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Extract version, including build metadata, ignoring comments
-          NEW_VERSION=$(grep '^version:' pubspec.yaml | head -n1 | sed -E 's/^version:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+(\+[0-9]+)?).*/\1/')
-          git add -A
+          NEW_VERSION=$(cider version)
+
+          git add pubspec.yaml
+          
           if ! git diff --cached --quiet; then
             git commit -m "ci: version bump to $NEW_VERSION [skip ci]"
             git push origin staging
