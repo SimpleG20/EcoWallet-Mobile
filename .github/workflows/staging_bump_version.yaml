@@ -41,5 +41,9 @@ jobs:
           NEW_VERSION=$(grep 'version:' pubspec.yaml | head -n1 | awk '{print $2}')
           
           git add -A
-          git commit -m "ci: version bump to $NEW_VERSION [skip ci]"
-          git push origin staging
+          if ! git diff --cached --quiet; then
+            git commit -m "ci: version bump to $NEW_VERSION [skip ci]"
+            git push origin staging
+          else
+            echo "No changes to commit. Skipping commit and push."
+          fi
