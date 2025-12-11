@@ -23,6 +23,14 @@ class TransactionState extends Equatable {
   final double balance;
   final String? errorMessage;
 
+  /// Get transactions for current month
+  int get currentMonthTransactionsCount {
+    final now = DateTime.now();
+    return transactions
+        .where((t) => t.date.month == now.month && t.date.year == now.year)
+        .length;
+  }
+
   TransactionState copyWith({
     TransactionStatus? status,
     List<Transaction>? transactions,

@@ -65,16 +65,36 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       AddTransactionParams(transaction: event.transaction),
     );
 
-    result.fold(
-      (failure) => emit(
+    await result.fold(
+      (failure) async => emit(
         state.copyWith(
           status: TransactionStatus.error,
           errorMessage: failure.message ?? 'Failed to add transaction',
         ),
       ),
-      (transaction) {
+      (transaction) async {
         // Reload transactions after adding
-        add(const LoadTransactions());
+        final transactionsResult = await getAllTransactions(const NoParams());
+        final balanceResult = await getBalance(const NoParams());
+        
+        transactionsResult.fold(
+          (failure) => emit(
+            state.copyWith(
+              status: TransactionStatus.error,
+              errorMessage: failure.message ?? 'Failed to reload transactions',
+            ),
+          ),
+          (transactions) {
+            final balance = balanceResult.getOrElse((l) => 0.0);
+            emit(
+              state.copyWith(
+                status: TransactionStatus.success,
+                transactions: transactions,
+                balance: balance,
+              ),
+            );
+          },
+        );
       },
     );
   }
@@ -89,16 +109,36 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
       DeleteTransactionParams(id: event.transactionId),
     );
 
-    result.fold(
-      (failure) => emit(
+    await result.fold(
+      (failure) async => emit(
         state.copyWith(
           status: TransactionStatus.error,
           errorMessage: failure.message ?? 'Failed to delete transaction',
         ),
       ),
-      (_) {
+      (_) async {
         // Reload transactions after deleting
-        add(const LoadTransactions());
+        final transactionsResult = await getAllTransactions(const NoParams());
+        final balanceResult = await getBalance(const NoParams());
+        
+        transactionsResult.fold(
+          (failure) => emit(
+            state.copyWith(
+              status: TransactionStatus.error,
+              errorMessage: failure.message ?? 'Failed to reload transactions',
+            ),
+          ),
+          (transactions) {
+            final balance = balanceResult.getOrElse((l) => 0.0);
+            emit(
+              state.copyWith(
+                status: TransactionStatus.success,
+                transactions: transactions,
+                balance: balance,
+              ),
+            );
+          },
+        );
       },
     );
   }

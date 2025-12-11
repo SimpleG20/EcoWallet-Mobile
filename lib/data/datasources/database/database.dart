@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:ecowallet/core/constants/app_constants.dart';
 
+// Generated file - run: flutter pub run build_runner build
 part 'database.g.dart';
 
 /// Transactions table definition

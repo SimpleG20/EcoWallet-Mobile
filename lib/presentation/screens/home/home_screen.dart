@@ -200,12 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: _buildStatItem(
                     context,
                     'This Month',
-                    state.transactions
-                        .where((t) =>
-                            t.date.month == DateTime.now().month &&
-                            t.date.year == DateTime.now().year)
-                        .length
-                        .toString(),
+                    state.currentMonthTransactionsCount.toString(),
                     Icons.calendar_today,
                   ),
                 ),

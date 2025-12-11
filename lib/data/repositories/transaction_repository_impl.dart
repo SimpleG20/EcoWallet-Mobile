@@ -110,6 +110,14 @@ class TransactionRepositoryImpl implements TransactionRepository {
     Transaction transaction,
   ) async {
     try {
+      // Check if transaction exists before updating
+      final existing = await _database.getTransactionById(transaction.id);
+      if (existing == null) {
+        return const Left(
+          DatabaseFailure('Transaction not found - cannot update'),
+        );
+      }
+      
       final success = await _database.updateTransaction(transaction.toDrift());
       if (!success) {
         return const Left(DatabaseFailure('Failed to update transaction'));

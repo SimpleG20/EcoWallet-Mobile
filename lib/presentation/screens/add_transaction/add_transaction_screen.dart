@@ -163,8 +163,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   final picked = await showDatePicker(
                     context: context,
                     initialDate: _selectedDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now(),
+                    firstDate: AppConstants.earliestDate,
+                    lastDate: AppConstants.latestDate,
                   );
                   if (picked != null && picked != _selectedDate) {
                     setState(() {

@@ -15,6 +15,10 @@ class AppConstants {
   static const String dateTimeFormat = 'yyyy-MM-dd HH:mm:ss';
   static const String displayDateFormat = 'MMM dd, yyyy';
   
+  // Date Limits
+  static final DateTime earliestDate = DateTime(2000);
+  static final DateTime latestDate = DateTime.now();
+  
   // Transaction Categories
   static const List<String> expenseCategories = [
     'Food & Dining',
