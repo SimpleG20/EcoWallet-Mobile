@@ -1,0 +1,54 @@
+name: Staging Version Bump
+
+on:
+  push:
+    branches:
+      - staging
+
+permissions:
+  contents: write
+
+jobs:
+  bump-version:
+    name: Bump Patch Version
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci: version bump')"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: staging
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.19.0'
+
+      - name: Install Cider (Versioning Tool)
+        run: dart pub global activate cider
+
+      - name: Bump Patch Version
+        run: |
+          cider bump patch
+          if [ $? -ne 0 ]; then
+            echo "cider bump patch failed. Aborting version bump."
+            exit 1
+          fi
+
+      - name: Commit and Push Version Bump
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Extract version, including build metadata, ignoring comments
+          NEW_VERSION=$(grep '^version:' pubspec.yaml | head -n1 | sed -E 's/^version:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+(\+[0-9]+)?).*/\1/')
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "ci: version bump to $NEW_VERSION [skip ci]"
+            git push origin staging
+          else
+            echo "No changes to commit. Skipping commit and push."
+          fi
