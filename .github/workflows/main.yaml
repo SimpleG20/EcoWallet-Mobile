@@ -1,13 +1,11 @@
 name: Flutter CI
 
-# Quando esse workflow deve rodar?
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
-# O que ele vai fazer?
 jobs:
   build:
     name: Build & Test
@@ -23,7 +21,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0' # Ou 'stable'
+          flutter-version: '3.19.0'
           channel: 'stable'
           cache: true
 
