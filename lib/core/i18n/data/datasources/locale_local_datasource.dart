@@ -26,7 +26,11 @@ class LocaleLocalDataSourceImpl implements LocaleLocalDataSource {
     @override
     Future<void> saveLocale(AppLocale locale) async {
         await _prefs.setString('${_localeKey}_language', locale.languageCode);
-        await _prefs.setString('${_localeKey}_country', locale.countryCode);
+        if (locale.countryCode != null) {
+            await _prefs.setString('${_localeKey}_country', locale.countryCode!);
+        } else {
+            await _prefs.remove('${_localeKey}_country');
+        }
     }
 
     @override

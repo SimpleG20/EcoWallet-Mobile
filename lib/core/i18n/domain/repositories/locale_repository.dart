@@ -8,6 +8,12 @@ abstract class LocaleRepository {
     AppLocale getSystemLocale();
 }
 
+/// Represents an error that occurred during locale operations.
+///
+/// This error can occur in the following scenarios:
+/// - SharedPreferences read/write failures
+/// - Locale persistence issues
+/// - Invalid locale data
 class LocaleError {
     final String message;
 
