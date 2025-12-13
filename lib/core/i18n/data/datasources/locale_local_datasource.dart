@@ -16,17 +16,17 @@ class LocaleLocalDataSourceImpl implements LocaleLocalDataSource {
 
     @override
     Future<AppLocale?> getSavedLocale() async {
-        final languageCode = _prefs.getString('${_localKey}_language');
+        final languageCode = _prefs.getString('${_localeKey}_language');
         if (languageCode == null) return null;
 
-        final countryCode = _prefs.getString('${_localKey}_country');
+        final countryCode = _prefs.getString('${_localeKey}_country');
         return AppLocale(languageCode: languageCode, countryCode: countryCode);
     }
 
     @override
     Future<void> saveLocale(AppLocale locale) async {
-        await _prefs.setString('${_localKey}_language', locale.languageCode);
-        await _prefs.setString('${_localKey}_country', locale.countryCode);
+        await _prefs.setString('${_localeKey}_language', locale.languageCode);
+        await _prefs.setString('${_localeKey}_country', locale.countryCode);
     }
 
     @override
