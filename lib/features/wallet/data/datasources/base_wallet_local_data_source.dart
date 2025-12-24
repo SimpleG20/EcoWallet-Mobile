@@ -10,7 +10,7 @@ abstract class BaseWalletLocalDataSource {
   /// Saves a transaction to local storage.
   ///
   /// Throws a [CacheException] if the save operation fails.
-  Future<void> cacheTransactions(TransactionModel transaction);
+  Future<void> cacheTransaction(TransactionModel transaction);
 
   /// Deletes a transaction from local storage by its ID.
   ///
@@ -20,5 +20,5 @@ abstract class BaseWalletLocalDataSource {
   /// Retrieves a transaction by its ID from local storage.
   ///
   /// Throws a [CacheException] if the retrieval operation fails.
-  Future<dynamic> getTransactionById(String transactionId);
+  Future<TransactionModel> getTransactionById(String transactionId);
 }
