@@ -1,0 +1,96 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import '../../domain/entities/transaction.dart';
+import '../../../../core/usescases/base_usecase.dart';
+import '../../domain/usescases/add_transaction.dart';
+import '../../domain/usescases/delete_transaction.dart';
+import '../../domain/usescases/get_transaction.dart';
+import '../../domain/usescases/get_transactions.dart';
+import '../../domain/usescases/update_transaction.dart';
+
+part 'wallet_event.dart';
+part 'wallet_state.dart';
+
+class WalletBloc extends Bloc<WalletEvent, WalletState> {
+  final GetTransaction getTransactionById;
+  final GetTransactions getTransactions;
+  final AddTransaction addTransaction;
+  final DeleteTransaction deleteTransaction;
+  final UpdateTransaction updateTransaction;
+
+  WalletBloc({
+    required this.getTransactions,
+    required this.addTransaction,
+    required this.deleteTransaction,
+    required this.updateTransaction,
+    required this.getTransactionById,
+  }) : super(WalletInitial()) {
+    on<GetTransactionsEvent>(_onGetTransactions);
+    on<AddTransactionEvent>(_onAddTransaction);
+    on<DeleteTransactionEvent>(_onDeleteTransaction);
+    on<UpdateTransactionEvent>(_onUpdateTransaction);
+    on<GetTransactionEvent>(_onGetTransaction);
+  }
+
+  Future<void> _onGetTransactions(
+      GetTransactionsEvent event, Emitter<WalletState> emit) async {
+    emit(WalletLoading());
+
+    final result = await getTransactions(NoParams());
+
+    result.fold((failure) => emit(const WalletError("Erro ao carregar dados")),
+        (transactions) => emit(WalletLoaded(transactions)));
+  }
+
+  Future<void> _onAddTransaction(
+      AddTransactionEvent event, Emitter<WalletState> emit) async {
+    emit(WalletLoading());
+
+    final result = await addTransaction(event.transaction);
+    result.fold(
+        (failure) => emit(const WalletError("Erro ao adicionar transação")),
+        (unit) async {
+      emit(WalletTransactionAdded());
+      add(GetTransactionsEvent());
+    });
+  }
+
+  Future<void> _onDeleteTransaction(
+      DeleteTransactionEvent event, Emitter<WalletState> emit) async {
+    emit(WalletLoading());
+
+    final result = await deleteTransaction(event.transactionId);
+    result
+        .fold((failure) => emit(const WalletError("Erro ao deletar transação")),
+            (unit) async {
+      emit(WalletTransactionDeleted());
+      add(GetTransactionsEvent());
+    });
+  }
+
+  Future<void> _onUpdateTransaction(
+      UpdateTransactionEvent event, Emitter<WalletState> emit) async {
+    emit(WalletLoading());
+
+    final result = await updateTransaction(event.transaction);
+    result.fold(
+        (failure) => emit(const WalletError("Erro ao atualizar transação")),
+        (unit) async {
+      emit(WalletTransactionUpdated());
+      add(GetTransactionsEvent());
+    });
+  }
+
+  Future<void> _onGetTransaction(
+      GetTransactionEvent event, Emitter<WalletState> emit) async {
+    emit(WalletLoading());
+
+    final result = await getTransactionById(event.transactionId);
+
+    result.fold((failure) => emit(const WalletError("Erro ao carregar dados")),
+        (transaction) {
+      emit(WalletTransactionLoaded(transaction));
+    });
+  }
+}
