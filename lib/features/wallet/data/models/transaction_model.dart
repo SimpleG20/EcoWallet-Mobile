@@ -12,13 +12,13 @@ class TransactionModel extends Transaction {
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     return TransactionModel(
-      id: json['id'] as String,
-      name: json['name'] as String,
+      id: json['id'],
+      name: json['name'],
       amount: json['amount'] as int,
       cents: json['cents'] as int,
       type: json['type'] as ETransactionType,
-      date: DateTime.parse(json['date'] as String),
-      category: json['category'] as String,
+      date: DateTime.parse(json['date']),
+      category: json['category'],
     );
   }
 
@@ -32,5 +32,17 @@ class TransactionModel extends Transaction {
       'date': date.toIso8601String(),
       'category': category,
     };
+  }
+
+  static TransactionModel fromEntity(Transaction transaction) {
+    return TransactionModel(
+      id: transaction.id,
+      name: transaction.name,
+      amount: transaction.amount,
+      cents: transaction.cents,
+      type: transaction.type,
+      date: transaction.date,
+      category: transaction.category,
+    );
   }
 }
