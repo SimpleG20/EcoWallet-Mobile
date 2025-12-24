@@ -13,9 +13,6 @@ class AddTransaction implements BaseUsecase<Unit, Transaction> {
   @override
   Future<Either<BaseFailure, Unit>> call(Transaction transaction) async {
     final result = await repository.addTransaction(transaction);
-    return result.fold(
-      (failure) => Left(failure),
-      (createdTransaction) => Right(unit),
-    );
+    return result.map((_) => unit);
   }
 }

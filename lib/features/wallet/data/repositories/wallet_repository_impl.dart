@@ -19,7 +19,7 @@ class WalletRepositoryImpl implements BaseWalletRepository {
     try {
       final transactionModel = TransactionModel.fromEntity(transaction);
 
-      await localDataSource.cacheTransactions(transactionModel);
+      await localDataSource.cacheTransaction(transactionModel);
 
       return Right(transactionModel);
     } on CacheException {
@@ -75,7 +75,7 @@ class WalletRepositoryImpl implements BaseWalletRepository {
       Transaction transaction) async {
     try {
       final transactionModel = TransactionModel.fromEntity(transaction);
-      await localDataSource.cacheTransactions(transactionModel);
+      await localDataSource.cacheTransaction(transactionModel);
       return Right(transactionModel);
     } on CacheException {
       return Left(
