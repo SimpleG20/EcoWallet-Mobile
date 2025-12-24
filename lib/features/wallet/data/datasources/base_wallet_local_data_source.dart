@@ -9,6 +9,10 @@ abstract class BaseWalletLocalDataSource {
 
   /// Saves a transaction to local storage.
   ///
+  /// Uses upsert behavior: if a transaction with the same ID already exists,
+  /// it will be replaced with the new transaction data. This allows both
+  /// add and update operations to use the same method.
+  ///
   /// Throws a [CacheException] if the save operation fails.
   Future<void> cacheTransaction(TransactionModel transaction);
 
