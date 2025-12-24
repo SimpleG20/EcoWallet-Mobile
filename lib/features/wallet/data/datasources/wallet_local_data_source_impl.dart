@@ -28,7 +28,7 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
   }
 
   @override
-  Future<void> cacheTransactions(TransactionModel transaction) async {
+  Future<void> cacheTransaction(TransactionModel transaction) async {
     try {
       final db = await dbHelper.database;
 
@@ -56,6 +56,8 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       if (count == 0) {
         throw CacheException('Transaction not found for deletion');
       }
+    } on CacheException {
+      rethrow;
     } catch (e) {
       throw CacheException('Failed to delete transaction from db');
     }
@@ -77,6 +79,8 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       }
 
       return TransactionModel.fromJson(maps.first);
+    } on CacheException {
+      rethrow;
     } catch (e) {
       throw CacheException('Failed to get transaction from db');
     }

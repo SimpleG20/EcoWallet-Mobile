@@ -23,12 +23,12 @@ class DbHelper {
         await db.execute('''
           CREATE TABLE transactions(
             id TEXT PRIMARY KEY,
-            name TEXT,
-            amount INTEGER,
-            cents INTEGER,
+            name TEXT NOT NULL,
+            amount INTEGER NOT NULL,
+            cents INTEGER NOT NULL,
             date TEXT NOT NULL,
             type TEXT NOT NULL,
-            category TEXT NOT NULL,
+            category TEXT NOT NULL
           )
         ''');
       },

@@ -11,12 +11,21 @@ class TransactionModel extends Transaction {
       required super.category});
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
+    final dynamic rawType = json['type'];
+    final ETransactionType parsedType = rawType is ETransactionType
+        ? rawType
+        : ETransactionType.values.firstWhere(
+            (e) =>
+                e.toString() == rawType.toString() ||
+                e.name == rawType.toString(),
+          );
+
     return TransactionModel(
       id: json['id'],
       name: json['name'],
       amount: json['amount'] as int,
       cents: json['cents'] as int,
-      type: json['type'] as ETransactionType,
+      type: parsedType,
       date: DateTime.parse(json['date']),
       category: json['category'],
     );
