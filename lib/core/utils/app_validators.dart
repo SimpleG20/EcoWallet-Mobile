@@ -21,6 +21,9 @@ class AppValidators {
     }
 
     // Treat comma as a decimal separator only when no period is present.
+    // Note: This approach does not support thousands separators. Input like "1,234"
+    // will be interpreted as "1.234" (one point two three four), not as one thousand.
+    // This is intentional to keep the validation simple and avoid locale-specific parsing complexity.
     final normalized = value.contains(',')
         ? value.replaceAll(',', '.')
         : value;
