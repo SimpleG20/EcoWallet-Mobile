@@ -8,7 +8,10 @@ void main() async {
     await di.init();
     runApp(const EcoWalletApp());
   } catch (e) {
-    runApp(ErrorApp(error: e.toString()));
+    // Log the error for debugging
+    // ignore: avoid_print
+    print('Failed to initialize app: $e');
+    runApp(const ErrorApp());
   }
 }
 
@@ -30,9 +33,7 @@ class EcoWalletApp extends StatelessWidget {
 }
 
 class ErrorApp extends StatelessWidget {
-  final String error;
-
-  const ErrorApp({super.key, required this.error});
+  const ErrorApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +53,10 @@ class ErrorApp extends StatelessWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  error,
+                const Text(
+                  'Please restart the app. If the problem persists, contact support.',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Colors.grey),
                 ),
               ],
             ),
