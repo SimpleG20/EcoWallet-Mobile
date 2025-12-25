@@ -1,0 +1,11 @@
+{
+  "@@locale": "pt",
+  "appTitle": "EcoWallet",
+  "@appTitle": {
+    "description": "O título do aplicativo"
+  },
+  "welcome": "Bem-vindo",
+  "@welcome": {
+    "description": "Mensagem de boas-vindas"
+  }
+}
