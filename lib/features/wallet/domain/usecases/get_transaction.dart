@@ -12,7 +12,7 @@ class GetTransaction implements BaseUsecase<Transaction, String> {
   GetTransaction(this.repository);
 
   @override
-  Future<Either<BaseFailure, Transaction>> call(String transactionId) async {
-    return await repository.getTransactionById(transactionId);
+  Future<Either<BaseFailure, Transaction>> call(String transactionId) {
+    return repository.getTransactionById(transactionId);
   }
 }

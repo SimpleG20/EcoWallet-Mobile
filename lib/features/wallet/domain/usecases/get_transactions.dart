@@ -12,7 +12,7 @@ class GetTransactions implements BaseUsecase<List<Transaction>, NoParams> {
   GetTransactions(this.repository);
 
   @override
-  Future<Either<BaseFailure, List<Transaction>>> call(NoParams params) async {
-    return await repository.getTransactions();
+  Future<Either<BaseFailure, List<Transaction>>> call(NoParams params) {
+    return repository.getTransactions();
   }
 }
