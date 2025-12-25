@@ -26,11 +26,11 @@ class AppValidators {
         : value;
 
     final parsedValue = double.tryParse(normalized);
-    
+
     if (parsedValue == null) {
       return loc.errorAmountFormat;
     }
-    
+
     if (parsedValue <= 0) {
       return loc.errorAmountMustBePositive;
     }

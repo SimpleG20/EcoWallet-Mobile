@@ -14,5 +14,11 @@
   "errorTitleEmpty": "Please enter a title.",
   "errorAmountInvalid": "Please enter a valid amount.",
   "errorAmountMustBePositive": "Amount must be greater than zero.",
-  "errorAmountFormat": "Invalid number format. Use only digits and a decimal separator."
+  "@errorAmountMustBePositive": {
+    "description": "Error message shown when user enters a zero or negative amount in a transaction form"
+  },
+  "errorAmountFormat": "Invalid number format. Use only digits and a decimal separator.",
+  "@errorAmountFormat": {
+    "description": "Error message shown when user enters an invalid number format (e.g., with multiple decimal separators)"
+  }
 }
