@@ -29,12 +29,6 @@ class WalletError extends WalletState {
   List<Object> get props => [message];
 }
 
-class WalletTransactionAdded extends WalletState {}
-
-class WalletTransactionDeleted extends WalletState {}
-
-class WalletTransactionUpdated extends WalletState {}
-
 class WalletTransactionLoaded extends WalletState {
   final Transaction transaction;
 

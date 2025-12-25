@@ -2,12 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/transaction.dart';
-import '../../../../core/usescases/base_usecase.dart';
-import '../../domain/usescases/add_transaction.dart';
-import '../../domain/usescases/delete_transaction.dart';
-import '../../domain/usescases/get_transaction.dart';
-import '../../domain/usescases/get_transactions.dart';
-import '../../domain/usescases/update_transaction.dart';
+import '../../../../core/usecases/base_usecase.dart';
+import '../../domain/usecases/add_transaction.dart';
+import '../../domain/usecases/delete_transaction.dart';
+import '../../domain/usecases/get_transaction.dart';
+import '../../domain/usecases/get_transactions.dart';
+import '../../domain/usecases/update_transaction.dart';
 
 part 'wallet_event.dart';
 part 'wallet_state.dart';
@@ -48,12 +48,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await addTransaction(event.transaction);
-    result.fold(
-        (failure) => emit(const WalletError("Erro ao adicionar transação")),
-        (unit) async {
-      emit(WalletTransactionAdded());
-      add(GetTransactionsEvent());
-    });
+    await result.fold(
+        (failure) async => emit(const WalletError("Erro ao adicionar transação")),
+        (unit) async => await _refreshTransactions(emit));
   }
 
   Future<void> _onDeleteTransaction(
@@ -61,12 +58,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await deleteTransaction(event.transactionId);
-    result
-        .fold((failure) => emit(const WalletError("Erro ao deletar transação")),
-            (unit) async {
-      emit(WalletTransactionDeleted());
-      add(GetTransactionsEvent());
-    });
+    await result.fold(
+        (failure) async => emit(const WalletError("Erro ao deletar transação")),
+        (unit) async => await _refreshTransactions(emit));
   }
 
   Future<void> _onUpdateTransaction(
@@ -74,12 +68,17 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await updateTransaction(event.transaction);
-    result.fold(
-        (failure) => emit(const WalletError("Erro ao atualizar transação")),
-        (unit) async {
-      emit(WalletTransactionUpdated());
-      add(GetTransactionsEvent());
-    });
+    await result.fold(
+        (failure) async => emit(const WalletError("Erro ao atualizar transação")),
+        (unit) async => await _refreshTransactions(emit));
+  }
+
+  Future<void> _refreshTransactions(Emitter<WalletState> emit) async {
+    final transactionsResult = await getTransactions(NoParams());
+    transactionsResult.fold(
+      (failure) => emit(const WalletError("Erro ao carregar dados")),
+      (transactions) => emit(WalletLoaded(transactions)),
+    );
   }
 
   Future<void> _onGetTransaction(
