@@ -12,6 +12,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appTitle => 'EcoWallet';
 
   @override
+  String get welcome => 'Bem-vindo';
+
+  @override
+  String get welcomeBack => 'Bem-vindo de volta!';
+
+  @override
   String get dashboardTotalBalance => 'Saldo Total';
 
   @override
@@ -21,10 +27,37 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dashboardExpense => 'Despesas';
 
   @override
+  String get dashboardRecentTransactions => 'Transações Recentes';
+
+  @override
+  String get dashboardMonthlySavings => 'Economias Mensais';
+
+  @override
   String get btnSave => 'Salvar Transação';
 
   @override
   String get btnCancel => 'Cancelar';
+
+  @override
+  String get btnViewAll => 'Ver Todos';
+
+  @override
+  String get btnHome => 'Início';
+
+  @override
+  String get btnWallet => 'Carteira';
+
+  @override
+  String get btnSettings => 'Configurações';
+
+  @override
+  String get btnAnalytics => 'Análises';
+
+  @override
+  String get btnProfile => 'Perfil';
+
+  @override
+  String get lbUncategorized => 'Sem Categoria';
 
   @override
   String get errorTitleEmpty => 'Por favor, insira um título.';
@@ -36,5 +69,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get errorAmountMustBePositive => 'O valor deve ser maior que zero.';
 
   @override
-  String get errorAmountFormat => 'Formato de número inválido. Use apenas dígitos e um separador decimal.';
+  String get errorAmountFormat =>
+      'Formato de número inválido. Use apenas dígitos e um separador decimal.';
 }

@@ -104,6 +104,18 @@ abstract class AppLocalizations {
   /// **'EcoWallet'**
   String get appTitle;
 
+  /// No description provided for @welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome'**
+  String get welcome;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back!'**
+  String get welcomeBack;
+
   /// No description provided for @dashboardTotalBalance.
   ///
   /// In en, this message translates to:
@@ -122,6 +134,18 @@ abstract class AppLocalizations {
   /// **'Expense'**
   String get dashboardExpense;
 
+  /// No description provided for @dashboardRecentTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Transactions'**
+  String get dashboardRecentTransactions;
+
+  /// No description provided for @dashboardMonthlySavings.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Savings'**
+  String get dashboardMonthlySavings;
+
   /// No description provided for @btnSave.
   ///
   /// In en, this message translates to:
@@ -133,6 +157,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get btnCancel;
+
+  /// No description provided for @btnViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get btnViewAll;
+
+  /// No description provided for @btnHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get btnHome;
+
+  /// No description provided for @btnWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get btnWallet;
+
+  /// No description provided for @btnSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get btnSettings;
+
+  /// No description provided for @btnAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get btnAnalytics;
+
+  /// No description provided for @btnProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get btnProfile;
+
+  /// No description provided for @lbUncategorized.
+  ///
+  /// In en, this message translates to:
+  /// **'Uncategorized'**
+  String get lbUncategorized;
 
   /// No description provided for @errorTitleEmpty.
   ///
@@ -146,13 +212,13 @@ abstract class AppLocalizations {
   /// **'Please enter a valid amount.'**
   String get errorAmountInvalid;
 
-  /// Error message shown when user enters a zero or negative amount in a transaction form
+  /// No description provided for @errorAmountMustBePositive.
   ///
   /// In en, this message translates to:
   /// **'Amount must be greater than zero.'**
   String get errorAmountMustBePositive;
 
-  /// Error message shown when user enters an invalid number format (e.g., with multiple decimal separators)
+  /// No description provided for @errorAmountFormat.
   ///
   /// In en, this message translates to:
   /// **'Invalid number format. Use only digits and a decimal separator.'**
