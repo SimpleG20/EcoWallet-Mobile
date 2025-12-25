@@ -1,11 +1,20 @@
 {
   "@@locale": "pt",
-  "appTitle": "EcoWallet",
-  "@appTitle": {
-    "description": "O título do aplicativo"
-  },
   "welcome": "Bem-vindo",
-  "@welcome": {
-    "description": "Mensagem de boas-vindas"
-  }
+  "appTitle": "EcoWallet",
+
+  "@_DASHBOARD": {},
+  "dashboardTotalBalance": "Saldo Total",
+  "dashboardIncome": "Receitas",
+  "dashboardExpense": "Despesas",
+
+  "@_ACTIONS": {},
+  "btnSave": "Salvar Transação",
+  "btnCancel": "Cancelar",
+
+  "@_ERRORS": {},
+  "errorTitleEmpty": "Por favor, insira um título.",
+  "errorAmountInvalid": "Por favor, insira um valor válido.",
+  "errorAmountMustBePositive": "O valor deve ser maior que zero.",
+  "errorAmountFormat": "Formato de número inválido. Use apenas dígitos e um separador decimal.",
 }
