@@ -1,0 +1,24 @@
+{
+  "appTitle": "EcoWallet",
+
+  "@_DASHBOARD": {},
+  "dashboardTotalBalance": "Total Balance",
+  "dashboardIncome": "Income",
+  "dashboardExpense": "Expense",
+
+  "@_ACTIONS": {},
+  "btnSave": "Save Transaction",
+  "btnCancel": "Cancel",
+
+  "@_ERRORS": {},
+  "errorTitleEmpty": "Please enter a title.",
+  "errorAmountInvalid": "Please enter a valid amount.",
+  "errorAmountMustBePositive": "Amount must be greater than zero.",
+  "@errorAmountMustBePositive": {
+    "description": "Error message shown when user enters a zero or negative amount in a transaction form"
+  },
+  "errorAmountFormat": "Invalid number format. Use only digits and a decimal separator.",
+  "@errorAmountFormat": {
+    "description": "Error message shown when user enters an invalid number format (e.g., with multiple decimal separators)"
+  }
+}
