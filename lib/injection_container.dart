@@ -3,14 +3,14 @@ import 'package:get_it/get_it.dart';
 import 'package:eco_wallet/core/database/db_helper.dart';
 import 'package:eco_wallet/features/wallet/data/repositories/wallet_repository_impl.dart';
 import 'package:eco_wallet/features/wallet/domain/repositories/base_wallet_repository.dart';
-import 'package:eco_wallet/features/wallet/domain/usescases/get_transaction.dart';
-import 'package:eco_wallet/features/wallet/domain/usescases/get_transactions.dart';
+import 'package:eco_wallet/features/wallet/domain/usecases/get_transaction.dart';
+import 'package:eco_wallet/features/wallet/domain/usecases/get_transactions.dart';
 
 import 'features/wallet/data/datasources/base_wallet_local_data_source.dart';
 import 'features/wallet/data/datasources/wallet_local_data_source_impl.dart';
-import 'features/wallet/domain/usescases/add_transaction.dart';
-import 'features/wallet/domain/usescases/delete_transaction.dart';
-import 'features/wallet/domain/usescases/update_transaction.dart';
+import 'features/wallet/domain/usecases/add_transaction.dart';
+import 'features/wallet/domain/usecases/delete_transaction.dart';
+import 'features/wallet/domain/usecases/update_transaction.dart';
 import 'features/wallet/presentation/bloc/wallet_bloc.dart';
 
 final sl = GetIt.instance;
