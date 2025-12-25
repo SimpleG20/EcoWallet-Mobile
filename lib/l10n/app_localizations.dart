@@ -104,23 +104,35 @@ abstract class AppLocalizations {
   /// **'EcoWallet'**
   String get appTitle;
 
-  /// No description provided for @totalBalance.
+  /// No description provided for @dashboardTotalBalance.
   ///
   /// In en, this message translates to:
   /// **'Total Balance'**
-  String get totalBalance;
+  String get dashboardTotalBalance;
 
-  /// No description provided for @income.
+  /// No description provided for @dashboardIncome.
   ///
   /// In en, this message translates to:
   /// **'Income'**
-  String get income;
+  String get dashboardIncome;
 
-  /// No description provided for @expense.
+  /// No description provided for @dashboardExpense.
   ///
   /// In en, this message translates to:
   /// **'Expense'**
-  String get expense;
+  String get dashboardExpense;
+
+  /// No description provided for @btnSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Transaction'**
+  String get btnSave;
+
+  /// No description provided for @btnCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get btnCancel;
 
   /// No description provided for @errorTitleEmpty.
   ///
@@ -133,12 +145,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a valid amount.'**
   String get errorAmountInvalid;
-
-  /// No description provided for @btnSave.
-  ///
-  /// In en, this message translates to:
-  /// **'Save Transaction'**
-  String get btnSave;
 }
 
 class _AppLocalizationsDelegate

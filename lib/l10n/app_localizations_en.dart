@@ -12,20 +12,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'EcoWallet';
 
   @override
-  String get totalBalance => 'Total Balance';
+  String get dashboardTotalBalance => 'Total Balance';
 
   @override
-  String get income => 'Income';
+  String get dashboardIncome => 'Income';
 
   @override
-  String get expense => 'Expense';
+  String get dashboardExpense => 'Expense';
+
+  @override
+  String get btnSave => 'Save Transaction';
+
+  @override
+  String get btnCancel => 'Cancel';
 
   @override
   String get errorTitleEmpty => 'Please enter a title.';
 
   @override
   String get errorAmountInvalid => 'Please enter a valid amount.';
-
-  @override
-  String get btnSave => 'Save Transaction';
 }

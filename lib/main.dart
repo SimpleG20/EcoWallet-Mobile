@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:eco_wallet/core/theme/app_theme.dart';
+// import 'package:eco_wallet/core/theme/app_theme.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'injection_container.dart' as di;
 
@@ -20,8 +20,8 @@ class EcoWalletApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'EcoWallet',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
+        // theme: AppTheme.lightTheme,
+        // darkTheme: AppTheme.darkTheme,
         themeMode: themeMode,
         localizationsDelegates: const [
           AppLocalizations.delegate,

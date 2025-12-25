@@ -1,9 +1,16 @@
 {
   "appTitle": "EcoWallet",
-  "totalBalance": "Saldo Total",
-  "income": "Receitas",
-  "expense": "Despesas",
+
+  "@_DASHBOARD": {},
+  "dashboardTotalBalance": "Saldo Total",
+  "dashboardIncome": "Receitas",
+  "dashboardExpense": "Despesas",
+
+  "@_ACTIONS": {},
+  "btnSave": "Salvar Transação",
+  "btnCancel": "Cancelar",
+
+  "@_ERRORS": {},
   "errorTitleEmpty": "Por favor, insira um título.",
-  "errorAmountInvalid": "Por favor, insira um valor válido.",
-  "btnSave": "Salvar Transação"
+  "errorAmountInvalid": "Por favor, insira um valor válido."
 }
