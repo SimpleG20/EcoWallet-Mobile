@@ -31,4 +31,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorAmountInvalid => 'Please enter a valid amount.';
+
+  @override
+  String get errorAmountMustBePositive => 'Amount must be greater than zero.';
+
+  @override
+  String get errorAmountFormat => 'Invalid number format. Use only digits and a decimal separator.';
 }
