@@ -71,6 +71,10 @@ class AppTheme {
 
       // Typography Mapping (H1-H4 from CSS)
       textTheme: const TextTheme(
+        titleLarge:
+            TextStyle(fontSize: 22, fontWeight: _fontMedium, height: 1.5), // h4
+        titleMedium:
+            TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h5
         displayLarge:
             TextStyle(fontSize: 24, fontWeight: _fontMedium, height: 1.5), // h1
         displayMedium:

@@ -49,6 +49,10 @@ class AppColors {
   static const Color darkBorder = Color(0xFF454545);
   static const Color darkRing = Color(0xFF6E6E6E); // approx oklch(0.439 0 0)
 
+  // --- Shared Accent Colors ---
+  /// Primary green used for balance cards and positive indicators.
+  static const Color primaryGreen = Color(0xFF10C085);
+
   // --- Charts (Shared or Specific) ---
   static const Color chart1 = Color(0xFF10B981);
   static const Color chart2 = Color(0xFF3B82F6);
