@@ -9,8 +9,7 @@ void main() async {
     runApp(const EcoWalletApp());
   } catch (e) {
     // Log the error for debugging
-    // ignore: avoid_print
-    print('Failed to initialize app: $e');
+    debugPrint('Failed to initialize app: $e');
     runApp(const ErrorApp());
   }
 }

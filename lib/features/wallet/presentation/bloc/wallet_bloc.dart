@@ -48,9 +48,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await addTransaction(event.transaction);
-    result.fold(
-        (failure) => emit(const WalletError("Erro ao adicionar transação")),
-        (unit) => _refreshTransactions(emit));
+    await result.fold(
+        (failure) async => emit(const WalletError("Erro ao adicionar transação")),
+        (unit) async => await _refreshTransactions(emit));
   }
 
   Future<void> _onDeleteTransaction(
@@ -58,9 +58,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await deleteTransaction(event.transactionId);
-    result.fold(
-        (failure) => emit(const WalletError("Erro ao deletar transação")),
-        (unit) => _refreshTransactions(emit));
+    await result.fold(
+        (failure) async => emit(const WalletError("Erro ao deletar transação")),
+        (unit) async => await _refreshTransactions(emit));
   }
 
   Future<void> _onUpdateTransaction(
@@ -68,9 +68,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await updateTransaction(event.transaction);
-    result.fold(
-        (failure) => emit(const WalletError("Erro ao atualizar transação")),
-        (unit) => _refreshTransactions(emit));
+    await result.fold(
+        (failure) async => emit(const WalletError("Erro ao atualizar transação")),
+        (unit) async => await _refreshTransactions(emit));
   }
 
   Future<void> _refreshTransactions(Emitter<WalletState> emit) async {
