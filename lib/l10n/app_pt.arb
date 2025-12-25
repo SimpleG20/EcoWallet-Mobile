@@ -1,0 +1,9 @@
+{
+  "appTitle": "EcoWallet",
+  "totalBalance": "Saldo Total",
+  "income": "Receitas",
+  "expense": "Despesas",
+  "errorTitleEmpty": "Por favor, insira um título.",
+  "errorAmountInvalid": "Por favor, insira um valor válido.",
+  "btnSave": "Salvar Transação"
+}

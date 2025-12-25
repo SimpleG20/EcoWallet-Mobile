@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:eco_wallet/core/theme/app_theme.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -10,16 +14,25 @@ void main() async {
 
 class EcoWalletApp extends StatelessWidget {
   const EcoWalletApp({super.key});
+  final ThemeMode themeMode = ThemeMode.system;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'EcoWallet',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF10B981)), // Emerald Green
-          useMaterial3: true,
-        ),
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: themeMode,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('pt'),
+        ],
         home:
             const Scaffold(body: Center(child: Text("EcoWallet Initialized"))));
   }
