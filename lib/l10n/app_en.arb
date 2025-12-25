@@ -12,5 +12,7 @@
 
   "@_ERRORS": {},
   "errorTitleEmpty": "Please enter a title.",
-  "errorAmountInvalid": "Please enter a valid amount."
+  "errorAmountInvalid": "Please enter a valid amount.",
+  "errorAmountMustBePositive": "Amount must be greater than zero.",
+  "errorAmountFormat": "Invalid number format. Use only digits and a decimal separator."
 }

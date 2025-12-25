@@ -14,7 +14,6 @@ void main() async {
 
 class EcoWalletApp extends StatelessWidget {
   const EcoWalletApp({super.key});
-  final ThemeMode themeMode = ThemeMode.system;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class EcoWalletApp extends StatelessWidget {
         title: 'EcoWallet',
         // theme: AppTheme.lightTheme,
         // darkTheme: AppTheme.darkTheme,
-        themeMode: themeMode,
+        // themeMode: ThemeMode.system,
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

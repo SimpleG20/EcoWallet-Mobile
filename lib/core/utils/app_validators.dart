@@ -13,9 +13,26 @@ class AppValidators {
       return loc.errorAmountInvalid;
     }
 
-    final parsedValue = double.tryParse(value.replaceAll(',', '.'));
-    if (parsedValue == null || parsedValue <= 0) {
-      return loc.errorAmountInvalid;
+    // Only support simple decimal input without thousands separators.
+    // If both '.' and ',' appear, the format is ambiguous (e.g. "1,234.56" or "1.234,56"),
+    // so reject it explicitly.
+    if (value.contains(',') && value.contains('.')) {
+      return loc.errorAmountFormat;
+    }
+
+    // Treat comma as a decimal separator only when no period is present.
+    final normalized = value.contains(',')
+        ? value.replaceAll(',', '.')
+        : value;
+
+    final parsedValue = double.tryParse(normalized);
+    
+    if (parsedValue == null) {
+      return loc.errorAmountFormat;
+    }
+    
+    if (parsedValue <= 0) {
+      return loc.errorAmountMustBePositive;
     }
 
     return null;

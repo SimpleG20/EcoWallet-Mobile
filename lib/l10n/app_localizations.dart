@@ -145,6 +145,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a valid amount.'**
   String get errorAmountInvalid;
+
+  /// No description provided for @errorAmountMustBePositive.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount must be greater than zero.'**
+  String get errorAmountMustBePositive;
+
+  /// No description provided for @errorAmountFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid number format. Use only digits and a decimal separator.'**
+  String get errorAmountFormat;
 }
 
 class _AppLocalizationsDelegate
