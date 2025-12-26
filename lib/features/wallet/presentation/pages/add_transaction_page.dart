@@ -51,8 +51,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         final loc = AppLocalizations.of(context)!;
 
         _nameController.text = transaction.name;
-        _amountController.text = AppFormatters.formatCurrency(
-            value, loc.localeName); //, noSymbol: true);
+        _amountController.text =
+            AppFormatters.formatCurrency(value, loc.localeName, noSymbol: true);
         _selectedDate = transaction.date;
         _selectedTransactionCategory = transaction.category;
         _transactionType = transaction.type;
