@@ -13,11 +13,22 @@ class WalletLoading extends WalletState {}
 
 class WalletLoaded extends WalletState {
   final List<Transaction> transactions;
+  final double totalBalance;
+  final double totalIncome;
+  final double totalExpense;
+  final double monthlySavings;
 
-  const WalletLoaded(this.transactions);
+  const WalletLoaded({
+    required this.transactions,
+    required this.totalBalance,
+    required this.totalIncome,
+    required this.totalExpense,
+    required this.monthlySavings,
+  });
 
   @override
-  List<Object> get props => [transactions];
+  List<Object> get props =>
+      [transactions, totalBalance, totalIncome, totalExpense, monthlySavings];
 }
 
 class WalletError extends WalletState {
@@ -36,4 +47,13 @@ class WalletTransactionLoaded extends WalletState {
 
   @override
   List<Object> get props => [transaction];
+}
+
+class WalletTransactionsLoaded extends WalletState {
+  final List<Transaction> transactions;
+
+  const WalletTransactionsLoaded(this.transactions);
+
+  @override
+  List<Object> get props => [transactions];
 }

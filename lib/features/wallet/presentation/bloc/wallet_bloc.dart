@@ -26,11 +26,34 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     required this.updateTransaction,
     required this.getTransactionById,
   }) : super(WalletInitial()) {
+    on<LoadWalletDataEvent>(_onLoadWalletData);
     on<GetTransactionsEvent>(_onGetTransactions);
     on<AddTransactionEvent>(_onAddTransaction);
     on<DeleteTransactionEvent>(_onDeleteTransaction);
     on<UpdateTransactionEvent>(_onUpdateTransaction);
     on<GetTransactionEvent>(_onGetTransaction);
+  }
+
+  Future<void> _onLoadWalletData(
+      LoadWalletDataEvent event, Emitter<WalletState> emit) async {
+    emit(WalletLoading());
+
+    final result = await getTransactions(NoParams());
+
+    result.fold(
+      (failure) => emit(const WalletError("Erro ao carregar dados")),
+      (transactions) {
+        emit(
+          WalletLoaded(
+            transactions: transactions,
+            totalBalance: _calculateTotalBalance(transactions),
+            totalIncome: _calculateTotalIncome(transactions),
+            totalExpense: _calculateTotalExpense(transactions),
+            monthlySavings: _calculateMonthlySavings(transactions),
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _onGetTransactions(
@@ -39,8 +62,52 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     final result = await getTransactions(NoParams());
 
-    result.fold((failure) => emit(const WalletError("Erro ao carregar dados")),
-        (transactions) => emit(WalletLoaded(transactions)));
+    result.fold(
+      (failure) => emit(const WalletError("Erro ao carregar dados")),
+      (transactions) => emit(WalletTransactionsLoaded(transactions)),
+    );
+  }
+
+  double _calculateTotalBalance(List<Transaction> transactions) {
+    return transactions.fold(
+        0.0,
+        (previousValue, transaction) =>
+            transaction.type == ETransactionType.income
+                ? previousValue + transaction.amount
+                : previousValue - transaction.amount);
+  }
+
+  double _calculateTotalIncome(List<Transaction> transactions) {
+    return transactions
+        .where((t) => t.type == ETransactionType.income)
+        .fold(0.0, (sum, t) => sum + t.amount);
+  }
+
+  double _calculateTotalExpense(List<Transaction> transactions) {
+    return transactions
+        .where((t) => t.type == ETransactionType.expense)
+        .fold(0.0, (sum, t) => sum + t.amount);
+  }
+
+  double _calculateMonthlySavings(List<Transaction> transactions) {
+    var now = DateTime.now();
+    var monthlyIncome = transactions
+        .where((t) =>
+            t.type == ETransactionType.income &&
+            t.date.month == now.month &&
+            t.date.year == now.year)
+        .fold(0.0, (sum, t) => sum + t.amount);
+    var monthlyExpense = transactions
+        .where((t) =>
+            t.type == ETransactionType.expense &&
+            t.date.month == now.month &&
+            t.date.year == now.year)
+        .fold(0.0, (sum, t) => sum + t.amount);
+    if (monthlyIncome > monthlyExpense) {
+      return monthlyIncome - monthlyExpense;
+    } else {
+      return 0.0;
+    }
   }
 
   Future<void> _onAddTransaction(
@@ -49,8 +116,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     final result = await addTransaction(event.transaction);
     await result.fold(
-        (failure) async => emit(const WalletError("Erro ao adicionar transação")),
-        (unit) async => await _refreshTransactions(emit));
+      (failure) async => emit(const WalletError("Erro ao adicionar transação")),
+      (unit) async => await _refreshTransactions(emit),
+    );
   }
 
   Future<void> _onDeleteTransaction(
@@ -59,8 +127,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     final result = await deleteTransaction(event.transactionId);
     await result.fold(
-        (failure) async => emit(const WalletError("Erro ao deletar transação")),
-        (unit) async => await _refreshTransactions(emit));
+      (failure) async => emit(const WalletError("Erro ao deletar transação")),
+      (unit) async => await _refreshTransactions(emit),
+    );
   }
 
   Future<void> _onUpdateTransaction(
@@ -69,15 +138,24 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     final result = await updateTransaction(event.transaction);
     await result.fold(
-        (failure) async => emit(const WalletError("Erro ao atualizar transação")),
-        (unit) async => await _refreshTransactions(emit));
+      (failure) async => emit(const WalletError("Erro ao atualizar transação")),
+      (unit) async => await _refreshTransactions(emit),
+    );
   }
 
   Future<void> _refreshTransactions(Emitter<WalletState> emit) async {
     final transactionsResult = await getTransactions(NoParams());
     transactionsResult.fold(
       (failure) => emit(const WalletError("Erro ao carregar dados")),
-      (transactions) => emit(WalletLoaded(transactions)),
+      (transactions) => emit(
+        WalletLoaded(
+          transactions: transactions,
+          totalBalance: _calculateTotalBalance(transactions),
+          totalIncome: _calculateTotalIncome(transactions),
+          totalExpense: _calculateTotalExpense(transactions),
+          monthlySavings: _calculateMonthlySavings(transactions),
+        ),
+      ),
     );
   }
 
@@ -87,9 +165,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     final result = await getTransactionById(event.transactionId);
 
-    result.fold((failure) => emit(const WalletError("Erro ao carregar dados")),
-        (transaction) {
-      emit(WalletTransactionLoaded(transaction));
-    });
+    result.fold(
+      (failure) => emit(const WalletError("Erro ao carregar dados")),
+      (transaction) {
+        emit(WalletTransactionLoaded(transaction));
+      },
+    );
   }
 }
