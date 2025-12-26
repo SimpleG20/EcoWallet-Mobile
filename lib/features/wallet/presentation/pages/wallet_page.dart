@@ -1,14 +1,16 @@
-import 'package:eco_wallet/features/wallet/presentation/pages/add_transaction_page.dart';
 import 'package:flutter/material.dart';
-import 'package:eco_wallet/l10n/app_localizations.dart';
-import 'package:eco_wallet/features/wallet/presentation/widgets/transaction_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../injection_container.dart' as di;
+import '/l10n/app_localizations.dart';
+import '/features/wallet/presentation/widgets/transaction_card.dart';
+import '/features/wallet/presentation/pages/add_transaction_page.dart';
+
 import '../bloc/wallet_bloc.dart';
 import '../widgets/balance_card.dart';
-import '../widgets/wallet_action_buttons.dart';
 import '../widgets/wallet_header.dart';
+import '../widgets/wallet_action_buttons.dart';
+import '../../domain/entities/transaction.dart';
+import '../../../../injection_container.dart' as di;
 
 /// Main page for the Wallet feature displaying balance, actions, and transactions.
 ///
@@ -110,23 +112,29 @@ class WalletPage extends StatelessWidget {
                 WalletActionButtons(
                   incomeLabel: loc.lbIncome,
                   expenseLabel: loc.lbExpense,
-                  onIncomePressed: () {
-                    // modal bottom sheet
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => AddTransactionPage(),
-                    );
-                    // TODO: Navigate to add income screen
-                  },
-                  onExpensePressed: () {
-                    // TODO: Navigate to add expense screen
-                  },
+                  onIncomePressed: () => _showAddTransactionModal(
+                      context, ETransactionType.income),
+                  onExpensePressed: () => _showAddTransactionModal(
+                      context, ETransactionType.expense),
                 ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showAddTransactionModal(BuildContext context, ETransactionType type) {
+    final walletBloc = context.read<WalletBloc>();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => BlocProvider.value(
+        value: walletBloc,
+        child: AddTransactionPage(
+          transactionType: type,
+        ),
       ),
     );
   }
@@ -182,11 +190,40 @@ class WalletPage extends StatelessWidget {
                       : state.transactions.length,
                   itemBuilder: (context, index) {
                     final transaction = state.transactions[index];
-                    return TransactionCard(
-                      transaction: transaction,
-                      onTap: () {
-                        // TODO: Navigate to transaction details
+                    return Dismissible(
+                      key: Key(transaction.id),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: const Icon(Icons.delete, color: Colors.white),
+                      ),
+                      onDismissed: (direction) {
+                        context
+                            .read<WalletBloc>()
+                            .add(DeleteTransactionEvent(transaction.id));
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(loc.msgTransactionDeleted),
+                            action: SnackBarAction(
+                              label: loc.btnUndo,
+                              onPressed: () {
+                                context
+                                    .read<WalletBloc>()
+                                    .add(AddTransactionEvent(transaction));
+                              },
+                            ),
+                          ),
+                        );
                       },
+                      child: TransactionCard(
+                        transaction: transaction,
+                        onTap: () {
+                          // TODO: Navigate to transaction details
+                        },
+                      ),
                     );
                   },
                 ),
