@@ -33,6 +33,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardMonthlySavings => 'Monthly Savings';
 
   @override
+  String get dashboardNoTransactions => 'No transactions available.';
+
+  @override
   String get btnSave => 'Save Transaction';
 
   @override

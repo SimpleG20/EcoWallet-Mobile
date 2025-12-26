@@ -33,6 +33,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dashboardMonthlySavings => 'Economias Mensais';
 
   @override
+  String get dashboardNoTransactions => 'Nenhuma transação disponível.';
+
+  @override
   String get btnSave => 'Salvar Transação';
 
   @override

@@ -32,7 +32,8 @@ class WalletPage extends StatelessWidget {
           const SizedBox(height: 8),
           _buildTransactionsHeader(loc, theme),
           const SizedBox(height: 8),
-          _buildTransactionsList(theme, transactions),
+          _buildTransactionsList(loc, theme, transactions),
+          const SizedBox(height: 8),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigation(loc, theme),
@@ -121,6 +122,7 @@ class WalletPage extends StatelessWidget {
 
   /// Builds the scrollable transactions list.
   Widget _buildTransactionsList(
+    AppLocalizations loc,
     ThemeData theme,
     List<Transaction> transactions,
   ) {
@@ -128,23 +130,31 @@ class WalletPage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Material(
-          elevation: 8,
+          elevation: 4,
           borderRadius: BorderRadius.circular(12.0),
           color: theme.colorScheme.surface,
           clipBehavior: Clip.antiAlias,
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: transactions.length > 5 ? 5 : transactions.length,
-            itemBuilder: (context, index) {
-              final transaction = transactions[index];
-              return TransactionCard(
-                transaction: transaction,
-                onTap: () {
-                  // TODO: Navigate to transaction details
-                },
-              );
-            },
-          ),
+          child: transactions.isEmpty
+              ? Center(
+                  child: Text(
+                  textAlign: TextAlign.center,
+                  loc.dashboardNoTransactions,
+                  style: theme.textTheme.titleSmall
+                      ?.copyWith(color: theme.colorScheme.outlineVariant),
+                ))
+              : ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: transactions.length > 5 ? 5 : transactions.length,
+                  itemBuilder: (context, index) {
+                    final transaction = transactions[index];
+                    return TransactionCard(
+                      transaction: transaction,
+                      onTap: () {
+                        // TODO: Navigate to transaction details
+                      },
+                    );
+                  },
+                ),
         ),
       ),
     );
@@ -152,33 +162,48 @@ class WalletPage extends StatelessWidget {
 
   /// Builds the bottom navigation bar.
   Widget _buildBottomNavigation(AppLocalizations loc, ThemeData theme) {
+    int currentIndex = 0; // TODO: Manage current index state
+
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       backgroundColor: theme.colorScheme.surface,
       selectedItemColor: theme.colorScheme.primary,
       showUnselectedLabels: true,
-      currentIndex: 0,
+      currentIndex: currentIndex,
       onTap: (index) {
         // TODO: Handle navigation
       },
       items: [
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.home),
-          label: loc.btnHome,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.account_balance_wallet),
-          label: loc.btnWallet,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.pie_chart),
-          label: loc.btnAnalytics,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.settings),
-          label: loc.btnSettings,
-        ),
+        _navigationBarItem(currentIndex, 0, theme, loc, Icons.home_outlined),
+        _navigationBarItem(
+            currentIndex, 1, theme, loc, Icons.account_balance_wallet_outlined),
+        _navigationBarItem(
+            currentIndex, 2, theme, loc, Icons.bar_chart_outlined),
+        _navigationBarItem(
+            currentIndex, 3, theme, loc, Icons.settings_outlined),
       ],
+    );
+  }
+
+  BottomNavigationBarItem _navigationBarItem(int currentIndex, int index,
+      ThemeData theme, AppLocalizations loc, IconData icon) {
+    return BottomNavigationBarItem(
+      icon: Container(
+        padding: EdgeInsets.all(4.0),
+        decoration: BoxDecoration(
+          color: currentIndex == index
+              ? theme.colorScheme.primary
+              : Colors.transparent,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          icon,
+          color: currentIndex == index
+              ? theme.colorScheme.onPrimary
+              : theme.colorScheme.outlineVariant,
+        ),
+      ),
+      label: loc.btnWallet,
     );
   }
 
@@ -204,78 +229,78 @@ class WalletPage extends StatelessWidget {
         type: ETransactionType.income,
         category: 'Salary',
       ),
-      Transaction(
-        id: '3',
-        name: 'Movie Night',
-        amount: 45,
-        cents: 50,
-        date: DateTime.now().subtract(const Duration(days: 5)),
-        type: ETransactionType.expense,
-        category: 'Entertainment',
-      ),
-      Transaction(
-        id: '4',
-        name: 'Electricity Bill',
-        amount: 120,
-        cents: 20,
-        date: DateTime.now().subtract(const Duration(days: 7)),
-        type: ETransactionType.expense,
-        category: 'Utilities',
-      ),
-      Transaction(
-        id: '5',
-        name: 'Freelance Project',
-        amount: 800,
-        cents: 0,
-        date: DateTime.now().subtract(const Duration(days: 10)),
-        type: ETransactionType.income,
-        category: 'Work',
-      ),
-      Transaction(
-        id: '6',
-        name: 'Dinner Out',
-        amount: 60,
-        cents: 30,
-        date: DateTime.now().subtract(const Duration(days: 12)),
-        type: ETransactionType.expense,
-        category: 'Food',
-      ),
-      Transaction(
-        id: '7',
-        name: 'Gas Station',
-        amount: 80,
-        cents: 0,
-        date: DateTime.now().subtract(const Duration(days: 14)),
-        type: ETransactionType.expense,
-        category: 'Transport',
-      ),
-      Transaction(
-        id: '8',
-        name: 'Netflix Subscription',
-        amount: 39,
-        cents: 90,
-        date: DateTime.now().subtract(const Duration(days: 15)),
-        type: ETransactionType.expense,
-        category: 'Entertainment',
-      ),
-      Transaction(
-        id: '9',
-        name: 'Bonus',
-        amount: 500,
-        cents: 0,
-        date: DateTime.now().subtract(const Duration(days: 17)),
-        type: ETransactionType.income,
-        category: 'Salary',
-      ),
-      Transaction(
-        id: '10',
-        name: 'Supermarket',
-        amount: 200,
-        cents: 50,
-        date: DateTime.now().subtract(const Duration(days: 20)),
-        type: ETransactionType.expense,
-        category: 'Food',
-      ),
+      // Transaction(
+      //   id: '3',
+      //   name: 'Movie Night',
+      //   amount: 45,
+      //   cents: 50,
+      //   date: DateTime.now().subtract(const Duration(days: 5)),
+      //   type: ETransactionType.expense,
+      //   category: 'Entertainment',
+      // ),
+      // Transaction(
+      //   id: '4',
+      //   name: 'Electricity Bill',
+      //   amount: 120,
+      //   cents: 20,
+      //   date: DateTime.now().subtract(const Duration(days: 7)),
+      //   type: ETransactionType.expense,
+      //   category: 'Utilities',
+      // ),
+      // Transaction(
+      //   id: '5',
+      //   name: 'Freelance Project',
+      //   amount: 800,
+      //   cents: 0,
+      //   date: DateTime.now().subtract(const Duration(days: 10)),
+      //   type: ETransactionType.income,
+      //   category: 'Work',
+      // ),
+      // Transaction(
+      //   id: '6',
+      //   name: 'Dinner Out',
+      //   amount: 60,
+      //   cents: 30,
+      //   date: DateTime.now().subtract(const Duration(days: 12)),
+      //   type: ETransactionType.expense,
+      //   category: 'Food',
+      // ),
+      // Transaction(
+      //   id: '7',
+      //   name: 'Gas Station',
+      //   amount: 80,
+      //   cents: 0,
+      //   date: DateTime.now().subtract(const Duration(days: 14)),
+      //   type: ETransactionType.expense,
+      //   category: 'Transport',
+      // ),
+      // Transaction(
+      //   id: '8',
+      //   name: 'Netflix Subscription',
+      //   amount: 39,
+      //   cents: 90,
+      //   date: DateTime.now().subtract(const Duration(days: 15)),
+      //   type: ETransactionType.expense,
+      //   category: 'Entertainment',
+      // ),
+      // Transaction(
+      //   id: '9',
+      //   name: 'Bonus',
+      //   amount: 500,
+      //   cents: 0,
+      //   date: DateTime.now().subtract(const Duration(days: 17)),
+      //   type: ETransactionType.income,
+      //   category: 'Salary',
+      // ),
+      // Transaction(
+      //   id: '10',
+      //   name: 'Supermarket',
+      //   amount: 200,
+      //   cents: 50,
+      //   date: DateTime.now().subtract(const Duration(days: 20)),
+      //   type: ETransactionType.expense,
+      //   category: 'Food',
+      // ),
     ];
   }
 }

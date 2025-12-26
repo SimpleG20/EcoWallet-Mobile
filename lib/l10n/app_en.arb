@@ -8,6 +8,7 @@
   "dashboardExpense": "Expense",
   "dashboardRecentTransactions": "Recent Transactions",
   "dashboardMonthlySavings": "Monthly Savings",
+  "dashboardNoTransactions": "No transactions available.",
   "btnSave": "Save Transaction",
   "btnCancel": "Cancel",
   "btnViewAll": "View All",

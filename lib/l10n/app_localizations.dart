@@ -146,6 +146,12 @@ abstract class AppLocalizations {
   /// **'Monthly Savings'**
   String get dashboardMonthlySavings;
 
+  /// No description provided for @dashboardNoTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions available.'**
+  String get dashboardNoTransactions;
+
   /// No description provided for @btnSave.
   ///
   /// In en, this message translates to:

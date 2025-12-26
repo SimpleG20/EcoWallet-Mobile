@@ -23,9 +23,10 @@ class TransactionCard extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: isIncome
             ? theme.colorScheme.primary.withAlpha(50)
-            : theme.colorScheme.outlineVariant.withAlpha(125),
-        foregroundColor:
-            isIncome ? theme.colorScheme.primary : theme.colorScheme.onSurface,
+            : theme.colorScheme.outlineVariant.withAlpha(80),
+        foregroundColor: isIncome
+            ? theme.colorScheme.primary
+            : theme.colorScheme.outlineVariant,
         child: Icon(transaction.type == ETransactionType.income
             ? Icons.trending_up
             : IconsMap.getCategoryIcon(transaction.category)),
