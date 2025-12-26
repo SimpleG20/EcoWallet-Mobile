@@ -202,9 +202,9 @@ class WalletPage extends StatelessWidget {
                         child: const Icon(Icons.delete, color: Colors.white),
                       ),
                       onDismissed: (direction) {
-                        context
-                            .read<WalletBloc>()
-                            .add(DeleteTransactionEvent(transaction.id));
+                        final walletBloc = context.read<WalletBloc>();
+
+                        walletBloc.add(DeleteTransactionEvent(transaction.id));
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -212,8 +212,7 @@ class WalletPage extends StatelessWidget {
                             action: SnackBarAction(
                               label: loc.btnUndo,
                               onPressed: () {
-                                context
-                                    .read<WalletBloc>()
+                                walletBloc
                                     .add(AddTransactionEvent(transaction));
                               },
                             ),
