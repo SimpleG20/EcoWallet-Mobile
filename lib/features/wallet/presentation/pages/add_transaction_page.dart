@@ -273,7 +273,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             controller: _amountController,
             cursorColor: theme.colorScheme.onSurface,
             style: theme.textTheme.headlineMedium,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType: TextInputType.number,
             inputFormatters: [
               CurrencyInputFormatter(locale: loc.localeName),
             ],
@@ -405,7 +405,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     );
   }
 
-  _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
@@ -468,9 +468,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     int amount = value.floor();
     int cents = ((value - amount) * 100).round();
 
-    final entityType = _transactionType == ETransactionType.income
-        ? ETransactionType.income
-        : ETransactionType.expense;
+    final entityType = _transactionType;
 
     const uuid = Uuid();
     final id = isEditing ? widget.transactionToEdit!.id : uuid.v4();

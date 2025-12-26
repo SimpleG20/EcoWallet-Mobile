@@ -37,10 +37,10 @@ class CurrencyInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    // 1. Limpa tudo que não for número
+    // 1. Remove everything that is not a number
     String newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
 
-    // Se estiver vazio, retorna vazio
+    // If it is empty, return empty
     if (newText.isEmpty) {
       return newValue.copyWith(text: '');
     }
