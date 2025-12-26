@@ -35,6 +35,7 @@
   "lbBills": "Bills",
   "lbOthers": "Others",
   "formNameHint": "Enter transaction name",
+  "formCategoryHint": "Write the category",
   "msgTransactionAdded": "Transaction added successfully.",
   "msgTransactionUpdated": "Transaction updated successfully.",
   "msgTransactionDeleted": "Transaction deleted successfully.",

@@ -125,7 +125,8 @@ class WalletPage extends StatelessWidget {
     );
   }
 
-  void _showAddTransactionModal(BuildContext context, ETransactionType type) {
+  void _showAddTransactionModal(BuildContext context, ETransactionType type,
+      {Transaction? transactionToEdit}) {
     final walletBloc = context.read<WalletBloc>();
     showModalBottomSheet(
       context: context,
@@ -134,6 +135,7 @@ class WalletPage extends StatelessWidget {
         value: walletBloc,
         child: AddTransactionPage(
           transactionType: type,
+          transactionToEdit: transactionToEdit,
         ),
       ),
     );
@@ -221,7 +223,11 @@ class WalletPage extends StatelessWidget {
                       child: TransactionCard(
                         transaction: transaction,
                         onTap: () {
-                          // TODO: Navigate to transaction details
+                          _showAddTransactionModal(
+                            context,
+                            transaction.type,
+                            transactionToEdit: transaction,
+                          );
                         },
                       ),
                     );

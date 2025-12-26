@@ -308,6 +308,12 @@ abstract class AppLocalizations {
   /// **'Enter transaction name'**
   String get formNameHint;
 
+  /// No description provided for @formCategoryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write the category'**
+  String get formCategoryHint;
+
   /// No description provided for @msgTransactionAdded.
   ///
   /// In en, this message translates to:

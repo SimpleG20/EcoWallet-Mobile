@@ -114,6 +114,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get formNameHint => 'Insira o nome da transação';
 
   @override
+  String get formCategoryHint => 'Escreva a categoria';
+
+  @override
   String get msgTransactionAdded => 'Transação adicionada com sucesso.';
 
   @override

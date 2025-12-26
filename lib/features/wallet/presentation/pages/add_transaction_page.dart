@@ -1,3 +1,4 @@
+import 'package:eco_wallet/core/utils/app_formatters.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:flutter/material.dart';
@@ -10,9 +11,11 @@ import '../bloc/wallet_bloc.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class AddTransactionPage extends StatefulWidget {
-  const AddTransactionPage({super.key, required this.transactionType});
+  const AddTransactionPage(
+      {super.key, required this.transactionType, this.transactionToEdit});
 
   final ETransactionType transactionType;
+  final Transaction? transactionToEdit;
 
   @override
   State<AddTransactionPage> createState() => _AddTransactionPageState();
@@ -26,12 +29,37 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   final _nameController = TextEditingController();
-  final _categoryController = TextEditingController();
+
+  bool _isInitialized = false;
+  bool get isEditing => widget.transactionToEdit != null;
 
   @override
   void initState() {
     super.initState();
     _transactionType = widget.transactionType;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_isInitialized) {
+      if (isEditing) {
+        final transaction = widget.transactionToEdit!;
+
+        double value = transaction.amount + (transaction.cents / 100);
+        final loc = AppLocalizations.of(context)!;
+
+        _nameController.text = transaction.name;
+        _amountController.text = AppFormatters.formatCurrency(
+            value, loc.localeName); //, noSymbol: true);
+        _selectedDate = transaction.date;
+        _selectedTransactionCategory = transaction.category;
+        _transactionType = transaction.type;
+      }
+
+      _isInitialized = true;
+    }
   }
 
   @override
@@ -52,26 +80,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                loc.addTransaction,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w600),
-              ),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Container(
-            height: 1,
-            width: double.infinity,
-            color: theme.colorScheme.outlineVariant,
-          ),
+          _buildHeader(context),
           Expanded(
             child: SingleChildScrollView(
               child: Form(
@@ -87,19 +96,51 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                     const SizedBox(height: 16),
                     _buildAmountField(loc, theme),
                     const SizedBox(height: 16),
-                    _buildCategoryPicker(context),
-                    const SizedBox(height: 16),
                     _buildDatePicker(context),
+                    const SizedBox(height: 16),
+                    _buildCategoryPicker(context),
                     const SizedBox(height: 24)
                   ],
                 ),
               ),
             ),
           ),
-          _buildSaveButton(theme, loc),
+          _buildSubmitBtn(theme, loc),
           const SizedBox(height: 20),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              widget.transactionToEdit != null
+                  ? loc.editTransaction
+                  : loc.addTransaction,
+              style: theme.textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Container(
+          height: 1,
+          width: double.infinity,
+          color: theme.colorScheme.outlineVariant,
+        ),
+      ],
     );
   }
 
@@ -192,6 +233,16 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          errorBuilder: (context, errorText) => Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: FittedBox(
+              child: Text(
+                errorText,
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(color: theme.colorScheme.error),
+              ),
+            ),
+          ),
           decoration: InputDecoration(
             hintText: loc.formNameHint,
             hintStyle: theme.textTheme.bodyMedium?.copyWith(
@@ -222,7 +273,18 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             controller: _amountController,
             cursorColor: theme.colorScheme.onSurface,
             style: theme.textTheme.headlineMedium,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              CurrencyInputFormatter(locale: loc.localeName),
+            ],
+            errorBuilder: (context, errorText) => Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    errorText,
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(color: theme.colorScheme.error),
+                  ),
+                ),
             decoration: InputDecoration(
               hintText: _amountController.text.isEmpty ? "0.00" : null,
               hintStyle: theme.textTheme.headlineMedium?.copyWith(
@@ -261,23 +323,12 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
           itemBuilder: (context, index) {
             final category = CategoryRepository.getCategoryByIndex(index);
             return _buildCategoryItem(
-                theme, index, CategoryRepository.getIcon(category), CategoryRepository.getLabel(category, loc));
+                theme,
+                index,
+                CategoryRepository.getIcon(category),
+                CategoryRepository.getLabel(category, loc));
           },
         ),
-        if (CategoryRepository.isOthersCategory(_selectedTransactionCategory, loc))
-          Column(
-            children: [
-              const SizedBox(height: 16),
-              TextField(
-                controller: _categoryController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-              ),
-            ],
-          )
       ],
     );
   }
@@ -368,7 +419,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     }
   }
 
-  Widget _buildSaveButton(ThemeData theme, AppLocalizations loc) {
+  Widget _buildSubmitBtn(ThemeData theme, AppLocalizations loc) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -403,24 +454,17 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
 
     if (_selectedTransactionCategory.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(loc.errorCategoryEmpty)),
+        SnackBar(
+          content: Text(loc.errorCategoryEmpty),
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(16.0),
+        ),
       );
       return;
     }
 
-    String finalCategory = _selectedTransactionCategory;
-    if (CategoryRepository.isOthersCategory(_selectedTransactionCategory, loc)) {
-      if (_categoryController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(loc.errorCategoryEmpty)),
-        );
-        return;
-      } else {
-        finalCategory = _categoryController.text;
-      }
-    }
-
-    final value = double.tryParse(_amountController.text) ?? 0.0;
+    final value =
+        AppFormatters.getCurrencyValue(_amountController.text, loc.localeName);
     int amount = value.floor();
     int cents = ((value - amount) * 100).round();
 
@@ -429,7 +473,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         : ETransactionType.expense;
 
     const uuid = Uuid();
-    final id = uuid.v4();
+    final id = isEditing ? widget.transactionToEdit!.id : uuid.v4();
 
     final newTransaction = Transaction(
       id: id,
@@ -438,12 +482,14 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       cents: cents,
       date: _selectedDate,
       type: entityType,
-      category: finalCategory,
+      category: _selectedTransactionCategory,
     );
 
-    context.read<WalletBloc>().add(AddTransactionEvent(newTransaction));
-
+    if (isEditing) {
+      context.read<WalletBloc>().add(UpdateTransactionEvent(newTransaction));
+    } else {
+      context.read<WalletBloc>().add(AddTransactionEvent(newTransaction));
+    }
     Navigator.of(context).pop();
   }
 }
-

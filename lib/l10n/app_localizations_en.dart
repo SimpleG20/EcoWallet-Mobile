@@ -114,6 +114,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get formNameHint => 'Enter transaction name';
 
   @override
+  String get formCategoryHint => 'Write the category';
+
+  @override
   String get msgTransactionAdded => 'Transaction added successfully.';
 
   @override
