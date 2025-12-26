@@ -44,3 +44,5 @@ class UpdateTransactionEvent extends WalletEvent {
   @override
   List<Object> get props => [transaction];
 }
+
+class LoadWalletDataEvent extends WalletEvent {}

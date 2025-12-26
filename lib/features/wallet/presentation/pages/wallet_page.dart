@@ -1,8 +1,11 @@
+import 'package:eco_wallet/features/wallet/presentation/pages/add_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:eco_wallet/features/wallet/presentation/widgets/transaction_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entities/transaction.dart';
+import '../../../../injection_container.dart' as di;
+import '../bloc/wallet_bloc.dart';
 import '../widgets/balance_card.dart';
 import '../widgets/wallet_action_buttons.dart';
 import '../widgets/wallet_header.dart';
@@ -19,24 +22,47 @@ class WalletPage extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    // TODO: Replace with data from repository/use case
-    final transactions = _getMockTransactions();
+    return BlocProvider(
+      create: (_) => di.sl<WalletBloc>()..add(LoadWalletDataEvent()),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: theme.colorScheme.primaryContainer,
+        ),
+        body: BlocBuilder<WalletBloc, WalletState>(
+          builder: (context, state) {
+            // Loading
+            if (state is WalletLoading) {
+              // TODO: Skeleton loader
+              return const Center(child: CircularProgressIndicator());
+            }
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.colorScheme.primaryContainer,
+            // Error
+            if (state is WalletError) {
+              return Center(
+                  child: Text(
+                state.message,
+                style: theme.textTheme.titleMedium
+                    ?.copyWith(color: theme.colorScheme.error),
+              ));
+            }
+
+            if (state is WalletLoaded) {
+              return Column(
+                children: [
+                  _buildHeaderSection(context, loc, theme, state),
+                  const SizedBox(height: 8),
+                  _buildTransactionsHeader(loc, theme),
+                  const SizedBox(height: 8),
+                  _buildTransactionsList(loc, theme, state),
+                  const SizedBox(height: 8),
+                ],
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+        bottomNavigationBar: _buildBottomNavigation(loc, theme),
       ),
-      body: Column(
-        children: [
-          _buildHeaderSection(context, loc, theme),
-          const SizedBox(height: 8),
-          _buildTransactionsHeader(loc, theme),
-          const SizedBox(height: 8),
-          _buildTransactionsList(loc, theme, transactions),
-          const SizedBox(height: 8),
-        ],
-      ),
-      bottomNavigationBar: _buildBottomNavigation(loc, theme),
     );
   }
 
@@ -45,6 +71,7 @@ class WalletPage extends StatelessWidget {
     BuildContext context,
     AppLocalizations loc,
     ThemeData theme,
+    WalletLoaded state,
   ) {
     return SizedBox(
       height: 350,
@@ -73,17 +100,23 @@ class WalletPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 BalanceCard(
-                  totalBalance: 5250,
-                  monthlySavings: 1200,
+                  totalBalance: state.totalBalance,
+                  monthlySavings: state.monthlySavings,
                   locale: loc.localeName,
                   balanceLabel: loc.dashboardTotalBalance,
                   savingsLabel: loc.dashboardMonthlySavings,
                 ),
                 const SizedBox(height: 8),
                 WalletActionButtons(
-                  incomeLabel: loc.dashboardIncome,
-                  expenseLabel: loc.dashboardExpense,
+                  incomeLabel: loc.lbIncome,
+                  expenseLabel: loc.lbExpense,
                   onIncomePressed: () {
+                    // modal bottom sheet
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => AddTransactionPage(),
+                    );
                     // TODO: Navigate to add income screen
                   },
                   onExpensePressed: () {
@@ -124,7 +157,7 @@ class WalletPage extends StatelessWidget {
   Widget _buildTransactionsList(
     AppLocalizations loc,
     ThemeData theme,
-    List<Transaction> transactions,
+    WalletLoaded state,
   ) {
     return Expanded(
       child: Padding(
@@ -134,7 +167,7 @@ class WalletPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           color: theme.colorScheme.surface,
           clipBehavior: Clip.antiAlias,
-          child: transactions.isEmpty
+          child: state.transactions.isEmpty
               ? Center(
                   child: Text(
                   textAlign: TextAlign.center,
@@ -144,9 +177,11 @@ class WalletPage extends StatelessWidget {
                 ))
               : ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemCount: transactions.length > 5 ? 5 : transactions.length,
+                  itemCount: state.transactions.length > 5
+                      ? 5
+                      : state.transactions.length,
                   itemBuilder: (context, index) {
-                    final transaction = transactions[index];
+                    final transaction = state.transactions[index];
                     return TransactionCard(
                       transaction: transaction,
                       onTap: () {
@@ -174,19 +209,20 @@ class WalletPage extends StatelessWidget {
         // TODO: Handle navigation
       },
       items: [
-        _navigationBarItem(currentIndex, 0, theme, loc, Icons.home_outlined),
         _navigationBarItem(
-            currentIndex, 1, theme, loc, Icons.account_balance_wallet_outlined),
-        _navigationBarItem(
-            currentIndex, 2, theme, loc, Icons.bar_chart_outlined),
-        _navigationBarItem(
-            currentIndex, 3, theme, loc, Icons.settings_outlined),
+            currentIndex, 0, loc.lbHome, Icons.home_outlined, theme, loc),
+        _navigationBarItem(currentIndex, 1, loc.lbWallet,
+            Icons.account_balance_wallet_outlined, theme, loc),
+        _navigationBarItem(currentIndex, 2, loc.lbAnalytics,
+            Icons.bar_chart_outlined, theme, loc),
+        _navigationBarItem(currentIndex, 3, loc.lbSettings,
+            Icons.settings_outlined, theme, loc),
       ],
     );
   }
 
   BottomNavigationBarItem _navigationBarItem(int currentIndex, int index,
-      ThemeData theme, AppLocalizations loc, IconData icon) {
+      String label, IconData icon, ThemeData theme, AppLocalizations loc) {
     return BottomNavigationBarItem(
       icon: Container(
         padding: EdgeInsets.all(4.0),
@@ -203,104 +239,7 @@ class WalletPage extends StatelessWidget {
               : theme.colorScheme.outlineVariant,
         ),
       ),
-      label: loc.btnWallet,
+      label: label,
     );
-  }
-
-  /// Returns mock transactions for development/testing.
-  /// TODO: Remove when integrating with actual data source.
-  List<Transaction> _getMockTransactions() {
-    return [
-      Transaction(
-        id: '1',
-        name: 'Grocery Shopping',
-        amount: 150,
-        cents: 75,
-        date: DateTime.now().subtract(const Duration(days: 1)),
-        type: ETransactionType.expense,
-        category: 'Food',
-      ),
-      Transaction(
-        id: '2',
-        name: 'Salary',
-        amount: 3000,
-        cents: 0,
-        date: DateTime.now().subtract(const Duration(days: 3)),
-        type: ETransactionType.income,
-        category: 'Salary',
-      ),
-      // Transaction(
-      //   id: '3',
-      //   name: 'Movie Night',
-      //   amount: 45,
-      //   cents: 50,
-      //   date: DateTime.now().subtract(const Duration(days: 5)),
-      //   type: ETransactionType.expense,
-      //   category: 'Entertainment',
-      // ),
-      // Transaction(
-      //   id: '4',
-      //   name: 'Electricity Bill',
-      //   amount: 120,
-      //   cents: 20,
-      //   date: DateTime.now().subtract(const Duration(days: 7)),
-      //   type: ETransactionType.expense,
-      //   category: 'Utilities',
-      // ),
-      // Transaction(
-      //   id: '5',
-      //   name: 'Freelance Project',
-      //   amount: 800,
-      //   cents: 0,
-      //   date: DateTime.now().subtract(const Duration(days: 10)),
-      //   type: ETransactionType.income,
-      //   category: 'Work',
-      // ),
-      // Transaction(
-      //   id: '6',
-      //   name: 'Dinner Out',
-      //   amount: 60,
-      //   cents: 30,
-      //   date: DateTime.now().subtract(const Duration(days: 12)),
-      //   type: ETransactionType.expense,
-      //   category: 'Food',
-      // ),
-      // Transaction(
-      //   id: '7',
-      //   name: 'Gas Station',
-      //   amount: 80,
-      //   cents: 0,
-      //   date: DateTime.now().subtract(const Duration(days: 14)),
-      //   type: ETransactionType.expense,
-      //   category: 'Transport',
-      // ),
-      // Transaction(
-      //   id: '8',
-      //   name: 'Netflix Subscription',
-      //   amount: 39,
-      //   cents: 90,
-      //   date: DateTime.now().subtract(const Duration(days: 15)),
-      //   type: ETransactionType.expense,
-      //   category: 'Entertainment',
-      // ),
-      // Transaction(
-      //   id: '9',
-      //   name: 'Bonus',
-      //   amount: 500,
-      //   cents: 0,
-      //   date: DateTime.now().subtract(const Duration(days: 17)),
-      //   type: ETransactionType.income,
-      //   category: 'Salary',
-      // ),
-      // Transaction(
-      //   id: '10',
-      //   name: 'Supermarket',
-      //   amount: 200,
-      //   cents: 50,
-      //   date: DateTime.now().subtract(const Duration(days: 20)),
-      //   type: ETransactionType.expense,
-      //   category: 'Food',
-      // ),
-    ];
   }
 }
