@@ -1,8 +1,10 @@
+import 'package:eco_wallet/features/wallet/presentation/pages/wallet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 // import 'package:eco_wallet/core/theme/app_theme.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'core/theme/app_theme.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -25,9 +27,9 @@ class EcoWalletApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'EcoWallet',
-        // theme: AppTheme.lightTheme,
-        // darkTheme: AppTheme.darkTheme,
-        // themeMode: ThemeMode.system,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -38,8 +40,7 @@ class EcoWalletApp extends StatelessWidget {
           Locale('en'),
           Locale('pt'),
         ],
-        home:
-            const Scaffold(body: Center(child: Text("EcoWallet Initialized"))));
+        home: const WalletPage());
   }
 }
 

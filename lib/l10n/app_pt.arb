@@ -1,20 +1,25 @@
 {
   "@@locale": "pt",
   "welcome": "Bem-vindo",
+  "welcomeBack": "Bem-vindo de volta!",
   "appTitle": "EcoWallet",
-
-  "@_DASHBOARD": {},
   "dashboardTotalBalance": "Saldo Total",
   "dashboardIncome": "Receitas",
   "dashboardExpense": "Despesas",
-
-  "@_ACTIONS": {},
+  "dashboardRecentTransactions": "Transações Recentes",
+  "dashboardMonthlySavings": "Economias Mensais",
+  "dashboardNoTransactions": "Nenhuma transação disponível.",
   "btnSave": "Salvar Transação",
   "btnCancel": "Cancelar",
-
-  "@_ERRORS": {},
+  "btnViewAll": "Ver Todos",
+  "btnHome": "Início",
+  "btnWallet": "Carteira",
+  "btnSettings": "Configurações",
+  "btnAnalytics": "Análises",
+  "btnProfile": "Perfil",
+  "lbUncategorized": "Sem Categoria",
   "errorTitleEmpty": "Por favor, insira um título.",
   "errorAmountInvalid": "Por favor, insira um valor válido.",
   "errorAmountMustBePositive": "O valor deve ser maior que zero.",
-  "errorAmountFormat": "Formato de número inválido. Use apenas dígitos e um separador decimal.",
+  "errorAmountFormat": "Formato de número inválido. Use apenas dígitos e um separador decimal."
 }
