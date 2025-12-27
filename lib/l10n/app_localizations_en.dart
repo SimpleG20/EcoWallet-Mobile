@@ -39,6 +39,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchTransactions => 'Search transactions...';
 
   @override
+  String get filterTransactions => 'Filter Transactions';
+
+  @override
+  String get addFilters => 'Add Filters';
+
+  @override
+  String get btnApply => 'Apply';
+
+  @override
+  String get btnClear => 'Clear';
+
+  @override
   String get btnUndo => 'Undo';
 
   @override
@@ -51,6 +63,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnViewAll => 'View All';
 
   @override
+  String get lbAll => 'All';
+
+  @override
   String get lbName => 'Name';
 
   @override
@@ -61,6 +76,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbFood => 'Food';
+
+  @override
+  String get lbType => 'Type';
 
   @override
   String get lbBills => 'Bills';
@@ -85,6 +103,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbAmount => 'Amount';
+
+  @override
+  String get lbReserve => 'Reserve';
 
   @override
   String get lbProfile => 'Profile';
@@ -115,6 +136,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbAllTransactions => 'All Transactions';
+
+  @override
+  String get lbSelectDateRange => 'Select Date Range';
 
   @override
   String get formNameHint => 'Enter transaction name';

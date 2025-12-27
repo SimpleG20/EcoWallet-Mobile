@@ -1,8 +1,10 @@
+import 'package:eco_wallet/core/constants/ui_data.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constants/transaction_type_data.dart';
 import '/core/utils/app_formatters.dart';
 import '/core/utils/app_validators.dart';
 import '/core/constants/category_data.dart';
@@ -10,18 +12,18 @@ import '/features/wallet/domain/entities/transaction.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 import '../../../../l10n/app_localizations.dart';
 
-class AddTransactionPage extends StatefulWidget {
-  const AddTransactionPage(
+class AddTransactionModal extends StatefulWidget {
+  const AddTransactionModal(
       {super.key, required this.transactionType, this.transactionToEdit});
 
   final ETransactionType transactionType;
   final Transaction? transactionToEdit;
 
   @override
-  State<AddTransactionPage> createState() => _AddTransactionPageState();
+  State<AddTransactionModal> createState() => _AddTransactionModalState();
 }
 
-class _AddTransactionPageState extends State<AddTransactionPage> {
+class _AddTransactionModalState extends State<AddTransactionModal> {
   DateTime _selectedDate = DateTime.now();
   String _selectedTransactionCategory = "";
   late ETransactionType _transactionType;
@@ -69,7 +71,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
 
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.62,
+      height: MediaQuery.of(context).size.height * kModalHeightFactor,
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: const BorderRadius.only(
@@ -81,6 +83,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       child: Column(
         children: [
           _buildHeader(context),
+          const Divider(),
           Expanded(
             child: SingleChildScrollView(
               child: Form(
@@ -133,12 +136,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
-        ),
-        const SizedBox(height: 8),
-        Container(
-          height: 1,
-          width: double.infinity,
-          color: theme.colorScheme.outlineVariant,
         ),
       ],
     );
@@ -447,7 +444,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     );
   }
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     final loc = AppLocalizations.of(context)!;
 
     if (!_formKey.currentState!.validate()) return;
@@ -483,11 +480,20 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
       category: _selectedTransactionCategory,
     );
 
+    final bloc = context.read<WalletBloc>();
+
     if (isEditing) {
-      context.read<WalletBloc>().add(UpdateTransactionEvent(newTransaction));
+      bloc.add(UpdateTransactionEvent(newTransaction));
     } else {
-      context.read<WalletBloc>().add(AddTransactionEvent(newTransaction));
+      bloc.add(AddTransactionEvent(newTransaction));
     }
-    Navigator.of(context).pop();
+
+    await bloc.stream.firstWhere(
+      (state) => state is WalletLoaded || state is WalletError,
+    );
+
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fpdart/fpdart.dart';
 
 import 'package:eco_wallet/core/errors/exceptions.dart';
@@ -11,7 +13,12 @@ import '../models/transaction_model.dart';
 class WalletRepositoryImpl implements BaseWalletRepository {
   final BaseWalletLocalDataSource localDataSource;
 
+  final _changeController = StreamController<void>.broadcast();
+
   WalletRepositoryImpl({required this.localDataSource});
+
+  @override
+  Stream<void> get onTransactionsChanged => _changeController.stream;
 
   @override
   Future<Either<BaseFailure, Transaction>> addTransaction(
@@ -20,7 +27,7 @@ class WalletRepositoryImpl implements BaseWalletRepository {
       final transactionModel = TransactionModel.fromEntity(transaction);
 
       await localDataSource.cacheTransaction(transactionModel);
-
+      _changeController.add(null); // Notify listeners of the change
       return Right(transactionModel);
     } on CacheException {
       return Left(CacheFailure('Failed to add transaction to local storage'));
@@ -34,6 +41,7 @@ class WalletRepositoryImpl implements BaseWalletRepository {
       String transactionId) async {
     try {
       await localDataSource.deleteTransaction(transactionId);
+      _changeController.add(null); // Notify listeners of the change
       return const Right(unit);
     } on CacheException {
       return Left(
@@ -76,6 +84,7 @@ class WalletRepositoryImpl implements BaseWalletRepository {
     try {
       final transactionModel = TransactionModel.fromEntity(transaction);
       await localDataSource.cacheTransaction(transactionModel);
+      _changeController.add(null); // Notify listeners of the change
       return Right(transactionModel);
     } on CacheException {
       return Left(

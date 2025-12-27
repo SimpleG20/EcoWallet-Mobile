@@ -1,3 +1,4 @@
+import '../../../../core/constants/transaction_type_data.dart';
 import '../../domain/entities/transaction.dart';
 import 'package:uuid/uuid.dart';
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'add_transaction_page.dart';
+import '../../../../core/constants/transaction_type_data.dart';
+import '../widgets/add_transaction_modal.dart';
 import '../widgets/balance_card.dart';
 import '../widgets/home_header.dart';
 import '../widgets/transaction_card.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: theme.colorScheme.primaryContainer,
         ),
-        body: BlocBuilder<WalletBloc, WalletState>(
+        body: BlocBuilder<WalletBloc, BaseWalletState>(
           builder: (context, state) {
             // Loading
             if (state is WalletLoading) {
@@ -44,21 +45,30 @@ class HomePage extends StatelessWidget {
             }
 
             if (state is WalletLoaded) {
-              return Column(
-                children: [
-                  _buildHeaderSection(context, loc, theme, state),
-                  const SizedBox(height: 8),
-                  _buildTransactionsHeader(loc, theme),
-                  const SizedBox(height: 8),
-                  _buildTransactionsList(loc, theme, state),
-                  const SizedBox(height: 8),
-                ],
-              );
+              return _buildBody(context, loc, theme, state);
             }
             return const SizedBox.shrink();
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildBody(
+    BuildContext context,
+    AppLocalizations loc,
+    ThemeData theme,
+    WalletLoaded state,
+  ) {
+    return Column(
+      children: [
+        _buildHeaderSection(context, loc, theme, state),
+        const SizedBox(height: 8),
+        _buildTransactionsHeader(context, loc, theme),
+        const SizedBox(height: 8),
+        _buildTransactionsList(context, loc, theme, state),
+        const SizedBox(height: 8),
+      ],
     );
   }
 
@@ -96,9 +106,9 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 BalanceCard(
+                  locale: loc.localeName,
                   totalBalance: state.totalBalance,
                   monthlySavings: state.monthlySavings,
-                  locale: loc.localeName,
                   balanceLabel: loc.dashboardTotalBalance,
                   savingsLabel: loc.dashboardMonthlySavings,
                 ),
@@ -127,7 +137,7 @@ class HomePage extends StatelessWidget {
       isScrollControlled: true,
       builder: (context) => BlocProvider.value(
         value: walletBloc,
-        child: AddTransactionPage(
+        child: AddTransactionModal(
           transactionType: type,
           transactionToEdit: transactionToEdit,
         ),
@@ -136,7 +146,8 @@ class HomePage extends StatelessWidget {
   }
 
   /// Builds the transactions section header with "View All" button.
-  Widget _buildTransactionsHeader(AppLocalizations loc, ThemeData theme) {
+  Widget _buildTransactionsHeader(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -148,6 +159,7 @@ class HomePage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
+              // context.read<RouteBloc>().add(NavigateToAllTransactionsEvent(ERoute.Wallet));
               // TODO: Navigate to all transactions screen
             },
             child: Text(loc.btnViewAll),
@@ -159,6 +171,7 @@ class HomePage extends StatelessWidget {
 
   /// Builds the scrollable transactions list.
   Widget _buildTransactionsList(
+    BuildContext ctx,
     AppLocalizations loc,
     ThemeData theme,
     WalletLoaded state,

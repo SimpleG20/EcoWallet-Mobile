@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'package:eco_wallet/core/utils/app_formatters.dart';
+
 import '../../../wallet/domain/entities/transaction.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../core/utils/app_formatters.dart';
 import '../../../../core/constants/category_data.dart';
 import '../../../../core/constants/transaction_type_data.dart';
 
 class TransactionCard extends StatelessWidget {
-  const TransactionCard(
-      {super.key,
-      required this.transaction,
-      required this.onTap,
-      this.blackAndWhite = false});
+  const TransactionCard({
+    super.key,
+    required this.transaction,
+    required this.onTap,
+  });
 
   final Transaction transaction;
   final VoidCallback onTap;
-  final bool blackAndWhite;
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,10 @@ class TransactionCard extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: isIncome
             ? theme.colorScheme.primary.withAlpha(50)
-            : blackAndWhite
-                ? theme.colorScheme.outlineVariant.withAlpha(80)
-                : theme.colorScheme.error.withAlpha(80),
+            : theme.colorScheme.outlineVariant.withAlpha(80),
         foregroundColor: isIncome
             ? theme.colorScheme.primary
-            : blackAndWhite
-                ? theme.colorScheme.outlineVariant
-                : theme.colorScheme.error,
+            : theme.colorScheme.outlineVariant,
         child: Icon(transaction.type == ETransactionType.income
             ? Icons.trending_up
             : CategoryRepository.getIconByLabel(transaction.category, loc)),

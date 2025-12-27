@@ -1,17 +1,17 @@
 part of 'wallet_bloc.dart';
 
-abstract class WalletState extends Equatable {
-  const WalletState();
+abstract class BaseWalletState extends Equatable {
+  const BaseWalletState();
 
   @override
   List<Object> get props => [];
 }
 
-class WalletInitial extends WalletState {}
+class WalletInitial extends BaseWalletState {}
 
-class WalletLoading extends WalletState {}
+class WalletLoading extends BaseWalletState {}
 
-class WalletLoaded extends WalletState {
+class WalletLoaded extends BaseWalletState {
   final List<Transaction> transactions;
   final double totalBalance;
   final double totalIncome;
@@ -31,7 +31,7 @@ class WalletLoaded extends WalletState {
       [transactions, totalBalance, totalIncome, totalExpense, monthlySavings];
 }
 
-class WalletError extends WalletState {
+class WalletError extends BaseWalletState {
   final String message;
 
   const WalletError(this.message);
@@ -40,7 +40,7 @@ class WalletError extends WalletState {
   List<Object> get props => [message];
 }
 
-class WalletTransactionLoaded extends WalletState {
+class WalletTransactionLoaded extends BaseWalletState {
   final Transaction transaction;
 
   const WalletTransactionLoaded(this.transaction);
@@ -49,7 +49,7 @@ class WalletTransactionLoaded extends WalletState {
   List<Object> get props => [transaction];
 }
 
-class WalletTransactionsLoaded extends WalletState {
+class WalletTransactionsLoaded extends BaseWalletState {
   final List<Transaction> transactions;
 
   const WalletTransactionsLoaded(this.transactions);

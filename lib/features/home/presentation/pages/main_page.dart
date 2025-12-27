@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'home_page.dart';
 import '/l10n/app_localizations.dart';
-import '../../../wallet/presentation/pages/wallet_page.dart';
+import '../../../transactions/presentation/pages/transactions_page.dart';
 
 class AnalyticsPage extends StatelessWidget {
   const AnalyticsPage({super.key});
@@ -28,7 +28,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const WalletPage(),
+    const TransactionWalletPage(),
     const AnalyticsPage(),
     const SettingsPage(),
   ];
@@ -78,7 +78,7 @@ class _MainPageState extends State<MainPage> {
       String label, IconData icon, ThemeData theme, AppLocalizations loc) {
     return BottomNavigationBarItem(
       icon: Container(
-        padding: EdgeInsets.all(4.0),
+        padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: currentIndex == index
               ? theme.colorScheme.primary

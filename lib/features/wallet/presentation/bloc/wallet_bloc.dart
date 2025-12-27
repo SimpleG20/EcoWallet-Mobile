@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/constants/transaction_type_data.dart';
 import '../../domain/entities/transaction.dart';
+import '../../domain/repositories/base_wallet_repository.dart';
 import '../../domain/usecases/add_transaction.dart';
 import '../../domain/usecases/get_transaction.dart';
 import '../../domain/usecases/get_transactions.dart';
@@ -12,12 +16,16 @@ import '../../../../core/usecases/base_usecase.dart';
 part 'wallet_event.dart';
 part 'wallet_state.dart';
 
-class WalletBloc extends Bloc<WalletEvent, WalletState> {
+class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
   final GetTransaction getTransactionById;
   final GetTransactions getTransactions;
   final AddTransaction addTransaction;
   final DeleteTransaction deleteTransaction;
   final UpdateTransaction updateTransaction;
+
+  final BaseWalletRepository repository;
+
+  StreamSubscription? _transactionsSubscription;
 
   WalletBloc({
     required this.getTransactions,
@@ -25,17 +33,28 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     required this.deleteTransaction,
     required this.updateTransaction,
     required this.getTransactionById,
+    required this.repository,
   }) : super(WalletInitial()) {
     on<LoadWalletDataEvent>(_onLoadWalletData);
-    on<GetTransactionsEvent>(_onGetTransactions);
     on<AddTransactionEvent>(_onAddTransaction);
+    on<GetTransactionEvent>(_onGetTransaction);
+    on<GetTransactionsEvent>(_onGetTransactions);
     on<DeleteTransactionEvent>(_onDeleteTransaction);
     on<UpdateTransactionEvent>(_onUpdateTransaction);
-    on<GetTransactionEvent>(_onGetTransaction);
+
+    _transactionsSubscription = repository.onTransactionsChanged.listen((_) {
+      add(LoadWalletDataEvent());
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _transactionsSubscription?.cancel();
+    return super.close();
   }
 
   Future<void> _onLoadWalletData(
-      LoadWalletDataEvent event, Emitter<WalletState> emit) async {
+      LoadWalletDataEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await getTransactions(NoParams());
@@ -57,7 +76,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   }
 
   Future<void> _onGetTransactions(
-      GetTransactionsEvent event, Emitter<WalletState> emit) async {
+      GetTransactionsEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await getTransactions(NoParams());
@@ -111,39 +130,40 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
   }
 
   Future<void> _onAddTransaction(
-      AddTransactionEvent event, Emitter<WalletState> emit) async {
+      AddTransactionEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await addTransaction(event.transaction);
     result.fold(
       (failure) => emit(const WalletError("Erro ao adicionar transação")),
-      (_) => add(LoadWalletDataEvent()),
+      (_) => {},
     );
   }
 
   Future<void> _onDeleteTransaction(
-      DeleteTransactionEvent event, Emitter<WalletState> emit) async {
+      DeleteTransactionEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await deleteTransaction(event.transactionId);
     result.fold(
-        (failure) => emit(const WalletError("Erro ao deletar transação")),
-        (_) => add(LoadWalletDataEvent()));
+      (failure) => emit(const WalletError("Erro ao deletar transação")),
+      (_) => {},
+    );
   }
 
   Future<void> _onUpdateTransaction(
-      UpdateTransactionEvent event, Emitter<WalletState> emit) async {
+      UpdateTransactionEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await updateTransaction(event.transaction);
     result.fold(
       (failure) => emit(const WalletError("Erro ao atualizar transação")),
-      (_) => add(LoadWalletDataEvent()),
+      (_) => {},
     );
   }
 
   Future<void> _onGetTransaction(
-      GetTransactionEvent event, Emitter<WalletState> emit) async {
+      GetTransactionEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await getTransactionById(event.transactionId);

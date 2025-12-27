@@ -1,5 +1,6 @@
-import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/transaction_type_data.dart';
 
 /// Defines the raw palette based on the provided CSS variables.
 /// OKLCH values have been pre-converted to sRGB Color objects for performance.

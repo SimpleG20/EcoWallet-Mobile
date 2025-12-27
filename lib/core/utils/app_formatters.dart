@@ -27,6 +27,9 @@ class AppFormatters {
   static final DateFormat fullDateFormatter = DateFormat.yMMMMd();
 
   static final DateFormat weekdayDateFormatter = DateFormat('EEEE, MMM d');
+
+  static String currencySymbol(String locale) =>
+      NumberFormat.simpleCurrency(locale: locale).currencySymbol;
 }
 
 class CurrencyInputFormatter extends TextInputFormatter {
