@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 /// Action buttons for adding income and expense transactions.
 ///
 /// Displays two styled buttons side by side for quick transaction entry.
-class WalletActionButtons extends StatelessWidget {
-  const WalletActionButtons({
+class HomeActionButtons extends StatelessWidget {
+  const HomeActionButtons({
     super.key,
     required this.incomeLabel,
     required this.expenseLabel,

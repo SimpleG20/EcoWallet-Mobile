@@ -1,287 +1,242 @@
+import 'package:eco_wallet/core/utils/app_formatters.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/transaction_card.dart';
+import 'package:eco_wallet/features/wallet/data/datasources/mock_transactions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/l10n/app_localizations.dart';
-import '/features/wallet/presentation/widgets/transaction_card.dart';
-import '/features/wallet/presentation/pages/add_transaction_page.dart';
-
-import '../bloc/wallet_bloc.dart';
-import '../widgets/balance_card.dart';
-import '../widgets/wallet_header.dart';
-import '../widgets/wallet_action_buttons.dart';
 import '../../domain/entities/transaction.dart';
-import '../../../../injection_container.dart' as di;
+import '/l10n/app_localizations.dart';
 
 /// Main page for the Wallet feature displaying balance, actions, and transactions.
 ///
 /// This page follows Clean Architecture by delegating UI components to
 /// specialized widgets while maintaining the overall layout structure.
-class WalletPage extends StatelessWidget {
+class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
+
+  @override
+  State<WalletPage> createState() => _WalletPageState();
+}
+
+class _WalletPageState extends State<WalletPage> {
+  final List<String> _filters = ["Income", "Expense", "Last 7 days"];
+  bool _showFilters = false;
+  List<String> _activeFilters = [];
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    return BlocProvider(
-      create: (_) => di.sl<WalletBloc>()..add(LoadWalletDataEvent()),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: theme.colorScheme.primaryContainer,
-        ),
-        body: BlocBuilder<WalletBloc, WalletState>(
-          builder: (context, state) {
-            // Loading
-            if (state is WalletLoading) {
-              // TODO: Skeleton loader
-              return const Center(child: CircularProgressIndicator());
-            }
+    final transactions = kMockTransactions;
 
-            // Error
-            if (state is WalletError) {
-              return Center(
-                  child: Text(
-                state.message,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(color: theme.colorScheme.error),
-              ));
-            }
-
-            if (state is WalletLoaded) {
-              return Column(
-                children: [
-                  _buildHeaderSection(context, loc, theme, state),
-                  const SizedBox(height: 8),
-                  _buildTransactionsHeader(loc, theme),
-                  const SizedBox(height: 8),
-                  _buildTransactionsList(loc, theme, state),
-                  const SizedBox(height: 8),
-                ],
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-        bottomNavigationBar: _buildBottomNavigation(loc, theme),
+    return Scaffold(
+      backgroundColor: theme.colorScheme.outline,
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          _buildHeader(context, loc, theme),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 0.0),
+              child: _buildTransactionsList(theme, loc, transactions),
+            ),
+          ),
+        ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {},
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
     );
   }
 
-  /// Builds the header section with balance card and action buttons.
-  Widget _buildHeaderSection(
-    BuildContext context,
-    AppLocalizations loc,
-    ThemeData theme,
-    WalletLoaded state,
-  ) {
-    return SizedBox(
-      height: 350,
-      child: Stack(
+  Widget _buildHeader(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 16.0),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
         children: [
-          // Background decoration
-          Container(
-            height: 300,
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primaryContainer,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(16.0),
-                bottomRight: Radius.circular(16.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                loc.lbAllTransactions,
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
-            ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    _showFilters = !_showFilters;
+                  });
+                },
+                icon: const Icon(Icons.filter_list),
+              )
+            ],
           ),
-          // Content overlay
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                WalletHeader(
-                  welcomeText: loc.welcome,
-                  titleText: loc.appTitle,
-                ),
-                const SizedBox(height: 20),
-                BalanceCard(
-                  totalBalance: state.totalBalance,
-                  monthlySavings: state.monthlySavings,
-                  locale: loc.localeName,
-                  balanceLabel: loc.dashboardTotalBalance,
-                  savingsLabel: loc.dashboardMonthlySavings,
-                ),
-                const SizedBox(height: 8),
-                WalletActionButtons(
-                  incomeLabel: loc.lbIncome,
-                  expenseLabel: loc.lbExpense,
-                  onIncomePressed: () => _showAddTransactionModal(
-                      context, ETransactionType.income),
-                  onExpensePressed: () => _showAddTransactionModal(
-                      context, ETransactionType.expense),
-                ),
-              ],
-            ),
-          ),
+          const SizedBox(height: 8),
+          _buildSearchBar(theme, loc)
         ],
       ),
     );
   }
 
-  void _showAddTransactionModal(BuildContext context, ETransactionType type,
-      {Transaction? transactionToEdit}) {
-    final walletBloc = context.read<WalletBloc>();
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => BlocProvider.value(
-        value: walletBloc,
-        child: AddTransactionPage(
-          transactionType: type,
-          transactionToEdit: transactionToEdit,
-        ),
-      ),
-    );
-  }
-
-  /// Builds the transactions section header with "View All" button.
-  Widget _buildTransactionsHeader(AppLocalizations loc, ThemeData theme) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            loc.dashboardRecentTransactions,
-            style: theme.textTheme.titleMedium,
+  Widget _buildSearchBar(ThemeData theme, AppLocalizations loc) {
+    return Column(
+      children: [
+        TextField(
+          cursorColor: theme.colorScheme.onSurface,
+          decoration: InputDecoration(
+            hintText: loc.searchTransactions,
+            hintStyle: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant.withAlpha(150),
+            ),
+            prefixIcon: const Icon(Icons.search),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide.none,
+            ),
           ),
-          TextButton(
-            onPressed: () {
-              // TODO: Navigate to all transactions screen
-            },
-            child: Text(loc.btnViewAll),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// Builds the scrollable transactions list.
-  Widget _buildTransactionsList(
-    AppLocalizations loc,
-    ThemeData theme,
-    WalletLoaded state,
-  ) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Material(
-          elevation: 4,
-          borderRadius: BorderRadius.circular(12.0),
-          color: theme.colorScheme.surface,
-          clipBehavior: Clip.antiAlias,
-          child: state.transactions.isEmpty
-              ? Center(
-                  child: Text(
-                  textAlign: TextAlign.center,
-                  loc.dashboardNoTransactions,
-                  style: theme.textTheme.titleSmall
-                      ?.copyWith(color: theme.colorScheme.outlineVariant),
-                ))
-              : ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: state.transactions.length > 5
-                      ? 5
-                      : state.transactions.length,
-                  itemBuilder: (context, index) {
-                    final transaction = state.transactions[index];
-                    return Dismissible(
-                      key: Key(transaction.id),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        color: Colors.red,
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const Icon(Icons.delete, color: Colors.white),
-                      ),
-                      onDismissed: (direction) {
-                        final walletBloc = context.read<WalletBloc>();
-
-                        walletBloc.add(DeleteTransactionEvent(transaction.id));
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(loc.msgTransactionDeleted),
-                            action: SnackBarAction(
-                              label: loc.btnUndo,
-                              onPressed: () {
-                                walletBloc
-                                    .add(AddTransactionEvent(transaction));
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                      child: TransactionCard(
-                        transaction: transaction,
-                        onTap: () {
-                          _showAddTransactionModal(
-                            context,
-                            transaction.type,
-                            transactionToEdit: transaction,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
         ),
-      ),
-    );
-  }
-
-  /// Builds the bottom navigation bar.
-  Widget _buildBottomNavigation(AppLocalizations loc, ThemeData theme) {
-    int currentIndex = 0; // TODO: Manage current index state
-
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: theme.colorScheme.surface,
-      selectedItemColor: theme.colorScheme.primary,
-      showUnselectedLabels: true,
-      currentIndex: currentIndex,
-      onTap: (index) {
-        // TODO: Handle navigation
-      },
-      items: [
-        _navigationBarItem(
-            currentIndex, 0, loc.lbHome, Icons.home_outlined, theme, loc),
-        _navigationBarItem(currentIndex, 1, loc.lbWallet,
-            Icons.account_balance_wallet_outlined, theme, loc),
-        _navigationBarItem(currentIndex, 2, loc.lbAnalytics,
-            Icons.bar_chart_outlined, theme, loc),
-        _navigationBarItem(currentIndex, 3, loc.lbSettings,
-            Icons.settings_outlined, theme, loc),
+        if (_showFilters) ...[const SizedBox(height: 8), _buildFilterSection()],
       ],
     );
   }
 
-  BottomNavigationBarItem _navigationBarItem(int currentIndex, int index,
-      String label, IconData icon, ThemeData theme, AppLocalizations loc) {
-    return BottomNavigationBarItem(
-      icon: Container(
-        padding: EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          color: currentIndex == index
-              ? theme.colorScheme.primary
-              : Colors.transparent,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          icon,
-          color: currentIndex == index
-              ? theme.colorScheme.onPrimary
-              : theme.colorScheme.outlineVariant,
-        ),
+  SizedBox _buildFilterSection() {
+    return SizedBox(
+      height: 40,
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          ),
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _filters.length,
+              itemBuilder: (ctx, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Chip(
+                    label: Text(_filters[index]),
+                    onDeleted: () {
+                      setState(() {
+                        _filters.removeAt(index);
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.clear),
+          ),
+        ],
       ),
-      label: label,
     );
   }
+
+  Widget _buildTransactionsList(
+      ThemeData theme, AppLocalizations loc, List<Transaction> transactions) {
+    final groups = _groupTransactionsByDate(transactions);
+    final bottomPadding = 48.0 + MediaQuery.of(context).padding.bottom;
+
+    return ListView.builder(
+      padding: EdgeInsets.only(bottom: bottomPadding),
+      itemCount: groups.length,
+      itemBuilder: (ctx, index) {
+        final group = groups[index];
+        return _buildGroup(group.date, group.transactions);
+      },
+    );
+  }
+
+  List<TransactionGroup> _groupTransactionsByDate(
+      List<Transaction> transactions) {
+    Map<String, List<Transaction>> groupedMap = {};
+
+    for (var transaction in transactions) {
+      String dateKey = AppFormatters.dateOnlyFormatter.format(transaction.date);
+      if (!groupedMap.containsKey(dateKey)) {
+        groupedMap[dateKey] = [];
+      }
+      groupedMap[dateKey]!.add(transaction);
+    }
+
+    List<TransactionGroup> groups = [];
+    groupedMap.forEach((dateStr, txns) {
+      DateTime date = AppFormatters.dateOnlyFormatter.parse(dateStr);
+      groups.add(TransactionGroup(date: date, transactions: txns));
+    });
+
+    groups.sort((a, b) => b.date.compareTo(a.date));
+
+    return groups;
+  }
+
+  Widget _buildGroup(DateTime date, List<Transaction> transactions) {
+    final theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppFormatters.weekdayDateFormatter.format(date),
+          style: theme.textTheme.titleMedium,
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Column(
+            children: [
+              ...transactions.map(
+                (transaction) {
+                  return TransactionCard(
+                      transaction: transaction,
+                      onTap: () {},
+                      blackAndWhite: true);
+                },
+              )
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+}
+
+class TransactionGroup {
+  final DateTime date;
+  final List<Transaction> transactions;
+
+  TransactionGroup({required this.date, required this.transactions});
 }

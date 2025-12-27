@@ -1,11 +1,10 @@
-import 'package:eco_wallet/features/wallet/presentation/pages/wallet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-// import 'package:eco_wallet/core/theme/app_theme.dart';
-import 'package:eco_wallet/l10n/app_localizations.dart';
-import 'core/theme/app_theme.dart';
 import 'injection_container.dart' as di;
+import 'core/theme/app_theme.dart';
+import '/l10n/app_localizations.dart';
+import '/features/home/presentation/pages/main_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +39,7 @@ class EcoWalletApp extends StatelessWidget {
           Locale('en'),
           Locale('pt'),
         ],
-        home: const WalletPage());
+        home: const MainPage());
   }
 }
 

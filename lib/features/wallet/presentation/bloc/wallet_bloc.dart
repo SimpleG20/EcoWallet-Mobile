@@ -2,12 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/transaction.dart';
-import '../../../../core/usecases/base_usecase.dart';
 import '../../domain/usecases/add_transaction.dart';
-import '../../domain/usecases/delete_transaction.dart';
 import '../../domain/usecases/get_transaction.dart';
 import '../../domain/usecases/get_transactions.dart';
 import '../../domain/usecases/update_transaction.dart';
+import '../../domain/usecases/delete_transaction.dart';
+import '../../../../core/usecases/base_usecase.dart';
 
 part 'wallet_event.dart';
 part 'wallet_state.dart';

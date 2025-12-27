@@ -1,13 +1,13 @@
-import 'package:eco_wallet/core/utils/app_formatters.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '/core/utils/app_formatters.dart';
 import '/core/utils/app_validators.dart';
 import '/core/constants/category_data.dart';
 import '/features/wallet/domain/entities/transaction.dart';
-import '../bloc/wallet_bloc.dart';
+import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class AddTransactionPage extends StatefulWidget {
