@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardNoTransactions => 'No transactions available.';
 
   @override
+  String get searchTransactions => 'Search transactions...';
+
+  @override
   String get btnUndo => 'Undo';
 
   @override
@@ -48,12 +51,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnViewAll => 'View All';
 
   @override
-  String get lbAmount => 'Amount';
-
-  @override
-  String get lbCategory => 'Category';
-
-  @override
   String get lbName => 'Name';
 
   @override
@@ -61,6 +58,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbHome => 'Home';
+
+  @override
+  String get lbFood => 'Food';
+
+  @override
+  String get lbBills => 'Bills';
 
   @override
   String get lbWallet => 'Wallet';
@@ -72,6 +75,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbIncome => 'Income';
 
   @override
+  String get lbSalary => 'Salary';
+
+  @override
+  String get lbHealth => 'Health';
+
+  @override
+  String get lbOthers => 'Others';
+
+  @override
+  String get lbAmount => 'Amount';
+
+  @override
   String get lbProfile => 'Profile';
 
   @override
@@ -81,34 +96,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbSettings => 'Settings';
 
   @override
-  String get lbAnalytics => 'Analytics';
+  String get lbShopping => 'Shopping';
 
   @override
-  String get lbUncategorized => 'Uncategorized';
+  String get lbCategory => 'Category';
+
+  @override
+  String get lbAnalytics => 'Analytics';
 
   @override
   String get lbTransport => 'Transport';
 
   @override
-  String get lbFood => 'Food';
-
-  @override
-  String get lbShopping => 'Shopping';
-
-  @override
-  String get lbSalary => 'Salary';
+  String get lbUncategorized => 'Uncategorized';
 
   @override
   String get lbEntertainment => 'Entertainment';
 
   @override
-  String get lbHealth => 'Health';
-
-  @override
-  String get lbBills => 'Bills';
-
-  @override
-  String get lbOthers => 'Others';
+  String get lbAllTransactions => 'All Transactions';
 
   @override
   String get formNameHint => 'Enter transaction name';

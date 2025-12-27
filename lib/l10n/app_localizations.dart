@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'No transactions available.'**
   String get dashboardNoTransactions;
 
+  /// No description provided for @searchTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Search transactions...'**
+  String get searchTransactions;
+
   /// No description provided for @btnUndo.
   ///
   /// In en, this message translates to:
@@ -176,18 +182,6 @@ abstract class AppLocalizations {
   /// **'View All'**
   String get btnViewAll;
 
-  /// No description provided for @lbAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Amount'**
-  String get lbAmount;
-
-  /// No description provided for @lbCategory.
-  ///
-  /// In en, this message translates to:
-  /// **'Category'**
-  String get lbCategory;
-
   /// No description provided for @lbName.
   ///
   /// In en, this message translates to:
@@ -205,6 +199,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get lbHome;
+
+  /// No description provided for @lbFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get lbFood;
+
+  /// No description provided for @lbBills.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get lbBills;
 
   /// No description provided for @lbWallet.
   ///
@@ -224,6 +230,30 @@ abstract class AppLocalizations {
   /// **'Income'**
   String get lbIncome;
 
+  /// No description provided for @lbSalary.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get lbSalary;
+
+  /// No description provided for @lbHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get lbHealth;
+
+  /// No description provided for @lbOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Others'**
+  String get lbOthers;
+
+  /// No description provided for @lbAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get lbAmount;
+
   /// No description provided for @lbProfile.
   ///
   /// In en, this message translates to:
@@ -242,17 +272,23 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get lbSettings;
 
+  /// No description provided for @lbShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get lbShopping;
+
+  /// No description provided for @lbCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get lbCategory;
+
   /// No description provided for @lbAnalytics.
   ///
   /// In en, this message translates to:
   /// **'Analytics'**
   String get lbAnalytics;
-
-  /// No description provided for @lbUncategorized.
-  ///
-  /// In en, this message translates to:
-  /// **'Uncategorized'**
-  String get lbUncategorized;
 
   /// No description provided for @lbTransport.
   ///
@@ -260,23 +296,11 @@ abstract class AppLocalizations {
   /// **'Transport'**
   String get lbTransport;
 
-  /// No description provided for @lbFood.
+  /// No description provided for @lbUncategorized.
   ///
   /// In en, this message translates to:
-  /// **'Food'**
-  String get lbFood;
-
-  /// No description provided for @lbShopping.
-  ///
-  /// In en, this message translates to:
-  /// **'Shopping'**
-  String get lbShopping;
-
-  /// No description provided for @lbSalary.
-  ///
-  /// In en, this message translates to:
-  /// **'Salary'**
-  String get lbSalary;
+  /// **'Uncategorized'**
+  String get lbUncategorized;
 
   /// No description provided for @lbEntertainment.
   ///
@@ -284,23 +308,11 @@ abstract class AppLocalizations {
   /// **'Entertainment'**
   String get lbEntertainment;
 
-  /// No description provided for @lbHealth.
+  /// No description provided for @lbAllTransactions.
   ///
   /// In en, this message translates to:
-  /// **'Health'**
-  String get lbHealth;
-
-  /// No description provided for @lbBills.
-  ///
-  /// In en, this message translates to:
-  /// **'Bills'**
-  String get lbBills;
-
-  /// No description provided for @lbOthers.
-  ///
-  /// In en, this message translates to:
-  /// **'Others'**
-  String get lbOthers;
+  /// **'All Transactions'**
+  String get lbAllTransactions;
 
   /// No description provided for @formNameHint.
   ///
