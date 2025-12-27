@@ -3,7 +3,7 @@ import 'package:eco_wallet/l10n/app_localizations.dart';
 
 /// Enum representing all available transaction categories.
 /// This provides type-safety and avoids magic strings throughout the codebase.
-enum TransactionCategory {
+enum ETransactionCategory {
   food,
   transport,
   bills,
@@ -32,36 +32,36 @@ class CategoryDisplayInfo {
 /// This is the single source of truth for categories in the app.
 abstract class CategoryRepository {
   /// Map of all categories with their display information.
-  static const Map<TransactionCategory, CategoryDisplayInfo> _categories = {
-    TransactionCategory.food: CategoryDisplayInfo(
+  static const Map<ETransactionCategory, CategoryDisplayInfo> _categories = {
+    ETransactionCategory.food: CategoryDisplayInfo(
       icon: Icons.fastfood_outlined,
       labelBuilder: _getLabelFood,
     ),
-    TransactionCategory.transport: CategoryDisplayInfo(
+    ETransactionCategory.transport: CategoryDisplayInfo(
       icon: Icons.directions_car_outlined,
       labelBuilder: _getLabelTransport,
     ),
-    TransactionCategory.bills: CategoryDisplayInfo(
+    ETransactionCategory.bills: CategoryDisplayInfo(
       icon: Icons.home_work_outlined,
       labelBuilder: _getLabelBills,
     ),
-    TransactionCategory.health: CategoryDisplayInfo(
+    ETransactionCategory.health: CategoryDisplayInfo(
       icon: Icons.health_and_safety_outlined,
       labelBuilder: _getLabelHealth,
     ),
-    TransactionCategory.shopping: CategoryDisplayInfo(
+    ETransactionCategory.shopping: CategoryDisplayInfo(
       icon: Icons.shopping_cart_outlined,
       labelBuilder: _getLabelShopping,
     ),
-    TransactionCategory.entertainment: CategoryDisplayInfo(
+    ETransactionCategory.entertainment: CategoryDisplayInfo(
       icon: Icons.movie_outlined,
       labelBuilder: _getLabelEntertainment,
     ),
-    TransactionCategory.salary: CategoryDisplayInfo(
+    ETransactionCategory.salary: CategoryDisplayInfo(
       icon: Icons.money_outlined,
       labelBuilder: _getLabelSalary,
     ),
-    TransactionCategory.others: CategoryDisplayInfo(
+    ETransactionCategory.others: CategoryDisplayInfo(
       icon: Icons.miscellaneous_services_outlined,
       labelBuilder: _getLabelOthers,
     ),
@@ -79,37 +79,37 @@ abstract class CategoryRepository {
   static String _getLabelOthers(AppLocalizations loc) => loc.lbOthers;
 
   /// Returns all available categories.
-  static List<TransactionCategory> get allCategories =>
-      TransactionCategory.values;
+  static List<ETransactionCategory> get allCategories =>
+      ETransactionCategory.values;
 
   /// Returns the number of available categories.
-  static int get categoryCount => TransactionCategory.values.length;
+  static int get categoryCount => ETransactionCategory.values.length;
 
   /// Gets the display info for a category.
-  static CategoryDisplayInfo getDisplayInfo(TransactionCategory category) {
+  static CategoryDisplayInfo getDisplayInfo(ETransactionCategory category) {
     return _categories[category]!;
   }
 
   /// Gets the icon for a category.
-  static IconData getIcon(TransactionCategory category) {
+  static IconData getIcon(ETransactionCategory category) {
     return _categories[category]!.icon;
   }
 
   /// Gets the localized label for a category.
-  static String getLabel(TransactionCategory category, AppLocalizations loc) {
+  static String getLabel(ETransactionCategory category, AppLocalizations loc) {
     return _categories[category]!.getLabel(loc);
   }
 
   /// Gets a category by its index in the enum.
-  static TransactionCategory getCategoryByIndex(int index) {
-    return TransactionCategory.values[index];
+  static ETransactionCategory getCategoryByIndex(int index) {
+    return ETransactionCategory.values[index];
   }
 
   /// Tries to find a category by its localized label.
   /// Returns null if no match is found.
-  static TransactionCategory? getCategoryByLabel(
+  static ETransactionCategory? getCategoryByLabel(
       String label, AppLocalizations loc) {
-    for (final category in TransactionCategory.values) {
+    for (final category in ETransactionCategory.values) {
       if (getLabel(category, loc) == label) {
         return category;
       }
@@ -129,6 +129,6 @@ abstract class CategoryRepository {
 
   /// Checks if the given label corresponds to the "Others" category.
   static bool isOthersCategory(String label, AppLocalizations loc) {
-    return label == getLabel(TransactionCategory.others, loc);
+    return label == getLabel(ETransactionCategory.others, loc);
   }
 }

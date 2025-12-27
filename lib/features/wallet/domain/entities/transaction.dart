@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum ETransactionType { income, expense, reserve }
+import '../../../../core/constants/transaction_type_data.dart';
 
 class Transaction extends Equatable {
   final String id;

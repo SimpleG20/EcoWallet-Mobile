@@ -24,4 +24,6 @@ abstract class BaseWalletRepository {
       Transaction transaction);
 
   Future<Either<BaseFailure, Unit>> deleteTransaction(String transactionId);
+
+  Stream<void> get onTransactionsChanged;
 }

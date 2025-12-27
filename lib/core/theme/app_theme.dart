@@ -58,6 +58,17 @@ class AppTheme {
             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
 
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.lightPrimary,
+          foregroundColor: AppColors.lightPrimaryForeground,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_radius),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+        ),
+      ),
+
       // Card Theme
       cardTheme: CardThemeData(
         color: AppColors.lightCard,

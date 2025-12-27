@@ -158,6 +158,30 @@ abstract class AppLocalizations {
   /// **'Search transactions...'**
   String get searchTransactions;
 
+  /// No description provided for @filterTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Transactions'**
+  String get filterTransactions;
+
+  /// No description provided for @addFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Filters'**
+  String get addFilters;
+
+  /// No description provided for @btnApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get btnApply;
+
+  /// No description provided for @btnClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get btnClear;
+
   /// No description provided for @btnUndo.
   ///
   /// In en, this message translates to:
@@ -182,6 +206,12 @@ abstract class AppLocalizations {
   /// **'View All'**
   String get btnViewAll;
 
+  /// No description provided for @lbAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get lbAll;
+
   /// No description provided for @lbName.
   ///
   /// In en, this message translates to:
@@ -205,6 +235,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Food'**
   String get lbFood;
+
+  /// No description provided for @lbType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get lbType;
 
   /// No description provided for @lbBills.
   ///
@@ -253,6 +289,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount'**
   String get lbAmount;
+
+  /// No description provided for @lbReserve.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve'**
+  String get lbReserve;
 
   /// No description provided for @lbProfile.
   ///
@@ -313,6 +355,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All Transactions'**
   String get lbAllTransactions;
+
+  /// No description provided for @lbSelectDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date Range'**
+  String get lbSelectDateRange;
 
   /// No description provided for @formNameHint.
   ///

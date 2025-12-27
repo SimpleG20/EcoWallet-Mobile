@@ -1,5 +1,7 @@
 import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
+import '../../../../core/constants/transaction_type_data.dart';
+
 class TransactionModel extends Transaction {
   const TransactionModel(
       {required super.id,
