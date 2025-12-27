@@ -115,9 +115,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await addTransaction(event.transaction);
-    await result.fold(
-      (failure) async => emit(const WalletError("Erro ao adicionar transação")),
-      (unit) async => await _refreshTransactions(emit),
+    result.fold(
+      (failure) => emit(const WalletError("Erro ao adicionar transação")),
+      (_) => add(LoadWalletDataEvent()),
     );
   }
 
@@ -126,10 +126,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await deleteTransaction(event.transactionId);
-    await result.fold(
-      (failure) async => emit(const WalletError("Erro ao deletar transação")),
-      (unit) async => await _refreshTransactions(emit),
-    );
+    result.fold(
+        (failure) => emit(const WalletError("Erro ao deletar transação")),
+        (_) => add(LoadWalletDataEvent()));
   }
 
   Future<void> _onUpdateTransaction(
@@ -137,25 +136,9 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     emit(WalletLoading());
 
     final result = await updateTransaction(event.transaction);
-    await result.fold(
-      (failure) async => emit(const WalletError("Erro ao atualizar transação")),
-      (unit) async => await _refreshTransactions(emit),
-    );
-  }
-
-  Future<void> _refreshTransactions(Emitter<WalletState> emit) async {
-    final transactionsResult = await getTransactions(NoParams());
-    transactionsResult.fold(
-      (failure) => emit(const WalletError("Erro ao carregar dados")),
-      (transactions) => emit(
-        WalletLoaded(
-          transactions: transactions,
-          totalBalance: _calculateTotalBalance(transactions),
-          totalIncome: _calculateTotalIncome(transactions),
-          totalExpense: _calculateTotalExpense(transactions),
-          monthlySavings: _calculateMonthlySavings(transactions),
-        ),
-      ),
+    result.fold(
+      (failure) => emit(const WalletError("Erro ao atualizar transação")),
+      (_) => add(LoadWalletDataEvent()),
     );
   }
 

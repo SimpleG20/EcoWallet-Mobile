@@ -75,6 +75,8 @@ class AppTheme {
             TextStyle(fontSize: 22, fontWeight: _fontMedium, height: 1.5), // h4
         titleMedium:
             TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h5
+        titleSmall:
+            TextStyle(fontSize: 16, fontWeight: _fontMedium, height: 1.5), // h6
         displayLarge:
             TextStyle(fontSize: 24, fontWeight: _fontMedium, height: 1.5), // h1
         displayMedium:

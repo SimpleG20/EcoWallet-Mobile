@@ -1,0 +1,134 @@
+import 'package:flutter/material.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+
+/// Enum representing all available transaction categories.
+/// This provides type-safety and avoids magic strings throughout the codebase.
+enum TransactionCategory {
+  food,
+  transport,
+  bills,
+  health,
+  shopping,
+  entertainment,
+  salary,
+  others,
+}
+
+/// Model class containing the display information for a category.
+class CategoryDisplayInfo {
+  final IconData icon;
+  final String Function(AppLocalizations loc) labelBuilder;
+
+  const CategoryDisplayInfo({
+    required this.icon,
+    required this.labelBuilder,
+  });
+
+  /// Gets the localized label for this category.
+  String getLabel(AppLocalizations loc) => labelBuilder(loc);
+}
+
+/// Centralized repository for all category-related data.
+/// This is the single source of truth for categories in the app.
+abstract class CategoryRepository {
+  /// Map of all categories with their display information.
+  static const Map<TransactionCategory, CategoryDisplayInfo> _categories = {
+    TransactionCategory.food: CategoryDisplayInfo(
+      icon: Icons.fastfood_outlined,
+      labelBuilder: _getLabelFood,
+    ),
+    TransactionCategory.transport: CategoryDisplayInfo(
+      icon: Icons.directions_car_outlined,
+      labelBuilder: _getLabelTransport,
+    ),
+    TransactionCategory.bills: CategoryDisplayInfo(
+      icon: Icons.home_work_outlined,
+      labelBuilder: _getLabelBills,
+    ),
+    TransactionCategory.health: CategoryDisplayInfo(
+      icon: Icons.health_and_safety_outlined,
+      labelBuilder: _getLabelHealth,
+    ),
+    TransactionCategory.shopping: CategoryDisplayInfo(
+      icon: Icons.shopping_cart_outlined,
+      labelBuilder: _getLabelShopping,
+    ),
+    TransactionCategory.entertainment: CategoryDisplayInfo(
+      icon: Icons.movie_outlined,
+      labelBuilder: _getLabelEntertainment,
+    ),
+    TransactionCategory.salary: CategoryDisplayInfo(
+      icon: Icons.money_outlined,
+      labelBuilder: _getLabelSalary,
+    ),
+    TransactionCategory.others: CategoryDisplayInfo(
+      icon: Icons.miscellaneous_services_outlined,
+      labelBuilder: _getLabelOthers,
+    ),
+  };
+
+  // Label builder functions (required for const Map).
+  static String _getLabelFood(AppLocalizations loc) => loc.lbFood;
+  static String _getLabelTransport(AppLocalizations loc) => loc.lbTransport;
+  static String _getLabelBills(AppLocalizations loc) => loc.lbBills;
+  static String _getLabelHealth(AppLocalizations loc) => loc.lbHealth;
+  static String _getLabelShopping(AppLocalizations loc) => loc.lbShopping;
+  static String _getLabelEntertainment(AppLocalizations loc) =>
+      loc.lbEntertainment;
+  static String _getLabelSalary(AppLocalizations loc) => loc.lbSalary;
+  static String _getLabelOthers(AppLocalizations loc) => loc.lbOthers;
+
+  /// Returns all available categories.
+  static List<TransactionCategory> get allCategories =>
+      TransactionCategory.values;
+
+  /// Returns the number of available categories.
+  static int get categoryCount => TransactionCategory.values.length;
+
+  /// Gets the display info for a category.
+  static CategoryDisplayInfo getDisplayInfo(TransactionCategory category) {
+    return _categories[category]!;
+  }
+
+  /// Gets the icon for a category.
+  static IconData getIcon(TransactionCategory category) {
+    return _categories[category]!.icon;
+  }
+
+  /// Gets the localized label for a category.
+  static String getLabel(TransactionCategory category, AppLocalizations loc) {
+    return _categories[category]!.getLabel(loc);
+  }
+
+  /// Gets a category by its index in the enum.
+  static TransactionCategory getCategoryByIndex(int index) {
+    return TransactionCategory.values[index];
+  }
+
+  /// Tries to find a category by its localized label.
+  /// Returns null if no match is found.
+  static TransactionCategory? getCategoryByLabel(
+      String label, AppLocalizations loc) {
+    for (final category in TransactionCategory.values) {
+      if (getLabel(category, loc) == label) {
+        return category;
+      }
+    }
+    return null;
+  }
+
+  /// Gets the icon for a category label string.
+  /// Falls back to a default icon if the category is not found.
+  static IconData getIconByLabel(String label, AppLocalizations loc) {
+    final category = getCategoryByLabel(label, loc);
+    if (category != null) {
+      return getIcon(category);
+    }
+    return Icons.category;
+  }
+
+  /// Checks if the given label corresponds to the "Others" category.
+  static bool isOthersCategory(String label, AppLocalizations loc) {
+    return label == getLabel(TransactionCategory.others, loc);
+  }
+}

@@ -116,23 +116,23 @@ abstract class AppLocalizations {
   /// **'Welcome Back!'**
   String get welcomeBack;
 
+  /// No description provided for @addTransaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Transaction'**
+  String get addTransaction;
+
+  /// No description provided for @editTransaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Transaction'**
+  String get editTransaction;
+
   /// No description provided for @dashboardTotalBalance.
   ///
   /// In en, this message translates to:
   /// **'Total Balance'**
   String get dashboardTotalBalance;
-
-  /// No description provided for @dashboardIncome.
-  ///
-  /// In en, this message translates to:
-  /// **'Income'**
-  String get dashboardIncome;
-
-  /// No description provided for @dashboardExpense.
-  ///
-  /// In en, this message translates to:
-  /// **'Expense'**
-  String get dashboardExpense;
 
   /// No description provided for @dashboardRecentTransactions.
   ///
@@ -152,17 +152,23 @@ abstract class AppLocalizations {
   /// **'No transactions available.'**
   String get dashboardNoTransactions;
 
+  /// No description provided for @btnUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get btnUndo;
+
+  /// No description provided for @btnRedo.
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get btnRedo;
+
   /// No description provided for @btnSave.
   ///
   /// In en, this message translates to:
   /// **'Save Transaction'**
   String get btnSave;
-
-  /// No description provided for @btnCancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get btnCancel;
 
   /// No description provided for @btnViewAll.
   ///
@@ -170,41 +176,179 @@ abstract class AppLocalizations {
   /// **'View All'**
   String get btnViewAll;
 
-  /// No description provided for @btnHome.
+  /// No description provided for @lbAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get lbAmount;
+
+  /// No description provided for @lbCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get lbCategory;
+
+  /// No description provided for @lbName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get lbName;
+
+  /// No description provided for @lbDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get lbDate;
+
+  /// No description provided for @lbHome.
   ///
   /// In en, this message translates to:
   /// **'Home'**
-  String get btnHome;
+  String get lbHome;
 
-  /// No description provided for @btnWallet.
+  /// No description provided for @lbWallet.
   ///
   /// In en, this message translates to:
   /// **'Wallet'**
-  String get btnWallet;
+  String get lbWallet;
 
-  /// No description provided for @btnSettings.
+  /// No description provided for @lbCancel.
   ///
   /// In en, this message translates to:
-  /// **'Settings'**
-  String get btnSettings;
+  /// **'Cancel'**
+  String get lbCancel;
 
-  /// No description provided for @btnAnalytics.
+  /// No description provided for @lbIncome.
   ///
   /// In en, this message translates to:
-  /// **'Analytics'**
-  String get btnAnalytics;
+  /// **'Income'**
+  String get lbIncome;
 
-  /// No description provided for @btnProfile.
+  /// No description provided for @lbProfile.
   ///
   /// In en, this message translates to:
   /// **'Profile'**
-  String get btnProfile;
+  String get lbProfile;
+
+  /// No description provided for @lbExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get lbExpense;
+
+  /// No description provided for @lbSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get lbSettings;
+
+  /// No description provided for @lbAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get lbAnalytics;
 
   /// No description provided for @lbUncategorized.
   ///
   /// In en, this message translates to:
   /// **'Uncategorized'**
   String get lbUncategorized;
+
+  /// No description provided for @lbTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get lbTransport;
+
+  /// No description provided for @lbFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get lbFood;
+
+  /// No description provided for @lbShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get lbShopping;
+
+  /// No description provided for @lbSalary.
+  ///
+  /// In en, this message translates to:
+  /// **'Salary'**
+  String get lbSalary;
+
+  /// No description provided for @lbEntertainment.
+  ///
+  /// In en, this message translates to:
+  /// **'Entertainment'**
+  String get lbEntertainment;
+
+  /// No description provided for @lbHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get lbHealth;
+
+  /// No description provided for @lbBills.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get lbBills;
+
+  /// No description provided for @lbOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Others'**
+  String get lbOthers;
+
+  /// No description provided for @formNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter transaction name'**
+  String get formNameHint;
+
+  /// No description provided for @formCategoryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write the category'**
+  String get formCategoryHint;
+
+  /// No description provided for @msgTransactionAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction added successfully.'**
+  String get msgTransactionAdded;
+
+  /// No description provided for @msgTransactionUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction updated successfully.'**
+  String get msgTransactionUpdated;
+
+  /// No description provided for @msgTransactionDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction deleted successfully.'**
+  String get msgTransactionDeleted;
+
+  /// No description provided for @errorAmountEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an amount.'**
+  String get errorAmountEmpty;
+
+  /// No description provided for @errorCategoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a category.'**
+  String get errorCategoryEmpty;
+
+  /// No description provided for @errorDateEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a date.'**
+  String get errorDateEmpty;
 
   /// No description provided for @errorTitleEmpty.
   ///

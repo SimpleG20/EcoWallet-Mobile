@@ -18,13 +18,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get welcomeBack => 'Bem-vindo de volta!';
 
   @override
+  String get addTransaction => 'Adicionar Transação';
+
+  @override
+  String get editTransaction => 'Editar Transação';
+
+  @override
   String get dashboardTotalBalance => 'Saldo Total';
-
-  @override
-  String get dashboardIncome => 'Receitas';
-
-  @override
-  String get dashboardExpense => 'Despesas';
 
   @override
   String get dashboardRecentTransactions => 'Transações Recentes';
@@ -36,31 +36,103 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dashboardNoTransactions => 'Nenhuma transação disponível.';
 
   @override
-  String get btnSave => 'Salvar Transação';
+  String get btnUndo => 'Desfazer';
 
   @override
-  String get btnCancel => 'Cancelar';
+  String get btnRedo => 'Refazer';
+
+  @override
+  String get btnSave => 'Salvar';
 
   @override
   String get btnViewAll => 'Ver Todos';
 
   @override
-  String get btnHome => 'Início';
+  String get lbAmount => 'Valor';
 
   @override
-  String get btnWallet => 'Carteira';
+  String get lbCategory => 'Categoria';
 
   @override
-  String get btnSettings => 'Configurações';
+  String get lbName => 'Nome';
 
   @override
-  String get btnAnalytics => 'Análises';
+  String get lbDate => 'Data';
 
   @override
-  String get btnProfile => 'Perfil';
+  String get lbHome => 'Início';
+
+  @override
+  String get lbWallet => 'Carteira';
+
+  @override
+  String get lbCancel => 'Cancelar';
+
+  @override
+  String get lbIncome => 'Receitas';
+
+  @override
+  String get lbProfile => 'Perfil';
+
+  @override
+  String get lbExpense => 'Despesas';
+
+  @override
+  String get lbSettings => 'Configurações';
+
+  @override
+  String get lbAnalytics => 'Análises';
 
   @override
   String get lbUncategorized => 'Sem Categoria';
+
+  @override
+  String get lbTransport => 'Transporte';
+
+  @override
+  String get lbFood => 'Alimentação';
+
+  @override
+  String get lbShopping => 'Compras';
+
+  @override
+  String get lbSalary => 'Salário';
+
+  @override
+  String get lbEntertainment => 'Entretenimento';
+
+  @override
+  String get lbHealth => 'Saúde';
+
+  @override
+  String get lbBills => 'Contas';
+
+  @override
+  String get lbOthers => 'Outros';
+
+  @override
+  String get formNameHint => 'Insira o nome da transação';
+
+  @override
+  String get formCategoryHint => 'Escreva a categoria';
+
+  @override
+  String get msgTransactionAdded => 'Transação adicionada com sucesso.';
+
+  @override
+  String get msgTransactionUpdated => 'Transação atualizada com sucesso.';
+
+  @override
+  String get msgTransactionDeleted => 'Transação removida com sucesso.';
+
+  @override
+  String get errorAmountEmpty => 'Por favor, insira um valor.';
+
+  @override
+  String get errorCategoryEmpty => 'Por favor, selecione uma categoria.';
+
+  @override
+  String get errorDateEmpty => 'Por favor, selecione uma data.';
 
   @override
   String get errorTitleEmpty => 'Por favor, insira um título.';
