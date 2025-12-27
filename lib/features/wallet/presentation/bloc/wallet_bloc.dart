@@ -127,7 +127,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     final result = await deleteTransaction(event.transactionId);
     result.fold(
-        (failure) async => emit(const WalletError("Erro ao deletar transação")),
+        (failure) => emit(const WalletError("Erro ao deletar transação")),
         (_) => add(LoadWalletDataEvent()));
   }
 
@@ -137,7 +137,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
 
     final result = await updateTransaction(event.transaction);
     result.fold(
-      (failure) async => emit(const WalletError("Erro ao atualizar transação")),
+      (failure) => emit(const WalletError("Erro ao atualizar transação")),
       (_) => add(LoadWalletDataEvent()),
     );
   }
