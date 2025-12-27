@@ -7,10 +7,14 @@ import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard(
-      {super.key, required this.transaction, required this.onTap});
+      {super.key,
+      required this.transaction,
+      required this.onTap,
+      this.blackAndWhite = false});
 
   final Transaction transaction;
   final VoidCallback onTap;
+  final bool blackAndWhite;
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +28,25 @@ class TransactionCard extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: isIncome
             ? theme.colorScheme.primary.withAlpha(50)
-            : theme.colorScheme.error.withAlpha(80),
-        foregroundColor:
-            isIncome ? theme.colorScheme.primary : theme.colorScheme.error,
+            : blackAndWhite
+                ? theme.colorScheme.outlineVariant.withAlpha(80)
+                : theme.colorScheme.error.withAlpha(80),
+        foregroundColor: isIncome
+            ? theme.colorScheme.primary
+            : blackAndWhite
+                ? theme.colorScheme.outlineVariant
+                : theme.colorScheme.error,
         child: Icon(transaction.type == ETransactionType.income
             ? Icons.trending_up
             : CategoryRepository.getIconByLabel(transaction.category, loc)),
       ),
       title: Text(transaction.name),
-      subtitle: Text(transaction.category.isNotEmpty
-          ? transaction.category
-          : loc.lbUncategorized),
+      subtitle: Text(
+          transaction.category.isNotEmpty
+              ? transaction.category
+              : loc.lbUncategorized,
+          style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant.withAlpha(150))),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,

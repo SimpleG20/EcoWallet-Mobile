@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 /// Header widget displaying welcome message and title.
-/// 
+///
 /// Used in the wallet page to greet the user.
-class WalletHeader extends StatelessWidget {
-  const WalletHeader({
+class HomeHeader extends StatelessWidget {
+  const HomeHeader({
     super.key,
     required this.welcomeText,
     required this.titleText,
@@ -16,7 +16,7 @@ class WalletHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

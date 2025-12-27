@@ -22,6 +22,11 @@ class AppFormatters {
     cleaned = cleaned.replaceAll(format.symbols.DECIMAL_SEP, '.');
     return double.tryParse(cleaned) ?? 0.0;
   }
+
+  static final DateFormat dateOnlyFormatter = DateFormat('yyyy-MM-dd');
+  static final DateFormat fullDateFormatter = DateFormat.yMMMMd();
+
+  static final DateFormat weekdayDateFormatter = DateFormat('EEEE, MMM d');
 }
 
 class CurrencyInputFormatter extends TextInputFormatter {
