@@ -1,8 +1,18 @@
-import 'package:eco_wallet/features/settings/presentation/pages/personal_page.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_option_item.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_container.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/settings_container.dart';
+import '../widgets/settings_option_item.dart';
+import 'help_page.dart';
+import 'terms_page.dart';
+import 'policy_page.dart';
+import 'feedback_page.dart';
+import 'personal_page.dart';
+import 'apperance_page.dart';
+import 'budget_info_page.dart';
+import 'manage_data_page.dart';
+import 'notifications_page.dart';
+import 'password_change_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -167,13 +177,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.analytics_outlined,
           title: loc.lbBudgetInfo,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, BudgetInfoPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.data_object_outlined,
           title: loc.lbManageData,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, ManageDataPage()),
         ),
       ],
     );
@@ -186,13 +196,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.notifications,
           title: loc.lbNotifications,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, NotificationsPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.color_lens,
           title: loc.lbAppearance,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, ApperancePage()),
         ),
       ],
     );
@@ -205,7 +215,7 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.lock_outline,
           title: loc.lbChangePassword,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, PasswordChangePage()),
         ),
       ],
     );
@@ -218,13 +228,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.help_outline,
           title: loc.lbHelpCenter,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, HelpPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.feedback_outlined,
           title: loc.lbSendFeedback,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, FeedbackPage()),
         ),
       ],
     );
@@ -237,13 +247,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.description_outlined,
           title: loc.lbTermsOfService,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, TermsPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.privacy_tip_outlined,
           title: loc.lbPrivacyPolicy,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, PolicyPage()),
         ),
       ],
     );
@@ -264,11 +274,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildDeleteAccountBtn(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return ElevatedButton(
-      child: Text(loc.deleteAccount),
       style: ElevatedButton.styleFrom(
         backgroundColor: theme.colorScheme.errorContainer,
         foregroundColor: theme.colorScheme.onErrorContainer,
       ),
+      child: Text(loc.deleteAccount),
       onPressed: () {
         // Add your delete account logic here
       },
