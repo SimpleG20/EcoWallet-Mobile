@@ -127,7 +127,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildSettingsOptions(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -165,26 +165,14 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
-          icon: Icons.notifications,
+          icon: Icons.analytics_outlined,
           title: loc.lbBudgetInfo,
           onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
-          icon: Icons.data_saver_on_outlined,
-          title: loc.lbExportData,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
-        ),
-        const SizedBox(height: 8),
-        SettingsOptionItem(
-          icon: Icons.backup_outlined,
-          title: loc.lbBackupData,
-          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
-        ),
-        const SizedBox(height: 8),
-        SettingsOptionItem(
-          icon: Icons.delete_outline,
-          title: loc.lbDeleteData,
+          icon: Icons.data_object_outlined,
+          title: loc.lbManageData,
           onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
       ],

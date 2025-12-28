@@ -182,6 +182,54 @@ abstract class AppLocalizations {
   /// **'Manage your notification preferences'**
   String get notificationsSubTitle;
 
+  /// No description provided for @appearanceSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize the look and feel of the app'**
+  String get appearanceSubTitle;
+
+  /// No description provided for @passwordSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change your account password'**
+  String get passwordSubTitle;
+
+  /// No description provided for @helpSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get help and support'**
+  String get helpSubTitle;
+
+  /// No description provided for @privacySubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review our privacy policies'**
+  String get privacySubTitle;
+
+  /// No description provided for @feedbackSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send us your feedback'**
+  String get feedbackSubTitle;
+
+  /// No description provided for @termsSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Read our terms of service'**
+  String get termsSubTitle;
+
+  /// No description provided for @policySubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Understand our privacy policy'**
+  String get policySubTitle;
+
+  /// No description provided for @manageDataSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your data preferences'**
+  String get manageDataSubTitle;
+
   /// No description provided for @searchTransactions.
   ///
   /// In en, this message translates to:
@@ -457,6 +505,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Preferences'**
   String get lbPreferences;
+
+  /// No description provided for @lbManageData.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Data'**
+  String get lbManageData;
 
   /// No description provided for @lbAboutLegal.
   ///

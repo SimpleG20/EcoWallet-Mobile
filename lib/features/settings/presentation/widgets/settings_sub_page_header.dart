@@ -5,14 +5,14 @@ import '../../../../l10n/app_localizations.dart';
 class SettingsSubPageHeader extends StatelessWidget {
   final String title;
   final String subtitle;
-  final Widget Function(ThemeData, AppLocalizations) complement;
+  final Widget Function(ThemeData, AppLocalizations)? complement;
   final double height;
 
   const SettingsSubPageHeader({
     super.key,
     required this.title,
     required this.subtitle,
-    required this.complement,
+    this.complement,
     this.height = 180,
   });
 
@@ -84,7 +84,7 @@ class SettingsSubPageHeader extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: complement(theme, AppLocalizations.of(context)!),
+                    child: complement != null ? complement!(theme, AppLocalizations.of(context)!) : null,
                   ),
                 )
               ],

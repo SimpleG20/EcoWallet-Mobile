@@ -52,6 +52,30 @@ class AppLocalizationsPt extends AppLocalizations {
       'Gerencie suas preferências de notificação';
 
   @override
+  String get appearanceSubTitle => 'Personalize a aparência e o estilo do app';
+
+  @override
+  String get passwordSubTitle => 'Altere a senha da sua conta';
+
+  @override
+  String get helpSubTitle => 'Obtenha ajuda e suporte';
+
+  @override
+  String get privacySubTitle => 'Revise nossas políticas de privacidade';
+
+  @override
+  String get feedbackSubTitle => 'Envie seu feedback';
+
+  @override
+  String get termsSubTitle => 'Leia nossos termos de serviço';
+
+  @override
+  String get policySubTitle => 'Entenda nossa política de privacidade';
+
+  @override
+  String get manageDataSubTitle => 'Gerencie suas preferências de dados';
+
+  @override
   String get searchTransactions => 'Pesquisar transações...';
 
   @override
@@ -188,6 +212,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lbPreferences => 'Preferências';
+
+  @override
+  String get lbManageData => 'Gerenciar Dados';
 
   @override
   String get lbAboutLegal => 'Sobre & Legal';
