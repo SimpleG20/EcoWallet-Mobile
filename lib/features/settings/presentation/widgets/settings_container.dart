@@ -25,6 +25,8 @@ class SettingsContainer extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Container(
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(12.0),
@@ -33,6 +35,11 @@ class SettingsContainer extends StatelessWidget {
                 color: Colors.black.withValues(alpha: 0.2),
                 blurRadius: 4,
                 offset: const Offset(0, 2),
+              ),
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 8,
+                offset: const Offset(2, 0),
               ),
             ],
           ),

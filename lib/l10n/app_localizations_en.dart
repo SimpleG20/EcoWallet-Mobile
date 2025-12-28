@@ -39,6 +39,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsSubTitle => 'Manage your app settings';
 
   @override
+  String get personalInfoSubTitle => 'Update your personal information';
+
+  @override
+  String get securitySubTitle => 'Enhance your account security';
+
+  @override
+  String get notificationsSubTitle => 'Manage your notification preferences';
+
+  @override
+  String get budgetInfoSubTitle => 'View and manage your budget';
+
+  @override
   String get searchTransactions => 'Search transactions...';
 
   @override
@@ -87,6 +99,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbBills => 'Bills';
 
   @override
+  String get lbEmail => 'Email';
+
+  @override
+  String get lbPhone => 'Phone';
+
+  @override
   String get lbWallet => 'Wallet';
 
   @override
@@ -126,6 +144,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbAccount => 'Account';
 
   @override
+  String get lbAddress => 'Address';
+
+  @override
   String get lbSettings => 'Settings';
 
   @override
@@ -151,6 +172,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbHelpCenter => 'Help Center';
+
+  @override
+  String get lbDateBirth => 'Date of Birth';
 
   @override
   String get lbPreferences => 'Preferences';
@@ -198,22 +222,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgTransactionDeleted => 'Transaction deleted successfully.';
 
   @override
-  String get errorAmountEmpty => 'Please enter an amount.';
-
-  @override
-  String get errorCategoryEmpty => 'Please select a category.';
-
-  @override
   String get errorDateEmpty => 'Please select a date.';
 
   @override
   String get errorTitleEmpty => 'Please enter a title.';
 
   @override
+  String get errorAmountEmpty => 'Please enter an amount.';
+
+  @override
+  String get errorCategoryEmpty => 'Please select a category.';
+
+  @override
   String get errorAmountInvalid => 'Please enter a valid amount.';
 
   @override
   String get errorAmountMustBePositive => 'Amount must be greater than zero.';
+
+  @override
+  String get errorEmailEmpty => 'Email cannot be empty.';
+
+  @override
+  String get errorEmailInvalid => 'Invalid email format.';
+
+  @override
+  String get errorPhoneEmpty => 'Phone number cannot be empty.';
+
+  @override
+  String get errorPhoneInvalid => 'Invalid phone number format.';
+
+  @override
+  String get errorAddressEmpty => 'Address cannot be empty.';
+
+  @override
+  String get errorAddressInvalid => 'Address is too short.';
+
+  @override
+  String get errorDateInvalid => 'Invalid date format.';
+
+  @override
+  String get errorDateOutOfRange => 'Date out of range.';
+
+  @override
+  String get errorNameEmpty => 'Name cannot be empty.';
+
+  @override
+  String get errorNameInvalid => 'Name is too short.';
 
   @override
   String get errorAmountFormat =>

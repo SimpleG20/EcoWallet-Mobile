@@ -22,4 +22,77 @@ class AppValidators {
 
     return null;
   }
+
+  static String? isValidEmail(AppLocalizations loc, String? value) {
+    if (value == null || value.isEmpty) {
+      return loc.errorEmailEmpty;
+    }
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    if (!emailRegex.hasMatch(value)) {
+      return loc.errorEmailInvalid;
+    }
+    return null;
+  }
+
+  static String? isValidPhoneNumber(AppLocalizations loc, String? value) {
+    if (value == null || value.isEmpty) {
+      return loc.errorPhoneEmpty;
+    }
+
+    final phoneRegex = RegExp(r'^(\+\d{1,2}\s?)?\d{1,4}[\s.-]?\d{1,4}[\s.-]?\d{1,4}[\s.-]?\d{1,4}$');
+    if (!phoneRegex.hasMatch(value)) {
+      return loc.errorPhoneInvalid;
+    }
+    return null;
+  }
+
+  static String? isValidAddress(AppLocalizations loc, String? value) {
+    if (value == null || value.isEmpty) {
+      return loc.errorAddressEmpty;
+    }
+    if (value.length < 5) {
+      return loc.errorAddressInvalid;
+    }
+    return null;
+  }
+
+  static String? isValidDate(AppLocalizations loc, String? value) {
+    if (value == null || value.isEmpty) {
+      return loc.errorDateEmpty;
+    }
+    try {
+      final parts = value.split('/');
+      if (parts.length != 3) {
+        return loc.errorDateInvalid;
+      }
+
+      var minDate = DateTime.now().subtract(const Duration(days: 365 * 120));
+      var maxDate = DateTime.now().subtract(const Duration(days: 365 * 0));
+
+      final day = int.parse(parts[0]);
+      final month = int.parse(parts[1]);
+      final year = int.parse(parts[2]);
+      final date = DateTime(year, month, day);
+      if (date.year != year || date.month != month || date.day != day) {
+        return loc.errorDateInvalid;
+      }
+
+      if (date.isBefore(minDate) || date.isAfter(maxDate)) {
+        return loc.errorDateOutOfRange;
+      }
+    } catch (e) {
+      return loc.errorDateInvalid;
+    }
+    return null;
+  }
+
+  static String? isValidName(AppLocalizations loc, String? value) {
+    if (value == null || value.isEmpty) {
+      return loc.errorNameEmpty;
+    }
+    if (value.length < 2) {
+      return loc.errorNameInvalid;
+    }
+    return null;
+  }
 }

@@ -39,6 +39,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settingsSubTitle => 'Gerencie as configurações do seu app';
 
   @override
+  String get personalInfoSubTitle => 'Atualize suas informações pessoais';
+
+  @override
+  String get securitySubTitle => 'Melhore a segurança da sua conta';
+
+  @override
+  String get notificationsSubTitle =>
+      'Gerencie suas preferências de notificação';
+
+  @override
+  String get budgetInfoSubTitle => 'Visualize e gerencie seu orçamento';
+
+  @override
   String get searchTransactions => 'Pesquisar transações...';
 
   @override
@@ -87,6 +100,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbBills => 'Contas';
 
   @override
+  String get lbEmail => 'Email';
+
+  @override
+  String get lbPhone => 'Telefone';
+
+  @override
   String get lbWallet => 'Carteira';
 
   @override
@@ -126,6 +145,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbAccount => 'Conta';
 
   @override
+  String get lbAddress => 'Endereço';
+
+  @override
   String get lbSettings => 'Configurações';
 
   @override
@@ -151,6 +173,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lbHelpCenter => 'Central de Ajuda';
+
+  @override
+  String get lbDateBirth => 'Data de Nascimento';
 
   @override
   String get lbPreferences => 'Preferências';
@@ -198,22 +223,52 @@ class AppLocalizationsPt extends AppLocalizations {
   String get msgTransactionDeleted => 'Transação removida com sucesso.';
 
   @override
-  String get errorAmountEmpty => 'Por favor, insira um valor.';
-
-  @override
-  String get errorCategoryEmpty => 'Por favor, selecione uma categoria.';
-
-  @override
   String get errorDateEmpty => 'Por favor, selecione uma data.';
 
   @override
   String get errorTitleEmpty => 'Por favor, insira um título.';
 
   @override
+  String get errorAmountEmpty => 'Por favor, insira um valor.';
+
+  @override
+  String get errorCategoryEmpty => 'Por favor, selecione uma categoria.';
+
+  @override
   String get errorAmountInvalid => 'Por favor, insira um valor válido.';
 
   @override
   String get errorAmountMustBePositive => 'O valor deve ser maior que zero.';
+
+  @override
+  String get errorEmailEmpty => 'Email não pode estar vazio.';
+
+  @override
+  String get errorEmailInvalid => 'Formato de email inválido.';
+
+  @override
+  String get errorPhoneEmpty => 'Telefone não pode estar vazio.';
+
+  @override
+  String get errorPhoneInvalid => 'Formato de telefone inválido.';
+
+  @override
+  String get errorAddressEmpty => 'Endereço não pode estar vazio.';
+
+  @override
+  String get errorAddressInvalid => 'Endereço muito curto.';
+
+  @override
+  String get errorDateInvalid => 'Formato de data inválido.';
+
+  @override
+  String get errorDateOutOfRange => 'Data fora do intervalo.';
+
+  @override
+  String get errorNameEmpty => 'Nome não pode estar vazio.';
+
+  @override
+  String get errorNameInvalid => 'Nome muito curto.';
 
   @override
   String get errorAmountFormat =>

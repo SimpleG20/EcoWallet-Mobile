@@ -1,11 +1,19 @@
-import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/personal_page.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_option_item.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_container.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  Widget? _page;
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -15,22 +23,21 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primaryContainer,
       ),
-      body: _buildBody(context, loc, theme),
+      body: _page ?? _buildBody(context, loc, theme),
     );
   }
 
-  Widget _buildBody(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildBody(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildHeader(context, loc, theme),
-        _buildSettingsOptions(context, loc, theme)
+        _buildSettingsOptions(context, loc, theme),
       ],
     );
   }
 
-  Widget _buildHeader(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildHeader(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SizedBox(
       height: 180,
       child: Stack(
@@ -83,8 +90,7 @@ class SettingsPage extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 32,
-                        backgroundColor:
-                            theme.colorScheme.primary.withAlpha(50),
+                        backgroundColor: theme.colorScheme.primary.withAlpha(50),
                         child: Icon(
                           //state.profilePictureUrl != null ? --- IGNORE ---
                           Icons.person_outline,
@@ -103,8 +109,7 @@ class SettingsPage extends StatelessWidget {
                           ),
                           Text(
                             "example@email.com", //state.email,
-                            style: theme.textTheme.bodyLarge?.copyWith(
-                                color: theme.colorScheme.onSurfaceVariant),
+                            style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -119,11 +124,10 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsOptions(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildSettingsOptions(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -146,94 +150,86 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountSection(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildAccountSection(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbAccount,
       options: [
         SettingsOptionItem(
-            icon: Icons.person_outline,
-            title: loc.lbPersonalInfo,
-            onTap: () => _openModal(
-                context, Center() /* pass the widget you want to show here */)),
+          icon: Icons.person_outline,
+          title: loc.lbPersonalInfo,
+          onTap: () => _showScreen(context, PersonalPage()),
+        ),
+        const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.notifications,
           title: loc.lbBudgetInfo,
-          onTap: () => _openModal(
-              context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
       ],
     );
   }
 
-  Widget _buildPreferencesSection(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildPreferencesSection(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbPreferences,
       options: [
         SettingsOptionItem(
           icon: Icons.notifications,
           title: loc.lbNotifications,
-          onTap: () => _openModal(
-              context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
+        const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.color_lens,
           title: loc.lbAppearance,
-          onTap: () => _openModal(
-              context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
       ],
     );
   }
 
-  Widget _buildSecuritySection(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildSecuritySection(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbSecurity,
       options: [
         SettingsOptionItem(
           icon: Icons.lock_outline,
           title: loc.lbChangePassword,
-          onTap: () => _openModal(
-              context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
-        SettingsOptionItem(
-          icon: Icons.fingerprint,
-          title: loc.lbBiometrics,
-          onTap: () => _openModal(
-              context, Center() /* pass the widget you want to show here */),
-        ),
+        // const SizedBox(height: 8),
+        // SettingsOptionItem(
+        //   icon: Icons.fingerprint,
+        //   title: loc.lbBiometrics,
+        //   onTap: () => _showScreen(
+        //       context, Center() /* pass the widget you want to show here */),
+        // ),
       ],
     );
   }
 
-  Widget _buildSupportSection(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildSupportSection(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbSupport,
       options: [
         SettingsOptionItem(
           icon: Icons.help_outline,
           title: loc.lbHelpCenter,
-          onTap: () => _openModal(
-              context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
+        const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.feedback_outlined,
           title: loc.lbSendFeedback,
-          onTap: () => _openModal(
-              context, Center() /* pass the widget you want to show here */),
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
       ],
     );
   }
 
-  Widget _buildLogoutBtn(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildLogoutBtn(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        elevation: 4,
         backgroundColor: theme.colorScheme.onErrorContainer,
         foregroundColor: theme.colorScheme.error,
       ),
@@ -244,23 +240,16 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _openModal(BuildContext context, Widget child) {
-    var mediaQuery = MediaQuery.of(context);
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          height: mediaQuery.size.height * kModalHeightFactor,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(32.0),
-              topRight: Radius.circular(32.0),
-            ),
-          ),
-          child: child,
-        );
-      },
+  Widget _buildDeleteAccountBtn(BuildContext context, AppLocalizations loc, ThemeData theme) {
+    return TextButton(
+      onPressed: () {},
+      child: Text(loc.lbDeleteAccount),
     );
+  }
+
+  void _showScreen(BuildContext context, Widget child) {
+    setState(() {
+      _page = child;
+    });
   }
 }

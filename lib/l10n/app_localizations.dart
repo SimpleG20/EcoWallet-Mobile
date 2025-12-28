@@ -158,6 +158,30 @@ abstract class AppLocalizations {
   /// **'Manage your app settings'**
   String get settingsSubTitle;
 
+  /// No description provided for @personalInfoSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your personal information'**
+  String get personalInfoSubTitle;
+
+  /// No description provided for @securitySubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enhance your account security'**
+  String get securitySubTitle;
+
+  /// No description provided for @notificationsSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your notification preferences'**
+  String get notificationsSubTitle;
+
+  /// No description provided for @budgetInfoSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View and manage your budget'**
+  String get budgetInfoSubTitle;
+
   /// No description provided for @searchTransactions.
   ///
   /// In en, this message translates to:
@@ -254,6 +278,18 @@ abstract class AppLocalizations {
   /// **'Bills'**
   String get lbBills;
 
+  /// No description provided for @lbEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get lbEmail;
+
+  /// No description provided for @lbPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get lbPhone;
+
   /// No description provided for @lbWallet.
   ///
   /// In en, this message translates to:
@@ -332,6 +368,12 @@ abstract class AppLocalizations {
   /// **'Account'**
   String get lbAccount;
 
+  /// No description provided for @lbAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get lbAddress;
+
   /// No description provided for @lbSettings.
   ///
   /// In en, this message translates to:
@@ -385,6 +427,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Help Center'**
   String get lbHelpCenter;
+
+  /// No description provided for @lbDateBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get lbDateBirth;
 
   /// No description provided for @lbPreferences.
   ///
@@ -476,18 +524,6 @@ abstract class AppLocalizations {
   /// **'Transaction deleted successfully.'**
   String get msgTransactionDeleted;
 
-  /// No description provided for @errorAmountEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter an amount.'**
-  String get errorAmountEmpty;
-
-  /// No description provided for @errorCategoryEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Please select a category.'**
-  String get errorCategoryEmpty;
-
   /// No description provided for @errorDateEmpty.
   ///
   /// In en, this message translates to:
@@ -500,6 +536,18 @@ abstract class AppLocalizations {
   /// **'Please enter a title.'**
   String get errorTitleEmpty;
 
+  /// No description provided for @errorAmountEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an amount.'**
+  String get errorAmountEmpty;
+
+  /// No description provided for @errorCategoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a category.'**
+  String get errorCategoryEmpty;
+
   /// No description provided for @errorAmountInvalid.
   ///
   /// In en, this message translates to:
@@ -511,6 +559,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount must be greater than zero.'**
   String get errorAmountMustBePositive;
+
+  /// No description provided for @errorEmailEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Email cannot be empty.'**
+  String get errorEmailEmpty;
+
+  /// No description provided for @errorEmailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email format.'**
+  String get errorEmailInvalid;
+
+  /// No description provided for @errorPhoneEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number cannot be empty.'**
+  String get errorPhoneEmpty;
+
+  /// No description provided for @errorPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number format.'**
+  String get errorPhoneInvalid;
+
+  /// No description provided for @errorAddressEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Address cannot be empty.'**
+  String get errorAddressEmpty;
+
+  /// No description provided for @errorAddressInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is too short.'**
+  String get errorAddressInvalid;
+
+  /// No description provided for @errorDateInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid date format.'**
+  String get errorDateInvalid;
+
+  /// No description provided for @errorDateOutOfRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Date out of range.'**
+  String get errorDateOutOfRange;
+
+  /// No description provided for @errorNameEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Name cannot be empty.'**
+  String get errorNameEmpty;
+
+  /// No description provided for @errorNameInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is too short.'**
+  String get errorNameInvalid;
 
   /// No description provided for @errorAmountFormat.
   ///
