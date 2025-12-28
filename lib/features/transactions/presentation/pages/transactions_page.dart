@@ -34,12 +34,10 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
     final theme = Theme.of(context);
 
     return BlocProvider(
-      create: (_) =>
-          di.sl<TransactionsHistoryBloc>()..add(LoadTransactionsHistoryEvent()),
+      create: (_) => di.sl<TransactionsHistoryBloc>()..add(LoadTransactionsHistoryEvent()),
       child: Scaffold(
-        backgroundColor: theme.colorScheme.outline,
-        body:
-            BlocBuilder<TransactionsHistoryBloc, BaseTransactionsHistoryState>(
+        backgroundColor: theme.colorScheme.secondary,
+        body: BlocBuilder<TransactionsHistoryBloc, BaseTransactionsHistoryState>(
           builder: (context, state) {
             // Loading
             if (state is TransactionsHistoryLoading) {
@@ -51,8 +49,7 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
               return Center(
                   child: Text(
                 state.message,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(color: theme.colorScheme.error),
+                style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.error),
               ));
             }
             if (state is TransactionsHistoryLoaded) {
@@ -66,14 +63,12 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
           child: const Icon(Icons.add),
           onPressed: () {},
         ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, AppLocalizations loc, ThemeData theme,
-      TransactionsHistoryLoaded state) {
+  Widget _buildBody(BuildContext context, AppLocalizations loc, ThemeData theme, TransactionsHistoryLoaded state) {
     return Column(
       children: [
         PageHeader(
@@ -99,25 +94,18 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
           isLabelVisible: !_showFilters && state.filter.isEmpty == false,
           child: Icon(
             Icons.filter_list,
-            color: _showFilters
-                ? theme.colorScheme.primary
-                : theme.colorScheme.onSurface,
+            color: _showFilters ? theme.colorScheme.primary : theme.colorScheme.onSurface,
           ),
         ),
       ),
     ];
   }
 
-  Widget _buildSearchBar(BuildContext context, ThemeData theme,
-      AppLocalizations loc, TransactionsHistoryLoaded state) {
+  Widget _buildSearchBar(BuildContext context, ThemeData theme, AppLocalizations loc, TransactionsHistoryLoaded state) {
     return Column(
       children: [
         TextField(
-          onSubmitted: (value) => {
-            context
-                .read<TransactionsHistoryBloc>()
-                .add(SearchQueryHistoryEvent(value))
-          },
+          onSubmitted: (value) => {context.read<TransactionsHistoryBloc>().add(SearchQueryHistoryEvent(value))},
           cursorColor: theme.colorScheme.onSurface,
           decoration: InputDecoration(
             hintText: loc.searchTransactions,
@@ -131,16 +119,12 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
             ),
           ),
         ),
-        if (_showFilters) ...[
-          const SizedBox(height: 8),
-          _buildFilterSection(context, theme, loc, state)
-        ],
+        if (_showFilters) ...[const SizedBox(height: 8), _buildFilterSection(context, theme, loc, state)],
       ],
     );
   }
 
-  SizedBox _buildFilterSection(BuildContext context, ThemeData theme,
-      AppLocalizations loc, TransactionsHistoryLoaded state) {
+  SizedBox _buildFilterSection(BuildContext context, ThemeData theme, AppLocalizations loc, TransactionsHistoryLoaded state) {
     return SizedBox(
       height: 40,
       child: Row(
@@ -153,13 +137,11 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
             child: state.filter.isEmpty
                 ? TextButton(
                     onPressed: () => _openFilterModal(context, state),
-                    style:
-                        TextButton.styleFrom(alignment: Alignment.centerLeft),
+                    style: TextButton.styleFrom(alignment: Alignment.centerLeft),
                     child: Text(
                       loc.addFilters,
                       style: theme.textTheme.bodyLarge?.copyWith(
-                        color:
-                            theme.colorScheme.onSurfaceVariant.withAlpha(180),
+                        color: theme.colorScheme.onSurfaceVariant.withAlpha(180),
                       ),
                     ),
                   )
@@ -191,9 +173,7 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
             TextButton(
               child: Text(loc.btnClear),
               onPressed: () {
-                context
-                    .read<TransactionsHistoryBloc>()
-                    .add(UpdateFiltersEvent(TransactionFilter.empty()));
+                context.read<TransactionsHistoryBloc>().add(UpdateFiltersEvent(TransactionFilter.empty()));
               },
             ),
         ],
@@ -201,8 +181,7 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
     );
   }
 
-  Widget _buildTransactionsList(
-      ThemeData theme, AppLocalizations loc, List<Transaction> transactions) {
+  Widget _buildTransactionsList(ThemeData theme, AppLocalizations loc, List<Transaction> transactions) {
     final groups = _getGroupTransactionsByDate(transactions);
     final bottomPadding = 48.0 + MediaQuery.of(context).padding.bottom;
 
@@ -230,8 +209,7 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
     );
   }
 
-  List<TransactionGroup> _getGroupTransactionsByDate(
-      List<Transaction> transactions) {
+  List<TransactionGroup> _getGroupTransactionsByDate(List<Transaction> transactions) {
     Map<String, List<Transaction>> groupedMap = {};
 
     for (var transaction in transactions) {

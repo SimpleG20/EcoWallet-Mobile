@@ -34,6 +34,24 @@ class AppValidators {
     return null;
   }
 
+  static String? isValidPassword(String? value, AppLocalizations loc) {
+    if (value == null || value.isEmpty) {
+      return loc.errorPasswordEmpty;
+    }
+    if (value.length < 8) {
+      return loc.errorPasswordTooShort;
+    }
+    final hasUppercase = value.contains(RegExp(r'[A-Z]'));
+    final hasLowercase = value.contains(RegExp(r'[a-z]'));
+    final hasDigit = value.contains(RegExp(r'\d'));
+    final hasSpecialChar = value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+
+    if (!hasUppercase || !hasLowercase || !hasDigit || !hasSpecialChar) {
+      return loc.errorPasswordWeak;
+    }
+    return null;
+  }
+
   static String? isValidPhoneNumber(AppLocalizations loc, String? value) {
     if (value == null || value.isEmpty) {
       return loc.errorPhoneEmpty;

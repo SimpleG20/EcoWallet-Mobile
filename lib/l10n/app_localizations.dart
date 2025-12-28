@@ -254,17 +254,41 @@ abstract class AppLocalizations {
   /// **'Delete Account'**
   String get deleteAccount;
 
-  /// No description provided for @btnApply.
+  /// No description provided for @forgotPassword.
   ///
   /// In en, this message translates to:
-  /// **'Apply'**
-  String get btnApply;
+  /// **'Forgot Password?'**
+  String get forgotPassword;
 
-  /// No description provided for @btnClear.
+  /// No description provided for @passwordRequirements.
   ///
   /// In en, this message translates to:
-  /// **'Clear'**
-  String get btnClear;
+  /// **'Password Requirements'**
+  String get passwordRequirements;
+
+  /// No description provided for @pwRequirementNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one number'**
+  String get pwRequirementNumber;
+
+  /// No description provided for @pwRequirementLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum of 8 characters'**
+  String get pwRequirementLength;
+
+  /// No description provided for @pwRequirementUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one uppercase letter'**
+  String get pwRequirementUppercase;
+
+  /// No description provided for @pwRequirementSpecial.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one special character'**
+  String get pwRequirementSpecial;
 
   /// No description provided for @btnUndo.
   ///
@@ -278,17 +302,35 @@ abstract class AppLocalizations {
   /// **'Redo'**
   String get btnRedo;
 
-  /// No description provided for @btnSave.
+  /// No description provided for @btnClear.
   ///
   /// In en, this message translates to:
-  /// **'Save Transaction'**
-  String get btnSave;
+  /// **'Clear'**
+  String get btnClear;
+
+  /// No description provided for @btnApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get btnApply;
+
+  /// No description provided for @btnCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get btnCancel;
 
   /// No description provided for @btnViewAll.
   ///
   /// In en, this message translates to:
   /// **'View All'**
   String get btnViewAll;
+
+  /// No description provided for @btnSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Transaction'**
+  String get btnSave;
 
   /// No description provided for @lbAll.
   ///
@@ -457,6 +499,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Analytics'**
   String get lbAnalytics;
+
+  /// No description provided for @lbCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get lbCurrentPassword;
+
+  /// No description provided for @lbNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get lbNewPassword;
+
+  /// No description provided for @lbConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get lbConfirmPassword;
+
+  /// No description provided for @lbConfirmNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get lbConfirmNewPassword;
 
   /// No description provided for @lbTransport.
   ///
@@ -715,6 +781,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name is too short.'**
   String get errorNameInvalid;
+
+  /// No description provided for @errorPasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Password cannot be empty.'**
+  String get errorPasswordEmpty;
+
+  /// No description provided for @errorPasswordWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too weak.'**
+  String get errorPasswordWeak;
+
+  /// No description provided for @errorPasswordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too short.'**
+  String get errorPasswordTooShort;
+
+  /// No description provided for @errorPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get errorPasswordMismatch;
+
+  /// No description provided for @errorEnterCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your current password.'**
+  String get errorEnterCurrentPassword;
+
+  /// No description provided for @errorSameAsCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password cannot be the same as the current password.'**
+  String get errorSameAsCurrentPassword;
 
   /// No description provided for @errorAmountFormat.
   ///

@@ -88,10 +88,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get deleteAccount => 'Excluir Conta';
 
   @override
-  String get btnApply => 'Aplicar';
+  String get forgotPassword => 'Esqueceu a senha?';
 
   @override
-  String get btnClear => 'Limpar';
+  String get passwordRequirements => 'Requisitos de Senha';
+
+  @override
+  String get pwRequirementNumber => 'Pelo menos um número';
+
+  @override
+  String get pwRequirementLength => 'Mínimo de 8 caracteres';
+
+  @override
+  String get pwRequirementUppercase => 'Pelo menos uma letra maiúscula';
+
+  @override
+  String get pwRequirementSpecial => 'Pelo menos um caractere especial';
 
   @override
   String get btnUndo => 'Desfazer';
@@ -100,10 +112,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get btnRedo => 'Refazer';
 
   @override
-  String get btnSave => 'Salvar';
+  String get btnClear => 'Limpar';
+
+  @override
+  String get btnApply => 'Aplicar';
+
+  @override
+  String get btnCancel => 'Cancelar';
 
   @override
   String get btnViewAll => 'Ver Todos';
+
+  @override
+  String get btnSave => 'Salvar';
 
   @override
   String get lbAll => 'Todos';
@@ -188,6 +209,18 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lbAnalytics => 'Análises';
+
+  @override
+  String get lbCurrentPassword => 'Senha Atual';
+
+  @override
+  String get lbNewPassword => 'Nova Senha';
+
+  @override
+  String get lbConfirmPassword => 'Confirmar Senha';
+
+  @override
+  String get lbConfirmNewPassword => 'Confirmar Nova Senha';
 
   @override
   String get lbTransport => 'Transporte';
@@ -317,6 +350,25 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get errorNameInvalid => 'Nome muito curto.';
+
+  @override
+  String get errorPasswordEmpty => 'Senha não pode estar vazia.';
+
+  @override
+  String get errorPasswordWeak => 'Senha é muito fraca.';
+
+  @override
+  String get errorPasswordTooShort => 'Senha é muito curta.';
+
+  @override
+  String get errorPasswordMismatch => 'As senhas não coincidem.';
+
+  @override
+  String get errorEnterCurrentPassword => 'Por favor, insira sua senha atual.';
+
+  @override
+  String get errorSameAsCurrentPassword =>
+      'A nova senha não pode ser igual à senha atual.';
 
   @override
   String get errorAmountFormat =>

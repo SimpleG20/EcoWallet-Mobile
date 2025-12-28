@@ -21,7 +21,7 @@ class SettingsSubPageHeader extends StatelessWidget {
     final theme = Theme.of(context);
 
     return SizedBox(
-      height: height,
+      height: complement != null ? height : 120,
       child: Stack(
         children: [
           Container(
@@ -71,22 +71,23 @@ class SettingsSubPageHeader extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.surface,
-                      borderRadius: BorderRadius.circular(12.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.2),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
+                if (complement != null)
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surface,
+                        borderRadius: BorderRadius.circular(12.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.2),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: complement != null ? complement!(theme, AppLocalizations.of(context)!) : null,
                     ),
-                    child: complement != null ? complement!(theme, AppLocalizations.of(context)!) : null,
-                  ),
-                )
+                  )
               ],
             ),
           ),

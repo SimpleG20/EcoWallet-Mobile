@@ -87,10 +87,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAccount => 'Delete Account';
 
   @override
-  String get btnApply => 'Apply';
+  String get forgotPassword => 'Forgot Password?';
 
   @override
-  String get btnClear => 'Clear';
+  String get passwordRequirements => 'Password Requirements';
+
+  @override
+  String get pwRequirementNumber => 'At least one number';
+
+  @override
+  String get pwRequirementLength => 'Minimum of 8 characters';
+
+  @override
+  String get pwRequirementUppercase => 'At least one uppercase letter';
+
+  @override
+  String get pwRequirementSpecial => 'At least one special character';
 
   @override
   String get btnUndo => 'Undo';
@@ -99,10 +111,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnRedo => 'Redo';
 
   @override
-  String get btnSave => 'Save Transaction';
+  String get btnClear => 'Clear';
+
+  @override
+  String get btnApply => 'Apply';
+
+  @override
+  String get btnCancel => 'Cancel';
 
   @override
   String get btnViewAll => 'View All';
+
+  @override
+  String get btnSave => 'Save Transaction';
 
   @override
   String get lbAll => 'All';
@@ -187,6 +208,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbAnalytics => 'Analytics';
+
+  @override
+  String get lbCurrentPassword => 'Current Password';
+
+  @override
+  String get lbNewPassword => 'New Password';
+
+  @override
+  String get lbConfirmPassword => 'Confirm Password';
+
+  @override
+  String get lbConfirmNewPassword => 'Confirm New Password';
 
   @override
   String get lbTransport => 'Transport';
@@ -316,6 +349,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorNameInvalid => 'Name is too short.';
+
+  @override
+  String get errorPasswordEmpty => 'Password cannot be empty.';
+
+  @override
+  String get errorPasswordWeak => 'Password is too weak.';
+
+  @override
+  String get errorPasswordTooShort => 'Password is too short.';
+
+  @override
+  String get errorPasswordMismatch => 'Passwords do not match.';
+
+  @override
+  String get errorEnterCurrentPassword => 'Please enter your current password.';
+
+  @override
+  String get errorSameAsCurrentPassword =>
+      'New password cannot be the same as the current password.';
 
   @override
   String get errorAmountFormat =>
