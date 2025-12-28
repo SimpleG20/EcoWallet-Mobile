@@ -39,17 +39,17 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settingsSubTitle => 'Gerencie as configurações do seu app';
 
   @override
-  String get personalInfoSubTitle => 'Atualize suas informações pessoais';
+  String get securitySubTitle => 'Melhore a segurança da sua conta';
 
   @override
-  String get securitySubTitle => 'Melhore a segurança da sua conta';
+  String get budgetInfoSubTitle => 'Visualize e gerencie seu orçamento';
+
+  @override
+  String get personalInfoSubTitle => 'Atualize suas informações pessoais';
 
   @override
   String get notificationsSubTitle =>
       'Gerencie suas preferências de notificação';
-
-  @override
-  String get budgetInfoSubTitle => 'Visualize e gerencie seu orçamento';
 
   @override
   String get searchTransactions => 'Pesquisar transações...';
@@ -59,6 +59,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get addFilters => 'Adicionar Filtros';
+
+  @override
+  String get deleteAccount => 'Excluir Conta';
 
   @override
   String get btnApply => 'Aplicar';
@@ -172,6 +175,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbBudgetInfo => 'Informações do Orçamento';
 
   @override
+  String get lbExportData => 'Exportar Dados';
+
+  @override
+  String get lbDeleteData => 'Excluir Dados';
+
+  @override
   String get lbHelpCenter => 'Central de Ajuda';
 
   @override
@@ -181,22 +190,34 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbPreferences => 'Preferências';
 
   @override
+  String get lbAboutLegal => 'Sobre & Legal';
+
+  @override
   String get lbPersonalInfo => 'Informações Pessoais';
 
   @override
   String get lbSendFeedback => 'Enviar Feedback';
 
   @override
-  String get lbChangePassword => 'Alterar Senha';
+  String get lbNotifications => 'Notificações';
 
   @override
-  String get lbNotifications => 'Notificações';
+  String get lbBackupData => 'Backup & Restauração';
 
   @override
   String get lbUncategorized => 'Sem Categoria';
 
   @override
   String get lbEntertainment => 'Entretenimento';
+
+  @override
+  String get lbPrivacyPolicy => 'Política de Privacidade';
+
+  @override
+  String get lbChangePassword => 'Alterar Senha';
+
+  @override
+  String get lbTermsOfService => 'Termos de Serviço';
 
   @override
   String get lbAllTransactions => 'Todas as Transações';

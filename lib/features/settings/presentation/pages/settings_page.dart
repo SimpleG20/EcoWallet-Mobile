@@ -141,7 +141,11 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(height: 20),
               _buildSupportSection(context, loc, theme),
               const SizedBox(height: 20),
+              _buildLegalSection(context, loc, theme),
+              const SizedBox(height: 40),
               _buildLogoutBtn(context, loc, theme),
+              const SizedBox(height: 20),
+              _buildDeleteAccountBtn(context, loc, theme),
               const SizedBox(height: 20),
             ],
           ),
@@ -163,6 +167,24 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.notifications,
           title: loc.lbBudgetInfo,
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+        ),
+        const SizedBox(height: 8),
+        SettingsOptionItem(
+          icon: Icons.data_saver_on_outlined,
+          title: loc.lbExportData,
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+        ),
+        const SizedBox(height: 8),
+        SettingsOptionItem(
+          icon: Icons.backup_outlined,
+          title: loc.lbBackupData,
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+        ),
+        const SizedBox(height: 8),
+        SettingsOptionItem(
+          icon: Icons.delete_outline,
+          title: loc.lbDeleteData,
           onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
       ],
@@ -197,13 +219,6 @@ class _SettingsPageState extends State<SettingsPage> {
           title: loc.lbChangePassword,
           onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
         ),
-        // const SizedBox(height: 8),
-        // SettingsOptionItem(
-        //   icon: Icons.fingerprint,
-        //   title: loc.lbBiometrics,
-        //   onTap: () => _showScreen(
-        //       context, Center() /* pass the widget you want to show here */),
-        // ),
       ],
     );
   }
@@ -227,11 +242,30 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  Widget _buildLegalSection(BuildContext context, AppLocalizations loc, ThemeData theme) {
+    return SettingsContainer(
+      sectionLabel: loc.lbAboutLegal,
+      options: [
+        SettingsOptionItem(
+          icon: Icons.description_outlined,
+          title: loc.lbTermsOfService,
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+        ),
+        const SizedBox(height: 8),
+        SettingsOptionItem(
+          icon: Icons.privacy_tip_outlined,
+          title: loc.lbPrivacyPolicy,
+          onTap: () => _showScreen(context, Center() /* pass the widget you want to show here */),
+        ),
+      ],
+    );
+  }
+
   Widget _buildLogoutBtn(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: theme.colorScheme.onErrorContainer,
-        foregroundColor: theme.colorScheme.error,
+        backgroundColor: theme.colorScheme.secondaryContainer,
+        foregroundColor: theme.colorScheme.onSecondaryContainer,
       ),
       onPressed: () {
         // context.read<AuthenticationBloc>().add(LogoutEvent());
@@ -241,9 +275,15 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget _buildDeleteAccountBtn(BuildContext context, AppLocalizations loc, ThemeData theme) {
-    return TextButton(
-      onPressed: () {},
-      child: Text(loc.lbDeleteAccount),
+    return ElevatedButton(
+      child: Text(loc.deleteAccount),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: theme.colorScheme.errorContainer,
+        foregroundColor: theme.colorScheme.onErrorContainer,
+      ),
+      onPressed: () {
+        // Add your delete account logic here
+      },
     );
   }
 

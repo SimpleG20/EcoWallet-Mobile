@@ -158,29 +158,29 @@ abstract class AppLocalizations {
   /// **'Manage your app settings'**
   String get settingsSubTitle;
 
-  /// No description provided for @personalInfoSubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Update your personal information'**
-  String get personalInfoSubTitle;
-
   /// No description provided for @securitySubTitle.
   ///
   /// In en, this message translates to:
   /// **'Enhance your account security'**
   String get securitySubTitle;
 
-  /// No description provided for @notificationsSubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Manage your notification preferences'**
-  String get notificationsSubTitle;
-
   /// No description provided for @budgetInfoSubTitle.
   ///
   /// In en, this message translates to:
   /// **'View and manage your budget'**
   String get budgetInfoSubTitle;
+
+  /// No description provided for @personalInfoSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your personal information'**
+  String get personalInfoSubTitle;
+
+  /// No description provided for @notificationsSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your notification preferences'**
+  String get notificationsSubTitle;
 
   /// No description provided for @searchTransactions.
   ///
@@ -199,6 +199,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Filters'**
   String get addFilters;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
 
   /// No description provided for @btnApply.
   ///
@@ -422,6 +428,18 @@ abstract class AppLocalizations {
   /// **'Budget Info'**
   String get lbBudgetInfo;
 
+  /// No description provided for @lbExportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data'**
+  String get lbExportData;
+
+  /// No description provided for @lbDeleteData.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Data'**
+  String get lbDeleteData;
+
   /// No description provided for @lbHelpCenter.
   ///
   /// In en, this message translates to:
@@ -440,6 +458,12 @@ abstract class AppLocalizations {
   /// **'Preferences'**
   String get lbPreferences;
 
+  /// No description provided for @lbAboutLegal.
+  ///
+  /// In en, this message translates to:
+  /// **'About & Legal'**
+  String get lbAboutLegal;
+
   /// No description provided for @lbPersonalInfo.
   ///
   /// In en, this message translates to:
@@ -452,17 +476,17 @@ abstract class AppLocalizations {
   /// **'Send Feedback'**
   String get lbSendFeedback;
 
-  /// No description provided for @lbChangePassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Change Password'**
-  String get lbChangePassword;
-
   /// No description provided for @lbNotifications.
   ///
   /// In en, this message translates to:
   /// **'Notifications'**
   String get lbNotifications;
+
+  /// No description provided for @lbBackupData.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup & Restore'**
+  String get lbBackupData;
 
   /// No description provided for @lbUncategorized.
   ///
@@ -475,6 +499,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Entertainment'**
   String get lbEntertainment;
+
+  /// No description provided for @lbPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get lbPrivacyPolicy;
+
+  /// No description provided for @lbChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get lbChangePassword;
+
+  /// No description provided for @lbTermsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get lbTermsOfService;
 
   /// No description provided for @lbAllTransactions.
   ///
