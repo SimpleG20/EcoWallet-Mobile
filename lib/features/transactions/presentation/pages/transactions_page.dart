@@ -122,7 +122,7 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
           decoration: InputDecoration(
             hintText: loc.searchTransactions,
             hintStyle: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant.withAlpha(150),
+              color: theme.colorScheme.onSurfaceVariant,
             ),
             prefixIcon: const Icon(Icons.search),
             border: OutlineInputBorder(
@@ -153,13 +153,14 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
             child: state.filter.isEmpty
                 ? TextButton(
                     onPressed: () => _openFilterModal(context, state),
-                    style: TextButton.styleFrom(
-                        foregroundColor:
-                            theme.colorScheme.onSurfaceVariant.withAlpha(150),
-                        alignment: Alignment.centerLeft),
+                    style:
+                        TextButton.styleFrom(alignment: Alignment.centerLeft),
                     child: Text(
                       loc.addFilters,
-                      style: theme.textTheme.bodyLarge,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color:
+                            theme.colorScheme.onSurfaceVariant.withAlpha(180),
+                      ),
                     ),
                   )
                 : ListView.builder(

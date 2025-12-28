@@ -46,8 +46,8 @@ class TransactionCard extends StatelessWidget {
           transaction.category.isNotEmpty
               ? transaction.category
               : loc.lbUncategorized,
-          style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant.withAlpha(150))),
+          style: theme.textTheme.bodyMedium
+              ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -56,7 +56,7 @@ class TransactionCard extends StatelessWidget {
               style: theme.textTheme.bodyMedium?.copyWith(
                   color: isIncome
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.onSurfaceVariant)),
+                      : theme.colorScheme.onSurface)),
           Text(
             AppFormatters.formatDateShort(transaction.date, loc.localeName),
             style: theme.textTheme.bodySmall,

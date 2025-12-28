@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'No transactions available.'**
   String get dashboardNoTransactions;
 
+  /// No description provided for @settingsSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your app settings'**
+  String get settingsSubTitle;
+
   /// No description provided for @searchTransactions.
   ///
   /// In en, this message translates to:
@@ -290,6 +296,18 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get lbAmount;
 
+  /// No description provided for @lbLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get lbLogout;
+
+  /// No description provided for @lbSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get lbSupport;
+
   /// No description provided for @lbReserve.
   ///
   /// In en, this message translates to:
@@ -308,11 +326,23 @@ abstract class AppLocalizations {
   /// **'Expense'**
   String get lbExpense;
 
+  /// No description provided for @lbAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get lbAccount;
+
   /// No description provided for @lbSettings.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get lbSettings;
+
+  /// No description provided for @lbSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get lbSecurity;
 
   /// No description provided for @lbShopping.
   ///
@@ -338,6 +368,54 @@ abstract class AppLocalizations {
   /// **'Transport'**
   String get lbTransport;
 
+  /// No description provided for @lbAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get lbAppearance;
+
+  /// No description provided for @lbBudgetInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Info'**
+  String get lbBudgetInfo;
+
+  /// No description provided for @lbHelpCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Center'**
+  String get lbHelpCenter;
+
+  /// No description provided for @lbPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get lbPreferences;
+
+  /// No description provided for @lbPersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Info'**
+  String get lbPersonalInfo;
+
+  /// No description provided for @lbSendFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Feedback'**
+  String get lbSendFeedback;
+
+  /// No description provided for @lbChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get lbChangePassword;
+
+  /// No description provided for @lbNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get lbNotifications;
+
   /// No description provided for @lbUncategorized.
   ///
   /// In en, this message translates to:
@@ -361,6 +439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Date Range'**
   String get lbSelectDateRange;
+
+  /// No description provided for @lbBiometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric Authentication'**
+  String get lbBiometrics;
 
   /// No description provided for @formNameHint.
   ///

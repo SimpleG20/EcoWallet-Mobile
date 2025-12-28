@@ -124,7 +124,7 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
       title,
       style: theme.textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.w600,
-        color: theme.colorScheme.onSurfaceVariant,
+        color: theme.colorScheme.onSurface,
       ),
     );
   }

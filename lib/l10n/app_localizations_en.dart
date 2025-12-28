@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardNoTransactions => 'No transactions available.';
 
   @override
+  String get settingsSubTitle => 'Manage your app settings';
+
+  @override
   String get searchTransactions => 'Search transactions...';
 
   @override
@@ -105,6 +108,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbAmount => 'Amount';
 
   @override
+  String get lbLogout => 'Logout';
+
+  @override
+  String get lbSupport => 'Support';
+
+  @override
   String get lbReserve => 'Reserve';
 
   @override
@@ -114,7 +123,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbExpense => 'Expense';
 
   @override
+  String get lbAccount => 'Account';
+
+  @override
   String get lbSettings => 'Settings';
+
+  @override
+  String get lbSecurity => 'Security';
 
   @override
   String get lbShopping => 'Shopping';
@@ -129,6 +144,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbTransport => 'Transport';
 
   @override
+  String get lbAppearance => 'Appearance';
+
+  @override
+  String get lbBudgetInfo => 'Budget Info';
+
+  @override
+  String get lbHelpCenter => 'Help Center';
+
+  @override
+  String get lbPreferences => 'Preferences';
+
+  @override
+  String get lbPersonalInfo => 'Personal Info';
+
+  @override
+  String get lbSendFeedback => 'Send Feedback';
+
+  @override
+  String get lbChangePassword => 'Change Password';
+
+  @override
+  String get lbNotifications => 'Notifications';
+
+  @override
   String get lbUncategorized => 'Uncategorized';
 
   @override
@@ -139,6 +178,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbSelectDateRange => 'Select Date Range';
+
+  @override
+  String get lbBiometrics => 'Biometric Authentication';
 
   @override
   String get formNameHint => 'Enter transaction name';
