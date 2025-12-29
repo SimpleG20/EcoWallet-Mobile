@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/transaction_type_data.dart';
 import '../widgets/add_transaction_modal.dart';
-import '../widgets/balance_card.dart';
+import '../widgets/balance_card/balance_card.dart';
 import '../widgets/home_header.dart';
 import '../widgets/transaction_card.dart';
 import '../widgets/home_action_buttons.dart';
+import '../../domain/usecases/calculate_weekly_transactions.dart';
 import '../../../../injection_container.dart' as di;
 import '../../../../l10n/app_localizations.dart';
 import '../../../wallet/domain/entities/transaction.dart';
@@ -14,6 +15,9 @@ import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  // Use case instance for calculating weekly transactions
+  static final _calculateWeeklyTransactions = CalculateWeeklyTransactions();
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +82,9 @@ class HomePage extends StatelessWidget {
     ThemeData theme,
     WalletLoaded state,
   ) {
+    // Calculate weekly transaction data using the use case
+    final weeklyData = _calculateWeeklyTransactions(state.recentTransactions);
+
     return SizedBox(
       height: 350,
       child: Stack(
@@ -107,7 +114,7 @@ class HomePage extends StatelessWidget {
                 BalanceCard(
                   totalBalance: state.totalBalance,
                   monthlySavings: state.monthlySavings,
-                  recentTransactions: state.recentTransactions,
+                  weeklyData: weeklyData,
                 ),
                 const SizedBox(height: 8),
                 HomeActionButtons(
