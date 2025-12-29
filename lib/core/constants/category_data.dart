@@ -73,14 +73,12 @@ abstract class CategoryRepository {
   static String _getLabelBills(AppLocalizations loc) => loc.lbBills;
   static String _getLabelHealth(AppLocalizations loc) => loc.lbHealth;
   static String _getLabelShopping(AppLocalizations loc) => loc.lbShopping;
-  static String _getLabelEntertainment(AppLocalizations loc) =>
-      loc.lbEntertainment;
+  static String _getLabelEntertainment(AppLocalizations loc) => loc.lbEntertainment;
   static String _getLabelSalary(AppLocalizations loc) => loc.lbSalary;
   static String _getLabelOthers(AppLocalizations loc) => loc.lbOthers;
 
   /// Returns all available categories.
-  static List<ETransactionCategory> get allCategories =>
-      ETransactionCategory.values;
+  static List<ETransactionCategory> get allCategories => ETransactionCategory.values;
 
   /// Returns the number of available categories.
   static int get categoryCount => ETransactionCategory.values.length;
@@ -107,8 +105,7 @@ abstract class CategoryRepository {
 
   /// Tries to find a category by its localized label.
   /// Returns null if no match is found.
-  static ETransactionCategory? getCategoryByLabel(
-      String label, AppLocalizations loc) {
+  static ETransactionCategory? getCategoryByLabel(String label, AppLocalizations loc) {
     for (final category in ETransactionCategory.values) {
       if (getLabel(category, loc) == label) {
         return category;
@@ -130,5 +127,15 @@ abstract class CategoryRepository {
   /// Checks if the given label corresponds to the "Others" category.
   static bool isOthersCategory(String label, AppLocalizations loc) {
     return label == getLabel(ETransactionCategory.others, loc);
+  }
+
+  static ETransactionCategory fromLabel(String cat, AppLocalizations loc) {
+    var labels = ETransactionCategory.values.map((e) => getLabel(e, loc)).toList();
+
+    var index = labels.indexOf(cat);
+    if (index == -1) {
+      return ETransactionCategory.others;
+    }
+    return ETransactionCategory.values[index];
   }
 }

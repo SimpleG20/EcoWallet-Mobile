@@ -183,4 +183,23 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get errorAmountFormat =>
       'Formato de número inválido. Use apenas dígitos e um separador decimal.';
+
+  @override
+  String get lbMonthlyProgress => 'Progresso Mensal';
+
+  @override
+  String get lbEcoFootprint => 'Pegada de Carbono';
+
+  @override
+  String ecoFootprintValue(String value) {
+    return '$value kg CO₂';
+  }
+
+  @override
+  String get lbEcoFootprintCompensation => 'Compensação necessária:';
+
+  @override
+  String ecoFootprintCompensation(int count) {
+    return '$count árvores 🌳';
+  }
 }
