@@ -296,7 +296,7 @@ class _PersonalPageState extends State<PersonalPage> {
   bool _submitForm() {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Dados atualizados!')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.msgDataUpdated)),
       );
       // Aqui chamaria o BLoC: context.read<SettingsBloc>().add(UpdateProfile(...));
       return true;

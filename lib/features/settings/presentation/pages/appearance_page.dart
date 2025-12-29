@@ -65,8 +65,7 @@ class _AppearancePageState extends State<AppearancePage> {
     );
   }
 
-  Widget _buildOptions(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildOptions(BuildContext context, ThemeData theme, AppLocalizations loc) {
     final sections = [
       _buildGeneralSection(context, theme, loc),
       _buildDisplaySection(context, theme, loc),
@@ -75,23 +74,21 @@ class _AppearancePageState extends State<AppearancePage> {
     return SettingsSectionList(sections: sections, theme: theme);
   }
 
-  Widget _buildGeneralSection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildGeneralSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 16),
-        SettingsSectionTitle(title: "Geral"), // Add to arb
+        SettingsSectionTitle(title: loc.sectionGeneral),
         const SizedBox(height: 8),
         DropdownRow<EAppThemeMode>(
           icon: Icons.brightness_6,
           label: loc.lbTheme,
           value: _selectedTheme,
-          items: const [
-            DropdownMenuItem(
-                value: EAppThemeMode.system, child: Text("Sistema")),
-            DropdownMenuItem(value: EAppThemeMode.light, child: Text("Claro")),
-            DropdownMenuItem(value: EAppThemeMode.dark, child: Text("Escuro")),
+          items: [
+            DropdownMenuItem(value: EAppThemeMode.system, child: Text(loc.themeSystem)),
+            DropdownMenuItem(value: EAppThemeMode.light, child: Text(loc.themeLight)),
+            DropdownMenuItem(value: EAppThemeMode.dark, child: Text(loc.themeDark)),
           ],
           onChanged: (v) => setState(() => _selectedTheme = v!),
           theme: theme,
@@ -100,30 +97,26 @@ class _AppearancePageState extends State<AppearancePage> {
     );
   }
 
-  Widget _buildDisplaySection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDisplaySection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        SettingsSectionTitle(title: "Display"),
+        SettingsSectionTitle(title: loc.sectionDisplay),
         const SizedBox(height: 8),
         DropdownRow<ECurrencyFormat>(
           icon: Icons.attach_money,
-          label: "Formato Moeda", // Add to arb: loc.lbCurrencyFormat
+          label: loc.lbCurrencyFormat,
           value: _currencyFormat,
-          items: const [
-            DropdownMenuItem(
-                value: ECurrencyFormat.symbol, child: Text("Símbolo (R\$)")),
-            DropdownMenuItem(
-                value: ECurrencyFormat.code, child: Text("Código (BRL)")),
+          items: [
+            DropdownMenuItem(value: ECurrencyFormat.symbol, child: Text(loc.currencySymbol)),
+            DropdownMenuItem(value: ECurrencyFormat.code, child: Text(loc.currencyCode)),
           ],
           onChanged: (v) => setState(() => _currencyFormat = v!),
           theme: theme,
         ),
         SwitchRow(
           icon: _hideCurrency ? Icons.visibility_off : Icons.visibility,
-          label: "Ocultar Valores", // Add to arb: loc.lbHideCurrency
+          label: loc.lbHideValues,
           value: _hideCurrency,
           onChanged: (v) => setState(() => _hideCurrency = v),
           theme: theme,
@@ -132,13 +125,11 @@ class _AppearancePageState extends State<AppearancePage> {
     );
   }
 
-  Widget _buildAccessibilitySection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildAccessibilitySection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        SettingsSectionTitle(title: "Accessibility"),
+        SettingsSectionTitle(title: loc.sectionAccessibility),
         const SizedBox(height: 8),
         _buildColorBlindModeOption(context, theme, loc),
         _buildAnimationsOption(context, theme, loc),
@@ -147,20 +138,16 @@ class _AppearancePageState extends State<AppearancePage> {
     );
   }
 
-  Widget _buildColorBlindModeOption(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildColorBlindModeOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return DropdownRow<EColorBlindMode>(
       icon: Icons.color_lens_outlined,
-      label: "Color Blind Mode", //loc.colorBlindMode,
+      label: loc.lbColorBlindMode,
       value: _colorBlindMode,
-      items: const [
-        DropdownMenuItem(value: EColorBlindMode.none, child: Text("None")),
-        DropdownMenuItem(
-            value: EColorBlindMode.protanopia, child: Text("Protanopia")),
-        DropdownMenuItem(
-            value: EColorBlindMode.deuteranopia, child: Text("Deuteranopia")),
-        DropdownMenuItem(
-            value: EColorBlindMode.tritanopia, child: Text("Tritanopia")),
+      items: [
+        DropdownMenuItem(value: EColorBlindMode.none, child: Text(loc.colorBlindNone)),
+        DropdownMenuItem(value: EColorBlindMode.protanopia, child: Text(loc.colorBlindProtanopia)),
+        DropdownMenuItem(value: EColorBlindMode.deuteranopia, child: Text(loc.colorBlindDeuteranopia)),
+        DropdownMenuItem(value: EColorBlindMode.tritanopia, child: Text(loc.colorBlindTritanopia)),
       ],
       onChanged: (EColorBlindMode? newValue) {
         setState(() {
@@ -171,11 +158,10 @@ class _AppearancePageState extends State<AppearancePage> {
     );
   }
 
-  Widget _buildAnimationsOption(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildAnimationsOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return SwitchRow(
       icon: Icons.auto_awesome,
-      label: "Animations", //loc.enableAnimations,
+      label: loc.lbAnimations,
       value: _enableAnimations,
       onChanged: (bool newValue) {
         setState(() {
@@ -186,16 +172,15 @@ class _AppearancePageState extends State<AppearancePage> {
     );
   }
 
-  Widget _buildFontsSizeOption(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildFontsSizeOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return DropdownRow<EFontSize>(
       icon: Icons.text_fields,
-      label: "Font Size", //loc.fontSize,
+      label: loc.lbFontSize,
       value: _fontSize,
-      items: const [
-        DropdownMenuItem(value: EFontSize.small, child: Text("Small")),
-        DropdownMenuItem(value: EFontSize.medium, child: Text("Medium")),
-        DropdownMenuItem(value: EFontSize.large, child: Text("Large")),
+      items: [
+        DropdownMenuItem(value: EFontSize.small, child: Text(loc.fontSizeSmall)),
+        DropdownMenuItem(value: EFontSize.medium, child: Text(loc.fontSizeMedium)),
+        DropdownMenuItem(value: EFontSize.large, child: Text(loc.fontSizeLarge)),
       ],
       onChanged: (EFontSize? newValue) {
         setState(() {

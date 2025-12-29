@@ -18,8 +18,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      fontFamily:
-          'Inter', // Assuming Inter as it's common with Tailwind defaults
+      fontFamily: 'Inter', // Assuming Inter as it's common with Tailwind defaults
       scaffoldBackgroundColor: AppColors.lightBackground,
 
       // Standard ColorScheme Mapping
@@ -48,16 +47,13 @@ class AppTheme {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
-          borderSide: const BorderSide(
-              color:
-                  AppColors.lightInputBackground), // Transparent in CSS logic
+          borderSide: const BorderSide(color: AppColors.lightInputBackground), // Transparent in CSS logic
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
           borderSide: const BorderSide(color: AppColors.lightRing, width: 2),
         ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -84,22 +80,14 @@ class AppTheme {
 
       // Typography Mapping (H1-H4 from CSS)
       textTheme: const TextTheme(
-        titleLarge:
-            TextStyle(fontSize: 22, fontWeight: _fontMedium, height: 1.5), // h4
-        titleMedium:
-            TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h5
-        titleSmall:
-            TextStyle(fontSize: 16, fontWeight: _fontMedium, height: 1.5), // h6
-        displayLarge:
-            TextStyle(fontSize: 24, fontWeight: _fontMedium, height: 1.5), // h1
-        displayMedium:
-            TextStyle(fontSize: 20, fontWeight: _fontMedium, height: 1.5), // h2
-        displaySmall:
-            TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h3
-        bodyLarge: TextStyle(
-            fontSize: 16, fontWeight: _fontNormal, height: 1.5), // p/base
-        labelLarge: TextStyle(
-            fontSize: 16, fontWeight: _fontMedium, height: 1.5), // button/label
+        titleLarge: TextStyle(fontSize: 22, fontWeight: _fontMedium, height: 1.5), // h4
+        titleMedium: TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h5
+        titleSmall: TextStyle(fontSize: 16, fontWeight: _fontMedium, height: 1.5), // h6
+        displayLarge: TextStyle(fontSize: 24, fontWeight: _fontMedium, height: 1.5), // h1
+        displayMedium: TextStyle(fontSize: 20, fontWeight: _fontMedium, height: 1.5), // h2
+        displaySmall: TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h3
+        bodyLarge: TextStyle(fontSize: 16, fontWeight: _fontNormal, height: 1.5), // p/base
+        labelLarge: TextStyle(fontSize: 16, fontWeight: _fontMedium, height: 1.5), // button/label
       ),
 
       // Extensions for custom properties
@@ -144,8 +132,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor:
-            AppColors.darkSecondary, // Used secondary for input in dark map
+        fillColor: AppColors.darkSecondary, // Used secondary for input in dark map
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
           borderSide: BorderSide.none,
@@ -154,8 +141,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(_radius),
           borderSide: const BorderSide(color: AppColors.darkRing, width: 2),
         ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       cardTheme: CardThemeData(
         color: AppColors.darkCard,
@@ -166,16 +152,8 @@ class AppTheme {
         ),
       ),
       textTheme: const TextTheme(
-        displayLarge: TextStyle(
-            fontSize: 24,
-            fontWeight: _fontMedium,
-            height: 1.5,
-            color: AppColors.darkForeground),
-        bodyLarge: TextStyle(
-            fontSize: 16,
-            fontWeight: _fontNormal,
-            height: 1.5,
-            color: AppColors.darkForeground),
+        displayLarge: TextStyle(fontSize: 24, fontWeight: _fontMedium, height: 1.5, color: AppColors.darkForeground),
+        bodyLarge: TextStyle(fontSize: 16, fontWeight: _fontNormal, height: 1.5, color: AppColors.darkForeground),
       ),
       extensions: [
         const ExtraColors(

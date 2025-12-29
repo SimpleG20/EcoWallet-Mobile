@@ -121,5 +121,171 @@
   "errorPasswordMismatch": "As senhas não coincidem.",
   "errorEnterCurrentPassword": "Por favor, insira sua senha atual.",
   "errorSameAsCurrentPassword": "A nova senha não pode ser igual à senha atual.",
-  "errorAmountFormat": "Formato de número inválido. Use apenas dígitos e um separador decimal."
+  "errorAmountFormat": "Formato de número inválido. Use apenas dígitos e um separador decimal.",
+
+  "sectionGeneral": "Geral",
+  "sectionDisplay": "Exibição",
+  "sectionAccessibility": "Acessibilidade",
+  "sectionMonthly": "Mensal",
+  "sectionWeekly": "Semanal",
+  "sectionDaily": "Diário",
+  "sectionDataManagement": "Gerenciamento de Dados",
+  "sectionBackup": "Backup",
+  "sectionReminders": "Lembretes",
+  "sectionReports": "Relatórios",
+  "sectionDoNotDisturb": "Não Perturbe",
+  "sectionEcoNotifications": "Notificações Eco",
+
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Escuro",
+
+  "lbCurrencyFormat": "Formato da Moeda",
+  "currencySymbol": "Símbolo (R$)",
+  "currencyCode": "Código (BRL)",
+  "lbHideValues": "Ocultar Valores",
+
+  "lbColorBlindMode": "Modo Daltonismo",
+  "colorBlindNone": "Nenhum",
+  "colorBlindProtanopia": "Protanopia",
+  "colorBlindDeuteranopia": "Deuteranopia",
+  "colorBlindTritanopia": "Tritanopia",
+
+  "lbAnimations": "Animações",
+  "lbFontSize": "Tamanho da Fonte",
+  "fontSizeSmall": "Pequeno",
+  "fontSizeMedium": "Médio",
+  "fontSizeLarge": "Grande",
+
+  "lbInitialDayOfMonth": "Dia Inicial do Mês",
+  "lbExpensesLimit": "Limite de Despesas",
+  "expensesLimitDescription": "Defina um limite para controlar suas despesas mensais.",
+  "setMonthlyExpensesLimit": "Definir Limite de Despesas Mensais",
+  "lbLimitAlert": "Alerta de Limite",
+  "limitAlertDescription": "Receba um alerta quando atingir seu limite de orçamento.",
+  "lbBudgetLimit": "Limite de Orçamento",
+
+  "lbExport": "Exportar",
+  "exportDataDescription": "Exporte seus dados para um arquivo de backup.",
+  "lbImport": "Importar",
+  "importDataDescription": "Importe dados de um arquivo exportado anteriormente.",
+  "lbDelete": "Excluir",
+  "deleteDataDescription": "Exclua permanentemente todos os seus dados do aplicativo.",
+  "lbEnableCloud": "Ativar Nuvem",
+  "lbEncrypted": "Criptografado",
+  "lbFrequency": "Frequência",
+  "frequencyNone": "Nenhum",
+  "frequencyDaily": "Diário",
+  "frequencyWeekly": "Semanal",
+  "frequencyMonthly": "Mensal",
+
+  "lbDailyReminder": "Lembrete Diário",
+  "dailyReminderDescription": "Receba notificações diárias sobre seu uso de energia",
+  "lbBillsReminder": "Lembrete de Contas",
+  "billsReminderDescription": "Seja notificado sobre contas próximas",
+  "lbMonthlyReport": "Relatório Mensal",
+  "monthlyReportDescription": "Receba um resumo mensal de consumo",
+  "lbQuietHours": "Horário Silencioso",
+  "lbFrom": "De:",
+  "lbTo": "Até:",
+  "lbEnergySavingTips": "Dicas de Economia de Energia",
+  "energySavingTipsDescription": "Receba dicas para reduzir o consumo de energia",
+  "lbHighConsumptionAlert": "Alerta de Alto Consumo",
+  "highConsumptionAlertDescription": "Alerta quando o consumo excede o limite",
+  "thresholdLabel": "Limite: {value} kWh",
+  "@thresholdLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "btnSendTestNotification": "Enviar Notificação de Teste",
+  "msgTestNotificationSent": "Notificação de teste enviada!",
+  "msgDataUpdated": "Dados atualizados!",
+
+  "feedbackTitle": "Adoraríamos ouvir você!",
+  "feedbackDescription": "Seu feedback nos ajuda a melhorar o EcoWallet e criar uma experiência melhor para todos.",
+  "feedbackCategoryLabel": "Categoria",
+  "feedbackCategoryBug": "Relatar Bug",
+  "feedbackCategorySuggestion": "Sugestão",
+  "feedbackCategoryCompliment": "Elogio",
+  "feedbackCategoryOther": "Outro",
+  "feedbackMessageLabel": "Sua Mensagem",
+  "feedbackMessageHint": "Conte-nos o que está pensando...",
+  "feedbackEmailLabel": "Seu Email (opcional)",
+  "feedbackEmailHint": "Para perguntas de acompanhamento",
+  "feedbackSubmitButton": "Enviar Feedback",
+  "feedbackThankYou": "Obrigado pelo seu feedback!",
+  "feedbackCharacterCount": "{count}/500 caracteres",
+  "@feedbackCharacterCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "helpSearchHint": "Buscar tópicos de ajuda...",
+  "helpFaqTitle": "Perguntas Frequentes",
+  "helpFaqAddTransaction": "Como adiciono uma transação?",
+  "helpFaqAddTransactionAnswer": "Toque no botão '+' na tela inicial, selecione o tipo de transação (receita, despesa ou reserva), preencha os detalhes e toque em 'Salvar'.",
+  "helpFaqEditDelete": "Como edito ou excluo uma transação?",
+  "helpFaqEditDeleteAnswer": "Deslize para a esquerda na transação para revelar as opções de editar e excluir, ou toque na transação para abrir os detalhes e usar os botões de ação.",
+  "helpFaqCategories": "Como gerencio as categorias?",
+  "helpFaqCategoriesAnswer": "Vá para Configurações > Gerenciar Dados para personalizar suas categorias de transação.",
+  "helpFaqBackup": "Como faço backup dos meus dados?",
+  "helpFaqBackupAnswer": "Ative o backup na nuvem em Configurações > Gerenciar Dados > seção Backup. Você também pode exportar seus dados manualmente.",
+  "helpFaqLanguage": "Como mudo o idioma?",
+  "helpFaqLanguageAnswer": "O aplicativo segue as configurações de idioma do seu dispositivo. Altere o idioma do dispositivo para mudar o idioma do aplicativo.",
+  "helpContactTitle": "Contatar Suporte",
+  "helpContactDescription": "Ainda precisa de ajuda? Nossa equipe de suporte está aqui para você.",
+  "helpContactEmail": "Suporte por Email",
+  "helpContactChat": "Chat ao Vivo",
+  "helpVersion": "Versão do App",
+
+  "policyLastUpdated": "Última Atualização: {date}",
+  "@policyLastUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "policyIntroTitle": "Introdução",
+  "policyIntroContent": "O EcoWallet está comprometido em proteger sua privacidade. Esta política explica como coletamos, usamos e protegemos suas informações pessoais.",
+  "policyDataCollectionTitle": "Coleta de Dados",
+  "policyDataCollectionContent": "Coletamos informações que você fornece diretamente, como seu nome, email e dados de transações financeiras. Todos os dados são armazenados com segurança no seu dispositivo e opcionalmente em armazenamento na nuvem criptografado.",
+  "policyDataUsageTitle": "Como Usamos Seus Dados",
+  "policyDataUsageContent": "Seus dados são usados exclusivamente para fornecer funcionalidades do aplicativo, incluindo rastreamento de transações, gerenciamento de orçamento e geração de relatórios financeiros. Nunca vendemos seus dados para terceiros.",
+  "policySecurityTitle": "Segurança de Dados",
+  "policySecurityContent": "Implementamos medidas de segurança padrão da indústria, incluindo criptografia, transmissão segura de dados e auditorias de segurança regulares para proteger suas informações.",
+  "policyRightsTitle": "Seus Direitos",
+  "policyRightsContent": "Você tem o direito de acessar, modificar, exportar ou excluir seus dados a qualquer momento através das configurações do aplicativo. Você também pode solicitar uma exclusão completa de dados entrando em contato com nossa equipe de suporte.",
+  "policyContactTitle": "Entre em Contato",
+  "policyContactContent": "Para perguntas sobre esta política de privacidade, entre em contato conosco em privacy@ecowallet.app",
+
+  "termsLastUpdated": "Última Atualização: {date}",
+  "@termsLastUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "termsAcceptanceTitle": "Aceitação dos Termos",
+  "termsAcceptanceContent": "Ao baixar, instalar ou usar o EcoWallet, você concorda em estar vinculado a estes Termos de Serviço. Se você não concorda, por favor não use o aplicativo.",
+  "termsServiceTitle": "Descrição do Serviço",
+  "termsServiceContent": "O EcoWallet fornece ferramentas de gerenciamento de finanças pessoais, incluindo rastreamento de transações, orçamento e análises financeiras. O serviço é fornecido 'como está' para uso pessoal e não comercial.",
+  "termsAccountTitle": "Contas de Usuário",
+  "termsAccountContent": "Você é responsável por manter a confidencialidade das credenciais da sua conta e por todas as atividades em sua conta. Você deve fornecer informações precisas e completas ao criar uma conta.",
+  "termsContentTitle": "Conteúdo do Usuário",
+  "termsContentContent": "Você mantém todos os direitos sobre os dados financeiros que insere no aplicativo. Ao usar nossos recursos de backup na nuvem, você nos concede permissão para armazenar e processar esses dados exclusivamente para fornecer o serviço.",
+  "termsProhibitedTitle": "Usos Proibidos",
+  "termsProhibitedContent": "Você não pode usar o EcoWallet para fins ilegais, transmitir código malicioso ou tentar acessar dados de outros usuários. A violação pode resultar no encerramento da conta.",
+  "termsLiabilityTitle": "Limitação de Responsabilidade",
+  "termsLiabilityContent": "O EcoWallet não é responsável por quaisquer decisões financeiras que você tome com base nos dados ou análises do aplicativo. Sempre consulte um profissional financeiro para assuntos financeiros importantes.",
+  "termsChangesTitle": "Alterações nos Termos",
+  "termsChangesContent": "Podemos atualizar estes termos periodicamente. O uso continuado do aplicativo após as alterações constitui aceitação dos novos termos."
 }
+

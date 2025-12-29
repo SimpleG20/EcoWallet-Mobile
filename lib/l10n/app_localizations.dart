@@ -829,6 +829,756 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid number format. Use only digits and a decimal separator.'**
   String get errorAmountFormat;
+
+  /// No description provided for @sectionGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get sectionGeneral;
+
+  /// No description provided for @sectionDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Display'**
+  String get sectionDisplay;
+
+  /// No description provided for @sectionAccessibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get sectionAccessibility;
+
+  /// No description provided for @sectionMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get sectionMonthly;
+
+  /// No description provided for @sectionWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get sectionWeekly;
+
+  /// No description provided for @sectionDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get sectionDaily;
+
+  /// No description provided for @sectionDataManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Management'**
+  String get sectionDataManagement;
+
+  /// No description provided for @sectionBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get sectionBackup;
+
+  /// No description provided for @sectionReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get sectionReminders;
+
+  /// No description provided for @sectionReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get sectionReports;
+
+  /// No description provided for @sectionDoNotDisturb.
+  ///
+  /// In en, this message translates to:
+  /// **'Do Not Disturb'**
+  String get sectionDoNotDisturb;
+
+  /// No description provided for @sectionEcoNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Eco Notifications'**
+  String get sectionEcoNotifications;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @lbCurrencyFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency Format'**
+  String get lbCurrencyFormat;
+
+  /// No description provided for @currencySymbol.
+  ///
+  /// In en, this message translates to:
+  /// **'Symbol (R\$)'**
+  String get currencySymbol;
+
+  /// No description provided for @currencyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Code (BRL)'**
+  String get currencyCode;
+
+  /// No description provided for @lbHideValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide Values'**
+  String get lbHideValues;
+
+  /// No description provided for @lbColorBlindMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Color Blind Mode'**
+  String get lbColorBlindMode;
+
+  /// No description provided for @colorBlindNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get colorBlindNone;
+
+  /// No description provided for @colorBlindProtanopia.
+  ///
+  /// In en, this message translates to:
+  /// **'Protanopia'**
+  String get colorBlindProtanopia;
+
+  /// No description provided for @colorBlindDeuteranopia.
+  ///
+  /// In en, this message translates to:
+  /// **'Deuteranopia'**
+  String get colorBlindDeuteranopia;
+
+  /// No description provided for @colorBlindTritanopia.
+  ///
+  /// In en, this message translates to:
+  /// **'Tritanopia'**
+  String get colorBlindTritanopia;
+
+  /// No description provided for @lbAnimations.
+  ///
+  /// In en, this message translates to:
+  /// **'Animations'**
+  String get lbAnimations;
+
+  /// No description provided for @lbFontSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Font Size'**
+  String get lbFontSize;
+
+  /// No description provided for @fontSizeSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get fontSizeSmall;
+
+  /// No description provided for @fontSizeMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get fontSizeMedium;
+
+  /// No description provided for @fontSizeLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get fontSizeLarge;
+
+  /// No description provided for @lbInitialDayOfMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Initial Day of the Month'**
+  String get lbInitialDayOfMonth;
+
+  /// No description provided for @lbExpensesLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses Limit'**
+  String get lbExpensesLimit;
+
+  /// No description provided for @expensesLimitDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a limit to control your monthly expenses.'**
+  String get expensesLimitDescription;
+
+  /// No description provided for @setMonthlyExpensesLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Monthly Expenses Limit'**
+  String get setMonthlyExpensesLimit;
+
+  /// No description provided for @lbLimitAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit Alert'**
+  String get lbLimitAlert;
+
+  /// No description provided for @limitAlertDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive an alert when you reach your budget limit.'**
+  String get limitAlertDescription;
+
+  /// No description provided for @lbBudgetLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Limit'**
+  String get lbBudgetLimit;
+
+  /// No description provided for @lbExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get lbExport;
+
+  /// No description provided for @exportDataDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Export your data to a file for backup purposes.'**
+  String get exportDataDescription;
+
+  /// No description provided for @lbImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get lbImport;
+
+  /// No description provided for @importDataDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Import data from a previously exported file.'**
+  String get importDataDescription;
+
+  /// No description provided for @lbDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get lbDelete;
+
+  /// No description provided for @deleteDataDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently delete all your data from the app.'**
+  String get deleteDataDescription;
+
+  /// No description provided for @lbEnableCloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Cloud'**
+  String get lbEnableCloud;
+
+  /// No description provided for @lbEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted'**
+  String get lbEncrypted;
+
+  /// No description provided for @lbFrequency.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency'**
+  String get lbFrequency;
+
+  /// No description provided for @frequencyNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get frequencyNone;
+
+  /// No description provided for @frequencyDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get frequencyDaily;
+
+  /// No description provided for @frequencyWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get frequencyWeekly;
+
+  /// No description provided for @frequencyMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get frequencyMonthly;
+
+  /// No description provided for @lbDailyReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Reminder'**
+  String get lbDailyReminder;
+
+  /// No description provided for @dailyReminderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive daily notifications about your energy usage'**
+  String get dailyReminderDescription;
+
+  /// No description provided for @lbBillsReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills Reminder'**
+  String get lbBillsReminder;
+
+  /// No description provided for @billsReminderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified about upcoming bills'**
+  String get billsReminderDescription;
+
+  /// No description provided for @lbMonthlyReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Report'**
+  String get lbMonthlyReport;
+
+  /// No description provided for @monthlyReportDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive monthly consumption summary'**
+  String get monthlyReportDescription;
+
+  /// No description provided for @lbQuietHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet Hours'**
+  String get lbQuietHours;
+
+  /// No description provided for @lbFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From:'**
+  String get lbFrom;
+
+  /// No description provided for @lbTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To:'**
+  String get lbTo;
+
+  /// No description provided for @lbEnergySavingTips.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy Saving Tips'**
+  String get lbEnergySavingTips;
+
+  /// No description provided for @energySavingTipsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive tips to reduce energy consumption'**
+  String get energySavingTipsDescription;
+
+  /// No description provided for @lbHighConsumptionAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'High Consumption Alert'**
+  String get lbHighConsumptionAlert;
+
+  /// No description provided for @highConsumptionAlertDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when consumption exceeds threshold'**
+  String get highConsumptionAlertDescription;
+
+  /// No description provided for @thresholdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Threshold: {value} kWh'**
+  String thresholdLabel(String value);
+
+  /// No description provided for @btnSendTestNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Test Notification'**
+  String get btnSendTestNotification;
+
+  /// No description provided for @msgTestNotificationSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Test notification sent!'**
+  String get msgTestNotificationSent;
+
+  /// No description provided for @msgDataUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Data updated!'**
+  String get msgDataUpdated;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'d love to hear from you!'**
+  String get feedbackTitle;
+
+  /// No description provided for @feedbackDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your feedback helps us improve EcoWallet and create a better experience for everyone.'**
+  String get feedbackDescription;
+
+  /// No description provided for @feedbackCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get feedbackCategoryLabel;
+
+  /// No description provided for @feedbackCategoryBug.
+  ///
+  /// In en, this message translates to:
+  /// **'Bug Report'**
+  String get feedbackCategoryBug;
+
+  /// No description provided for @feedbackCategorySuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion'**
+  String get feedbackCategorySuggestion;
+
+  /// No description provided for @feedbackCategoryCompliment.
+  ///
+  /// In en, this message translates to:
+  /// **'Compliment'**
+  String get feedbackCategoryCompliment;
+
+  /// No description provided for @feedbackCategoryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get feedbackCategoryOther;
+
+  /// No description provided for @feedbackMessageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Message'**
+  String get feedbackMessageLabel;
+
+  /// No description provided for @feedbackMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what\'s on your mind...'**
+  String get feedbackMessageHint;
+
+  /// No description provided for @feedbackEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Email (optional)'**
+  String get feedbackEmailLabel;
+
+  /// No description provided for @feedbackEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For follow-up questions'**
+  String get feedbackEmailHint;
+
+  /// No description provided for @feedbackSubmitButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Feedback'**
+  String get feedbackSubmitButton;
+
+  /// No description provided for @feedbackThankYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your feedback!'**
+  String get feedbackThankYou;
+
+  /// No description provided for @feedbackCharacterCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}/500 characters'**
+  String feedbackCharacterCount(int count);
+
+  /// No description provided for @helpSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for help topics...'**
+  String get helpSearchHint;
+
+  /// No description provided for @helpFaqTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Frequently Asked Questions'**
+  String get helpFaqTitle;
+
+  /// No description provided for @helpFaqAddTransaction.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I add a transaction?'**
+  String get helpFaqAddTransaction;
+
+  /// No description provided for @helpFaqAddTransactionAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the \'+\' button on the home screen, select the transaction type (income, expense, or reserve), fill in the details, and tap \'Save\'.'**
+  String get helpFaqAddTransactionAnswer;
+
+  /// No description provided for @helpFaqEditDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I edit or delete a transaction?'**
+  String get helpFaqEditDelete;
+
+  /// No description provided for @helpFaqEditDeleteAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe left on the transaction to reveal edit and delete options, or tap on the transaction to open details and use the action buttons.'**
+  String get helpFaqEditDeleteAnswer;
+
+  /// No description provided for @helpFaqCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I manage categories?'**
+  String get helpFaqCategories;
+
+  /// No description provided for @helpFaqCategoriesAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Settings > Manage Data to customize your transaction categories.'**
+  String get helpFaqCategoriesAnswer;
+
+  /// No description provided for @helpFaqBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I backup my data?'**
+  String get helpFaqBackup;
+
+  /// No description provided for @helpFaqBackupAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable cloud backup in Settings > Manage Data > Backup section. You can also export your data manually.'**
+  String get helpFaqBackupAnswer;
+
+  /// No description provided for @helpFaqLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I change the language?'**
+  String get helpFaqLanguage;
+
+  /// No description provided for @helpFaqLanguageAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'The app follows your device\'s language settings. Change your device language to switch the app language.'**
+  String get helpFaqLanguageAnswer;
+
+  /// No description provided for @helpContactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Support'**
+  String get helpContactTitle;
+
+  /// No description provided for @helpContactDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Still need help? Our support team is here for you.'**
+  String get helpContactDescription;
+
+  /// No description provided for @helpContactEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Support'**
+  String get helpContactEmail;
+
+  /// No description provided for @helpContactChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Chat'**
+  String get helpContactChat;
+
+  /// No description provided for @helpVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'App Version'**
+  String get helpVersion;
+
+  /// No description provided for @policyLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated: {date}'**
+  String policyLastUpdated(String date);
+
+  /// No description provided for @policyIntroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Introduction'**
+  String get policyIntroTitle;
+
+  /// No description provided for @policyIntroContent.
+  ///
+  /// In en, this message translates to:
+  /// **'EcoWallet is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal information.'**
+  String get policyIntroContent;
+
+  /// No description provided for @policyDataCollectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Collection'**
+  String get policyDataCollectionTitle;
+
+  /// No description provided for @policyDataCollectionContent.
+  ///
+  /// In en, this message translates to:
+  /// **'We collect information you provide directly, such as your name, email, and financial transaction data. All data is stored securely on your device and optionally in encrypted cloud storage.'**
+  String get policyDataCollectionContent;
+
+  /// No description provided for @policyDataUsageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How We Use Your Data'**
+  String get policyDataUsageTitle;
+
+  /// No description provided for @policyDataUsageContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data is used solely to provide app functionality, including transaction tracking, budget management, and generating financial reports. We never sell your data to third parties.'**
+  String get policyDataUsageContent;
+
+  /// No description provided for @policySecurityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Security'**
+  String get policySecurityTitle;
+
+  /// No description provided for @policySecurityContent.
+  ///
+  /// In en, this message translates to:
+  /// **'We implement industry-standard security measures including encryption, secure data transmission, and regular security audits to protect your information.'**
+  String get policySecurityContent;
+
+  /// No description provided for @policyRightsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Rights'**
+  String get policyRightsTitle;
+
+  /// No description provided for @policyRightsContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You have the right to access, modify, export, or delete your data at any time through the app settings. You can also request a complete data deletion by contacting our support team.'**
+  String get policyRightsContent;
+
+  /// No description provided for @policyContactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get policyContactTitle;
+
+  /// No description provided for @policyContactContent.
+  ///
+  /// In en, this message translates to:
+  /// **'For questions about this privacy policy, please contact us at privacy@ecowallet.app'**
+  String get policyContactContent;
+
+  /// No description provided for @termsLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated: {date}'**
+  String termsLastUpdated(String date);
+
+  /// No description provided for @termsAcceptanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceptance of Terms'**
+  String get termsAcceptanceTitle;
+
+  /// No description provided for @termsAcceptanceContent.
+  ///
+  /// In en, this message translates to:
+  /// **'By downloading, installing, or using EcoWallet, you agree to be bound by these Terms of Service. If you do not agree, please do not use the app.'**
+  String get termsAcceptanceContent;
+
+  /// No description provided for @termsServiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Description'**
+  String get termsServiceTitle;
+
+  /// No description provided for @termsServiceContent.
+  ///
+  /// In en, this message translates to:
+  /// **'EcoWallet provides personal finance management tools including transaction tracking, budgeting, and financial analytics. The service is provided \'as is\' for personal, non-commercial use.'**
+  String get termsServiceContent;
+
+  /// No description provided for @termsAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'User Accounts'**
+  String get termsAccountTitle;
+
+  /// No description provided for @termsAccountContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account. You must provide accurate and complete information when creating an account.'**
+  String get termsAccountContent;
+
+  /// No description provided for @termsContentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'User Content'**
+  String get termsContentTitle;
+
+  /// No description provided for @termsContentContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You retain all rights to the financial data you enter into the app. By using our cloud backup features, you grant us permission to store and process this data solely for providing the service.'**
+  String get termsContentContent;
+
+  /// No description provided for @termsProhibitedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Prohibited Uses'**
+  String get termsProhibitedTitle;
+
+  /// No description provided for @termsProhibitedContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You may not use EcoWallet for any illegal purposes, to transmit malicious code, or to attempt to access other users\' data. Violation may result in account termination.'**
+  String get termsProhibitedContent;
+
+  /// No description provided for @termsLiabilityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Limitation of Liability'**
+  String get termsLiabilityTitle;
+
+  /// No description provided for @termsLiabilityContent.
+  ///
+  /// In en, this message translates to:
+  /// **'EcoWallet is not liable for any financial decisions you make based on the app\'s data or analytics. Always consult a financial professional for important financial matters.'**
+  String get termsLiabilityContent;
+
+  /// No description provided for @termsChangesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes to Terms'**
+  String get termsChangesTitle;
+
+  /// No description provided for @termsChangesContent.
+  ///
+  /// In en, this message translates to:
+  /// **'We may update these terms periodically. Continued use of the app after changes constitutes acceptance of the new terms.'**
+  String get termsChangesContent;
 }
 
 class _AppLocalizationsDelegate

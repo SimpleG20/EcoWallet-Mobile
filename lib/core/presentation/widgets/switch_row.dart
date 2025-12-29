@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class SwitchRow extends StatelessWidget {
   final IconData icon;
   final String label;
+  final String? subLabel;
   final bool value;
   final ValueChanged<bool> onChanged;
   final ThemeData theme;
@@ -14,6 +15,7 @@ class SwitchRow extends StatelessWidget {
     required this.value,
     required this.onChanged,
     required this.theme,
+    this.subLabel,
   });
 
   @override
@@ -23,12 +25,27 @@ class SwitchRow extends StatelessWidget {
         Icon(icon, color: theme.colorScheme.onSurfaceVariant),
         const SizedBox(width: 16),
         Expanded(
-          child: Text(
-            label,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.onSurface,
-              fontSize: 15,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontSize: 15,
+                ),
+              ),
+              if (subLabel != null) ...[
+                const SizedBox(height: 4),
+                Text(
+                  subLabel!,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+            ],
           ),
         ),
         Switch(

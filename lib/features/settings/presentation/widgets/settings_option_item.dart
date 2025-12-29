@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 class SettingsOptionItem extends StatelessWidget {
   final IconData icon;
   final String title;
+  final String? subtitle;
+  final Widget? trailing;
   final VoidCallback? onTap;
 
   const SettingsOptionItem({
     super.key,
     required this.icon,
     required this.title,
+    this.subtitle,
+    this.trailing,
     this.onTap,
   });
 
@@ -28,10 +32,17 @@ class SettingsOptionItem extends StatelessWidget {
         title,
         style: theme.textTheme.titleSmall?.copyWith(fontSize: 15),
       ),
-      trailing: Icon(
-        Icons.chevron_right,
-        color: theme.colorScheme.onSurfaceVariant,
-      ),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle!,
+              style: theme.textTheme.bodySmall?.copyWith(fontSize: 13),
+            )
+          : null,
+      trailing: trailing ??
+          Icon(
+            Icons.chevron_right,
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
       onTap: onTap,
     );
   }

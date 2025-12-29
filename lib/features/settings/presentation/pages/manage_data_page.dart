@@ -47,23 +47,18 @@ class ManageDataPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDataOptions(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
-    final sections = [
-      _buildDataSection(context, theme, loc),
-      _buildBackupSection(context, theme, loc)
-    ];
+  Widget _buildDataOptions(BuildContext context, ThemeData theme, AppLocalizations loc) {
+    final sections = [_buildDataSection(context, theme, loc), _buildBackupSection(context, theme, loc)];
 
     return SettingsSectionList(sections: sections, theme: theme);
   }
 
-  Widget _buildDataSection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDataSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        SettingsSectionTitle(title: "Data Management"),
+        const SizedBox(height: 8),
+        SettingsSectionTitle(title: loc.sectionDataManagement),
         const SizedBox(height: 16),
         _buildExportData(context, theme, loc),
         const SizedBox(height: 16),
@@ -74,18 +69,17 @@ class ManageDataPage extends StatelessWidget {
     );
   }
 
-  Widget _buildExportData(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildExportData(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOptionTitle(context, theme, "Export"),
-            const SizedBox(height: 8),
+            _buildOptionTitle(context, theme, loc.lbExport),
+            const SizedBox(height: 4),
             Text(
-              "Export data description", //loc.exportDataDescription,
-              style: theme.textTheme.bodyMedium,
+              loc.exportDataDescription,
+              style: theme.textTheme.bodySmall,
             ),
           ],
         ),
@@ -104,18 +98,17 @@ class ManageDataPage extends StatelessWidget {
     );
   }
 
-  Widget _buildImportData(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildImportData(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOptionTitle(context, theme, "Import"),
+            _buildOptionTitle(context, theme, loc.lbImport),
             const SizedBox(height: 8),
             Text(
-              "Import data description", //loc.importDataDescription,
-              style: theme.textTheme.bodyMedium,
+              loc.importDataDescription,
+              style: theme.textTheme.bodySmall,
             ),
           ],
         ),
@@ -134,19 +127,17 @@ class ManageDataPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDeleteData(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDeleteData(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildOptionTitle(context, theme, "Delete",
-                color: theme.colorScheme.error),
+            _buildOptionTitle(context, theme, loc.lbDelete, color: theme.colorScheme.error),
             const SizedBox(height: 8),
             Text(
-              "Delete data description", //loc.deleteDataDescription,
-              style: theme.textTheme.bodyMedium,
+              loc.deleteDataDescription,
+              style: theme.textTheme.bodySmall,
             ),
           ],
         ),
@@ -164,17 +155,15 @@ class ManageDataPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBackupSection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildBackupSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 8),
-        SettingsSectionTitle(title: "Backup"),
+        SettingsSectionTitle(title: loc.sectionBackup),
         const SizedBox(height: 16),
         SwitchRow(
           icon: Icons.cloud_upload,
-          label: "Enable Cloud", //loc.enableCloudBackup,
+          label: loc.lbEnableCloud,
           value: true, // Replace with actual state
           onChanged: (bool newValue) {
             // Handle toggle
@@ -184,7 +173,7 @@ class ManageDataPage extends StatelessWidget {
         const SizedBox(height: 8),
         SwitchRow(
           icon: Icons.lock,
-          label: "Encrypted", //loc.encryptBackups,
+          label: loc.lbEncrypted,
           value: false, // Replace with actual state
           onChanged: (bool newValue) {
             // Handle toggle
@@ -194,17 +183,13 @@ class ManageDataPage extends StatelessWidget {
         const SizedBox(height: 8),
         DropdownRow<EBackupFrequency>(
             icon: Icons.schedule,
-            label: "Frequency",
+            label: loc.lbFrequency,
             value: EBackupFrequency.daily,
-            items: const [
-              DropdownMenuItem(
-                  value: EBackupFrequency.none, child: Text("None")),
-              DropdownMenuItem(
-                  value: EBackupFrequency.daily, child: Text("Daily")),
-              DropdownMenuItem(
-                  value: EBackupFrequency.weekly, child: Text("Weekly")),
-              DropdownMenuItem(
-                  value: EBackupFrequency.monthly, child: Text("Monthly")),
+            items: [
+              DropdownMenuItem(value: EBackupFrequency.none, child: Text(loc.frequencyNone)),
+              DropdownMenuItem(value: EBackupFrequency.daily, child: Text(loc.frequencyDaily)),
+              DropdownMenuItem(value: EBackupFrequency.weekly, child: Text(loc.frequencyWeekly)),
+              DropdownMenuItem(value: EBackupFrequency.monthly, child: Text(loc.frequencyMonthly)),
             ],
             onChanged: (EBackupFrequency? newValue) {
               // Handle dropdown change
@@ -214,8 +199,7 @@ class ManageDataPage extends StatelessWidget {
     );
   }
 
-  Widget _buildOptionTitle(BuildContext context, ThemeData theme, String title,
-      {Color? color}) {
+  Widget _buildOptionTitle(BuildContext context, ThemeData theme, String title, {Color? color}) {
     return Text(
       title,
       style: theme.textTheme.titleSmall?.copyWith(

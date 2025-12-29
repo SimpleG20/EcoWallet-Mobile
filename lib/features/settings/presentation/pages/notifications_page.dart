@@ -63,8 +63,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildNotificationsOptions(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildNotificationsOptions(BuildContext context, ThemeData theme, AppLocalizations loc) {
     final sections = [
       _buildRemindersSection(context, theme, loc),
       _buildReportsSection(context, theme, loc),
@@ -75,13 +74,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return SettingsSectionList(sections: sections, theme: theme);
   }
 
-  Widget _buildRemindersSection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildRemindersSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        SettingsSectionTitle(title: "Reminders"),
+        const SizedBox(height: 8),
+        SettingsSectionTitle(title: loc.sectionReminders),
         const SizedBox(height: 16),
         _buildDailyReminderOption(context, theme, loc),
         const SizedBox(height: 16),
@@ -90,25 +88,23 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildDailyReminderOption(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDailyReminderOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
-        Icon(Icons.notifications_outlined,
-            color: theme.colorScheme.onSurfaceVariant),
+        Icon(Icons.notifications_outlined, color: theme.colorScheme.onSurfaceVariant),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Daily Reminder", //loc.dailyReminder,
+                loc.lbDailyReminder,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: theme.colorScheme.onSurface,
                 ),
               ),
               Text(
-                "Receive daily notifications about your energy usage", //loc.dailyReminderDescription,
+                loc.dailyReminderDescription,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -133,25 +129,23 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildBillsReminderOption(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildBillsReminderOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
-        Icon(Icons.receipt_long_outlined,
-            color: theme.colorScheme.onSurfaceVariant),
+        Icon(Icons.receipt_long_outlined, color: theme.colorScheme.onSurfaceVariant),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Bills Reminder", //loc.billsReminder,
+                loc.lbBillsReminder,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: theme.colorScheme.onSurface,
                 ),
               ),
               Text(
-                "Get notified about upcoming bills", //loc.billsReminderDescription,
+                loc.billsReminderDescription,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -169,38 +163,34 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildReportsSection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildReportsSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 8),
-        SettingsSectionTitle(title: "Reports"),
+        SettingsSectionTitle(title: loc.sectionReports),
         const SizedBox(height: 16),
         _buildMonthlyReportOption(context, theme, loc),
       ],
     );
   }
 
-  Widget _buildMonthlyReportOption(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildMonthlyReportOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
-        Icon(Icons.calendar_month_outlined,
-            color: theme.colorScheme.onSurfaceVariant),
+        Icon(Icons.calendar_month_outlined, color: theme.colorScheme.onSurfaceVariant),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Monthly Report",
+                loc.lbMonthlyReport,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: theme.colorScheme.onSurface,
                 ),
               ),
               Text(
-                "Receive monthly consumption summary",
+                loc.monthlyReportDescription,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -216,29 +206,25 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildDoNotDisturbSection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDoNotDisturbSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Text(
-            "Do Not Disturb",
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
+        Text(
+          loc.sectionDoNotDisturb,
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: theme.colorScheme.primary,
+            fontWeight: FontWeight.bold,
           ),
         ),
+        const SizedBox(height: 8),
         Row(
           children: [
-            Icon(Icons.nightlight_outlined,
-                color: theme.colorScheme.onSurfaceVariant),
+            Icon(Icons.nightlight_outlined, color: theme.colorScheme.onSurfaceVariant),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
-                "Quiet Hours",
+                loc.lbQuietHours,
                 style: theme.textTheme.bodyLarge,
               ),
             ),
@@ -252,13 +238,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
           padding: const EdgeInsets.only(left: 40, top: 8),
           child: Row(
             children: [
-              Expanded(child: Text("From:", style: theme.textTheme.bodyMedium)),
+              Expanded(child: Text(loc.lbFrom, style: theme.textTheme.bodyMedium)),
               TextButton(
                 onPressed: () {},
                 child: const Text("22:00"),
               ),
               const SizedBox(width: 16),
-              Expanded(child: Text("To:", style: theme.textTheme.bodyMedium)),
+              Expanded(child: Text(loc.lbTo, style: theme.textTheme.bodyMedium)),
               TextButton(
                 onPressed: () {},
                 child: const Text("07:00"),
@@ -270,13 +256,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildEcoSection(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildEcoSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 8),
-        SettingsSectionTitle(title: "Eco Notifications"),
+        SettingsSectionTitle(title: loc.sectionEcoNotifications),
         const SizedBox(height: 16),
         _buildEnergySavingTipsOption(context, theme, loc),
         const SizedBox(height: 16),
@@ -285,25 +269,23 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildEnergySavingTipsOption(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildEnergySavingTipsOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
-        Icon(Icons.energy_savings_leaf_outlined,
-            color: theme.colorScheme.onSurfaceVariant),
+        Icon(Icons.energy_savings_leaf_outlined, color: theme.colorScheme.onSurfaceVariant),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Energy Saving Tips",
+                loc.lbEnergySavingTips,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: theme.colorScheme.onSurface,
                 ),
               ),
               Text(
-                "Receive tips to reduce energy consumption",
+                loc.energySavingTipsDescription,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -319,27 +301,25 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildHighConsumptionAlertOption(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildHighConsumptionAlertOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       children: [
         Row(
           children: [
-            Icon(Icons.warning_amber_outlined,
-                color: theme.colorScheme.onSurfaceVariant),
+            Icon(Icons.warning_amber_outlined, color: theme.colorScheme.onSurfaceVariant),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "High Consumption Alert",
+                    loc.lbHighConsumptionAlert,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.onSurface,
                     ),
                   ),
                   Text(
-                    "Alert when consumption exceeds threshold",
+                    loc.highConsumptionAlertDescription,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -359,7 +339,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             children: [
               Expanded(
                 child: Text(
-                  "Threshold: 500 kWh",
+                  loc.thresholdLabel("500"),
                   style: theme.textTheme.bodyMedium,
                 ),
               ),
@@ -376,19 +356,18 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildTestNotificationButton(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildTestNotificationButton(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: OutlinedButton.icon(
         onPressed: () {
           // Send test notification
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Test notification sent!')),
+            SnackBar(content: Text(loc.msgTestNotificationSent)),
           );
         },
         icon: const Icon(Icons.send_outlined),
-        label: const Text('Send Test Notification'),
+        label: Text(loc.btnSendTestNotification),
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(double.infinity, 48),
         ),
