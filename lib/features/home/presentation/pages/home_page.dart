@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/transaction_type_data.dart';
 import '../widgets/add_transaction_modal.dart';
-import '../widgets/balance_card.dart';
+import '../widgets/balance_card/balance_card.dart';
 import '../widgets/home_header.dart';
 import '../widgets/transaction_card.dart';
 import '../widgets/home_action_buttons.dart';
+import '../../domain/usecases/calculate_weekly_transactions.dart';
 import '../../../../injection_container.dart' as di;
 import '../../../../l10n/app_localizations.dart';
 import '../../../wallet/domain/entities/transaction.dart';
@@ -14,6 +15,9 @@ import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  // Use case instance for calculating weekly transactions
+  static final _calculateWeeklyTransactions = CalculateWeeklyTransactions();
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +43,7 @@ class HomePage extends StatelessWidget {
               return Center(
                   child: Text(
                 state.message,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(color: theme.colorScheme.error),
+                style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.error),
               ));
             }
 
@@ -79,6 +82,9 @@ class HomePage extends StatelessWidget {
     ThemeData theme,
     WalletLoaded state,
   ) {
+    // Calculate weekly transaction data using the use case
+    final weeklyData = _calculateWeeklyTransactions(state.recentTransactions);
+
     return SizedBox(
       height: 350,
       child: Stack(
@@ -106,20 +112,16 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 BalanceCard(
-                  locale: loc.localeName,
                   totalBalance: state.totalBalance,
                   monthlySavings: state.monthlySavings,
-                  balanceLabel: loc.dashboardTotalBalance,
-                  savingsLabel: loc.dashboardMonthlySavings,
+                  weeklyData: weeklyData,
                 ),
                 const SizedBox(height: 8),
                 HomeActionButtons(
                   incomeLabel: loc.lbIncome,
                   expenseLabel: loc.lbExpense,
-                  onIncomePressed: () => _showAddTransactionModal(
-                      context, ETransactionType.income),
-                  onExpensePressed: () => _showAddTransactionModal(
-                      context, ETransactionType.expense),
+                  onIncomePressed: () => _showAddTransactionModal(context, ETransactionType.income),
+                  onExpensePressed: () => _showAddTransactionModal(context, ETransactionType.expense),
                 ),
               ],
             ),
@@ -129,8 +131,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _showAddTransactionModal(BuildContext context, ETransactionType type,
-      {Transaction? transactionToEdit}) {
+  void _showAddTransactionModal(BuildContext context, ETransactionType type, {Transaction? transactionToEdit}) {
     final walletBloc = context.read<WalletBloc>();
     showModalBottomSheet(
       context: context,
@@ -146,8 +147,7 @@ class HomePage extends StatelessWidget {
   }
 
   /// Builds the transactions section header with "View All" button.
-  Widget _buildTransactionsHeader(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildTransactionsHeader(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -189,14 +189,11 @@ class HomePage extends StatelessWidget {
                   child: Text(
                   textAlign: TextAlign.center,
                   loc.dashboardNoTransactions,
-                  style: theme.textTheme.titleSmall
-                      ?.copyWith(color: theme.colorScheme.outlineVariant),
+                  style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.outlineVariant),
                 ))
               : ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemCount: state.transactions.length > 5
-                      ? 5
-                      : state.transactions.length,
+                  itemCount: state.transactions.length > 5 ? 5 : state.transactions.length,
                   itemBuilder: (context, index) {
                     final transaction = state.transactions[index];
                     return Dismissible(
@@ -219,8 +216,7 @@ class HomePage extends StatelessWidget {
                             action: SnackBarAction(
                               label: loc.btnUndo,
                               onPressed: () {
-                                walletBloc
-                                    .add(AddTransactionEvent(transaction));
+                                walletBloc.add(AddTransactionEvent(transaction));
                               },
                             ),
                           ),

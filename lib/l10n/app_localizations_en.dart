@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardNoTransactions => 'No transactions available.';
 
   @override
+  String get dashboardWeeklyOverview => 'Weekly Overview';
+
+  @override
   String get searchTransactions => 'Search transactions...';
 
   @override
@@ -176,4 +179,8 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorAmountFormat =>
       'Invalid number format. Use only digits and a decimal separator.';
+
+  @override
+  String get dashboardWeeklyOverviewInfo =>
+      'Shows weekly transaction overview.\nThe rightmost bar represents today.';
 }

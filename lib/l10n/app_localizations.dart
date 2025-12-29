@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'No transactions available.'**
   String get dashboardNoTransactions;
 
+  /// No description provided for @dashboardWeeklyOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Overview'**
+  String get dashboardWeeklyOverview;
+
   /// No description provided for @searchTransactions.
   ///
   /// In en, this message translates to:
@@ -433,6 +439,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid number format. Use only digits and a decimal separator.'**
   String get errorAmountFormat;
+
+  /// No description provided for @dashboardWeeklyOverviewInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows weekly transaction overview.\nThe rightmost bar represents today.'**
+  String get dashboardWeeklyOverviewInfo;
 }
 
 class _AppLocalizationsDelegate

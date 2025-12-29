@@ -36,6 +36,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dashboardNoTransactions => 'Nenhuma transação disponível.';
 
   @override
+  String get dashboardWeeklyOverview => 'Visão Geral Semanal';
+
+  @override
   String get searchTransactions => 'Pesquisar transações...';
 
   @override
@@ -176,4 +179,8 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get errorAmountFormat =>
       'Formato de número inválido. Use apenas dígitos e um separador decimal.';
+
+  @override
+  String get dashboardWeeklyOverviewInfo =>
+      'Mostra a visão geral das transações da semana.\nA barra mais à direita representa hoje.';
 }
