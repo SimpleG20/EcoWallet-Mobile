@@ -1,7 +1,11 @@
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_sub_page_header.dart';
+import 'package:eco_wallet/core/presentation/widgets/dropdown_row.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_section_list.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/settings_section_title.dart';
+import '../widgets/settings_sub_page_header.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/presentation/widgets/switch_row.dart';
 
 enum EAppThemeMode { system, light, dark }
 
@@ -61,208 +65,144 @@ class _AppearancePageState extends State<AppearancePage> {
     );
   }
 
-  Widget _buildOptions(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+  Widget _buildOptions(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    final sections = [
+      _buildGeneralSection(context, theme, loc),
+      _buildDisplaySection(context, theme, loc),
+      _buildAccessibilitySection(context, theme, loc),
+    ];
+    return SettingsSectionList(sections: sections, theme: theme);
+  }
+
+  Widget _buildGeneralSection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle(theme, "Geral"), // Add to arb
-        _OptionRow<EAppThemeMode>(
+        const SizedBox(height: 16),
+        SettingsSectionTitle(title: "Geral"), // Add to arb
+        const SizedBox(height: 8),
+        DropdownRow<EAppThemeMode>(
           icon: Icons.brightness_6,
           label: loc.lbTheme,
           value: _selectedTheme,
           items: const [
-            DropdownMenuItem(value: EAppThemeMode.system, child: Text("Sistema")),
+            DropdownMenuItem(
+                value: EAppThemeMode.system, child: Text("Sistema")),
             DropdownMenuItem(value: EAppThemeMode.light, child: Text("Claro")),
             DropdownMenuItem(value: EAppThemeMode.dark, child: Text("Escuro")),
           ],
           onChanged: (v) => setState(() => _selectedTheme = v!),
           theme: theme,
         ),
+      ],
+    );
+  }
 
-        _buildSectionTitle(theme, "Display"),
-
-        _OptionRow<ECurrencyFormat>(
+  Widget _buildDisplaySection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        SettingsSectionTitle(title: "Display"),
+        const SizedBox(height: 8),
+        DropdownRow<ECurrencyFormat>(
           icon: Icons.attach_money,
           label: "Formato Moeda", // Add to arb: loc.lbCurrencyFormat
           value: _currencyFormat,
           items: const [
-            DropdownMenuItem(value: ECurrencyFormat.symbol, child: Text("Símbolo (R\$)")),
-            DropdownMenuItem(value: ECurrencyFormat.code, child: Text("Código (BRL)")),
+            DropdownMenuItem(
+                value: ECurrencyFormat.symbol, child: Text("Símbolo (R\$)")),
+            DropdownMenuItem(
+                value: ECurrencyFormat.code, child: Text("Código (BRL)")),
           ],
           onChanged: (v) => setState(() => _currencyFormat = v!),
           theme: theme,
         ),
-        _Separator(theme: theme),
-
-        _SwitchRow(
+        SwitchRow(
           icon: _hideCurrency ? Icons.visibility_off : Icons.visibility,
           label: "Ocultar Valores", // Add to arb: loc.lbHideCurrency
           value: _hideCurrency,
           onChanged: (v) => setState(() => _hideCurrency = v),
           theme: theme,
         ),
-
-        _buildSectionTitle(theme, "Performance & Acessibilidade"),
-        _OptionRow<EColorBlindMode>(
-          icon: Icons.color_lens_outlined,
-          label: "Daltonismo", // Add to arb: loc.lbColorBlind
-          value: _colorBlindMode,
-          items: const [
-            DropdownMenuItem(value: EColorBlindMode.none, child: Text("Nenhum")),
-            DropdownMenuItem(value: EColorBlindMode.protanopia, child: Text("Protanopia")),
-            DropdownMenuItem(value: EColorBlindMode.deuteranopia, child: Text("Deuteranopia")),
-            DropdownMenuItem(value: EColorBlindMode.tritanopia, child: Text("Tritanopia")),
-          ],
-          onChanged: (v) => setState(() => _colorBlindMode = v!),
-          theme: theme,
-        ),
-        _Separator(theme: theme),
-
-        _SwitchRow(
-          icon: Icons.auto_awesome,
-          label: "Animações", // Add to arb: loc.lbAnimations
-          value: _enableAnimations,
-          onChanged: (v) => setState(() => _enableAnimations = v),
-          theme: theme,
-        ),
-        _Separator(theme: theme),
-
-        _OptionRow<EFontSize>(
-          icon: Icons.text_fields,
-          label: "Tamanho Fonte", // Add to arb: loc.lbFontSize
-          value: _fontSize,
-          items: const [
-            DropdownMenuItem(value: EFontSize.small, child: Text("Pequena")),
-            DropdownMenuItem(value: EFontSize.medium, child: Text("Média")),
-            DropdownMenuItem(value: EFontSize.large, child: Text("Grande")),
-          ],
-          onChanged: (v) => setState(() => _fontSize = v!),
-          theme: theme,
-        ),
       ],
     );
   }
 
-  Widget _buildSectionTitle(ThemeData theme, String title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: Text(
-        title.toUpperCase(),
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: theme.colorScheme.onSurfaceVariant,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+  Widget _buildAccessibilitySection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        SettingsSectionTitle(title: "Accessibility"),
+        const SizedBox(height: 8),
+        _buildColorBlindModeOption(context, theme, loc),
+        _buildAnimationsOption(context, theme, loc),
+        _buildFontsSizeOption(context, theme, loc),
+      ],
     );
   }
-}
 
-// --- Reusable Widgets to enforce DRY and Consistency ---
-
-class _OptionRow<T> extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final T value;
-  final List<DropdownMenuItem<T>> items;
-  final ValueChanged<T?> onChanged;
-  final ThemeData theme;
-
-  const _OptionRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.items,
-    required this.onChanged,
-    required this.theme,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-      child: Row(
-        children: [
-          Icon(icon, color: theme.colorScheme.onSurfaceVariant),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              label,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: theme.colorScheme.onSurface,
-              ),
-            ),
-          ),
-          DropdownButtonHideUnderline(
-            child: DropdownButton<T>(
-              value: value,
-              items: items,
-              onChanged: onChanged,
-              icon: Icon(Icons.arrow_drop_down, color: theme.colorScheme.primary),
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        ],
-      ),
+  Widget _buildColorBlindModeOption(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    return DropdownRow<EColorBlindMode>(
+      icon: Icons.color_lens_outlined,
+      label: "Color Blind Mode", //loc.colorBlindMode,
+      value: _colorBlindMode,
+      items: const [
+        DropdownMenuItem(value: EColorBlindMode.none, child: Text("None")),
+        DropdownMenuItem(
+            value: EColorBlindMode.protanopia, child: Text("Protanopia")),
+        DropdownMenuItem(
+            value: EColorBlindMode.deuteranopia, child: Text("Deuteranopia")),
+        DropdownMenuItem(
+            value: EColorBlindMode.tritanopia, child: Text("Tritanopia")),
+      ],
+      onChanged: (EColorBlindMode? newValue) {
+        setState(() {
+          _colorBlindMode = newValue!;
+        });
+      },
+      theme: theme,
     );
   }
-}
 
-class _SwitchRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  final ThemeData theme;
-
-  const _SwitchRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.onChanged,
-    required this.theme,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0), // Less padding for switch
-      child: Row(
-        children: [
-          Icon(icon, color: theme.colorScheme.onSurfaceVariant),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              label,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: theme.colorScheme.onSurface,
-              ),
-            ),
-          ),
-          Switch(
-            value: value,
-            onChanged: onChanged,
-          ),
-        ],
-      ),
+  Widget _buildAnimationsOption(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    return SwitchRow(
+      icon: Icons.auto_awesome,
+      label: "Animations", //loc.enableAnimations,
+      value: _enableAnimations,
+      onChanged: (bool newValue) {
+        setState(() {
+          _enableAnimations = newValue;
+        });
+      },
+      theme: theme,
     );
   }
-}
 
-class _Separator extends StatelessWidget {
-  final ThemeData theme;
-  const _Separator({required this.theme});
-
-  @override
-  Widget build(BuildContext context) {
-    return Divider(
-      color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-      indent: 56, // Align with text start
-      endIndent: 16,
-      height: 1,
+  Widget _buildFontsSizeOption(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    return DropdownRow<EFontSize>(
+      icon: Icons.text_fields,
+      label: "Font Size", //loc.fontSize,
+      value: _fontSize,
+      items: const [
+        DropdownMenuItem(value: EFontSize.small, child: Text("Small")),
+        DropdownMenuItem(value: EFontSize.medium, child: Text("Medium")),
+        DropdownMenuItem(value: EFontSize.large, child: Text("Large")),
+      ],
+      onChanged: (EFontSize? newValue) {
+        setState(() {
+          _fontSize = newValue!;
+        });
+      },
+      theme: theme,
     );
   }
 }
