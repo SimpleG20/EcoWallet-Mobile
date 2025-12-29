@@ -57,5 +57,24 @@
   "errorTitleEmpty": "Please enter a title.",
   "errorAmountInvalid": "Please enter a valid amount.",
   "errorAmountMustBePositive": "Amount must be greater than zero.",
-  "errorAmountFormat": "Invalid number format. Use only digits and a decimal separator."
+  "errorAmountFormat": "Invalid number format. Use only digits and a decimal separator.",
+  "lbMonthlyProgress": "Monthly Progress",
+  "lbEcoFootprint": "Carbon Footprint",
+  "ecoFootprintValue": "{value} kg CO₂",
+  "@ecoFootprintValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "lbEcoFootprintCompensation": "Compensation needed:",
+  "ecoFootprintCompensation": "{count} trees 🌳",
+  "@ecoFootprintCompensation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

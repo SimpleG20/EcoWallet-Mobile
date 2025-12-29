@@ -29,7 +29,6 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
     const HomePage(),
     const TransactionWalletPage(),
-    const AnalyticsPage(),
     const SettingsPage(),
   ];
 
@@ -62,34 +61,25 @@ class _MainPageState extends State<MainPage> {
         });
       },
       items: [
-        _navigationBarItem(
-            _currentIndex, 0, loc.lbHome, Icons.home_outlined, theme, loc),
-        _navigationBarItem(_currentIndex, 1, loc.lbWallet,
-            Icons.account_balance_wallet_outlined, theme, loc),
-        _navigationBarItem(_currentIndex, 2, loc.lbAnalytics,
-            Icons.bar_chart_outlined, theme, loc),
-        _navigationBarItem(_currentIndex, 3, loc.lbSettings,
-            Icons.settings_outlined, theme, loc),
+        _navigationBarItem(_currentIndex, 0, loc.lbHome, Icons.home_outlined, theme, loc),
+        _navigationBarItem(_currentIndex, 1, loc.lbWallet, Icons.account_balance_wallet_outlined, theme, loc),
+        _navigationBarItem(_currentIndex, 2, loc.lbSettings, Icons.settings_outlined, theme, loc),
       ],
     );
   }
 
-  BottomNavigationBarItem _navigationBarItem(int currentIndex, int index,
-      String label, IconData icon, ThemeData theme, AppLocalizations loc) {
+  BottomNavigationBarItem _navigationBarItem(
+      int currentIndex, int index, String label, IconData icon, ThemeData theme, AppLocalizations loc) {
     return BottomNavigationBarItem(
       icon: Container(
         padding: EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          color: currentIndex == index
-              ? theme.colorScheme.primary
-              : Colors.transparent,
+          color: currentIndex == index ? theme.colorScheme.primary : Colors.transparent,
           shape: BoxShape.circle,
         ),
         child: Icon(
           icon,
-          color: currentIndex == index
-              ? theme.colorScheme.onPrimary
-              : theme.colorScheme.outlineVariant,
+          color: currentIndex == index ? theme.colorScheme.onPrimary : theme.colorScheme.outlineVariant,
         ),
       ),
       label: label,

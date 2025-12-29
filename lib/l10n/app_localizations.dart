@@ -445,6 +445,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid number format. Use only digits and a decimal separator.'**
   String get errorAmountFormat;
+
+  /// No description provided for @lbMonthlyProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Progress'**
+  String get lbMonthlyProgress;
+
+  /// No description provided for @lbEcoFootprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Carbon Footprint'**
+  String get lbEcoFootprint;
+
+  /// No description provided for @ecoFootprintValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} kg CO₂'**
+  String ecoFootprintValue(String value);
+
+  /// No description provided for @lbEcoFootprintCompensation.
+  ///
+  /// In en, this message translates to:
+  /// **'Compensation needed:'**
+  String get lbEcoFootprintCompensation;
+
+  /// No description provided for @ecoFootprintCompensation.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} trees 🌳'**
+  String ecoFootprintCompensation(int count);
 }
 
 class _AppLocalizationsDelegate
