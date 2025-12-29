@@ -9,6 +9,7 @@
   "dashboardRecentTransactions": "Recent Transactions",
   "dashboardMonthlySavings": "Monthly Savings",
   "dashboardNoTransactions": "No transactions available.",
+  "dashboardWeeklyOverview": "Weekly Overview",
   "searchTransactions": "Search transactions...",
   "filterTransactions": "Filter Transactions",
   "addFilters": "Add Filters",

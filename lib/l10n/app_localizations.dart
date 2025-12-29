@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'No transactions available.'**
   String get dashboardNoTransactions;
 
+  /// No description provided for @dashboardWeeklyOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Overview'**
+  String get dashboardWeeklyOverview;
+
   /// No description provided for @searchTransactions.
   ///
   /// In en, this message translates to:

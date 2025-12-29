@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardNoTransactions => 'No transactions available.';
 
   @override
+  String get dashboardWeeklyOverview => 'Weekly Overview';
+
+  @override
   String get searchTransactions => 'Search transactions...';
 
   @override

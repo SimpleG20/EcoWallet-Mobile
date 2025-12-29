@@ -39,8 +39,7 @@ class HomePage extends StatelessWidget {
               return Center(
                   child: Text(
                 state.message,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(color: theme.colorScheme.error),
+                style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.error),
               ));
             }
 
@@ -106,20 +105,16 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 BalanceCard(
-                  locale: loc.localeName,
                   totalBalance: state.totalBalance,
                   monthlySavings: state.monthlySavings,
-                  balanceLabel: loc.dashboardTotalBalance,
-                  savingsLabel: loc.dashboardMonthlySavings,
+                  recentTransactions: state.recentTransactions,
                 ),
                 const SizedBox(height: 8),
                 HomeActionButtons(
                   incomeLabel: loc.lbIncome,
                   expenseLabel: loc.lbExpense,
-                  onIncomePressed: () => _showAddTransactionModal(
-                      context, ETransactionType.income),
-                  onExpensePressed: () => _showAddTransactionModal(
-                      context, ETransactionType.expense),
+                  onIncomePressed: () => _showAddTransactionModal(context, ETransactionType.income),
+                  onExpensePressed: () => _showAddTransactionModal(context, ETransactionType.expense),
                 ),
               ],
             ),
@@ -129,8 +124,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _showAddTransactionModal(BuildContext context, ETransactionType type,
-      {Transaction? transactionToEdit}) {
+  void _showAddTransactionModal(BuildContext context, ETransactionType type, {Transaction? transactionToEdit}) {
     final walletBloc = context.read<WalletBloc>();
     showModalBottomSheet(
       context: context,
@@ -146,8 +140,7 @@ class HomePage extends StatelessWidget {
   }
 
   /// Builds the transactions section header with "View All" button.
-  Widget _buildTransactionsHeader(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildTransactionsHeader(BuildContext context, AppLocalizations loc, ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -189,14 +182,11 @@ class HomePage extends StatelessWidget {
                   child: Text(
                   textAlign: TextAlign.center,
                   loc.dashboardNoTransactions,
-                  style: theme.textTheme.titleSmall
-                      ?.copyWith(color: theme.colorScheme.outlineVariant),
+                  style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.outlineVariant),
                 ))
               : ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemCount: state.transactions.length > 5
-                      ? 5
-                      : state.transactions.length,
+                  itemCount: state.transactions.length > 5 ? 5 : state.transactions.length,
                   itemBuilder: (context, index) {
                     final transaction = state.transactions[index];
                     return Dismissible(
@@ -219,8 +209,7 @@ class HomePage extends StatelessWidget {
                             action: SnackBarAction(
                               label: loc.btnUndo,
                               onPressed: () {
-                                walletBloc
-                                    .add(AddTransactionEvent(transaction));
+                                walletBloc.add(AddTransactionEvent(transaction));
                               },
                             ),
                           ),
