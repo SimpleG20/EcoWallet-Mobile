@@ -8,7 +8,7 @@ import 'terms_page.dart';
 import 'policy_page.dart';
 import 'feedback_page.dart';
 import 'personal_page.dart';
-import 'apperance_page.dart';
+import 'appearance_page.dart';
 import 'budget_info_page.dart';
 import 'manage_data_page.dart';
 import 'notifications_page.dart';
@@ -194,15 +194,15 @@ class _SettingsPageState extends State<SettingsPage> {
       sectionLabel: loc.lbPreferences,
       options: [
         SettingsOptionItem(
-          icon: Icons.notifications,
+          icon: Icons.notifications_outlined,
           title: loc.lbNotifications,
           onTap: () => _showScreen(context, NotificationsPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
-          icon: Icons.color_lens,
+          icon: Icons.color_lens_outlined,
           title: loc.lbAppearance,
-          onTap: () => _showScreen(context, ApperancePage()),
+          onTap: () => _showScreen(context, AppearancePage()),
         ),
       ],
     );

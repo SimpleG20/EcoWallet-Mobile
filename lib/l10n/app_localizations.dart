@@ -386,6 +386,12 @@ abstract class AppLocalizations {
   /// **'Phone'**
   String get lbPhone;
 
+  /// No description provided for @lbTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get lbTheme;
+
   /// No description provided for @lbWallet.
   ///
   /// In en, this message translates to:

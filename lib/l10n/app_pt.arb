@@ -44,6 +44,7 @@
   "lbName": "Nome",
   "lbDate": "Data",
   "lbType": "Tipo",
+  "lbTheme": "Tema",
   "lbHome": "Início",
   "lbEmail": "Email",
   "lbLogout": "Sair",

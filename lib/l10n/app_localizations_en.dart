@@ -153,6 +153,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbPhone => 'Phone';
 
   @override
+  String get lbTheme => 'Theme';
+
+  @override
   String get lbWallet => 'Wallet';
 
   @override

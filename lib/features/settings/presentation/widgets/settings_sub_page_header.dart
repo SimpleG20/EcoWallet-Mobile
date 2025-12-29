@@ -64,10 +64,13 @@ class SettingsSubPageHeader extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                Text(
-                  subtitle,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: theme.colorScheme.onPrimaryContainer.withAlpha(220),
+                FittedBox(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    subtitle,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.onPrimaryContainer.withAlpha(220),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
