@@ -1,19 +1,13 @@
 import 'package:eco_wallet/core/presentation/widgets/dropdown_row.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_section_list.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
+import 'package:eco_wallet/features/settings/domain/enums/settings_enums.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/settings_section_title.dart';
 import '../widgets/settings_sub_page_header.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/presentation/widgets/switch_row.dart';
-
-enum EAppThemeMode { system, light, dark }
-
-enum EColorBlindMode { none, protanopia, deuteranopia, tritanopia }
-
-enum ECurrencyFormat { symbol, code }
-
-enum EFontSize { small, medium, large }
 
 class AppearancePage extends StatefulWidget {
   const AppearancePage({super.key});
@@ -23,12 +17,13 @@ class AppearancePage extends StatefulWidget {
 }
 
 class _AppearancePageState extends State<AppearancePage> {
-  EAppThemeMode _selectedTheme = EAppThemeMode.system;
-  EColorBlindMode _colorBlindMode = EColorBlindMode.none;
-  ECurrencyFormat _currencyFormat = ECurrencyFormat.symbol;
-  EFontSize _fontSize = EFontSize.medium;
+  AppThemeMode _selectedTheme = AppThemeMode.system;
+  ColorBlindMode _colorBlindMode = ColorBlindMode.none;
+  CurrencyFormat _currencyFormat = CurrencyFormat.symbol;
+  FontSizePreference _fontSize = FontSizePreference.medium;
   bool _hideCurrency = false;
   bool _enableAnimations = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,20 +39,7 @@ class _AppearancePageState extends State<AppearancePage> {
         ),
         const SizedBox(height: 24),
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(12.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
-            clipBehavior: Clip.hardEdge,
+          child: SettingsCard(
             child: _buildOptions(context, theme, loc),
           ),
         ),
@@ -81,14 +63,14 @@ class _AppearancePageState extends State<AppearancePage> {
         const SizedBox(height: 16),
         SettingsSectionTitle(title: loc.sectionGeneral),
         const SizedBox(height: 8),
-        DropdownRow<EAppThemeMode>(
+        DropdownRow<AppThemeMode>(
           icon: Icons.brightness_6,
           label: loc.lbTheme,
           value: _selectedTheme,
           items: [
-            DropdownMenuItem(value: EAppThemeMode.system, child: Text(loc.themeSystem)),
-            DropdownMenuItem(value: EAppThemeMode.light, child: Text(loc.themeLight)),
-            DropdownMenuItem(value: EAppThemeMode.dark, child: Text(loc.themeDark)),
+            DropdownMenuItem(value: AppThemeMode.system, child: Text(loc.themeSystem)),
+            DropdownMenuItem(value: AppThemeMode.light, child: Text(loc.themeLight)),
+            DropdownMenuItem(value: AppThemeMode.dark, child: Text(loc.themeDark)),
           ],
           onChanged: (v) => setState(() => _selectedTheme = v!),
           theme: theme,
@@ -103,13 +85,13 @@ class _AppearancePageState extends State<AppearancePage> {
       children: [
         SettingsSectionTitle(title: loc.sectionDisplay),
         const SizedBox(height: 8),
-        DropdownRow<ECurrencyFormat>(
+        DropdownRow<CurrencyFormat>(
           icon: Icons.attach_money,
           label: loc.lbCurrencyFormat,
           value: _currencyFormat,
           items: [
-            DropdownMenuItem(value: ECurrencyFormat.symbol, child: Text(loc.currencySymbol)),
-            DropdownMenuItem(value: ECurrencyFormat.code, child: Text(loc.currencyCode)),
+            DropdownMenuItem(value: CurrencyFormat.symbol, child: Text(loc.currencySymbol)),
+            DropdownMenuItem(value: CurrencyFormat.code, child: Text(loc.currencyCode)),
           ],
           onChanged: (v) => setState(() => _currencyFormat = v!),
           theme: theme,
@@ -139,17 +121,17 @@ class _AppearancePageState extends State<AppearancePage> {
   }
 
   Widget _buildColorBlindModeOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return DropdownRow<EColorBlindMode>(
+    return DropdownRow<ColorBlindMode>(
       icon: Icons.color_lens_outlined,
       label: loc.lbColorBlindMode,
       value: _colorBlindMode,
       items: [
-        DropdownMenuItem(value: EColorBlindMode.none, child: Text(loc.colorBlindNone)),
-        DropdownMenuItem(value: EColorBlindMode.protanopia, child: Text(loc.colorBlindProtanopia)),
-        DropdownMenuItem(value: EColorBlindMode.deuteranopia, child: Text(loc.colorBlindDeuteranopia)),
-        DropdownMenuItem(value: EColorBlindMode.tritanopia, child: Text(loc.colorBlindTritanopia)),
+        DropdownMenuItem(value: ColorBlindMode.none, child: Text(loc.colorBlindNone)),
+        DropdownMenuItem(value: ColorBlindMode.protanopia, child: Text(loc.colorBlindProtanopia)),
+        DropdownMenuItem(value: ColorBlindMode.deuteranopia, child: Text(loc.colorBlindDeuteranopia)),
+        DropdownMenuItem(value: ColorBlindMode.tritanopia, child: Text(loc.colorBlindTritanopia)),
       ],
-      onChanged: (EColorBlindMode? newValue) {
+      onChanged: (ColorBlindMode? newValue) {
         setState(() {
           _colorBlindMode = newValue!;
         });
@@ -173,16 +155,16 @@ class _AppearancePageState extends State<AppearancePage> {
   }
 
   Widget _buildFontsSizeOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return DropdownRow<EFontSize>(
+    return DropdownRow<FontSizePreference>(
       icon: Icons.text_fields,
       label: loc.lbFontSize,
       value: _fontSize,
       items: [
-        DropdownMenuItem(value: EFontSize.small, child: Text(loc.fontSizeSmall)),
-        DropdownMenuItem(value: EFontSize.medium, child: Text(loc.fontSizeMedium)),
-        DropdownMenuItem(value: EFontSize.large, child: Text(loc.fontSizeLarge)),
+        DropdownMenuItem(value: FontSizePreference.small, child: Text(loc.fontSizeSmall)),
+        DropdownMenuItem(value: FontSizePreference.medium, child: Text(loc.fontSizeMedium)),
+        DropdownMenuItem(value: FontSizePreference.large, child: Text(loc.fontSizeLarge)),
       ],
-      onChanged: (EFontSize? newValue) {
+      onChanged: (FontSizePreference? newValue) {
         setState(() {
           _fontSize = newValue!;
         });

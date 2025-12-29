@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:eco_wallet/core/utils/app_validators.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
 
 import '../widgets/settings_sub_page_header.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -55,20 +56,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
         ),
         const SizedBox(height: 24),
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(12.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
-            clipBehavior: Clip.hardEdge,
+          child: SettingsCard(
             child: _buildPasswordState(context, theme, loc),
           ),
         ),

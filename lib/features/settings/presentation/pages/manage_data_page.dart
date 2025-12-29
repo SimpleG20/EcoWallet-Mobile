@@ -1,13 +1,13 @@
 import 'package:eco_wallet/core/presentation/widgets/dropdown_row.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_section_list.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_section_title.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
+import 'package:eco_wallet/features/settings/domain/enums/settings_enums.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/presentation/widgets/switch_row.dart';
 import '../widgets/settings_sub_page_header.dart';
 import '../../../../l10n/app_localizations.dart';
-
-enum EBackupFrequency { none, daily, weekly, monthly }
 
 class ManageDataPage extends StatelessWidget {
   const ManageDataPage({super.key});
@@ -26,20 +26,7 @@ class ManageDataPage extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(12.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
-            clipBehavior: Clip.hardEdge,
+          child: SettingsCard(
             child: _buildDataOptions(context, theme, loc),
           ),
         ),
@@ -181,17 +168,17 @@ class ManageDataPage extends StatelessWidget {
           theme: theme,
         ),
         const SizedBox(height: 8),
-        DropdownRow<EBackupFrequency>(
+        DropdownRow<BackupFrequency>(
             icon: Icons.schedule,
             label: loc.lbFrequency,
-            value: EBackupFrequency.daily,
+            value: BackupFrequency.daily,
             items: [
-              DropdownMenuItem(value: EBackupFrequency.none, child: Text(loc.frequencyNone)),
-              DropdownMenuItem(value: EBackupFrequency.daily, child: Text(loc.frequencyDaily)),
-              DropdownMenuItem(value: EBackupFrequency.weekly, child: Text(loc.frequencyWeekly)),
-              DropdownMenuItem(value: EBackupFrequency.monthly, child: Text(loc.frequencyMonthly)),
+              DropdownMenuItem(value: BackupFrequency.none, child: Text(loc.frequencyNone)),
+              DropdownMenuItem(value: BackupFrequency.daily, child: Text(loc.frequencyDaily)),
+              DropdownMenuItem(value: BackupFrequency.weekly, child: Text(loc.frequencyWeekly)),
+              DropdownMenuItem(value: BackupFrequency.monthly, child: Text(loc.frequencyMonthly)),
             ],
-            onChanged: (EBackupFrequency? newValue) {
+            onChanged: (BackupFrequency? newValue) {
               // Handle dropdown change
             },
             theme: theme)

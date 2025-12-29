@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:eco_wallet/core/presentation/widgets/dropdown_row.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
 
 import '../widgets/settings_section_list.dart';
 import '../widgets/settings_section_title.dart';
@@ -35,21 +36,9 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
         ),
         const SizedBox(height: 24),
         Expanded(
-          child: Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface,
-                borderRadius: BorderRadius.circular(12.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.15),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
-              clipBehavior: Clip.hardEdge,
-              child: _buildBudgetOptions(context, theme, loc)),
+          child: SettingsCard(
+            child: _buildBudgetOptions(context, theme, loc),
+          ),
         ),
       ],
     );
