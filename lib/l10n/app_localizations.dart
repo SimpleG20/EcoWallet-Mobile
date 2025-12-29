@@ -134,17 +134,23 @@ abstract class AppLocalizations {
   /// **'Total Balance'**
   String get dashboardTotalBalance;
 
-  /// No description provided for @dashboardRecentTransactions.
-  ///
-  /// In en, this message translates to:
-  /// **'Recent Transactions'**
-  String get dashboardRecentTransactions;
-
   /// No description provided for @dashboardMonthlySavings.
   ///
   /// In en, this message translates to:
   /// **'Monthly Savings'**
   String get dashboardMonthlySavings;
+
+  /// No description provided for @dashboardWeeklyOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Overview'**
+  String get dashboardWeeklyOverview;
+
+  /// No description provided for @dashboardRecentTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Transactions'**
+  String get dashboardRecentTransactions;
 
   /// No description provided for @dashboardNoTransactions.
   ///
@@ -152,11 +158,11 @@ abstract class AppLocalizations {
   /// **'No transactions available.'**
   String get dashboardNoTransactions;
 
-  /// No description provided for @dashboardWeeklyOverview.
+  /// No description provided for @dashboardWeeklyOverviewInfo.
   ///
   /// In en, this message translates to:
-  /// **'Weekly Overview'**
-  String get dashboardWeeklyOverview;
+  /// **'Shows weekly transaction overview.\nThe rightmost bar represents today.'**
+  String get dashboardWeeklyOverviewInfo;
 
   /// No description provided for @searchTransactions.
   ///
@@ -439,12 +445,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid number format. Use only digits and a decimal separator.'**
   String get errorAmountFormat;
-
-  /// No description provided for @dashboardWeeklyOverviewInfo.
-  ///
-  /// In en, this message translates to:
-  /// **'Shows weekly transaction overview.\nThe rightmost bar represents today.'**
-  String get dashboardWeeklyOverviewInfo;
 }
 
 class _AppLocalizationsDelegate

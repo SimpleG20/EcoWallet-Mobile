@@ -27,16 +27,20 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dashboardTotalBalance => 'Saldo Total';
 
   @override
-  String get dashboardRecentTransactions => 'Transações Recentes';
+  String get dashboardMonthlySavings => 'Economias Mensais';
 
   @override
-  String get dashboardMonthlySavings => 'Economias Mensais';
+  String get dashboardWeeklyOverview => 'Visão Geral Semanal';
+
+  @override
+  String get dashboardRecentTransactions => 'Transações Recentes';
 
   @override
   String get dashboardNoTransactions => 'Nenhuma transação disponível.';
 
   @override
-  String get dashboardWeeklyOverview => 'Visão Geral Semanal';
+  String get dashboardWeeklyOverviewInfo =>
+      'Mostra a visão geral das transações da semana.\nA barra mais à direita representa hoje.';
 
   @override
   String get searchTransactions => 'Pesquisar transações...';
@@ -179,8 +183,4 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get errorAmountFormat =>
       'Formato de número inválido. Use apenas dígitos e um separador decimal.';
-
-  @override
-  String get dashboardWeeklyOverviewInfo =>
-      'Mostra a visão geral das transações da semana.\nA barra mais à direita representa hoje.';
 }

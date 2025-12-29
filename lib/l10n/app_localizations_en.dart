@@ -27,16 +27,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardTotalBalance => 'Total Balance';
 
   @override
-  String get dashboardRecentTransactions => 'Recent Transactions';
+  String get dashboardMonthlySavings => 'Monthly Savings';
 
   @override
-  String get dashboardMonthlySavings => 'Monthly Savings';
+  String get dashboardWeeklyOverview => 'Weekly Overview';
+
+  @override
+  String get dashboardRecentTransactions => 'Recent Transactions';
 
   @override
   String get dashboardNoTransactions => 'No transactions available.';
 
   @override
-  String get dashboardWeeklyOverview => 'Weekly Overview';
+  String get dashboardWeeklyOverviewInfo =>
+      'Shows weekly transaction overview.\nThe rightmost bar represents today.';
 
   @override
   String get searchTransactions => 'Search transactions...';
@@ -179,8 +183,4 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errorAmountFormat =>
       'Invalid number format. Use only digits and a decimal separator.';
-
-  @override
-  String get dashboardWeeklyOverviewInfo =>
-      'Shows weekly transaction overview.\nThe rightmost bar represents today.';
 }
