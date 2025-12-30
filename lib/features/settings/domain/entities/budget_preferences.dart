@@ -18,6 +18,17 @@ class BudgetPreferences extends Equatable {
     this.dailyAlertPercentage,
   });
 
+  factory BudgetPreferences.defaults() {
+    return const BudgetPreferences(
+      monthStartDay: 1,
+      monthlyExpenseLimit: null,
+      weeklyBudgetLimit: null,
+      weeklyAlertPercentage: null,
+      dailyBudgetLimit: null,
+      dailyAlertPercentage: null,
+    );
+  }
+
   BudgetPreferences copyWith({
     int? monthStartDay,
     double? monthlyExpenseLimit,

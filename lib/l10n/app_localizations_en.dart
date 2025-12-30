@@ -643,7 +643,173 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedbackThankYou => 'Thank you for your feedback!';
 
   @override
-  String feedbackCharacterCount(Object count) {
+  String feedbackCharacterCount(int count) {
     return '$count/500 characters';
   }
+
+  @override
+  String get lbEcoFootprintCompensation => 'Compensation needed:';
+
+  @override
+  String ecoFootprintCompensation(int count) {
+    return '$count trees 🌳';
+  }
+
+  @override
+  String get helpSearchHint => 'Search for help topics...';
+
+  @override
+  String get helpFaqTitle => 'Frequently Asked Questions';
+
+  @override
+  String get helpFaqAddTransaction => 'How do I add a transaction?';
+
+  @override
+  String get helpFaqAddTransactionAnswer =>
+      'Tap the \'+\' button on the home screen, select the transaction type (income, expense, or reserve), fill in the details, and tap \'Save\'.';
+
+  @override
+  String get helpFaqEditDelete => 'How do I edit or delete a transaction?';
+
+  @override
+  String get helpFaqEditDeleteAnswer =>
+      'Swipe left on the transaction to reveal edit and delete options, or tap on the transaction to open details and use the action buttons.';
+
+  @override
+  String get helpFaqCategories => 'How do I manage categories?';
+
+  @override
+  String get helpFaqCategoriesAnswer =>
+      'Go to Settings > Manage Data to customize your transaction categories.';
+
+  @override
+  String get helpFaqBackup => 'How do I backup my data?';
+
+  @override
+  String get helpFaqBackupAnswer =>
+      'Enable cloud backup in Settings > Manage Data > Backup section. You can also export your data manually.';
+
+  @override
+  String get helpFaqLanguage => 'How do I change the language?';
+
+  @override
+  String get helpFaqLanguageAnswer =>
+      'The app follows your device\'s language settings. Change your device language to switch the app language.';
+
+  @override
+  String get helpContactTitle => 'Contact Support';
+
+  @override
+  String get helpContactDescription =>
+      'Still need help? Our support team is here for you.';
+
+  @override
+  String get helpContactEmail => 'Email Support';
+
+  @override
+  String get helpContactChat => 'Live Chat';
+
+  @override
+  String get helpVersion => 'App Version';
+
+  @override
+  String policyLastUpdated(String date) {
+    return 'Last Updated: $date';
+  }
+
+  @override
+  String get policyIntroTitle => 'Introduction';
+
+  @override
+  String get policyIntroContent =>
+      'EcoWallet is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal information.';
+
+  @override
+  String get policyDataCollectionTitle => 'Data Collection';
+
+  @override
+  String get policyDataCollectionContent =>
+      'We collect information you provide directly, such as your name, email, and financial transaction data. All data is stored securely on your device and optionally in encrypted cloud storage.';
+
+  @override
+  String get policyDataUsageTitle => 'How We Use Your Data';
+
+  @override
+  String get policyDataUsageContent =>
+      'Your data is used solely to provide app functionality, including transaction tracking, budget management, and generating financial reports. We never sell your data to third parties.';
+
+  @override
+  String get policySecurityTitle => 'Data Security';
+
+  @override
+  String get policySecurityContent =>
+      'We implement industry-standard security measures including encryption, secure data transmission, and regular security audits to protect your information.';
+
+  @override
+  String get policyRightsTitle => 'Your Rights';
+
+  @override
+  String get policyRightsContent =>
+      'You have the right to access, modify, export, or delete your data at any time through the app settings. You can also request a complete data deletion by contacting our support team.';
+
+  @override
+  String get policyContactTitle => 'Contact Us';
+
+  @override
+  String get policyContactContent =>
+      'For questions about this privacy policy, please contact us at privacy@ecowallet.app';
+
+  @override
+  String termsLastUpdated(String date) {
+    return 'Last Updated: $date';
+  }
+
+  @override
+  String get termsAcceptanceTitle => 'Acceptance of Terms';
+
+  @override
+  String get termsAcceptanceContent =>
+      'By downloading, installing, or using EcoWallet, you agree to be bound by these Terms of Service. If you do not agree, please do not use the app.';
+
+  @override
+  String get termsServiceTitle => 'Service Description';
+
+  @override
+  String get termsServiceContent =>
+      'EcoWallet provides personal finance management tools including transaction tracking, budgeting, and financial analytics. The service is provided \'as is\' for personal, non-commercial use.';
+
+  @override
+  String get termsAccountTitle => 'User Accounts';
+
+  @override
+  String get termsAccountContent =>
+      'You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account. You must provide accurate and complete information when creating an account.';
+
+  @override
+  String get termsContentTitle => 'User Content';
+
+  @override
+  String get termsContentContent =>
+      'You retain all rights to the financial data you enter into the app. By using our cloud backup features, you grant us permission to store and process this data solely for providing the service.';
+
+  @override
+  String get termsProhibitedTitle => 'Prohibited Uses';
+
+  @override
+  String get termsProhibitedContent =>
+      'You may not use EcoWallet for any illegal purposes, to transmit malicious code, or to attempt to access other users\' data. Violation may result in account termination.';
+
+  @override
+  String get termsLiabilityTitle => 'Limitation of Liability';
+
+  @override
+  String get termsLiabilityContent =>
+      'EcoWallet is not liable for any financial decisions you make based on the app\'s data or analytics. Always consult a financial professional for important financial matters.';
+
+  @override
+  String get termsChangesTitle => 'Changes to Terms';
+
+  @override
+  String get termsChangesContent =>
+      'We may update these terms periodically. Continued use of the app after changes constitutes acceptance of the new terms.';
 }

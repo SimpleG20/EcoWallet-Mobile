@@ -14,6 +14,10 @@ class DataPreferences extends Equatable {
     this.backupFrequency = BackupFrequency.daily,
   });
 
+  factory DataPreferences.defaults() {
+    return const DataPreferences();
+  }
+
   DataPreferences copyWith({
     bool? cloudBackupEnabled,
     bool? encryptedBackup,

@@ -1,18 +1,21 @@
+import 'package:eco_wallet/features/settings/presentation/pages/budget_info_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/notifications_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/password_change_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/terms_page.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../injection_container.dart' as di;
+import '../bloc/settings_bloc.dart';
 import '../widgets/settings_container.dart';
 import '../widgets/settings_option_item.dart';
-import 'help_page.dart';
-import 'terms_page.dart';
-import 'policy_page.dart';
-import 'feedback_page.dart';
-import 'personal_page.dart';
 import 'appearance_page.dart';
-import 'budget_info_page.dart';
+import 'feedback_page.dart';
+import 'help_page.dart';
 import 'manage_data_page.dart';
-import 'notifications_page.dart';
-import 'password_change_page.dart';
+import 'personal_page.dart';
+import 'policy_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -22,18 +25,42 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  Widget? _page;
-
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.colorScheme.primaryContainer,
+    return BlocProvider(
+      create: (_) => di.sl<SettingsBloc>()..add(LoadSettingsEvent()),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: theme.colorScheme.primaryContainer,
+        ),
+        body: BlocBuilder<SettingsBloc, BaseSettingsState>(
+          builder: (context, state) {
+            if (state is SettingsLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (state is SettingsError) {
+              return Center(
+                child: Text(
+                  state.message ?? "Unknown error", //loc.errorUnknown,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
+                ),
+              );
+            }
+
+            if (state is SettingsLoaded) {
+              return _buildBody(context, loc, theme);
+            }
+
+            return const SizedBox.shrink();
+          },
+        ),
       ),
-      body: _page ?? _buildBody(context, loc, theme),
     );
   }
 
@@ -171,19 +198,19 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.person_outline,
           title: loc.lbPersonalInfo,
-          onTap: () => _showScreen(context, PersonalPage()),
+          onTap: () => _navigateToPage(PersonalPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.analytics_outlined,
           title: loc.lbBudgetInfo,
-          onTap: () => _showScreen(context, BudgetInfoPage()),
+          onTap: () => _navigateToPage(BudgetInfoPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.data_object_outlined,
           title: loc.lbManageData,
-          onTap: () => _showScreen(context, ManageDataPage()),
+          onTap: () => _navigateToPage(ManageDataPage()),
         ),
       ],
     );
@@ -196,13 +223,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.notifications_outlined,
           title: loc.lbNotifications,
-          onTap: () => _showScreen(context, NotificationsPage()),
+          onTap: () => _navigateToPage(NotificationsPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.color_lens_outlined,
           title: loc.lbAppearance,
-          onTap: () => _showScreen(context, AppearancePage()),
+          onTap: () => _navigateToPage(AppearancePage()),
         ),
       ],
     );
@@ -215,7 +242,7 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.lock_outline,
           title: loc.lbChangePassword,
-          onTap: () => _showScreen(context, PasswordChangePage()),
+          onTap: () => _navigateToPage(PasswordChangePage()),
         ),
       ],
     );
@@ -228,13 +255,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.help_outline,
           title: loc.lbHelpCenter,
-          onTap: () => _showScreen(context, HelpPage()),
+          onTap: () => _navigateToPage(HelpPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.feedback_outlined,
           title: loc.lbSendFeedback,
-          onTap: () => _showScreen(context, FeedbackPage()),
+          onTap: () => _navigateToPage(FeedbackPage()),
         ),
       ],
     );
@@ -247,13 +274,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.description_outlined,
           title: loc.lbTermsOfService,
-          onTap: () => _showScreen(context, TermsPage()),
+          onTap: () => _navigateToPage(TermsPage()),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.privacy_tip_outlined,
           title: loc.lbPrivacyPolicy,
-          onTap: () => _showScreen(context, PolicyPage()),
+          onTap: () => _navigateToPage(PolicyPage()),
         ),
       ],
     );
@@ -265,10 +292,8 @@ class _SettingsPageState extends State<SettingsPage> {
         backgroundColor: theme.colorScheme.secondaryContainer,
         foregroundColor: theme.colorScheme.onSecondaryContainer,
       ),
-      onPressed: () {
-        // context.read<AuthenticationBloc>().add(LogoutEvent());
-      },
       child: Text(loc.lbLogout),
+      onPressed: () {},
     );
   }
 
@@ -279,15 +304,13 @@ class _SettingsPageState extends State<SettingsPage> {
         foregroundColor: theme.colorScheme.onErrorContainer,
       ),
       child: Text(loc.deleteAccount),
-      onPressed: () {
-        // Add your delete account logic here
-      },
+      onPressed: () {},
     );
   }
 
-  void _showScreen(BuildContext context, Widget child) {
-    setState(() {
-      _page = child;
-    });
+  void _navigateToPage(Widget page) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => page),
+    );
   }
 }

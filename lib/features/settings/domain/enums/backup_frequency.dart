@@ -10,5 +10,12 @@ enum BackupFrequency {
   weekly,
 
   /// Backup monthly.
-  monthly,
+  monthly;
+
+  static BackupFrequency fromString(String json) {
+    return BackupFrequency.values.firstWhere(
+      (e) => e.toString().split('.').last == json,
+      orElse: () => BackupFrequency.none,
+    );
+  }
 }

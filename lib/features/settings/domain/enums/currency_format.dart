@@ -4,5 +4,12 @@ enum CurrencyFormat {
   symbol,
 
   /// Display currency code (e.g., USD, BRL).
-  code,
+  code;
+
+  static CurrencyFormat fromString(String currencyFormat) {
+    return CurrencyFormat.values.firstWhere(
+      (e) => e.toString() == currencyFormat || e.name == currencyFormat,
+      orElse: () => CurrencyFormat.symbol,
+    );
+  }
 }

@@ -645,7 +645,173 @@ class AppLocalizationsPt extends AppLocalizations {
   String get feedbackThankYou => 'Obrigado pelo seu feedback!';
 
   @override
-  String feedbackCharacterCount(Object count) {
+  String feedbackCharacterCount(int count) {
     return '$count/500 caracteres';
   }
+
+  @override
+  String get lbEcoFootprintCompensation => 'Compensação necessária:';
+
+  @override
+  String ecoFootprintCompensation(int count) {
+    return '$count árvores 🌳';
+  }
+
+  @override
+  String get helpSearchHint => 'Buscar tópicos de ajuda...';
+
+  @override
+  String get helpFaqTitle => 'Perguntas Frequentes';
+
+  @override
+  String get helpFaqAddTransaction => 'Como adiciono uma transação?';
+
+  @override
+  String get helpFaqAddTransactionAnswer =>
+      'Toque no botão \'+\' na tela inicial, selecione o tipo de transação (receita, despesa ou reserva), preencha os detalhes e toque em \'Salvar\'.';
+
+  @override
+  String get helpFaqEditDelete => 'Como edito ou excluo uma transação?';
+
+  @override
+  String get helpFaqEditDeleteAnswer =>
+      'Deslize para a esquerda na transação para revelar as opções de editar e excluir, ou toque na transação para abrir os detalhes e usar os botões de ação.';
+
+  @override
+  String get helpFaqCategories => 'Como gerencio as categorias?';
+
+  @override
+  String get helpFaqCategoriesAnswer =>
+      'Vá para Configurações > Gerenciar Dados para personalizar suas categorias de transação.';
+
+  @override
+  String get helpFaqBackup => 'Como faço backup dos meus dados?';
+
+  @override
+  String get helpFaqBackupAnswer =>
+      'Ative o backup na nuvem em Configurações > Gerenciar Dados > seção Backup. Você também pode exportar seus dados manualmente.';
+
+  @override
+  String get helpFaqLanguage => 'Como mudo o idioma?';
+
+  @override
+  String get helpFaqLanguageAnswer =>
+      'O aplicativo segue as configurações de idioma do seu dispositivo. Altere o idioma do dispositivo para mudar o idioma do aplicativo.';
+
+  @override
+  String get helpContactTitle => 'Contatar Suporte';
+
+  @override
+  String get helpContactDescription =>
+      'Ainda precisa de ajuda? Nossa equipe de suporte está aqui para você.';
+
+  @override
+  String get helpContactEmail => 'Suporte por Email';
+
+  @override
+  String get helpContactChat => 'Chat ao Vivo';
+
+  @override
+  String get helpVersion => 'Versão do App';
+
+  @override
+  String policyLastUpdated(String date) {
+    return 'Última Atualização: $date';
+  }
+
+  @override
+  String get policyIntroTitle => 'Introdução';
+
+  @override
+  String get policyIntroContent =>
+      'O EcoWallet está comprometido em proteger sua privacidade. Esta política explica como coletamos, usamos e protegemos suas informações pessoais.';
+
+  @override
+  String get policyDataCollectionTitle => 'Coleta de Dados';
+
+  @override
+  String get policyDataCollectionContent =>
+      'Coletamos informações que você fornece diretamente, como seu nome, email e dados de transações financeiras. Todos os dados são armazenados com segurança no seu dispositivo e opcionalmente em armazenamento na nuvem criptografado.';
+
+  @override
+  String get policyDataUsageTitle => 'Como Usamos Seus Dados';
+
+  @override
+  String get policyDataUsageContent =>
+      'Seus dados são usados exclusivamente para fornecer funcionalidades do aplicativo, incluindo rastreamento de transações, gerenciamento de orçamento e geração de relatórios financeiros. Nunca vendemos seus dados para terceiros.';
+
+  @override
+  String get policySecurityTitle => 'Segurança de Dados';
+
+  @override
+  String get policySecurityContent =>
+      'Implementamos medidas de segurança padrão da indústria, incluindo criptografia, transmissão segura de dados e auditorias de segurança regulares para proteger suas informações.';
+
+  @override
+  String get policyRightsTitle => 'Seus Direitos';
+
+  @override
+  String get policyRightsContent =>
+      'Você tem o direito de acessar, modificar, exportar ou excluir seus dados a qualquer momento através das configurações do aplicativo. Você também pode solicitar uma exclusão completa de dados entrando em contato com nossa equipe de suporte.';
+
+  @override
+  String get policyContactTitle => 'Entre em Contato';
+
+  @override
+  String get policyContactContent =>
+      'Para perguntas sobre esta política de privacidade, entre em contato conosco em privacy@ecowallet.app';
+
+  @override
+  String termsLastUpdated(String date) {
+    return 'Última Atualização: $date';
+  }
+
+  @override
+  String get termsAcceptanceTitle => 'Aceitação dos Termos';
+
+  @override
+  String get termsAcceptanceContent =>
+      'Ao baixar, instalar ou usar o EcoWallet, você concorda em estar vinculado a estes Termos de Serviço. Se você não concorda, por favor não use o aplicativo.';
+
+  @override
+  String get termsServiceTitle => 'Descrição do Serviço';
+
+  @override
+  String get termsServiceContent =>
+      'O EcoWallet fornece ferramentas de gerenciamento de finanças pessoais, incluindo rastreamento de transações, orçamento e análises financeiras. O serviço é fornecido \'como está\' para uso pessoal e não comercial.';
+
+  @override
+  String get termsAccountTitle => 'Contas de Usuário';
+
+  @override
+  String get termsAccountContent =>
+      'Você é responsável por manter a confidencialidade das credenciais da sua conta e por todas as atividades em sua conta. Você deve fornecer informações precisas e completas ao criar uma conta.';
+
+  @override
+  String get termsContentTitle => 'Conteúdo do Usuário';
+
+  @override
+  String get termsContentContent =>
+      'Você mantém todos os direitos sobre os dados financeiros que insere no aplicativo. Ao usar nossos recursos de backup na nuvem, você nos concede permissão para armazenar e processar esses dados exclusivamente para fornecer o serviço.';
+
+  @override
+  String get termsProhibitedTitle => 'Usos Proibidos';
+
+  @override
+  String get termsProhibitedContent =>
+      'Você não pode usar o EcoWallet para fins ilegais, transmitir código malicioso ou tentar acessar dados de outros usuários. A violação pode resultar no encerramento da conta.';
+
+  @override
+  String get termsLiabilityTitle => 'Limitação de Responsabilidade';
+
+  @override
+  String get termsLiabilityContent =>
+      'O EcoWallet não é responsável por quaisquer decisões financeiras que você tome com base nos dados ou análises do aplicativo. Sempre consulte um profissional financeiro para assuntos financeiros importantes.';
+
+  @override
+  String get termsChangesTitle => 'Alterações nos Termos';
+
+  @override
+  String get termsChangesContent =>
+      'Podemos atualizar estes termos periodicamente. O uso continuado do aplicativo após as alterações constitui aceitação dos novos termos.';
 }

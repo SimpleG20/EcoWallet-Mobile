@@ -27,6 +27,21 @@ class NotificationPreferences extends Equatable {
     this.highConsumptionThreshold = 500.0,
   });
 
+  factory NotificationPreferences.defaults() {
+    return const NotificationPreferences(
+      dailyReminderEnabled: false,
+      reminderTime: TimeOfDay(hour: 9, minute: 0),
+      billsReminderEnabled: false,
+      monthlyReportEnabled: false,
+      quietHoursEnabled: false,
+      quietHoursStart: TimeOfDay(hour: 22, minute: 0),
+      quietHoursEnd: TimeOfDay(hour: 7, minute: 0),
+      energySavingTipsEnabled: false,
+      highConsumptionAlertEnabled: false,
+      highConsumptionThreshold: 500.0,
+    );
+  }
+
   NotificationPreferences copyWith({
     bool? dailyReminderEnabled,
     TimeOfDay? reminderTime,
