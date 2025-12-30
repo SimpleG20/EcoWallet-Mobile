@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/constants/transaction_type_data.dart';
 import '../widgets/add_transaction_modal.dart';
-import '../widgets/balance_card.dart';
+import '../widgets/balance_card/balance_card.dart';
+import '../widgets/dismissible_card.dart';
+import '../widgets/eco_footprint_card.dart';
 import '../widgets/home_header.dart';
-import '../widgets/transaction_card.dart';
 import '../widgets/home_action_buttons.dart';
-import '../../../../injection_container.dart' as di;
-import '../../../../l10n/app_localizations.dart';
+import '../../domain/entities/weekly_transaction_data.dart';
+import '../../domain/usecases/calculate_weekly_transactions.dart';
 import '../../../wallet/domain/entities/transaction.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../../injection_container.dart' as di;
+import '../../../../core/constants/transaction_type_data.dart';
 
+/// Main home page of the application.
+///
+/// Displays the user's financial overview including balance, weekly chart,
+/// eco footprint, and recent transactions.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  // Use case instance for calculating weekly transactions
+  static final _calculateWeeklyTransactions = CalculateWeeklyTransactions();
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +38,31 @@ class HomePage extends StatelessWidget {
         ),
         body: BlocBuilder<WalletBloc, BaseWalletState>(
           builder: (context, state) {
-            // Loading
             if (state is WalletLoading) {
               // TODO: Skeleton loader
               return const Center(child: CircularProgressIndicator());
             }
 
-            // Error
             if (state is WalletError) {
               return Center(
-                  child: Text(
-                state.message,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(color: theme.colorScheme.error),
-              ));
+                child: Text(
+                  state.message,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
+                ),
+              );
             }
 
             if (state is WalletLoaded) {
-              return _buildBody(context, loc, theme, state);
+              return _HomeBody(
+                loc: loc,
+                theme: theme,
+                state: state,
+                weeklyData: _calculateWeeklyTransactions(state.recentTransactions),
+                onAddTransaction: (type, {Transaction? transaction}) =>
+                    _showAddTransactionModal(context, type, transactionToEdit: transaction),
+              );
             }
             return const SizedBox.shrink();
           },
@@ -54,83 +71,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(
+  void _showAddTransactionModal(
     BuildContext context,
-    AppLocalizations loc,
-    ThemeData theme,
-    WalletLoaded state,
-  ) {
-    return Column(
-      children: [
-        _buildHeaderSection(context, loc, theme, state),
-        const SizedBox(height: 8),
-        _buildTransactionsHeader(context, loc, theme),
-        const SizedBox(height: 8),
-        _buildTransactionsList(context, loc, theme, state),
-        const SizedBox(height: 8),
-      ],
-    );
-  }
-
-  /// Builds the header section with balance card and action buttons.
-  Widget _buildHeaderSection(
-    BuildContext context,
-    AppLocalizations loc,
-    ThemeData theme,
-    WalletLoaded state,
-  ) {
-    return SizedBox(
-      height: 350,
-      child: Stack(
-        children: [
-          // Background decoration
-          Container(
-            height: 300,
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primaryContainer,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(16.0),
-                bottomRight: Radius.circular(16.0),
-              ),
-            ),
-          ),
-          // Content overlay
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HomeHeader(
-                  welcomeText: loc.welcome,
-                  titleText: loc.appTitle,
-                ),
-                const SizedBox(height: 20),
-                BalanceCard(
-                  locale: loc.localeName,
-                  totalBalance: state.totalBalance,
-                  monthlySavings: state.monthlySavings,
-                  balanceLabel: loc.dashboardTotalBalance,
-                  savingsLabel: loc.dashboardMonthlySavings,
-                ),
-                const SizedBox(height: 8),
-                HomeActionButtons(
-                  incomeLabel: loc.lbIncome,
-                  expenseLabel: loc.lbExpense,
-                  onIncomePressed: () => _showAddTransactionModal(
-                      context, ETransactionType.income),
-                  onExpensePressed: () => _showAddTransactionModal(
-                      context, ETransactionType.expense),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showAddTransactionModal(BuildContext context, ETransactionType type,
-      {Transaction? transactionToEdit}) {
+    ETransactionType type, {
+    Transaction? transactionToEdit,
+  }) {
     final walletBloc = context.read<WalletBloc>();
     showModalBottomSheet(
       context: context,
@@ -144,10 +89,159 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
 
-  /// Builds the transactions section header with "View All" button.
-  Widget _buildTransactionsHeader(
-      BuildContext context, AppLocalizations loc, ThemeData theme) {
+/// Internal widget containing the home page body content.
+class _HomeBody extends StatelessWidget {
+  const _HomeBody({
+    required this.loc,
+    required this.theme,
+    required this.state,
+    required this.weeklyData,
+    required this.onAddTransaction,
+  });
+
+  final AppLocalizations loc;
+  final ThemeData theme;
+  final WalletLoaded state;
+  final WeeklyTransactionData weeklyData;
+  final void Function(ETransactionType type, {Transaction? transaction}) onAddTransaction;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _HeaderSection(
+          loc: loc,
+          theme: theme,
+          totalBalance: state.totalBalance,
+          monthlySavings: state.monthlySavings,
+          weeklyData: weeklyData,
+          onIncomePressed: () => onAddTransaction(ETransactionType.income),
+          onExpensePressed: () => onAddTransaction(ETransactionType.expense),
+        ),
+        const SizedBox(height: 8),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // TODO: Calculate CO2 emissions from transactions
+                const EcoFootprintCard(co2Emissions: 10.0, treesNeeded: 0),
+                const SizedBox(height: 8),
+                _TransactionsSection(
+                  loc: loc,
+                  theme: theme,
+                  transactions: state.transactions,
+                  onTransactionTap: (transaction) => onAddTransaction(
+                    transaction.type,
+                    transaction: transaction,
+                  ),
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Header section containing the balance card and action buttons.
+class _HeaderSection extends StatelessWidget {
+  const _HeaderSection({
+    required this.loc,
+    required this.theme,
+    required this.totalBalance,
+    required this.monthlySavings,
+    required this.weeklyData,
+    required this.onIncomePressed,
+    required this.onExpensePressed,
+  });
+
+  final AppLocalizations loc;
+  final ThemeData theme;
+  final double totalBalance;
+  final double monthlySavings;
+  final WeeklyTransactionData weeklyData;
+  final VoidCallback onIncomePressed;
+  final VoidCallback onExpensePressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 350,
+      child: Stack(
+        children: [
+          Container(
+            height: 300,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primaryContainer,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(16.0),
+                bottomRight: Radius.circular(16.0),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                HomeHeader(
+                  welcomeText: loc.welcome,
+                  titleText: loc.appTitle,
+                ),
+                const SizedBox(height: 20),
+                BalanceCard(
+                  totalBalance: totalBalance,
+                  monthlySavings: monthlySavings,
+                  weeklyData: weeklyData,
+                ),
+                const SizedBox(height: 8),
+                HomeActionButtons(
+                  incomeLabel: loc.lbIncome,
+                  expenseLabel: loc.lbExpense,
+                  onIncomePressed: onIncomePressed,
+                  onExpensePressed: onExpensePressed,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Section displaying recent transactions header and list.
+class _TransactionsSection extends StatelessWidget {
+  const _TransactionsSection({
+    required this.loc,
+    required this.theme,
+    required this.transactions,
+    required this.onTransactionTap,
+  });
+
+  final AppLocalizations loc;
+  final ThemeData theme;
+  final List<Transaction> transactions;
+  final void Function(Transaction) onTransactionTap;
+
+  static const int _maxVisibleTransactions = 5;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildHeader(),
+        const SizedBox(height: 8),
+        _buildList(),
+      ],
+    );
+  }
+
+  Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -159,7 +253,6 @@ class HomePage extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              // context.read<RouteBloc>().add(NavigateToAllTransactionsEvent(ERoute.Wallet));
               // TODO: Navigate to all transactions screen
             },
             child: Text(loc.btnViewAll),
@@ -169,78 +262,51 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  /// Builds the scrollable transactions list.
-  Widget _buildTransactionsList(
-    BuildContext ctx,
-    AppLocalizations loc,
-    ThemeData theme,
-    WalletLoaded state,
-  ) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+  Widget _buildList() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: SizedBox(
+        height: 300,
         child: Material(
           elevation: 4,
           borderRadius: BorderRadius.circular(12.0),
           color: theme.colorScheme.surface,
           clipBehavior: Clip.antiAlias,
-          child: state.transactions.isEmpty
-              ? Center(
-                  child: Text(
-                  textAlign: TextAlign.center,
-                  loc.dashboardNoTransactions,
-                  style: theme.textTheme.titleSmall
-                      ?.copyWith(color: theme.colorScheme.outlineVariant),
-                ))
-              : ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: state.transactions.length > 5
-                      ? 5
-                      : state.transactions.length,
-                  itemBuilder: (context, index) {
-                    final transaction = state.transactions[index];
-                    return Dismissible(
-                      key: Key(transaction.id),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        color: Colors.red,
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const Icon(Icons.delete, color: Colors.white),
-                      ),
-                      onDismissed: (direction) {
-                        final walletBloc = context.read<WalletBloc>();
-
-                        walletBloc.add(DeleteTransactionEvent(transaction.id));
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(loc.msgTransactionDeleted),
-                            action: SnackBarAction(
-                              label: loc.btnUndo,
-                              onPressed: () {
-                                walletBloc
-                                    .add(AddTransactionEvent(transaction));
-                              },
-                            ),
-                          ),
-                        );
-                      },
-                      child: TransactionCard(
-                        transaction: transaction,
-                        onTap: () {
-                          _showAddTransactionModal(
-                            context,
-                            transaction.type,
-                            transactionToEdit: transaction,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
+          child: transactions.isEmpty ? _buildEmptyState() : _buildTransactionsList(),
         ),
       ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Text(
+        textAlign: TextAlign.center,
+        loc.dashboardNoTransactions,
+        style: theme.textTheme.titleSmall?.copyWith(
+          color: theme.colorScheme.outlineVariant,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTransactionsList() {
+    final visibleCount = transactions.length > _maxVisibleTransactions
+        ? _maxVisibleTransactions
+        : transactions.length;
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: visibleCount,
+      itemBuilder: (context, index) {
+        final transaction = transactions[index];
+        return DismissibleTransactionCard(
+          transaction: transaction,
+          onTap: () => onTransactionTap(transaction),
+        );
+      },
     );
   }
 }
