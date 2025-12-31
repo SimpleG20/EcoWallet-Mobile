@@ -1,10 +1,13 @@
-import 'package:eco_wallet/core/constants/ui_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../../core/presentation/widgets/password_field.dart';
+import '../../../../core/constants/ui_data.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '/core/utils/app_validators.dart';
 import '../../../../l10n/app_localizations.dart';
 
+import '../../../../core/presentation/widgets/password_field.dart';
 import '../../../../core/presentation/widgets/any_text_field.dart';
 import '../../../../core/presentation/widgets/or_divider.dart';
 
@@ -19,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _obscurePassword = true;
   bool _agreeTerms = false;
 
+  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -139,6 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildFields(ThemeData theme, AppLocalizations loc) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           AnyTextField(
@@ -191,7 +196,17 @@ class _RegisterPageState extends State<RegisterPage> {
             },
             label: loc.lbConfirmPassword,
             hintText: loc.hintConfirmPassword,
-            validator: (value) => AppValidators.isValidPassword(value, loc),
+            validator: (value) {
+              var result = AppValidators.isValidPassword(value, loc);
+              if (result != null) {
+                return result;
+              }
+
+              if (value != _passwordController.text) {
+                return loc.errorPasswordMismatch;
+              }
+              return null;
+            },
           ),
         ],
       ),
@@ -204,7 +219,7 @@ class _RegisterPageState extends State<RegisterPage> {
         shadowColor: theme.colorScheme.primary,
         elevation: 4,
       ),
-      onPressed: () {},
+      onPressed: () => _submitRegister(theme, loc),
       child: Text(
         loc.lbCreateAccount,
         style: theme.textTheme.labelLarge?.copyWith(
@@ -229,7 +244,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                context.pop();
               },
               child: Text(
                 loc.lbSignIn,
@@ -265,5 +280,27 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ],
     );
+  }
+
+  void _submitRegister(ThemeData theme, AppLocalizations loc) {
+    if (!_formKey.currentState!.validate()) return;
+
+    if (!_agreeTerms) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(loc.errorAgreeTerms),
+          backgroundColor: theme.colorScheme.error,
+        ),
+      );
+      return;
+    }
+
+    context.read<AuthBloc>().add(
+          SignUpEvent(
+            name: _nameController.text.trim(),
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          ),
+        );
   }
 }

@@ -265,22 +265,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorAmountMustBePositive => 'Amount must be greater than zero.';
 
   @override
-  String get errorEmailEmpty => 'Email cannot be empty.';
+  String get errorNameEmpty => 'Name cannot be empty.';
 
   @override
-  String get errorEmailInvalid => 'Invalid email format.';
-
-  @override
-  String get errorPhoneEmpty => 'Phone number cannot be empty.';
-
-  @override
-  String get errorPhoneInvalid => 'Invalid phone number format.';
-
-  @override
-  String get errorAddressEmpty => 'Address cannot be empty.';
-
-  @override
-  String get errorAddressInvalid => 'Address is too short.';
+  String get errorNameInvalid => 'Name is too short.';
 
   @override
   String get errorDateInvalid => 'Invalid date format.';
@@ -289,22 +277,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorDateOutOfRange => 'Date out of range.';
 
   @override
-  String get errorNameEmpty => 'Name cannot be empty.';
+  String get errorEmailEmpty => 'Email cannot be empty.';
 
   @override
-  String get errorNameInvalid => 'Name is too short.';
-
-  @override
-  String get errorPasswordEmpty => 'Password cannot be empty.';
+  String get errorEmailInvalid => 'Invalid email format.';
 
   @override
   String get errorPasswordWeak => 'Password is too weak.';
+
+  @override
+  String get errorAddressInvalid => 'Address is too short.';
+
+  @override
+  String get errorAddressEmpty => 'Address cannot be empty.';
+
+  @override
+  String get errorPasswordEmpty => 'Password cannot be empty.';
 
   @override
   String get errorPasswordTooShort => 'Password is too short.';
 
   @override
   String get errorPasswordMismatch => 'Passwords do not match.';
+
+  @override
+  String get errorPhoneEmpty => 'Phone number cannot be empty.';
+
+  @override
+  String get errorPhoneInvalid => 'Invalid phone number format.';
+
+  @override
+  String get errorAgreeTerms => 'You must agree to the terms to continue.';
 
   @override
   String get errorEnterCurrentPassword => 'Please enter your current password.';
@@ -329,4 +332,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String ecoFootprintCompensation(int count) {
     return '$count trees 🌳';
   }
+
+  @override
+  String get loginErrorGeneric => 'Login failed. Please try again.';
+
+  @override
+  String get lbDismiss => 'Dismiss';
 }

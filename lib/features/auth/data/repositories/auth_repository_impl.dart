@@ -23,7 +23,7 @@ class AuthRepositoryImpl implements BaseAuthRepository {
         id: const Uuid().v4(),
         fullName: params.name,
         email: params.email,
-        encryptedPassword: params.password,
+        password: params.password,
         phoneNumber: null,
         imageUrl: null,
         address: null,

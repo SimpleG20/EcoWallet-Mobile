@@ -1,12 +1,12 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'base_auth_data_source.dart';
+import '../../../user/data/model/user_model.dart';
 import '../../../../core/constants/keys.dart';
 import '../../../../core/database/db_helper.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/password_utils.dart';
-import '../../../user/data/model/user_model.dart';
-import 'base_auth_data_source.dart';
 
 class AuthLocalDataSource implements BaseAuthDataSource {
   final DbHelper dbHelper;
@@ -21,7 +21,6 @@ class AuthLocalDataSource implements BaseAuthDataSource {
   Future<UserModel> authenticate(String email, String password) async {
     try {
       final db = await dbHelper.database;
-      // Query user by email only, then verify password hash
       final List<Map<String, dynamic>> maps = await db.query(
         'users',
         where: 'email = ?',
@@ -35,15 +34,12 @@ class AuthLocalDataSource implements BaseAuthDataSource {
         // Verify password using hash comparison
         if (PasswordUtils.verifyPassword(password, email, storedHash)) {
           return UserModel.fromJson(userMap);
-        } else {
-          throw AuthenticationException('Invalid email or password');
         }
-      } else {
-        throw AuthenticationException('Invalid email or password');
       }
+      throw AuthenticationException('Invalid email or password');
     } catch (e) {
       if (e is AuthenticationException) rethrow;
-      throw CacheException('Database error during authentication');
+      throw CacheException('Error during authentication: ${e.toString()}');
     }
   }
 
@@ -54,7 +50,7 @@ class AuthLocalDataSource implements BaseAuthDataSource {
 
       // Hash the password before storing
       final hashedPassword = PasswordUtils.hashPassword(
-        user.encryptedPassword,
+        user.password,
         user.email,
       );
 
@@ -63,7 +59,7 @@ class AuthLocalDataSource implements BaseAuthDataSource {
         id: user.id,
         fullName: user.fullName,
         email: user.email,
-        encryptedPassword: hashedPassword,
+        password: hashedPassword,
         phoneNumber: user.phoneNumber,
         imageUrl: user.imageUrl,
         address: user.address,
@@ -77,7 +73,7 @@ class AuthLocalDataSource implements BaseAuthDataSource {
       );
       return userWithHashedPassword;
     } catch (e) {
-      throw CacheException('Database error during user registration');
+      throw CacheException('Error during user registration: ${e.toString()}');
     }
   }
 
@@ -120,7 +116,6 @@ class AuthLocalDataSource implements BaseAuthDataSource {
         throw AuthenticationException('User not found in database');
       }
     } on AuthenticationException {
-      // Preserve AuthenticationException to avoid wrapping it
       rethrow;
     } catch (e) {
       throw AuthenticationException('Failed to fetch logged user: ${e.toString()}');
