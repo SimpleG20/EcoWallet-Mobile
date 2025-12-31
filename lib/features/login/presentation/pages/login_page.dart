@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:eco_wallet/core/utils/app_validators.dart';
 
+import '../../../../core/constants/ui_data.dart';
+import '../widgets/or_divider.dart';
+import '../widgets/any_text_field.dart';
+import '../widgets/password_field.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +16,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obscurePassword = true;
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,218 +51,189 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 64),
-                  Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: theme.colorScheme.primaryContainer,
-                          boxShadow: [
-                            BoxShadow(
-                              color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
-                              blurRadius: 8,
-                              offset: const Offset(0, 5),
-                            ),
-                          ],
-                        ),
-                        height: 80,
-                        width: 80,
-                        child: Icon(
-                          Icons.wallet_outlined,
-                          color: theme.colorScheme.onPrimaryContainer,
-                          size: 48,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        loc.appTitle,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          color: theme.colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        loc.loginWelcomeMessage,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  Text(
-                    loc.welcomeBack,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    loc.loginSignInToContinue,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                    ),
-                  ),
+                  _buildHeader(theme, loc),
                   const SizedBox(height: 16),
-                  Form(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        _buildEmailField(theme, loc),
-                        const SizedBox(height: 12),
-                        _buildPasswordField(theme, loc),
-                      ],
-                    ),
-                  ),
+                  _buildFields(theme, loc),
                   const SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    child: Text(
-                      loc.lbSignIn,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: theme.colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _buildOrDivider(theme, loc),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        loc.dontHaveAccount,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          loc.lbSignUp,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.primary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
+                  _buildSignInBtn(theme, loc),
+                  _buildFooter(theme, loc),
                 ],
               ),
             ),
             const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: Text(
-                loc.loginWarningTerms,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            )
+            _buildWaningTerms(theme, loc),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildEmailField(ThemeData theme, AppLocalizations loc) {
+  Widget _buildHeader(ThemeData theme, AppLocalizations loc) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const SizedBox(height: kTopPaddingEcoWalletLogo),
+        Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: theme.colorScheme.primaryContainer,
+                boxShadow: [
+                  BoxShadow(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                    blurRadius: 8,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              height: 80,
+              width: 80,
+              child: Icon(
+                Icons.wallet_outlined,
+                color: theme.colorScheme.onPrimaryContainer,
+                size: 48,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              loc.appTitle,
+              style: theme.textTheme.titleLarge?.copyWith(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              loc.loginWelcomeMessage,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+        const SizedBox(height: 40),
         Text(
-          loc.lbEmail,
-          style: theme.textTheme.titleSmall?.copyWith(
+          loc.welcomeBack,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          loc.loginSignInToContinue,
+          style: theme.textTheme.bodyMedium?.copyWith(
             color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
           ),
         ),
-        const SizedBox(height: 8),
-        TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
+      ],
+    );
+  }
+
+  Widget _buildFields(ThemeData theme, AppLocalizations loc) {
+    return Form(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AnyTextField(
+            label: loc.lbEmail,
             hintText: loc.hintEmail,
+            controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            validator: (value) => AppValidators.isValidEmail(value, loc),
             prefixIcon: Icon(
               Icons.email_outlined,
               color: theme.colorScheme.primary,
             ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPasswordField(ThemeData theme, AppLocalizations loc) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          loc.lbPassword,
-          style: theme.textTheme.titleSmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          obscureText: _obscurePassword,
-          decoration: InputDecoration(
-            suffixIcon: IconButton(
-              onPressed: () => setState(() {
-                _obscurePassword = !_obscurePassword;
-                return;
-              }),
-              icon: Icon(
-                _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-              ),
-            ),
+          const SizedBox(height: 12),
+          PasswordField(
+            label: loc.lbPassword,
             hintText: loc.hintPassword,
-            prefixIcon: Icon(
-              Icons.lock_outline,
-              color: theme.colorScheme.primary,
-            ),
+            obscureText: _obscurePassword,
+            controller: _passwordController,
+            onToggleObscureText: () => setState(() {
+              _obscurePassword = !_obscurePassword;
+            }),
+            validator: (value) => AppValidators.isValidPassword(value, loc),
           ),
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton(
-            onPressed: () {},
-            child: Text(
-              loc.askForgotPassword,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.bold,
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                loc.askForgotPassword,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSignInBtn(ThemeData theme, AppLocalizations loc) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
         ),
+      ),
+      child: Text(
+        loc.lbSignIn,
+        style: theme.textTheme.labelLarge?.copyWith(
+          color: theme.colorScheme.onPrimary,
+        ),
+      ),
+      onPressed: () {},
+    );
+  }
+
+  Widget _buildFooter(ThemeData theme, AppLocalizations loc) {
+    return Column(
+      children: [
+        const SizedBox(height: 16),
+        const OrDivider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              loc.dontHaveAccount,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                loc.lbSignUp,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
 
-  Widget _buildOrDivider(ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Expanded(child: Divider(color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.3), thickness: 1)),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(
-            loc.lbOr,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-            ),
-          ),
+  Widget _buildWaningTerms(ThemeData theme, AppLocalizations loc) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      child: Text(
+        loc.loginWarningTerms,
+        style: theme.textTheme.bodyMedium?.copyWith(
+          color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
         ),
-        Expanded(child: Divider(color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.3), thickness: 1)),
-      ],
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
