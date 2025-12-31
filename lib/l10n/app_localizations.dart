@@ -170,17 +170,41 @@ abstract class AppLocalizations {
   /// **'Forgot Password?'**
   String get askForgotPassword;
 
-  /// No description provided for @searchTransactions.
+  /// No description provided for @askAlreadyHaveAccount.
   ///
   /// In en, this message translates to:
-  /// **'Search transactions...'**
-  String get searchTransactions;
+  /// **'Already have an account?'**
+  String get askAlreadyHaveAccount;
+
+  /// No description provided for @addFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Filters'**
+  String get addFilters;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
 
   /// No description provided for @filterTransactions.
   ///
   /// In en, this message translates to:
   /// **'Filter Transactions'**
   String get filterTransactions;
+
+  /// No description provided for @searchTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Search transactions...'**
+  String get searchTransactions;
+
+  /// No description provided for @loginSignInToContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue to your EcoWallet'**
+  String get loginSignInToContinue;
 
   /// No description provided for @loginWelcomeMessage.
   ///
@@ -194,23 +218,35 @@ abstract class AppLocalizations {
   /// **'By signing in, you agree to our\nTerms of Service and Privacy Policy.'**
   String get loginWarningTerms;
 
-  /// No description provided for @loginSignInToContinue.
+  /// No description provided for @passwordRequirements.
   ///
   /// In en, this message translates to:
-  /// **'Sign in to continue to your EcoWallet'**
-  String get loginSignInToContinue;
+  /// **'Password Requirements'**
+  String get passwordRequirements;
 
-  /// No description provided for @dontHaveAccount.
+  /// No description provided for @pwRequirementNumber.
   ///
   /// In en, this message translates to:
-  /// **'Don\'t have an account?'**
-  String get dontHaveAccount;
+  /// **'At least one number'**
+  String get pwRequirementNumber;
 
-  /// No description provided for @addFilters.
+  /// No description provided for @pwRequirementLength.
   ///
   /// In en, this message translates to:
-  /// **'Add Filters'**
-  String get addFilters;
+  /// **'Minimum of 8 characters'**
+  String get pwRequirementLength;
+
+  /// No description provided for @pwRequirementUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one uppercase letter'**
+  String get pwRequirementUppercase;
+
+  /// No description provided for @pwRequirementSpecial.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one special character'**
+  String get pwRequirementSpecial;
 
   /// No description provided for @btnApply.
   ///
@@ -338,12 +374,6 @@ abstract class AppLocalizations {
   /// **'Sign Up'**
   String get lbSignUp;
 
-  /// No description provided for @lbPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get lbPassword;
-
   /// No description provided for @lbHealth.
   ///
   /// In en, this message translates to:
@@ -398,6 +428,18 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get lbCategory;
 
+  /// No description provided for @lbPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get lbPassword;
+
+  /// No description provided for @lbFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get lbFullName;
+
   /// No description provided for @lbAnalytics.
   ///
   /// In en, this message translates to:
@@ -422,6 +464,30 @@ abstract class AppLocalizations {
   /// **'Entertainment'**
   String get lbEntertainment;
 
+  /// No description provided for @lbCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get lbCreateAccount;
+
+  /// No description provided for @lbEcoFootprint.
+  ///
+  /// In en, this message translates to:
+  /// **'Carbon Footprint'**
+  String get lbEcoFootprint;
+
+  /// No description provided for @lbConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get lbConfirmPassword;
+
+  /// No description provided for @lbMonthlyProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Progress'**
+  String get lbMonthlyProgress;
+
   /// No description provided for @lbAllTransactions.
   ///
   /// In en, this message translates to:
@@ -433,6 +499,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Date Range'**
   String get lbSelectDateRange;
+
+  /// No description provided for @lbCreateAccountSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up to get started!'**
+  String get lbCreateAccountSubtitle;
+
+  /// No description provided for @lbAgreeTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the Terms of Service and Privacy Policy.'**
+  String get lbAgreeTerms;
 
   /// No description provided for @hintEmail.
   ///
@@ -451,6 +529,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter your password'**
   String get hintPassword;
+
+  /// No description provided for @hintFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get hintFullName;
+
+  /// No description provided for @hintConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your password'**
+  String get hintConfirmPassword;
 
   /// No description provided for @hintTransactionName.
   ///
@@ -476,18 +566,6 @@ abstract class AppLocalizations {
   /// **'Transaction deleted successfully.'**
   String get msgTransactionDeleted;
 
-  /// No description provided for @errorAmountEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter an amount.'**
-  String get errorAmountEmpty;
-
-  /// No description provided for @errorCategoryEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Please select a category.'**
-  String get errorCategoryEmpty;
-
   /// No description provided for @errorDateEmpty.
   ///
   /// In en, this message translates to:
@@ -499,6 +577,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a title.'**
   String get errorTitleEmpty;
+
+  /// No description provided for @errorAmountEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an amount.'**
+  String get errorAmountEmpty;
+
+  /// No description provided for @errorCategoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a category.'**
+  String get errorCategoryEmpty;
 
   /// No description provided for @errorAmountInvalid.
   ///
@@ -512,23 +602,107 @@ abstract class AppLocalizations {
   /// **'Amount must be greater than zero.'**
   String get errorAmountMustBePositive;
 
+  /// No description provided for @errorEmailEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Email cannot be empty.'**
+  String get errorEmailEmpty;
+
+  /// No description provided for @errorEmailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email format.'**
+  String get errorEmailInvalid;
+
+  /// No description provided for @errorPhoneEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number cannot be empty.'**
+  String get errorPhoneEmpty;
+
+  /// No description provided for @errorPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number format.'**
+  String get errorPhoneInvalid;
+
+  /// No description provided for @errorAddressEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Address cannot be empty.'**
+  String get errorAddressEmpty;
+
+  /// No description provided for @errorAddressInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is too short.'**
+  String get errorAddressInvalid;
+
+  /// No description provided for @errorDateInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid date format.'**
+  String get errorDateInvalid;
+
+  /// No description provided for @errorDateOutOfRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Date out of range.'**
+  String get errorDateOutOfRange;
+
+  /// No description provided for @errorNameEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Name cannot be empty.'**
+  String get errorNameEmpty;
+
+  /// No description provided for @errorNameInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is too short.'**
+  String get errorNameInvalid;
+
+  /// No description provided for @errorPasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Password cannot be empty.'**
+  String get errorPasswordEmpty;
+
+  /// No description provided for @errorPasswordWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too weak.'**
+  String get errorPasswordWeak;
+
+  /// No description provided for @errorPasswordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too short.'**
+  String get errorPasswordTooShort;
+
+  /// No description provided for @errorPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get errorPasswordMismatch;
+
+  /// No description provided for @errorEnterCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your current password.'**
+  String get errorEnterCurrentPassword;
+
+  /// No description provided for @errorSameAsCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password cannot be the same as the current password.'**
+  String get errorSameAsCurrentPassword;
+
   /// No description provided for @errorAmountFormat.
   ///
   /// In en, this message translates to:
   /// **'Invalid number format. Use only digits and a decimal separator.'**
   String get errorAmountFormat;
-
-  /// No description provided for @lbMonthlyProgress.
-  ///
-  /// In en, this message translates to:
-  /// **'Monthly Progress'**
-  String get lbMonthlyProgress;
-
-  /// No description provided for @lbEcoFootprint.
-  ///
-  /// In en, this message translates to:
-  /// **'Carbon Footprint'**
-  String get lbEcoFootprint;
 
   /// No description provided for @ecoFootprintValue.
   ///

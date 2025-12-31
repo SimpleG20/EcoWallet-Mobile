@@ -1,24 +1,28 @@
+import 'package:eco_wallet/core/constants/ui_data.dart';
 import 'package:flutter/material.dart';
-import 'package:eco_wallet/core/utils/app_validators.dart';
 
-import '../../../../core/constants/ui_data.dart';
-import '../widgets/or_divider.dart';
-import '../widgets/any_text_field.dart';
-import '../widgets/password_field.dart';
+import '../../../login/presentation/widgets/password_field.dart';
+import '/core/utils/app_validators.dart';
 import '../../../../l10n/app_localizations.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+import '../../../login/presentation/widgets/any_text_field.dart';
+import '../../../login/presentation/widgets/or_divider.dart';
+
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   bool _obscurePassword = true;
+  bool _agreeTerms = false;
 
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +56,15 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   _buildHeader(theme, loc),
-                  const SizedBox(height: 16),
                   _buildFields(theme, loc),
-                  const SizedBox(height: 12),
-                  _buildSignInBtn(theme, loc),
-                  _buildFooter(theme, loc),
+                  const SizedBox(height: 16),
+                  _buildAgreeTermsField(theme, loc),
+                  const SizedBox(height: 24),
+                  _buildCreateBtn(theme, loc),
+                  _buildAlreadyHaveAccount(context, theme, loc)
                 ],
               ),
             ),
-            const SizedBox(height: 24),
-            _buildWaningTerms(theme, loc),
           ],
         ),
       ),
@@ -113,19 +116,23 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 32),
         Text(
-          loc.welcomeBack,
+          loc.lbCreateAccount,
           style: theme.textTheme.titleMedium?.copyWith(
+            color: theme.colorScheme.onSurface,
             fontWeight: FontWeight.bold,
           ),
         ),
+        const SizedBox(height: 8),
         Text(
-          loc.loginSignInToContinue,
+          loc.lbCreateAccountSubtitle,
           style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+            color: theme.colorScheme.onSurfaceVariant,
+            fontWeight: FontWeight.w500,
           ),
         ),
+        const SizedBox(height: 24)
       ],
     );
   }
@@ -133,8 +140,20 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildFields(ThemeData theme, AppLocalizations loc) {
     return Form(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          AnyTextField(
+            label: loc.lbFullName,
+            hintText: loc.hintFullName,
+            controller: _nameController,
+            keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next,
+            validator: (value) => AppValidators.isValidName(loc, value),
+            prefixIcon: Icon(
+              Icons.person_outline,
+              color: theme.colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: 16),
           AnyTextField(
             label: loc.lbEmail,
             hintText: loc.hintEmail,
@@ -147,93 +166,104 @@ class _LoginPageState extends State<LoginPage> {
               color: theme.colorScheme.primary,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           PasswordField(
+            controller: _passwordController,
+            obscureText: _obscurePassword,
+            onToggleObscureText: () {
+              setState(() {
+                _obscurePassword = !_obscurePassword;
+              });
+            },
             label: loc.lbPassword,
             hintText: loc.hintPassword,
-            obscureText: _obscurePassword,
-            controller: _passwordController,
-            onToggleObscureText: () => setState(() {
-              _obscurePassword = !_obscurePassword;
-            }),
             validator: (value) => AppValidators.isValidPassword(value, loc),
+            showRequirements: true,
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                loc.askForgotPassword,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.primary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+          const SizedBox(height: 20),
+          PasswordField(
+            controller: _confirmPasswordController,
+            obscureText: _obscurePassword,
+            onToggleObscureText: () {
+              setState(() {
+                _obscurePassword = !_obscurePassword;
+              });
+            },
+            label: loc.lbConfirmPassword,
+            hintText: loc.hintConfirmPassword,
+            validator: (value) => AppValidators.isValidPassword(value, loc),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSignInBtn(ThemeData theme, AppLocalizations loc) {
+  Widget _buildCreateBtn(ThemeData theme, AppLocalizations loc) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
+        shadowColor: theme.colorScheme.primary,
+        elevation: 4,
       ),
+      onPressed: () {},
       child: Text(
-        loc.lbSignIn,
+        loc.lbCreateAccount,
         style: theme.textTheme.labelLarge?.copyWith(
           color: theme.colorScheme.onPrimary,
         ),
       ),
-      onPressed: () {},
     );
   }
 
-  Widget _buildFooter(ThemeData theme, AppLocalizations loc) {
+  Widget _buildAlreadyHaveAccount(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       children: [
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
         const OrDivider(),
+        const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              loc.dontHaveAccount,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+              loc.askAlreadyHaveAccount,
+              style: theme.textTheme.bodyMedium,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               child: Text(
-                loc.lbSignUp,
+                loc.lbSignIn,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.primary,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }
 
-  Widget _buildWaningTerms(ThemeData theme, AppLocalizations loc) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-      child: Text(
-        loc.loginWarningTerms,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+  Widget _buildAgreeTermsField(ThemeData theme, AppLocalizations loc) {
+    return Row(
+      children: [
+        Checkbox(
+          shape: CircleBorder(),
+          value: _agreeTerms,
+          onChanged: (value) {
+            setState(() {
+              _agreeTerms = value ?? false;
+            });
+          },
         ),
-        textAlign: TextAlign.center,
-      ),
+        Expanded(
+          child: Text(
+            loc.lbAgreeTerms,
+            style: theme.textTheme.bodyMedium,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -46,10 +46,23 @@ class AppLocalizationsPt extends AppLocalizations {
   String get askForgotPassword => 'Esqueceu a Senha?';
 
   @override
-  String get searchTransactions => 'Pesquisar transações...';
+  String get askAlreadyHaveAccount => 'Já tem uma conta?';
+
+  @override
+  String get addFilters => 'Adicionar Filtros';
+
+  @override
+  String get dontHaveAccount => 'Não tem uma conta?';
 
   @override
   String get filterTransactions => 'Filtrar Transações';
+
+  @override
+  String get searchTransactions => 'Pesquisar transações...';
+
+  @override
+  String get loginSignInToContinue =>
+      'Faça login para continuar no seu EcoWallet';
 
   @override
   String get loginWelcomeMessage =>
@@ -60,14 +73,19 @@ class AppLocalizationsPt extends AppLocalizations {
       'Ao entrar, você concorda com nossos\nTermos de Serviço e Política de Privacidade.';
 
   @override
-  String get loginSignInToContinue =>
-      'Faça login para continuar no seu EcoWallet';
+  String get passwordRequirements => 'Requisitos de Senha';
 
   @override
-  String get dontHaveAccount => 'Não tem uma conta?';
+  String get pwRequirementNumber => 'Pelo menos um número';
 
   @override
-  String get addFilters => 'Adicionar Filtros';
+  String get pwRequirementLength => 'Mínimo de 8 caracteres';
+
+  @override
+  String get pwRequirementUppercase => 'Pelo menos uma letra maiúscula';
+
+  @override
+  String get pwRequirementSpecial => 'Pelo menos um caractere especial';
 
   @override
   String get btnApply => 'Aplicar';
@@ -133,9 +151,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbSignUp => 'Registrar-se';
 
   @override
-  String get lbPassword => 'Senha';
-
-  @override
   String get lbHealth => 'Saúde';
 
   @override
@@ -163,6 +178,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbCategory => 'Categoria';
 
   @override
+  String get lbPassword => 'Senha';
+
+  @override
+  String get lbFullName => 'Nome Completo';
+
+  @override
   String get lbAnalytics => 'Análises';
 
   @override
@@ -175,10 +196,29 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbEntertainment => 'Entretenimento';
 
   @override
+  String get lbCreateAccount => 'Criar Conta';
+
+  @override
+  String get lbEcoFootprint => 'Pegada de Carbono';
+
+  @override
+  String get lbConfirmPassword => 'Confirmar Senha';
+
+  @override
+  String get lbMonthlyProgress => 'Progresso Mensal';
+
+  @override
   String get lbAllTransactions => 'Todas as Transações';
 
   @override
   String get lbSelectDateRange => 'Selecionar Período';
+
+  @override
+  String get lbCreateAccountSubtitle => 'Registre-se para começar!';
+
+  @override
+  String get lbAgreeTerms =>
+      'Eu concordo com os Termos de Serviço e a Política de Privacidade.';
 
   @override
   String get hintEmail => 'Insira seu email';
@@ -188,6 +228,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get hintPassword => 'Insira sua senha';
+
+  @override
+  String get hintFullName => 'Insira seu nome completo';
+
+  @override
+  String get hintConfirmPassword => 'Confirme sua senha';
 
   @override
   String get hintTransactionName => 'Insira o nome da transação';
@@ -202,16 +248,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get msgTransactionDeleted => 'Transação removida com sucesso.';
 
   @override
-  String get errorAmountEmpty => 'Por favor, insira um valor.';
-
-  @override
-  String get errorCategoryEmpty => 'Por favor, selecione uma categoria.';
-
-  @override
   String get errorDateEmpty => 'Por favor, selecione uma data.';
 
   @override
   String get errorTitleEmpty => 'Por favor, insira um título.';
+
+  @override
+  String get errorAmountEmpty => 'Por favor, insira um valor.';
+
+  @override
+  String get errorCategoryEmpty => 'Por favor, selecione uma categoria.';
 
   @override
   String get errorAmountInvalid => 'Por favor, insira um valor válido.';
@@ -220,14 +266,57 @@ class AppLocalizationsPt extends AppLocalizations {
   String get errorAmountMustBePositive => 'O valor deve ser maior que zero.';
 
   @override
+  String get errorEmailEmpty => 'Email não pode estar vazio.';
+
+  @override
+  String get errorEmailInvalid => 'Formato de email inválido.';
+
+  @override
+  String get errorPhoneEmpty => 'Telefone não pode estar vazio.';
+
+  @override
+  String get errorPhoneInvalid => 'Formato de telefone inválido.';
+
+  @override
+  String get errorAddressEmpty => 'Endereço não pode estar vazio.';
+
+  @override
+  String get errorAddressInvalid => 'Endereço muito curto.';
+
+  @override
+  String get errorDateInvalid => 'Formato de data inválido.';
+
+  @override
+  String get errorDateOutOfRange => 'Data fora do intervalo.';
+
+  @override
+  String get errorNameEmpty => 'Nome não pode estar vazio.';
+
+  @override
+  String get errorNameInvalid => 'Nome muito curto.';
+
+  @override
+  String get errorPasswordEmpty => 'Senha não pode estar vazia.';
+
+  @override
+  String get errorPasswordWeak => 'Senha é muito fraca.';
+
+  @override
+  String get errorPasswordTooShort => 'Senha é muito curta.';
+
+  @override
+  String get errorPasswordMismatch => 'As senhas não coincidem.';
+
+  @override
+  String get errorEnterCurrentPassword => 'Por favor, insira sua senha atual.';
+
+  @override
+  String get errorSameAsCurrentPassword =>
+      'A nova senha não pode ser igual à senha atual.';
+
+  @override
   String get errorAmountFormat =>
       'Formato de número inválido. Use apenas dígitos e um separador decimal.';
-
-  @override
-  String get lbMonthlyProgress => 'Progresso Mensal';
-
-  @override
-  String get lbEcoFootprint => 'Pegada de Carbono';
 
   @override
   String ecoFootprintValue(String value) {
