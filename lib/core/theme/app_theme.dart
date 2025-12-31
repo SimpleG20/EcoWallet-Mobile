@@ -39,6 +39,12 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.lightInputBackground,
+        hintStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: _fontMedium,
+          height: 1.5,
+          color: AppColors.lightForeground.withAlpha(120),
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
           borderSide: BorderSide.none,

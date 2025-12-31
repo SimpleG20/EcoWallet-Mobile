@@ -164,6 +164,12 @@ abstract class AppLocalizations {
   /// **'Shows weekly transaction overview.\nThe rightmost bar represents today.'**
   String get dashboardWeeklyOverviewInfo;
 
+  /// No description provided for @askForgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get askForgotPassword;
+
   /// No description provided for @searchTransactions.
   ///
   /// In en, this message translates to:
@@ -175,6 +181,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Filter Transactions'**
   String get filterTransactions;
+
+  /// No description provided for @loginWelcomeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart finance tracking for a better tomorrow.'**
+  String get loginWelcomeMessage;
+
+  /// No description provided for @loginWarningTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'By signing in, you agree to our\nTerms of Service and Privacy Policy.'**
+  String get loginWarningTerms;
+
+  /// No description provided for @loginSignInToContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue to your EcoWallet'**
+  String get loginSignInToContinue;
+
+  /// No description provided for @dontHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
 
   /// No description provided for @addFilters.
   ///
@@ -218,6 +248,12 @@ abstract class AppLocalizations {
   /// **'View All'**
   String get btnViewAll;
 
+  /// No description provided for @lbOr.
+  ///
+  /// In en, this message translates to:
+  /// **'Or'**
+  String get lbOr;
+
   /// No description provided for @lbAll.
   ///
   /// In en, this message translates to:
@@ -260,6 +296,12 @@ abstract class AppLocalizations {
   /// **'Bills'**
   String get lbBills;
 
+  /// No description provided for @lbEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get lbEmail;
+
   /// No description provided for @lbWallet.
   ///
   /// In en, this message translates to:
@@ -283,6 +325,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Salary'**
   String get lbSalary;
+
+  /// No description provided for @lbSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get lbSignIn;
+
+  /// No description provided for @lbSignUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get lbSignUp;
+
+  /// No description provided for @lbPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get lbPassword;
 
   /// No description provided for @lbHealth.
   ///
@@ -374,17 +434,29 @@ abstract class AppLocalizations {
   /// **'Select Date Range'**
   String get lbSelectDateRange;
 
-  /// No description provided for @formNameHint.
+  /// No description provided for @hintEmail.
   ///
   /// In en, this message translates to:
-  /// **'Enter transaction name'**
-  String get formNameHint;
+  /// **'Enter your email'**
+  String get hintEmail;
 
-  /// No description provided for @formCategoryHint.
+  /// No description provided for @hintCategory.
   ///
   /// In en, this message translates to:
   /// **'Write the category'**
-  String get formCategoryHint;
+  String get hintCategory;
+
+  /// No description provided for @hintPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get hintPassword;
+
+  /// No description provided for @hintTransactionName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter transaction name'**
+  String get hintTransactionName;
 
   /// No description provided for @msgTransactionAdded.
   ///

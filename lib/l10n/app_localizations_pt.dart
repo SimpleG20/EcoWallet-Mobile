@@ -43,10 +43,28 @@ class AppLocalizationsPt extends AppLocalizations {
       'Mostra a visão geral das transações da semana.\nA barra mais à direita representa hoje.';
 
   @override
+  String get askForgotPassword => 'Esqueceu a Senha?';
+
+  @override
   String get searchTransactions => 'Pesquisar transações...';
 
   @override
   String get filterTransactions => 'Filtrar Transações';
+
+  @override
+  String get loginWelcomeMessage =>
+      'Rastreamento financeiro inteligente\npara um amanhã melhor.';
+
+  @override
+  String get loginWarningTerms =>
+      'Ao entrar, você concorda com nossos\nTermos de Serviço e Política de Privacidade.';
+
+  @override
+  String get loginSignInToContinue =>
+      'Faça login para continuar no seu EcoWallet';
+
+  @override
+  String get dontHaveAccount => 'Não tem uma conta?';
 
   @override
   String get addFilters => 'Adicionar Filtros';
@@ -70,6 +88,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get btnViewAll => 'Ver Todos';
 
   @override
+  String get lbOr => 'Ou';
+
+  @override
   String get lbAll => 'Todos';
 
   @override
@@ -91,6 +112,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbBills => 'Contas';
 
   @override
+  String get lbEmail => 'Email';
+
+  @override
   String get lbWallet => 'Carteira';
 
   @override
@@ -101,6 +125,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lbSalary => 'Salário';
+
+  @override
+  String get lbSignIn => 'Entrar';
+
+  @override
+  String get lbSignUp => 'Registrar-se';
+
+  @override
+  String get lbPassword => 'Senha';
 
   @override
   String get lbHealth => 'Saúde';
@@ -148,10 +181,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbSelectDateRange => 'Selecionar Período';
 
   @override
-  String get formNameHint => 'Insira o nome da transação';
+  String get hintEmail => 'Insira seu email';
 
   @override
-  String get formCategoryHint => 'Escreva a categoria';
+  String get hintCategory => 'Escreva a categoria';
+
+  @override
+  String get hintPassword => 'Insira sua senha';
+
+  @override
+  String get hintTransactionName => 'Insira o nome da transação';
 
   @override
   String get msgTransactionAdded => 'Transação adicionada com sucesso.';
