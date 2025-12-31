@@ -24,6 +24,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editTransaction => 'Edit Transaction';
 
   @override
+  String get filterTransactions => 'Filter Transactions';
+
+  @override
+  String get searchTransactions => 'Search transactions...';
+
+  @override
+  String get addFilters => 'Add Filters';
+
+  @override
   String get dashboardTotalBalance => 'Total Balance';
 
   @override
@@ -31,6 +40,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashboardWeeklyOverview => 'Weekly Overview';
+
+  @override
+  String get dashboardWeeklyOverviewInfo =>
+      'Shows weekly transaction overview.\nThe rightmost bar represents today.';
 
   @override
   String get dashboardRecentTransactions => 'Recent Transactions';
@@ -78,20 +91,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get manageDataSubTitle => 'Manage your data preferences';
 
   @override
-  String get dashboardWeeklyOverviewInfo =>
-      'Shows weekly transaction overview.\nThe rightmost bar represents today.';
-
-  @override
   String get askForgotPassword => 'Forgot Password?';
 
   @override
   String get askAlreadyHaveAccount => 'Already have an account?';
-
-  @override
-  String get addFilters => 'Add Filters';
-
-  @override
-  String get deleteAccount => 'Delete Account';
 
   @override
   String get forgotPassword => 'Forgot Password?';
@@ -100,10 +103,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dontHaveAccount => 'Don\'t have an account?';
 
   @override
-  String get filterTransactions => 'Filter Transactions';
-
-  @override
-  String get searchTransactions => 'Search transactions...';
+  String get deleteAccount => 'Delete Account';
 
   @override
   String get loginSignInToContinue => 'Sign in to continue to your EcoWallet';
@@ -115,6 +115,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get loginWarningTerms =>
       'By signing in, you agree to our\nTerms of Service and Privacy Policy.';
+
+  @override
+  String get loginErrorGeneric => 'Login failed. Please try again.';
 
   @override
   String get passwordRequirements => 'Password Requirements';
@@ -162,6 +165,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbTo => 'To:';
 
   @override
+  String get lbFrom => 'From:';
+
+  @override
   String get lbAll => 'All';
 
   @override
@@ -178,9 +184,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbType => 'Type';
-
-  @override
-  String get lbFrom => 'From:';
 
   @override
   String get lbBills => 'Bills';
@@ -387,9 +390,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbConfirmNewPassword => 'Confirm New Password';
 
   @override
-  String get loginErrorGeneric => 'Login failed. Please try again.';
-
-  @override
   String get lbCreateAccountSubtitle => 'Sign up to get started!';
 
   @override
@@ -422,6 +422,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get lbAgreeTerms =>
       'I agree to the Terms of Service and Privacy Policy.';
+
+  @override
+  String get lbBudgetLimit => 'Budget Limit';
 
   @override
   String get msgTestNotificationSent => 'Test notification sent!';
@@ -538,9 +541,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get limitAlertDescription =>
       'Receive an alert when you reach your budget limit.';
-
-  @override
-  String get lbBudgetLimit => 'Budget Limit';
 
   @override
   String get exportDataDescription =>

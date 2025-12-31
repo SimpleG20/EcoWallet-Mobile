@@ -128,6 +128,24 @@ abstract class AppLocalizations {
   /// **'Edit Transaction'**
   String get editTransaction;
 
+  /// No description provided for @filterTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Transactions'**
+  String get filterTransactions;
+
+  /// No description provided for @searchTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Search transactions...'**
+  String get searchTransactions;
+
+  /// No description provided for @addFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Filters'**
+  String get addFilters;
+
   /// No description provided for @dashboardTotalBalance.
   ///
   /// In en, this message translates to:
@@ -145,6 +163,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Weekly Overview'**
   String get dashboardWeeklyOverview;
+
+  /// No description provided for @dashboardWeeklyOverviewInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows weekly transaction overview.\nThe rightmost bar represents today.'**
+  String get dashboardWeeklyOverviewInfo;
 
   /// No description provided for @dashboardRecentTransactions.
   ///
@@ -236,12 +260,6 @@ abstract class AppLocalizations {
   /// **'Manage your data preferences'**
   String get manageDataSubTitle;
 
-  /// No description provided for @dashboardWeeklyOverviewInfo.
-  ///
-  /// In en, this message translates to:
-  /// **'Shows weekly transaction overview.\nThe rightmost bar represents today.'**
-  String get dashboardWeeklyOverviewInfo;
-
   /// No description provided for @askForgotPassword.
   ///
   /// In en, this message translates to:
@@ -253,18 +271,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Already have an account?'**
   String get askAlreadyHaveAccount;
-
-  /// No description provided for @addFilters.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Filters'**
-  String get addFilters;
-
-  /// No description provided for @deleteAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete Account'**
-  String get deleteAccount;
 
   /// No description provided for @forgotPassword.
   ///
@@ -278,17 +284,11 @@ abstract class AppLocalizations {
   /// **'Don\'t have an account?'**
   String get dontHaveAccount;
 
-  /// No description provided for @filterTransactions.
+  /// No description provided for @deleteAccount.
   ///
   /// In en, this message translates to:
-  /// **'Filter Transactions'**
-  String get filterTransactions;
-
-  /// No description provided for @searchTransactions.
-  ///
-  /// In en, this message translates to:
-  /// **'Search transactions...'**
-  String get searchTransactions;
+  /// **'Delete Account'**
+  String get deleteAccount;
 
   /// No description provided for @loginSignInToContinue.
   ///
@@ -307,6 +307,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By signing in, you agree to our\nTerms of Service and Privacy Policy.'**
   String get loginWarningTerms;
+
+  /// No description provided for @loginErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please try again.'**
+  String get loginErrorGeneric;
 
   /// No description provided for @passwordRequirements.
   ///
@@ -398,6 +404,12 @@ abstract class AppLocalizations {
   /// **'To:'**
   String get lbTo;
 
+  /// No description provided for @lbFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From:'**
+  String get lbFrom;
+
   /// No description provided for @lbAll.
   ///
   /// In en, this message translates to:
@@ -433,12 +445,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Type'**
   String get lbType;
-
-  /// No description provided for @lbFrom.
-  ///
-  /// In en, this message translates to:
-  /// **'From:'**
-  String get lbFrom;
 
   /// No description provided for @lbBills.
   ///
@@ -848,12 +854,6 @@ abstract class AppLocalizations {
   /// **'Confirm New Password'**
   String get lbConfirmNewPassword;
 
-  /// No description provided for @loginErrorGeneric.
-  ///
-  /// In en, this message translates to:
-  /// **'Login failed. Please try again.'**
-  String get loginErrorGeneric;
-
   /// No description provided for @lbCreateAccountSubtitle.
   ///
   /// In en, this message translates to:
@@ -919,6 +919,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I agree to the Terms of Service and Privacy Policy.'**
   String get lbAgreeTerms;
+
+  /// No description provided for @lbBudgetLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Limit'**
+  String get lbBudgetLimit;
 
   /// No description provided for @msgTestNotificationSent.
   ///
@@ -1147,12 +1153,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Receive an alert when you reach your budget limit.'**
   String get limitAlertDescription;
-
-  /// No description provided for @lbBudgetLimit.
-  ///
-  /// In en, this message translates to:
-  /// **'Budget Limit'**
-  String get lbBudgetLimit;
 
   /// No description provided for @exportDataDescription.
   ///

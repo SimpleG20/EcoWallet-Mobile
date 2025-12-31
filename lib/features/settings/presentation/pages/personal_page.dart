@@ -92,7 +92,7 @@ class _PersonalPageState extends State<PersonalPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (_isEditing) {
-            if (_submitForm()) {
+            if (_submitForm(context, loc)) {
               setState(() {
                 _isEditing = !_isEditing;
               });
@@ -293,11 +293,8 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  bool _submitForm() {
+  bool _submitForm(BuildContext context, AppLocalizations loc) {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.msgDataUpdated)),
-      );
       // Aqui chamaria o BLoC: context.read<SettingsBloc>().add(UpdateProfile(...));
       return true;
     }

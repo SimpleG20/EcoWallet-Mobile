@@ -24,6 +24,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get editTransaction => 'Editar Transação';
 
   @override
+  String get filterTransactions => 'Filtrar Transações';
+
+  @override
+  String get searchTransactions => 'Pesquisar transações...';
+
+  @override
+  String get addFilters => 'Adicionar Filtros';
+
+  @override
   String get dashboardTotalBalance => 'Saldo Total';
 
   @override
@@ -31,6 +40,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get dashboardWeeklyOverview => 'Visão Geral Semanal';
+
+  @override
+  String get dashboardWeeklyOverviewInfo =>
+      'Mostra a visão geral das transações da semana.\nA barra mais à direita representa hoje.';
 
   @override
   String get dashboardRecentTransactions => 'Transações Recentes';
@@ -79,20 +92,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get manageDataSubTitle => 'Gerencie suas preferências de dados';
 
   @override
-  String get dashboardWeeklyOverviewInfo =>
-      'Mostra a visão geral das transações da semana.\nA barra mais à direita representa hoje.';
-
-  @override
   String get askForgotPassword => 'Esqueceu a Senha?';
 
   @override
   String get askAlreadyHaveAccount => 'Já tem uma conta?';
-
-  @override
-  String get addFilters => 'Adicionar Filtros';
-
-  @override
-  String get deleteAccount => 'Excluir Conta';
 
   @override
   String get forgotPassword => 'Esqueceu a senha?';
@@ -101,10 +104,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dontHaveAccount => 'Não tem uma conta?';
 
   @override
-  String get filterTransactions => 'Filtrar Transações';
-
-  @override
-  String get searchTransactions => 'Pesquisar transações...';
+  String get deleteAccount => 'Excluir Conta';
 
   @override
   String get loginSignInToContinue =>
@@ -117,6 +117,9 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get loginWarningTerms =>
       'Ao entrar, você concorda com nossos\nTermos de Serviço e Política de Privacidade.';
+
+  @override
+  String get loginErrorGeneric => 'Erro ao fazer login. Tente novamente.';
 
   @override
   String get passwordRequirements => 'Requisitos de Senha';
@@ -152,7 +155,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get btnViewAll => 'Ver Todos';
 
   @override
-  String get btnSave => 'Salvar';
+  String get btnSave => 'Salvar Transação';
 
   @override
   String get btnSendTestNotification => 'Enviar Notificação de Teste';
@@ -162,6 +165,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lbTo => 'Até:';
+
+  @override
+  String get lbFrom => 'De:';
 
   @override
   String get lbAll => 'Todos';
@@ -180,9 +186,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lbType => 'Tipo';
-
-  @override
-  String get lbFrom => 'De:';
 
   @override
   String get lbBills => 'Contas';
@@ -389,9 +392,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lbConfirmNewPassword => 'Confirmar Nova Senha';
 
   @override
-  String get loginErrorGeneric => 'Erro ao fazer login. Tente novamente.';
-
-  @override
   String get lbCreateAccountSubtitle => 'Registre-se para começar!';
 
   @override
@@ -424,6 +424,9 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get lbAgreeTerms =>
       'Eu concordo com os Termos de Serviço e a Política de Privacidade.';
+
+  @override
+  String get lbBudgetLimit => 'Limite de Orçamento';
 
   @override
   String get msgTestNotificationSent => 'Notificação de teste enviada!';
@@ -540,9 +543,6 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get limitAlertDescription =>
       'Receba um alerta quando atingir seu limite de orçamento.';
-
-  @override
-  String get lbBudgetLimit => 'Limite de Orçamento';
 
   @override
   String get exportDataDescription =>
