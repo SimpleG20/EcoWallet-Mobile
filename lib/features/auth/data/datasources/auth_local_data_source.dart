@@ -1,13 +1,12 @@
-import 'package:eco_wallet/features/auth/data/datasources/base_auth_data_source.dart';
-import 'package:eco_wallet/features/user/data/model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../../../../core/constants/keys.dart';
 import '../../../../core/database/db_helper.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/password_utils.dart';
-
-const String CACHED_USER_ID = 'CACHED_USER_ID';
+import '../../../user/data/model/user_model.dart';
+import 'base_auth_data_source.dart';
 
 class AuthLocalDataSource implements BaseAuthDataSource {
   final DbHelper dbHelper;
@@ -32,7 +31,7 @@ class AuthLocalDataSource implements BaseAuthDataSource {
       if (maps.isNotEmpty) {
         final userMap = maps.first;
         final storedHash = userMap['password'] as String;
-        
+
         // Verify password using hash comparison
         if (PasswordUtils.verifyPassword(password, email, storedHash)) {
           return UserModel.fromJson(userMap);
@@ -52,13 +51,13 @@ class AuthLocalDataSource implements BaseAuthDataSource {
   Future<UserModel> registerUser(UserModel user) async {
     try {
       final db = await dbHelper.database;
-      
+
       // Hash the password before storing
       final hashedPassword = PasswordUtils.hashPassword(
         user.encryptedPassword,
         user.email,
       );
-      
+
       // Create a new user model with hashed password
       final userWithHashedPassword = UserModel(
         id: user.id,
@@ -70,7 +69,7 @@ class AuthLocalDataSource implements BaseAuthDataSource {
         address: user.address,
         dateOfBirth: user.dateOfBirth,
       );
-      
+
       await db.insert(
         'users',
         userWithHashedPassword.toJson(),
@@ -104,7 +103,7 @@ class AuthLocalDataSource implements BaseAuthDataSource {
       if (userId == null) {
         throw AuthenticationException('No session found');
       }
-      
+
       final db = await dbHelper.database;
       final List<Map<String, dynamic>> maps = await db.query(
         'users',
