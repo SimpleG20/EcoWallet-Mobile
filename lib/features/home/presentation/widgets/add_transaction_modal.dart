@@ -13,8 +13,7 @@ import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class AddTransactionModal extends StatefulWidget {
-  const AddTransactionModal(
-      {super.key, required this.transactionType, this.transactionToEdit});
+  const AddTransactionModal({super.key, required this.transactionType, this.transactionToEdit});
 
   final ETransactionType transactionType;
   final Transaction? transactionToEdit;
@@ -53,8 +52,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
         final loc = AppLocalizations.of(context)!;
 
         _nameController.text = transaction.name;
-        _amountController.text =
-            AppFormatters.formatCurrency(value, loc.localeName, noSymbol: true);
+        _amountController.text = AppFormatters.formatCurrency(value, loc.localeName, noSymbol: true);
         _selectedDate = transaction.date;
         _selectedTransactionCategory = transaction.category;
         _transactionType = transaction.type;
@@ -125,11 +123,8 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.transactionToEdit != null
-                  ? loc.editTransaction
-                  : loc.addTransaction,
-              style: theme.textTheme.titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w600),
+              widget.transactionToEdit != null ? loc.editTransaction : loc.addTransaction,
+              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
             IconButton(
               icon: const Icon(Icons.close),
@@ -194,18 +189,14 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
         children: [
           Icon(
             icon,
-            color: isSelected
-                ? theme.colorScheme.onPrimary
-                : theme.colorScheme.onSurface,
+            color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
           ),
           const SizedBox(width: 8),
           Text(label),
         ],
       ),
       labelStyle: TextStyle(
-        color: isSelected
-            ? theme.colorScheme.onPrimary
-            : theme.colorScheme.onSurface,
+        color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
       ),
       backgroundColor: unselectedColor,
       selectedColor: selectedColor,
@@ -235,19 +226,12 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
             child: FittedBox(
               child: Text(
                 errorText,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.error),
+                style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error),
               ),
             ),
           ),
           decoration: InputDecoration(
-            hintText: loc.formNameHint,
-            hintStyle: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withAlpha(120),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ),
+            hintText: loc.hintTransactionName,
           ),
           controller: _nameController,
           validator: (value) => AppValidators.validateTitle(value, loc),
@@ -278,17 +262,12 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
                     errorText,
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(color: theme.colorScheme.error),
+                    style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
                   ),
                 ),
             decoration: InputDecoration(
               hintText: _amountController.text.isEmpty ? "0.00" : null,
-              hintStyle: theme.textTheme.headlineMedium?.copyWith(
-                color: theme.colorScheme.onSurface.withAlpha(120),
-              ),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
             ),
             validator: (value) => AppValidators.validateAmount(value, loc))
       ],
@@ -313,25 +292,18 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: CategoryRepository.categoryCount,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisSpacing: 8,
-              crossAxisSpacing: 8,
-              childAspectRatio: 1.25),
+              crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing: 8, childAspectRatio: 1.25),
           itemBuilder: (context, index) {
             final category = CategoryRepository.getCategoryByIndex(index);
             return _buildCategoryItem(
-                theme,
-                index,
-                CategoryRepository.getIcon(category),
-                CategoryRepository.getLabel(category, loc));
+                theme, index, CategoryRepository.getIcon(category), CategoryRepository.getLabel(category, loc));
           },
         ),
       ],
     );
   }
 
-  Widget _buildCategoryItem(
-      ThemeData theme, int index, IconData icon, String label) {
+  Widget _buildCategoryItem(ThemeData theme, int index, IconData icon, String label) {
     final isSelected = _selectedTransactionCategory == label;
 
     return InkWell(
@@ -342,9 +314,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected
-              ? theme.colorScheme.primary
-              : theme.colorScheme.outline,
+          color: isSelected ? theme.colorScheme.primary : theme.colorScheme.outline,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Column(
@@ -353,17 +323,13 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
             Icon(
               icon,
               size: 28,
-              color: isSelected
-                  ? theme.colorScheme.onPrimary
-                  : theme.colorScheme.onSurface,
+              color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
             ),
             const SizedBox(height: 8),
             Text(
               label,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: isSelected
-                    ? theme.colorScheme.onPrimary
-                    : theme.colorScheme.onSurface,
+                color: isSelected ? theme.colorScheme.onPrimary : theme.colorScheme.onSurface,
               ),
             ),
           ],
@@ -435,8 +401,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
             const SizedBox(width: 8),
             Text(
               loc.btnSave,
-              style: theme.textTheme.titleMedium
-                  ?.copyWith(color: theme.colorScheme.onPrimary),
+              style: theme.textTheme.titleMedium?.copyWith(color: theme.colorScheme.onPrimary),
             ),
           ],
         ),
@@ -460,8 +425,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
       return;
     }
 
-    final value =
-        AppFormatters.getCurrencyValue(_amountController.text, loc.localeName);
+    final value = AppFormatters.getCurrencyValue(_amountController.text, loc.localeName);
     int amount = value.floor();
     int cents = ((value - amount) * 100).round();
 

@@ -43,10 +43,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'Shows weekly transaction overview.\nThe rightmost bar represents today.';
 
   @override
+  String get askForgotPassword => 'Forgot Password?';
+
+  @override
   String get searchTransactions => 'Search transactions...';
 
   @override
   String get filterTransactions => 'Filter Transactions';
+
+  @override
+  String get loginWelcomeMessage =>
+      'Smart finance tracking for a better tomorrow.';
+
+  @override
+  String get loginWarningTerms =>
+      'By signing in, you agree to our\nTerms of Service and Privacy Policy.';
+
+  @override
+  String get loginSignInToContinue => 'Sign in to continue to your EcoWallet';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
 
   @override
   String get addFilters => 'Add Filters';
@@ -70,6 +87,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get btnViewAll => 'View All';
 
   @override
+  String get lbOr => 'Or';
+
+  @override
   String get lbAll => 'All';
 
   @override
@@ -91,6 +111,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbBills => 'Bills';
 
   @override
+  String get lbEmail => 'Email';
+
+  @override
   String get lbWallet => 'Wallet';
 
   @override
@@ -101,6 +124,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbSalary => 'Salary';
+
+  @override
+  String get lbSignIn => 'Sign In';
+
+  @override
+  String get lbSignUp => 'Sign Up';
+
+  @override
+  String get lbPassword => 'Password';
 
   @override
   String get lbHealth => 'Health';
@@ -148,10 +180,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbSelectDateRange => 'Select Date Range';
 
   @override
-  String get formNameHint => 'Enter transaction name';
+  String get hintEmail => 'Enter your email';
 
   @override
-  String get formCategoryHint => 'Write the category';
+  String get hintCategory => 'Write the category';
+
+  @override
+  String get hintPassword => 'Enter your password';
+
+  @override
+  String get hintTransactionName => 'Enter transaction name';
 
   @override
   String get msgTransactionAdded => 'Transaction added successfully.';
