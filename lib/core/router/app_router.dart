@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:eco_wallet/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:eco_wallet/features/home/presentation/pages/main_page.dart';
 import 'package:eco_wallet/features/login/presentation/pages/login_page.dart';
 import 'package:eco_wallet/features/register/presentation/pages/register_page.dart';
 import 'package:eco_wallet/features/transactions/presentation/pages/transactions_page.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'app_routes.dart';
 import 'go_router_refresh_stream.dart';
@@ -28,16 +29,16 @@ class AppRouter {
           ),
         ),
         GoRoute(
-          path: AppRoutes.home,
-          builder: (context, state) => const MainPage(),
-        ),
-        GoRoute(
           path: AppRoutes.login,
           builder: (context, state) => const LoginPage(),
         ),
         GoRoute(
           path: AppRoutes.register,
           builder: (context, state) => const RegisterPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.home,
+          builder: (context, state) => const MainPage(),
         ),
         GoRoute(
           path: AppRoutes.wallet,

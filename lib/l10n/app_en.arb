@@ -78,6 +78,7 @@
   "msgTransactionAdded": "Transaction added successfully.",
   "msgTransactionUpdated": "Transaction updated successfully.",
   "msgTransactionDeleted": "Transaction deleted successfully.",
+  "msgFeatureComingSoon": "This feature is coming soon!",
   "errorDateEmpty": "Please select a date.",
   "errorTitleEmpty": "Please enter a title.",
   "errorAmountEmpty": "Please enter an amount.",

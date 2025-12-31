@@ -34,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
 
     return BlocListener<AuthBloc, BaseAuthState>(
       listener: (context, state) {
-        print('[debug] AuthBloc State changed: $state');
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
         if (state is AuthErrorState) {
@@ -83,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     _buildHeader(theme, loc),
                     const SizedBox(height: 16),
-                    _buildFields(theme, loc),
+                    _buildFields(context, theme, loc),
                     const SizedBox(height: 12),
                     _buildSignInBtn(theme, loc),
                     _buildFooter(theme, loc),
@@ -161,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildFields(ThemeData theme, AppLocalizations loc) {
+  Widget _buildFields(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Form(
       key: _formKey,
       child: Column(
@@ -193,7 +192,16 @@ class _LoginPageState extends State<LoginPage> {
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(loc.msgFeatureComingSoon),
+                    behavior: SnackBarBehavior.floating,
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              },
               child: Text(
                 loc.askForgotPassword,
                 style: theme.textTheme.bodyMedium?.copyWith(

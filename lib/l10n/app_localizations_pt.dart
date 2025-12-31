@@ -248,6 +248,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get msgTransactionDeleted => 'Transação removida com sucesso.';
 
   @override
+  String get msgFeatureComingSoon => 'Este recurso está chegando em breve!';
+
+  @override
   String get errorDateEmpty => 'Por favor, selecione uma data.';
 
   @override
