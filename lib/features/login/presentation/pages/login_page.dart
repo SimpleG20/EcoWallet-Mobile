@@ -19,6 +19,8 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 24),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -96,9 +98,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  _buildEmailField(theme, loc),
-                  const SizedBox(height: 12),
-                  _buildPasswordField(theme, loc),
+                  Form(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildEmailField(theme, loc),
+                        const SizedBox(height: 12),
+                        _buildPasswordField(theme, loc),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   ElevatedButton(
                     onPressed: () {},
@@ -195,20 +204,21 @@ class _LoginPageState extends State<LoginPage> {
         ),
         const SizedBox(height: 8),
         TextFormField(
-          obscureText: true,
+          obscureText: _obscurePassword,
           decoration: InputDecoration(
             suffixIcon: IconButton(
               onPressed: () => setState(() {
                 _obscurePassword = !_obscurePassword;
+                return;
               }),
               icon: Icon(
-                Icons.visibility_off_outlined,
+                _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                 color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
               ),
             ),
             hintText: loc.hintPassword,
             prefixIcon: Icon(
-              _obscurePassword ? Icons.lock_outline : Icons.lock_open_outlined,
+              Icons.lock_outline,
               color: theme.colorScheme.primary,
             ),
           ),
