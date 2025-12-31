@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'core/router/app_router.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
-import 'features/home/presentation/pages/main_page.dart';
-import 'features/login/presentation/pages/login_page.dart';
 import 'injection_container.dart' as di;
 import 'core/theme/app_theme.dart';
 import '/l10n/app_localizations.dart';
@@ -14,6 +13,8 @@ void main() async {
 
   try {
     await di.init();
+    // Dispatch AppStartedEvent immediately after DI initialization
+    di.sl<AuthBloc>().add(AppStartedEvent());
     runApp(const EcoWalletApp());
   } catch (e) {
     // Log the error for debugging
@@ -27,58 +28,24 @@ class EcoWalletApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'EcoWallet',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('pt'),
-      ],
-      home: BlocProvider<AuthBloc>(
-        create: (context) => di.sl<AuthBloc>()..add(AppStartedEvent()),
-        child: BlocBuilder<AuthBloc, BaseAuthState>(
-          builder: (context, state) {
-            if (state is AuthLoadingState) {
-              return const Scaffold(
-                body: Center(
-                  // TODO: Splash screen
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-
-            if (state is AuthAuthenticatedState) {
-              return const MainPage();
-            }
-
-            if (state is AuthUnauthenticatedState) {
-              // TODO: Check if is first time user to show onboarding
-              return const LoginPage();
-            }
-
-            if (state is AuthErrorState) {
-              return Scaffold(
-                body: Center(
-                  child: Text('Error: ${state.message ?? "Unknown error"}'),
-                ),
-              );
-            }
-
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          },
-        ),
+    return BlocProvider<AuthBloc>.value(
+      value: di.sl<AuthBloc>(),
+      child: MaterialApp.router(
+        title: 'EcoWallet',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('pt'),
+        ],
+        routerConfig: di.sl<AppRouter>().router,
       ),
     );
   }

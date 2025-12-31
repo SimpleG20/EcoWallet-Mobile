@@ -602,41 +602,17 @@ abstract class AppLocalizations {
   /// **'Amount must be greater than zero.'**
   String get errorAmountMustBePositive;
 
-  /// No description provided for @errorEmailEmpty.
+  /// No description provided for @errorNameEmpty.
   ///
   /// In en, this message translates to:
-  /// **'Email cannot be empty.'**
-  String get errorEmailEmpty;
+  /// **'Name cannot be empty.'**
+  String get errorNameEmpty;
 
-  /// No description provided for @errorEmailInvalid.
+  /// No description provided for @errorNameInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Invalid email format.'**
-  String get errorEmailInvalid;
-
-  /// No description provided for @errorPhoneEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone number cannot be empty.'**
-  String get errorPhoneEmpty;
-
-  /// No description provided for @errorPhoneInvalid.
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid phone number format.'**
-  String get errorPhoneInvalid;
-
-  /// No description provided for @errorAddressEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Address cannot be empty.'**
-  String get errorAddressEmpty;
-
-  /// No description provided for @errorAddressInvalid.
-  ///
-  /// In en, this message translates to:
-  /// **'Address is too short.'**
-  String get errorAddressInvalid;
+  /// **'Name is too short.'**
+  String get errorNameInvalid;
 
   /// No description provided for @errorDateInvalid.
   ///
@@ -650,29 +626,41 @@ abstract class AppLocalizations {
   /// **'Date out of range.'**
   String get errorDateOutOfRange;
 
-  /// No description provided for @errorNameEmpty.
+  /// No description provided for @errorEmailEmpty.
   ///
   /// In en, this message translates to:
-  /// **'Name cannot be empty.'**
-  String get errorNameEmpty;
+  /// **'Email cannot be empty.'**
+  String get errorEmailEmpty;
 
-  /// No description provided for @errorNameInvalid.
+  /// No description provided for @errorEmailInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Name is too short.'**
-  String get errorNameInvalid;
-
-  /// No description provided for @errorPasswordEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Password cannot be empty.'**
-  String get errorPasswordEmpty;
+  /// **'Invalid email format.'**
+  String get errorEmailInvalid;
 
   /// No description provided for @errorPasswordWeak.
   ///
   /// In en, this message translates to:
   /// **'Password is too weak.'**
   String get errorPasswordWeak;
+
+  /// No description provided for @errorAddressInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is too short.'**
+  String get errorAddressInvalid;
+
+  /// No description provided for @errorAddressEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Address cannot be empty.'**
+  String get errorAddressEmpty;
+
+  /// No description provided for @errorPasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Password cannot be empty.'**
+  String get errorPasswordEmpty;
 
   /// No description provided for @errorPasswordTooShort.
   ///
@@ -685,6 +673,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passwords do not match.'**
   String get errorPasswordMismatch;
+
+  /// No description provided for @errorPhoneEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number cannot be empty.'**
+  String get errorPhoneEmpty;
+
+  /// No description provided for @errorPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number format.'**
+  String get errorPhoneInvalid;
+
+  /// No description provided for @errorAgreeTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'You must agree to the terms to continue.'**
+  String get errorAgreeTerms;
 
   /// No description provided for @errorEnterCurrentPassword.
   ///
@@ -721,6 +727,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} trees 🌳'**
   String ecoFootprintCompensation(int count);
+
+  /// No description provided for @loginErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed. Please try again.'**
+  String get loginErrorGeneric;
+
+  /// No description provided for @lbDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get lbDismiss;
 }
 
 class _AppLocalizationsDelegate
