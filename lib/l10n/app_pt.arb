@@ -76,8 +76,9 @@
   "hintConfirmPassword": "Confirme sua senha",
   "hintTransactionName": "Insira o nome da transação",
   "msgTransactionAdded": "Transação adicionada com sucesso.",
-  "msgTransactionUpdated": "Transação atualizada com sucesso.",
   "msgTransactionDeleted": "Transação removida com sucesso.",
+  "msgTransactionUpdated": "Transação atualizada com sucesso.",
+  "msgFeatureComingSoon": "Este recurso está chegando em breve!",
   "errorAmountEmpty": "Por favor, insira um valor.",
   "errorCategoryEmpty": "Por favor, selecione uma categoria.",
   "errorDateEmpty": "Por favor, selecione uma data.",
@@ -94,11 +95,12 @@
   "errorDateOutOfRange": "Data fora do intervalo.",
   "errorNameEmpty": "Nome não pode estar vazio.",
   "errorNameInvalid": "Nome muito curto.",
-  "errorPasswordEmpty": "Senha não pode estar vazia.",
   "errorPasswordWeak": "Senha é muito fraca.",
   "errorPasswordTooShort": "Senha é muito curta.",
+  "errorPasswordEmpty": "Senha não pode estar vazia.",
   "errorPasswordMismatch": "As senhas não coincidem.",
   "errorEnterCurrentPassword": "Por favor, insira sua senha atual.",
+  "errorAgreeTerms": "Você deve concordar com os termos para continuar.",
   "errorSameAsCurrentPassword": "A nova senha não pode ser igual à senha atual.",
   "errorAmountFormat": "Formato de número inválido. Use apenas dígitos e um separador decimal.",
   "ecoFootprintValue": "{value} kg CO₂",
@@ -117,5 +119,7 @@
         "type": "int"
       }
     }
-  }
+  },
+  "loginErrorGeneric": "Erro ao fazer login. Tente novamente.",
+  "lbDismiss": "Fechar"
 }

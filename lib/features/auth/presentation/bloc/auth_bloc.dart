@@ -77,7 +77,7 @@ class AuthBloc extends Bloc<BaseAuthEvent, BaseAuthState> {
 
     result.fold(
       (failure) => emit(AuthErrorState(message: failure.message)),
-      (_) => emit(AuthAuthenticatedState(userId: '')), // User created, trigger re-check
+      (_) => emit(AuthAuthenticatedState(userId: '')),
     );
   }
 
@@ -92,4 +92,3 @@ class AuthBloc extends Bloc<BaseAuthEvent, BaseAuthState> {
     );
   }
 }
-

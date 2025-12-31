@@ -566,6 +566,12 @@ abstract class AppLocalizations {
   /// **'Transaction deleted successfully.'**
   String get msgTransactionDeleted;
 
+  /// No description provided for @msgFeatureComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is coming soon!'**
+  String get msgFeatureComingSoon;
+
   /// No description provided for @errorDateEmpty.
   ///
   /// In en, this message translates to:

@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DbHelper {
   static Database? _database;
-  static int get _dbVersion => 1;
+  static int get _dbVersion => 2;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -31,7 +31,40 @@ class DbHelper {
             category TEXT NOT NULL
           )
         ''');
+
+        await db.execute('''
+          CREATE TABLE users(
+            id TEXT PRIMARY KEY,
+            fullName TEXT,
+            email TEXT UNIQUE,
+            password TEXT,
+            phoneNumber TEXT,
+            imageUrl TEXT,
+            address TEXT,
+            dateOfBirth TEXT
+          )
+        ''');
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        await _migrateDb(db, oldVersion, newVersion);
       },
     );
+  }
+
+  Future<void> _migrateDb(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS users(
+          id TEXT PRIMARY KEY,
+          fullName TEXT,
+          email TEXT UNIQUE,
+          password TEXT,
+          phoneNumber TEXT,
+          imageUrl TEXT,
+          address TEXT,
+          dateOfBirth TEXT
+        )
+      ''');
+    }
   }
 }

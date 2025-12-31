@@ -1,11 +1,17 @@
+import 'package:go_router/go_router.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:eco_wallet/core/utils/app_validators.dart';
 
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../../core/router/app_routes.dart';
 import '../../../../core/constants/ui_data.dart';
 import '../../../../core/presentation/widgets/or_divider.dart';
 import '../../../../core/presentation/widgets/any_text_field.dart';
 import '../../../../core/presentation/widgets/password_field.dart';
-import '../../../../l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,6 +23,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _obscurePassword = true;
 
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -25,44 +32,67 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 24),
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(32),
-                  bottomRight: Radius.circular(32),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
-                    blurRadius: 8,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildHeader(theme, loc),
-                  const SizedBox(height: 16),
-                  _buildFields(theme, loc),
-                  const SizedBox(height: 12),
-                  _buildSignInBtn(theme, loc),
-                  _buildFooter(theme, loc),
-                ],
+    return BlocListener<AuthBloc, BaseAuthState>(
+      listener: (context, state) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+        if (state is AuthErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message ?? loc.loginErrorGeneric),
+              backgroundColor: theme.colorScheme.error,
+              behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 4),
+              action: SnackBarAction(
+                label: loc.lbDismiss,
+                textColor: theme.colorScheme.onError,
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
               ),
             ),
-            const SizedBox(height: 24),
-            _buildWaningTerms(theme, loc),
-          ],
+          );
+        }
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 24),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surface,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(32),
+                    bottomRight: Radius.circular(32),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
+                      blurRadius: 8,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildHeader(theme, loc),
+                    const SizedBox(height: 16),
+                    _buildFields(context, theme, loc),
+                    const SizedBox(height: 12),
+                    _buildSignInBtn(theme, loc),
+                    _buildFooter(theme, loc),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              _buildWaningTerms(theme, loc),
+            ],
+          ),
         ),
       ),
     );
@@ -130,8 +160,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildFields(ThemeData theme, AppLocalizations loc) {
+  Widget _buildFields(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Form(
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -161,7 +192,16 @@ class _LoginPageState extends State<LoginPage> {
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(loc.msgFeatureComingSoon),
+                    behavior: SnackBarBehavior.floating,
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              },
               child: Text(
                 loc.askForgotPassword,
                 style: theme.textTheme.bodyMedium?.copyWith(
@@ -184,13 +224,13 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(8.0),
         ),
       ),
+      onPressed: _submitLogin,
       child: Text(
         loc.lbSignIn,
         style: theme.textTheme.labelLarge?.copyWith(
           color: theme.colorScheme.onPrimary,
         ),
       ),
-      onPressed: () {},
     );
   }
 
@@ -209,7 +249,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () => context.push(AppRoutes.register),
               child: Text(
                 loc.lbSignUp,
                 style: theme.textTheme.bodyMedium?.copyWith(
@@ -235,5 +275,16 @@ class _LoginPageState extends State<LoginPage> {
         textAlign: TextAlign.center,
       ),
     );
+  }
+
+  void _submitLogin() {
+    if (!_formKey.currentState!.validate()) return;
+
+    context.read<AuthBloc>().add(
+          SignInEvent(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          ),
+        );
   }
 }

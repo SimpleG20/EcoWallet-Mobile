@@ -248,6 +248,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get msgTransactionDeleted => 'Transação removida com sucesso.';
 
   @override
+  String get msgFeatureComingSoon => 'Este recurso está chegando em breve!';
+
+  @override
   String get errorDateEmpty => 'Por favor, selecione uma data.';
 
   @override
@@ -266,22 +269,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get errorAmountMustBePositive => 'O valor deve ser maior que zero.';
 
   @override
-  String get errorEmailEmpty => 'Email não pode estar vazio.';
+  String get errorNameEmpty => 'Nome não pode estar vazio.';
 
   @override
-  String get errorEmailInvalid => 'Formato de email inválido.';
-
-  @override
-  String get errorPhoneEmpty => 'Telefone não pode estar vazio.';
-
-  @override
-  String get errorPhoneInvalid => 'Formato de telefone inválido.';
-
-  @override
-  String get errorAddressEmpty => 'Endereço não pode estar vazio.';
-
-  @override
-  String get errorAddressInvalid => 'Endereço muito curto.';
+  String get errorNameInvalid => 'Nome muito curto.';
 
   @override
   String get errorDateInvalid => 'Formato de data inválido.';
@@ -290,22 +281,38 @@ class AppLocalizationsPt extends AppLocalizations {
   String get errorDateOutOfRange => 'Data fora do intervalo.';
 
   @override
-  String get errorNameEmpty => 'Nome não pode estar vazio.';
+  String get errorEmailEmpty => 'Email não pode estar vazio.';
 
   @override
-  String get errorNameInvalid => 'Nome muito curto.';
-
-  @override
-  String get errorPasswordEmpty => 'Senha não pode estar vazia.';
+  String get errorEmailInvalid => 'Formato de email inválido.';
 
   @override
   String get errorPasswordWeak => 'Senha é muito fraca.';
+
+  @override
+  String get errorAddressInvalid => 'Endereço muito curto.';
+
+  @override
+  String get errorAddressEmpty => 'Endereço não pode estar vazio.';
+
+  @override
+  String get errorPasswordEmpty => 'Senha não pode estar vazia.';
 
   @override
   String get errorPasswordTooShort => 'Senha é muito curta.';
 
   @override
   String get errorPasswordMismatch => 'As senhas não coincidem.';
+
+  @override
+  String get errorPhoneEmpty => 'Telefone não pode estar vazio.';
+
+  @override
+  String get errorPhoneInvalid => 'Formato de telefone inválido.';
+
+  @override
+  String get errorAgreeTerms =>
+      'Você deve concordar com os termos para continuar.';
 
   @override
   String get errorEnterCurrentPassword => 'Por favor, insira sua senha atual.';
@@ -330,4 +337,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String ecoFootprintCompensation(int count) {
     return '$count árvores 🌳';
   }
+
+  @override
+  String get loginErrorGeneric => 'Erro ao fazer login. Tente novamente.';
+
+  @override
+  String get lbDismiss => 'Fechar';
 }

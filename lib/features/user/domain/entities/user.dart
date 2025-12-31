@@ -4,7 +4,7 @@ class User extends Equatable {
   final String id;
   final String fullName;
   final String email;
-  final String encryptedPassword;
+  final String password;
   final String? phoneNumber;
   final String? imageUrl;
   final String? address;
@@ -15,7 +15,7 @@ class User extends Equatable {
     required this.fullName,
     required this.email,
     required this.phoneNumber,
-    required this.encryptedPassword,
+    required this.password,
     this.imageUrl,
     this.address,
     this.dateOfBirth,
@@ -27,7 +27,7 @@ class User extends Equatable {
         fullName,
         email,
         phoneNumber,
-        encryptedPassword,
+        password,
         imageUrl,
         address,
         dateOfBirth,
