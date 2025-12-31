@@ -6,7 +6,7 @@ import 'package:eco_wallet/core/database/db_helper.dart';
 import 'base_settings_data_source.dart';
 
 import '../model/settings_data_model.dart';
-import '../model/personal_preferences_model.dart';
+import '../model/user_model.dart';
 
 import '../../domain/entities/user.dart';
 import '../../domain/entities/data_preferences.dart';
