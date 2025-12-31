@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'core/router/app_router.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'injection_container.dart' as di;
 import 'core/theme/app_theme.dart';
 import '/l10n/app_localizations.dart';
-import '/features/home/presentation/pages/main_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
     await di.init();
+    // Dispatch AppStartedEvent immediately after DI initialization
+    di.sl<AuthBloc>().add(AppStartedEvent());
     runApp(const EcoWalletApp());
   } catch (e) {
     // Log the error for debugging
@@ -24,7 +28,9 @@ class EcoWalletApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return BlocProvider<AuthBloc>.value(
+      value: di.sl<AuthBloc>(),
+      child: MaterialApp.router(
         title: 'EcoWallet',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
@@ -39,7 +45,9 @@ class EcoWalletApp extends StatelessWidget {
           Locale('en'),
           Locale('pt'),
         ],
-        home: const MainPage());
+        routerConfig: di.sl<AppRouter>().router,
+      ),
+    );
   }
 }
 

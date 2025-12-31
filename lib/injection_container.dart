@@ -1,27 +1,54 @@
+import 'package:eco_wallet/core/router/app_router.dart';
+import 'package:eco_wallet/features/auth/data/datasources/auth_local_data_source.dart';
+import 'package:eco_wallet/features/user/data/repositories/user_repository_impl.dart';
+import 'package:eco_wallet/features/user/domain/repositories/base_user_repository.dart';
+import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/database/db_helper.dart';
 
-import 'features/transactions/domain/usecases/filter_transactions.dart';
-import 'features/transactions/domain/usecases/search_query_transactions.dart';
+import 'features/auth/data/datasources/base_auth_data_source.dart';
+import 'features/auth/data/repositories/auth_repository_impl.dart';
+import 'features/auth/domain/repositories/base_auth_repository.dart';
+import 'features/auth/domain/usecases/auth_usecases.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
+
+import 'features/transactions/domain/usecases/transactions_usescases.dart';
 import 'features/transactions/presentation/bloc/transactions_history_bloc.dart';
 
-import 'features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'features/user/data/datasources/base_user_data_source.dart';
+import 'features/user/data/datasources/user_local_data_source.dart';
+import 'features/user/domain/usecases/user_usecases.dart';
 
 import 'features/wallet/data/datasources/base_wallet_local_data_source.dart';
 import 'features/wallet/data/datasources/wallet_local_data_source_impl.dart';
 import 'features/wallet/data/repositories/wallet_repository_impl.dart';
 
-import 'features/wallet/domain/usecases/get_transaction.dart';
-import 'features/wallet/domain/usecases/get_transactions.dart';
-import 'features/wallet/domain/usecases/add_transaction.dart';
-import 'features/wallet/domain/usecases/delete_transaction.dart';
-import 'features/wallet/domain/usecases/update_transaction.dart';
 import 'features/wallet/domain/repositories/base_wallet_repository.dart';
+import 'features/wallet/domain/usecases/wallet_usecases.dart';
+import 'features/wallet/presentation/bloc/wallet_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  sl.registerFactory(
+    () => UserBloc(
+      getUser: sl(),
+      updateUser: sl(),
+      deleteUser: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(
+    () => AuthBloc(
+      signIn: sl(),
+      signUp: sl(),
+      logOut: sl(),
+      checkAuthStatus: sl(),
+    ),
+  );
+
   sl.registerFactory(
     () => TransactionsHistoryBloc(
       getTransactions: sl(),
@@ -42,20 +69,35 @@ Future<void> init() async {
     ),
   );
 
+  sl.registerLazySingleton(() => AppRouter(authBloc: sl()));
+
+  sl.registerLazySingleton(() => GetUser(sl()));
+  sl.registerLazySingleton(() => UpdateUser(sl()));
+  sl.registerLazySingleton(() => DeleteUser(sl()));
+
+  sl.registerLazySingleton(() => SignIn(sl()));
+  sl.registerLazySingleton(() => SignUp(sl()));
+  sl.registerLazySingleton(() => LogOut(sl()));
+  sl.registerLazySingleton(() => CheckAuthStatus(sl()));
+
   sl.registerLazySingleton(() => GetTransactions(sl()));
   sl.registerLazySingleton(() => FilterTransactions());
   sl.registerLazySingleton(() => SearchQueryTransactions());
-
   sl.registerLazySingleton(() => AddTransaction(sl()));
   sl.registerLazySingleton(() => DeleteTransaction(sl()));
   sl.registerLazySingleton(() => UpdateTransaction(sl()));
   sl.registerLazySingleton(() => GetTransaction(sl()));
 
-  sl.registerLazySingleton<BaseWalletRepository>(
-      () => WalletRepositoryImpl(localDataSource: sl()));
+  sl.registerLazySingleton<BaseAuthRepository>(() => AuthRepositoryImpl(dataSource: sl()));
+  sl.registerLazySingleton<BaseUserRepository>(() => UserRepositoryImpl(dataSource: sl()));
+  sl.registerLazySingleton<BaseWalletRepository>(() => WalletRepositoryImpl(localDataSource: sl()));
 
-  sl.registerLazySingleton<BaseWalletLocalDataSource>(
-      () => WalletLocalDataSourceImpl(dbHelper: sl()));
+  sl.registerLazySingleton<BaseAuthDataSource>(() => AuthLocalDataSource(dbHelper: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton<BaseUserDataSource>(() => UserLocalDataSource(dbHelper: sl()));
+  sl.registerLazySingleton<BaseWalletLocalDataSource>(() => WalletLocalDataSourceImpl(dbHelper: sl()));
 
+  // External dependencies - must be initialized first
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => DbHelper());
 }

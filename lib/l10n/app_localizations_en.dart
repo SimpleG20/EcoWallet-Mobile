@@ -82,10 +82,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Shows weekly transaction overview.\nThe rightmost bar represents today.';
 
   @override
-  String get searchTransactions => 'Search transactions...';
+  String get askForgotPassword => 'Forgot Password?';
 
   @override
-  String get filterTransactions => 'Filter Transactions';
+  String get askAlreadyHaveAccount => 'Already have an account?';
 
   @override
   String get addFilters => 'Add Filters';
@@ -95,6 +95,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get forgotPassword => 'Forgot Password?';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
+
+  @override
+  String get filterTransactions => 'Filter Transactions';
+
+  @override
+  String get searchTransactions => 'Search transactions...';
+
+  @override
+  String get loginSignInToContinue => 'Sign in to continue to your EcoWallet';
+
+  @override
+  String get loginWelcomeMessage =>
+      'Smart finance tracking for a better tomorrow.';
+
+  @override
+  String get loginWarningTerms =>
+      'By signing in, you agree to our\nTerms of Service and Privacy Policy.';
 
   @override
   String get passwordRequirements => 'Password Requirements';
@@ -112,16 +132,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pwRequirementSpecial => 'At least one special character';
 
   @override
-  String get btnUndo => 'Undo';
-
-  @override
-  String get btnRedo => 'Redo';
+  String get btnApply => 'Apply';
 
   @override
   String get btnClear => 'Clear';
 
   @override
-  String get btnApply => 'Apply';
+  String get btnUndo => 'Undo';
+
+  @override
+  String get btnRedo => 'Redo';
 
   @override
   String get btnCancel => 'Cancel';
@@ -131,6 +151,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get btnSave => 'Save Transaction';
+
+  @override
+  String get btnSendTestNotification => 'Send Test Notification';
+
+  @override
+  String get lbOr => 'Or';
+
+  @override
+  String get lbTo => 'To:';
 
   @override
   String get lbAll => 'All';
@@ -149,6 +178,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbType => 'Type';
+
+  @override
+  String get lbFrom => 'From:';
 
   @override
   String get lbBills => 'Bills';
@@ -175,6 +207,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbSalary => 'Salary';
 
   @override
+  String get lbSignIn => 'Sign In';
+
+  @override
+  String get lbSignUp => 'Sign Up';
+
+  @override
   String get lbHealth => 'Health';
 
   @override
@@ -182,6 +220,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbAmount => 'Amount';
+
+  @override
+  String get lbDelete => 'Delete';
+
+  @override
+  String get lbImport => 'Import';
+
+  @override
+  String get lbExport => 'Export';
 
   @override
   String get lbLogout => 'Logout';
@@ -205,6 +252,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbAddress => 'Address';
 
   @override
+  String get lbDismiss => 'Dismiss';
+
+  @override
   String get lbSettings => 'Settings';
 
   @override
@@ -217,19 +267,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbCategory => 'Category';
 
   @override
+  String get lbPassword => 'Password';
+
+  @override
+  String get lbFontSize => 'Font Size';
+
+  @override
+  String get lbFullName => 'Full Name';
+
+  @override
+  String get lbEncrypted => 'Encrypted';
+
+  @override
+  String get lbFrequency => 'Frequency';
+
+  @override
   String get lbAnalytics => 'Analytics';
-
-  @override
-  String get lbCurrentPassword => 'Current Password';
-
-  @override
-  String get lbNewPassword => 'New Password';
-
-  @override
-  String get lbConfirmPassword => 'Confirm Password';
-
-  @override
-  String get lbConfirmNewPassword => 'Confirm New Password';
 
   @override
   String get lbTransport => 'Transport';
@@ -238,7 +291,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbAppearance => 'Appearance';
 
   @override
+  String get lbAnimations => 'Animations';
+
+  @override
+  String get lbHideValues => 'Hide Values';
+
+  @override
+  String get lbLimitAlert => 'Limit Alert';
+
+  @override
+  String get lbQuietHours => 'Quiet Hours';
+
+  @override
   String get lbBudgetInfo => 'Budget Info';
+
+  @override
+  String get lbManageData => 'Manage Data';
 
   @override
   String get lbExportData => 'Export Data';
@@ -256,10 +324,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbPreferences => 'Preferences';
 
   @override
-  String get lbManageData => 'Manage Data';
+  String get lbEnableCloud => 'Enable Cloud';
 
   @override
   String get lbAboutLegal => 'About & Legal';
+
+  @override
+  String get lbNewPassword => 'New Password';
 
   @override
   String get lbPersonalInfo => 'Personal Info';
@@ -268,10 +339,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbSendFeedback => 'Send Feedback';
 
   @override
-  String get lbNotifications => 'Notifications';
+  String get lbBackupData => 'Backup & Restore';
 
   @override
-  String get lbBackupData => 'Backup & Restore';
+  String get lbNotifications => 'Notifications';
 
   @override
   String get lbUncategorized => 'Uncategorized';
@@ -283,13 +354,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbPrivacyPolicy => 'Privacy Policy';
 
   @override
+  String get lbCreateAccount => 'Create Account';
+
+  @override
+  String get lbEcoFootprint => 'Carbon Footprint';
+
+  @override
   String get lbChangePassword => 'Change Password';
 
   @override
   String get lbTermsOfService => 'Terms of Service';
 
   @override
+  String get lbMonthlyProgress => 'Monthly Progress';
+
+  @override
   String get lbAllTransactions => 'All Transactions';
+
+  @override
+  String get lbCurrentPassword => 'Current Password';
+
+  @override
+  String get lbConfirmPassword => 'Confirm Password';
 
   @override
   String get lbSelectDateRange => 'Select Date Range';
@@ -298,10 +384,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbBiometrics => 'Biometric Authentication';
 
   @override
-  String get formNameHint => 'Enter transaction name';
+  String get lbConfirmNewPassword => 'Confirm New Password';
 
   @override
-  String get formCategoryHint => 'Write the category';
+  String get loginErrorGeneric => 'Login failed. Please try again.';
+
+  @override
+  String get lbCreateAccountSubtitle => 'Sign up to get started!';
+
+  @override
+  String get lbBillsReminder => 'Bills Reminder';
+
+  @override
+  String get lbDailyReminder => 'Daily Reminder';
+
+  @override
+  String get lbExpensesLimit => 'Expenses Limit';
+
+  @override
+  String get lbMonthlyReport => 'Monthly Report';
+
+  @override
+  String get lbCurrencyFormat => 'Currency Format';
+
+  @override
+  String get lbColorBlindMode => 'Color Blind Mode';
+
+  @override
+  String get lbEnergySavingTips => 'Energy Saving Tips';
+
+  @override
+  String get lbInitialDayOfMonth => 'Initial Day of the Month';
+
+  @override
+  String get lbHighConsumptionAlert => 'High Consumption Alert';
+
+  @override
+  String get lbAgreeTerms =>
+      'I agree to the Terms of Service and Privacy Policy.';
+
+  @override
+  String get msgTestNotificationSent => 'Test notification sent!';
+
+  @override
+  String get msgFeatureComingSoon => 'This feature is coming soon!';
 
   @override
   String get msgTransactionAdded => 'Transaction added successfully.';
@@ -313,75 +439,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgTransactionDeleted => 'Transaction deleted successfully.';
 
   @override
-  String get errorDateEmpty => 'Please select a date.';
+  String get hintEmail => 'Enter your email';
 
   @override
-  String get errorTitleEmpty => 'Please enter a title.';
+  String get hintCategory => 'Write the category';
 
   @override
-  String get errorAmountEmpty => 'Please enter an amount.';
+  String get hintPassword => 'Enter your password';
 
   @override
-  String get errorCategoryEmpty => 'Please select a category.';
+  String get hintFullName => 'Enter your full name';
 
   @override
-  String get errorAmountInvalid => 'Please enter a valid amount.';
+  String get hintConfirmPassword => 'Confirm your password';
 
   @override
-  String get errorAmountMustBePositive => 'Amount must be greater than zero.';
-
-  @override
-  String get errorEmailEmpty => 'Email cannot be empty.';
-
-  @override
-  String get errorEmailInvalid => 'Invalid email format.';
-
-  @override
-  String get errorPhoneEmpty => 'Phone number cannot be empty.';
-
-  @override
-  String get errorPhoneInvalid => 'Invalid phone number format.';
-
-  @override
-  String get errorAddressEmpty => 'Address cannot be empty.';
-
-  @override
-  String get errorAddressInvalid => 'Address is too short.';
-
-  @override
-  String get errorDateInvalid => 'Invalid date format.';
-
-  @override
-  String get errorDateOutOfRange => 'Date out of range.';
-
-  @override
-  String get errorNameEmpty => 'Name cannot be empty.';
-
-  @override
-  String get errorNameInvalid => 'Name is too short.';
-
-  @override
-  String get errorPasswordEmpty => 'Password cannot be empty.';
-
-  @override
-  String get errorPasswordWeak => 'Password is too weak.';
-
-  @override
-  String get errorPasswordTooShort => 'Password is too short.';
-
-  @override
-  String get errorPasswordMismatch => 'Passwords do not match.';
-
-  @override
-  String get errorEnterCurrentPassword => 'Please enter your current password.';
-
-  @override
-  String get errorSameAsCurrentPassword =>
-      'New password cannot be the same as the current password.';
-
-  @override
-  String get errorAmountFormat =>
-      'Invalid number format. Use only digits and a decimal separator.';
+  String get hintTransactionName => 'Enter transaction name';
 
   @override
   String get sectionGeneral => 'General';
@@ -429,19 +502,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeDark => 'Dark';
 
   @override
-  String get lbCurrencyFormat => 'Currency Format';
-
-  @override
   String get currencySymbol => 'Symbol (R\$)';
 
   @override
   String get currencyCode => 'Code (BRL)';
-
-  @override
-  String get lbHideValues => 'Hide Values';
-
-  @override
-  String get lbColorBlindMode => 'Color Blind Mode';
 
   @override
   String get colorBlindNone => 'None';
@@ -456,12 +520,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get colorBlindTritanopia => 'Tritanopia';
 
   @override
-  String get lbAnimations => 'Animations';
-
-  @override
-  String get lbFontSize => 'Font Size';
-
-  @override
   String get fontSizeSmall => 'Small';
 
   @override
@@ -471,20 +529,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fontSizeLarge => 'Large';
 
   @override
-  String get lbInitialDayOfMonth => 'Initial Day of the Month';
-
-  @override
-  String get lbExpensesLimit => 'Expenses Limit';
-
-  @override
   String get expensesLimitDescription =>
       'Set a limit to control your monthly expenses.';
 
   @override
   String get setMonthlyExpensesLimit => 'Set Monthly Expenses Limit';
-
-  @override
-  String get lbLimitAlert => 'Limit Alert';
 
   @override
   String get limitAlertDescription =>
@@ -494,34 +543,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbBudgetLimit => 'Budget Limit';
 
   @override
-  String get lbExport => 'Export';
-
-  @override
   String get exportDataDescription =>
       'Export your data to a file for backup purposes.';
-
-  @override
-  String get lbImport => 'Import';
 
   @override
   String get importDataDescription =>
       'Import data from a previously exported file.';
 
   @override
-  String get lbDelete => 'Delete';
-
-  @override
   String get deleteDataDescription =>
       'Permanently delete all your data from the app.';
-
-  @override
-  String get lbEnableCloud => 'Enable Cloud';
-
-  @override
-  String get lbEncrypted => 'Encrypted';
-
-  @override
-  String get lbFrequency => 'Frequency';
 
   @override
   String get frequencyNone => 'None';
@@ -536,42 +567,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get frequencyMonthly => 'Monthly';
 
   @override
-  String get lbDailyReminder => 'Daily Reminder';
-
-  @override
   String get dailyReminderDescription =>
       'Receive daily notifications about your energy usage';
-
-  @override
-  String get lbBillsReminder => 'Bills Reminder';
 
   @override
   String get billsReminderDescription => 'Get notified about upcoming bills';
 
   @override
-  String get lbMonthlyReport => 'Monthly Report';
-
-  @override
   String get monthlyReportDescription => 'Receive monthly consumption summary';
-
-  @override
-  String get lbQuietHours => 'Quiet Hours';
-
-  @override
-  String get lbFrom => 'From:';
-
-  @override
-  String get lbTo => 'To:';
-
-  @override
-  String get lbEnergySavingTips => 'Energy Saving Tips';
 
   @override
   String get energySavingTipsDescription =>
       'Receive tips to reduce energy consumption';
-
-  @override
-  String get lbHighConsumptionAlert => 'High Consumption Alert';
 
   @override
   String get highConsumptionAlertDescription =>
@@ -583,10 +590,78 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get lbMonthlyProgress => 'Monthly Progress';
+  String get errorNameInvalid => 'Name is too short.';
 
   @override
-  String get lbEcoFootprint => 'Carbon Footprint';
+  String get errorDateEmpty => 'Please select a date.';
+
+  @override
+  String get errorNameEmpty => 'Name cannot be empty.';
+
+  @override
+  String get errorDateInvalid => 'Invalid date format.';
+
+  @override
+  String get errorTitleEmpty => 'Please enter a title.';
+
+  @override
+  String get errorDateOutOfRange => 'Date out of range.';
+
+  @override
+  String get errorEmailEmpty => 'Email cannot be empty.';
+
+  @override
+  String get errorEmailInvalid => 'Invalid email format.';
+
+  @override
+  String get errorPasswordWeak => 'Password is too weak.';
+
+  @override
+  String get errorAmountEmpty => 'Please enter an amount.';
+
+  @override
+  String get errorAddressInvalid => 'Address is too short.';
+
+  @override
+  String get errorAddressEmpty => 'Address cannot be empty.';
+
+  @override
+  String get errorPasswordEmpty => 'Password cannot be empty.';
+
+  @override
+  String get errorPasswordTooShort => 'Password is too short.';
+
+  @override
+  String get errorCategoryEmpty => 'Please select a category.';
+
+  @override
+  String get errorPasswordMismatch => 'Passwords do not match.';
+
+  @override
+  String get errorPhoneEmpty => 'Phone number cannot be empty.';
+
+  @override
+  String get errorPhoneInvalid => 'Invalid phone number format.';
+
+  @override
+  String get errorAmountInvalid => 'Please enter a valid amount.';
+
+  @override
+  String get errorAgreeTerms => 'You must agree to the terms to continue.';
+
+  @override
+  String get errorAmountMustBePositive => 'Amount must be greater than zero.';
+
+  @override
+  String get errorEnterCurrentPassword => 'Please enter your current password.';
+
+  @override
+  String get errorSameAsCurrentPassword =>
+      'New password cannot be the same as the current password.';
+
+  @override
+  String get errorAmountFormat =>
+      'Invalid number format. Use only digits and a decimal separator.';
 
   @override
   String ecoFootprintValue(String value) {
@@ -594,13 +669,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get btnSendTestNotification => 'Send Test Notification';
+  String get lbEcoFootprintCompensation => 'Compensation needed:';
 
   @override
-  String get msgTestNotificationSent => 'Test notification sent!';
-
-  @override
-  String get msgDataUpdated => 'Data updated!';
+  String ecoFootprintCompensation(int count) {
+    return '$count trees 🌳';
+  }
 
   @override
   String get feedbackTitle => 'We\'d love to hear from you!';
@@ -643,7 +717,165 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedbackThankYou => 'Thank you for your feedback!';
 
   @override
-  String feedbackCharacterCount(Object count) {
+  String feedbackCharacterCount(int count) {
     return '$count/500 characters';
   }
+
+  @override
+  String get helpSearchHint => 'Search for help topics...';
+
+  @override
+  String get helpFaqTitle => 'Frequently Asked Questions';
+
+  @override
+  String get helpFaqAddTransaction => 'How do I add a transaction?';
+
+  @override
+  String get helpFaqAddTransactionAnswer =>
+      'Tap the \'+\' button on the home screen, select the transaction type (income, expense, or reserve), fill in the details, and tap \'Save\'.';
+
+  @override
+  String get helpFaqEditDelete => 'How do I edit or delete a transaction?';
+
+  @override
+  String get helpFaqEditDeleteAnswer =>
+      'Swipe left on the transaction to reveal edit and delete options, or tap on the transaction to open details and use the action buttons.';
+
+  @override
+  String get helpFaqCategories => 'How do I manage categories?';
+
+  @override
+  String get helpFaqCategoriesAnswer =>
+      'Go to Settings > Manage Data to customize your transaction categories.';
+
+  @override
+  String get helpFaqBackup => 'How do I backup my data?';
+
+  @override
+  String get helpFaqBackupAnswer =>
+      'Enable cloud backup in Settings > Manage Data > Backup section. You can also export your data manually.';
+
+  @override
+  String get helpFaqLanguage => 'How do I change the language?';
+
+  @override
+  String get helpFaqLanguageAnswer =>
+      'The app follows your device\'s language settings. Change your device language to switch the app language.';
+
+  @override
+  String get helpContactTitle => 'Contact Support';
+
+  @override
+  String get helpContactDescription =>
+      'Still need help? Our support team is here for you.';
+
+  @override
+  String get helpContactEmail => 'Email Support';
+
+  @override
+  String get helpContactChat => 'Live Chat';
+
+  @override
+  String get helpVersion => 'App Version';
+
+  @override
+  String policyLastUpdated(String date) {
+    return 'Last Updated: $date';
+  }
+
+  @override
+  String get policyIntroTitle => 'Introduction';
+
+  @override
+  String get policyIntroContent =>
+      'EcoWallet is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal information.';
+
+  @override
+  String get policyDataCollectionTitle => 'Data Collection';
+
+  @override
+  String get policyDataCollectionContent =>
+      'We collect information you provide directly, such as your name, email, and financial transaction data. All data is stored securely on your device and optionally in encrypted cloud storage.';
+
+  @override
+  String get policyDataUsageTitle => 'How We Use Your Data';
+
+  @override
+  String get policyDataUsageContent =>
+      'Your data is used solely to provide app functionality, including transaction tracking, budget management, and generating financial reports. We never sell your data to third parties.';
+
+  @override
+  String get policySecurityTitle => 'Data Security';
+
+  @override
+  String get policySecurityContent =>
+      'We implement industry-standard security measures including encryption, secure data transmission, and regular security audits to protect your information.';
+
+  @override
+  String get policyRightsTitle => 'Your Rights';
+
+  @override
+  String get policyRightsContent =>
+      'You have the right to access, modify, export, or delete your data at any time through the app settings. You can also request a complete data deletion by contacting our support team.';
+
+  @override
+  String get policyContactTitle => 'Contact Us';
+
+  @override
+  String get policyContactContent =>
+      'For questions about this privacy policy, please contact us at privacy@ecowallet.app';
+
+  @override
+  String termsLastUpdated(String date) {
+    return 'Last Updated: $date';
+  }
+
+  @override
+  String get termsAcceptanceTitle => 'Acceptance of Terms';
+
+  @override
+  String get termsAcceptanceContent =>
+      'By downloading, installing, or using EcoWallet, you agree to be bound by these Terms of Service. If you do not agree, please do not use the app.';
+
+  @override
+  String get termsServiceTitle => 'Service Description';
+
+  @override
+  String get termsServiceContent =>
+      'EcoWallet provides personal finance management tools including transaction tracking, budgeting, and financial analytics. The service is provided \'as is\' for personal, non-commercial use.';
+
+  @override
+  String get termsAccountTitle => 'User Accounts';
+
+  @override
+  String get termsAccountContent =>
+      'You are responsible for maintaining the confidentiality of your account credentials and for all activities under your account. You must provide accurate and complete information when creating an account.';
+
+  @override
+  String get termsContentTitle => 'User Content';
+
+  @override
+  String get termsContentContent =>
+      'You retain all rights to the financial data you enter into the app. By using our cloud backup features, you grant us permission to store and process this data solely for providing the service.';
+
+  @override
+  String get termsProhibitedTitle => 'Prohibited Uses';
+
+  @override
+  String get termsProhibitedContent =>
+      'You may not use EcoWallet for any illegal purposes, to transmit malicious code, or to attempt to access other users\' data. Violation may result in account termination.';
+
+  @override
+  String get termsLiabilityTitle => 'Limitation of Liability';
+
+  @override
+  String get termsLiabilityContent =>
+      'EcoWallet is not liable for any financial decisions you make based on the app\'s data or analytics. Always consult a financial professional for important financial matters.';
+
+  @override
+  String get termsChangesTitle => 'Changes to Terms';
+
+  @override
+  String get termsChangesContent =>
+      'We may update these terms periodically. Continued use of the app after changes constitutes acceptance of the new terms.';
 }
