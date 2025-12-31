@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:eco_wallet/core/utils/app_validators.dart';
 
 import '../../../../core/constants/ui_data.dart';
-import '../widgets/or_divider.dart';
-import '../widgets/any_text_field.dart';
-import '../widgets/password_field.dart';
+import '../../../../core/presentation/widgets/or_divider.dart';
+import '../../../../core/presentation/widgets/any_text_field.dart';
+import '../../../../core/presentation/widgets/password_field.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {

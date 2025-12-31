@@ -1,4 +1,5 @@
 import 'package:eco_wallet/core/errors/base_failure.dart';
+import 'package:eco_wallet/core/errors/exceptions.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../model/user_model.dart';
@@ -12,10 +13,12 @@ class UserRepositoryImpl implements BaseUserRepository {
   UserRepositoryImpl({required this.dataSource});
 
   @override
-  Future<Either<BaseFailure, User>> getUser() async {
+  Future<Either<BaseFailure, User>> getUser(String id) async {
     try {
-      final user = await dataSource.getUser();
+      final user = await dataSource.getUser(id);
       return Right(user);
+    } on CacheException {
+      return Left(CacheFailure("Failed to fetch user from cache"));
     } catch (e) {
       return Left(UnknownFailure(e.toString()));
     }
@@ -27,6 +30,20 @@ class UserRepositoryImpl implements BaseUserRepository {
       final userModel = UserModel.fromEntity(user);
       await dataSource.updateUser(userModel);
       return const Right(unit);
+    } on CacheException {
+      return Left(CacheFailure("Failed to update user in cache"));
+    } catch (e) {
+      return Left(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, Unit>> deleteUser(String id) async {
+    try {
+      await dataSource.deleteUser(id);
+      return const Right(unit);
+    } on CacheException {
+      return Left(CacheFailure("Failed to delete user from cache"));
     } catch (e) {
       return Left(UnknownFailure(e.toString()));
     }

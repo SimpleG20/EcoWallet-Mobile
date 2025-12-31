@@ -1,12 +1,12 @@
 import 'package:eco_wallet/core/constants/ui_data.dart';
 import 'package:flutter/material.dart';
 
-import '../../../login/presentation/widgets/password_field.dart';
+import '../../../../core/presentation/widgets/password_field.dart';
 import '/core/utils/app_validators.dart';
 import '../../../../l10n/app_localizations.dart';
 
-import '../../../login/presentation/widgets/any_text_field.dart';
-import '../../../login/presentation/widgets/or_divider.dart';
+import '../../../../core/presentation/widgets/any_text_field.dart';
+import '../../../../core/presentation/widgets/or_divider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

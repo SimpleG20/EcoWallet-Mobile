@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/app_validators.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../utils/app_validators.dart';
+import '../../../l10n/app_localizations.dart';
 
 class PasswordField extends StatelessWidget {
   const PasswordField({
