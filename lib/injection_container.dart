@@ -1,3 +1,4 @@
+import 'package:eco_wallet/core/router/app_router.dart';
 import 'package:eco_wallet/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:eco_wallet/features/user/data/repositories/user_repository_impl.dart';
 import 'package:eco_wallet/features/user/domain/repositories/base_user_repository.dart';
@@ -39,7 +40,7 @@ Future<void> init() async {
     ),
   );
 
-  sl.registerFactory(
+  sl.registerLazySingleton(
     () => AuthBloc(
       signIn: sl(),
       signUp: sl(),
@@ -67,6 +68,8 @@ Future<void> init() async {
       repository: sl(),
     ),
   );
+
+  sl.registerLazySingleton(() => AppRouter(authBloc: sl()));
 
   sl.registerLazySingleton(() => GetUser(sl()));
   sl.registerLazySingleton(() => UpdateUser(sl()));
