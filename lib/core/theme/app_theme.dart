@@ -12,6 +12,8 @@ class AppTheme {
   // Font Weights from CSS
   static const FontWeight _fontNormal = FontWeight.w400;
   static const FontWeight _fontMedium = FontWeight.w500;
+  static const FontWeight _fontSemiBold = FontWeight.w600;
+  static const FontWeight _fontBold = FontWeight.w700;
 
   /// Returns the Light Theme configuration
   static ThemeData get lightTheme {
@@ -29,6 +31,8 @@ class AppTheme {
         onSecondary: AppColors.lightSecondaryForeground,
         surface: AppColors.lightCard,
         onSurface: AppColors.lightCardForeground,
+        onSurfaceVariant: AppColors.lightMutedForeground,
+        onInverseSurface: AppColors.lightBackground,
         error: AppColors.lightDestructive,
         onError: AppColors.lightDestructiveForeground,
         outline: AppColors.lightBorder,
@@ -84,14 +88,14 @@ class AppTheme {
 
       // Typography Mapping (H1-H4 from CSS)
       textTheme: const TextTheme(
-        titleLarge: TextStyle(fontSize: 22, fontWeight: _fontMedium, height: 1.5), // h4
-        titleMedium: TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h5
+        titleLarge: TextStyle(fontSize: 22, fontWeight: _fontSemiBold, height: 1.5), // h4
+        titleMedium: TextStyle(fontSize: 18, fontWeight: _fontSemiBold, height: 1.5), // h5
         titleSmall: TextStyle(fontSize: 16, fontWeight: _fontMedium, height: 1.5), // h6
-        displayLarge: TextStyle(fontSize: 24, fontWeight: _fontMedium, height: 1.5), // h1
-        displayMedium: TextStyle(fontSize: 20, fontWeight: _fontMedium, height: 1.5), // h2
+        displayLarge: TextStyle(fontSize: 24, fontWeight: _fontSemiBold, height: 1.5), // h1
+        displayMedium: TextStyle(fontSize: 20, fontWeight: _fontSemiBold, height: 1.5), // h2
         displaySmall: TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h3
         bodyLarge: TextStyle(fontSize: 16, fontWeight: _fontNormal, height: 1.5), // p/base
-        labelLarge: TextStyle(fontSize: 16, fontWeight: _fontMedium, height: 1.5), // button/label
+        labelLarge: TextStyle(fontSize: 16, fontWeight: _fontBold, height: 1.5), // button/label
       ),
 
       // Extensions for custom properties
@@ -127,6 +131,8 @@ class AppTheme {
         onSecondary: AppColors.darkSecondaryForeground,
         surface: AppColors.darkCard,
         onSurface: AppColors.darkCardForeground,
+        onSurfaceVariant: AppColors.darkMutedForeground,
+        onInverseSurface: AppColors.darkBackground,
         error: AppColors.darkDestructive,
         onError: AppColors.darkDestructiveForeground,
         outline: AppColors.darkBorder,
@@ -135,6 +141,12 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.darkSecondary, // Used secondary for input in dark map
+        hintStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: _fontMedium,
+          height: 1.5,
+          color: AppColors.darkForeground.withAlpha(120),
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radius),
           borderSide: BorderSide.none,

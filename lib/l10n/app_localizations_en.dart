@@ -46,10 +46,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get askForgotPassword => 'Forgot Password?';
 
   @override
-  String get searchTransactions => 'Search transactions...';
+  String get askAlreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get addFilters => 'Add Filters';
+
+  @override
+  String get dontHaveAccount => 'Don\'t have an account?';
 
   @override
   String get filterTransactions => 'Filter Transactions';
+
+  @override
+  String get searchTransactions => 'Search transactions...';
+
+  @override
+  String get loginSignInToContinue => 'Sign in to continue to your EcoWallet';
 
   @override
   String get loginWelcomeMessage =>
@@ -60,13 +72,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'By signing in, you agree to our\nTerms of Service and Privacy Policy.';
 
   @override
-  String get loginSignInToContinue => 'Sign in to continue to your EcoWallet';
+  String get passwordRequirements => 'Password Requirements';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get pwRequirementNumber => 'At least one number';
 
   @override
-  String get addFilters => 'Add Filters';
+  String get pwRequirementLength => 'Minimum of 8 characters';
+
+  @override
+  String get pwRequirementUppercase => 'At least one uppercase letter';
+
+  @override
+  String get pwRequirementSpecial => 'At least one special character';
 
   @override
   String get btnApply => 'Apply';
@@ -132,9 +150,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbSignUp => 'Sign Up';
 
   @override
-  String get lbPassword => 'Password';
-
-  @override
   String get lbHealth => 'Health';
 
   @override
@@ -162,6 +177,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbCategory => 'Category';
 
   @override
+  String get lbPassword => 'Password';
+
+  @override
+  String get lbFullName => 'Full Name';
+
+  @override
   String get lbAnalytics => 'Analytics';
 
   @override
@@ -174,10 +195,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbEntertainment => 'Entertainment';
 
   @override
+  String get lbCreateAccount => 'Create Account';
+
+  @override
+  String get lbEcoFootprint => 'Carbon Footprint';
+
+  @override
+  String get lbConfirmPassword => 'Confirm Password';
+
+  @override
+  String get lbMonthlyProgress => 'Monthly Progress';
+
+  @override
   String get lbAllTransactions => 'All Transactions';
 
   @override
   String get lbSelectDateRange => 'Select Date Range';
+
+  @override
+  String get lbCreateAccountSubtitle => 'Sign up to get started!';
+
+  @override
+  String get lbAgreeTerms =>
+      'I agree to the Terms of Service and Privacy Policy.';
 
   @override
   String get hintEmail => 'Enter your email';
@@ -187,6 +227,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hintPassword => 'Enter your password';
+
+  @override
+  String get hintFullName => 'Enter your full name';
+
+  @override
+  String get hintConfirmPassword => 'Confirm your password';
 
   @override
   String get hintTransactionName => 'Enter transaction name';
@@ -201,16 +247,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgTransactionDeleted => 'Transaction deleted successfully.';
 
   @override
-  String get errorAmountEmpty => 'Please enter an amount.';
-
-  @override
-  String get errorCategoryEmpty => 'Please select a category.';
-
-  @override
   String get errorDateEmpty => 'Please select a date.';
 
   @override
   String get errorTitleEmpty => 'Please enter a title.';
+
+  @override
+  String get errorAmountEmpty => 'Please enter an amount.';
+
+  @override
+  String get errorCategoryEmpty => 'Please select a category.';
 
   @override
   String get errorAmountInvalid => 'Please enter a valid amount.';
@@ -219,14 +265,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorAmountMustBePositive => 'Amount must be greater than zero.';
 
   @override
+  String get errorEmailEmpty => 'Email cannot be empty.';
+
+  @override
+  String get errorEmailInvalid => 'Invalid email format.';
+
+  @override
+  String get errorPhoneEmpty => 'Phone number cannot be empty.';
+
+  @override
+  String get errorPhoneInvalid => 'Invalid phone number format.';
+
+  @override
+  String get errorAddressEmpty => 'Address cannot be empty.';
+
+  @override
+  String get errorAddressInvalid => 'Address is too short.';
+
+  @override
+  String get errorDateInvalid => 'Invalid date format.';
+
+  @override
+  String get errorDateOutOfRange => 'Date out of range.';
+
+  @override
+  String get errorNameEmpty => 'Name cannot be empty.';
+
+  @override
+  String get errorNameInvalid => 'Name is too short.';
+
+  @override
+  String get errorPasswordEmpty => 'Password cannot be empty.';
+
+  @override
+  String get errorPasswordWeak => 'Password is too weak.';
+
+  @override
+  String get errorPasswordTooShort => 'Password is too short.';
+
+  @override
+  String get errorPasswordMismatch => 'Passwords do not match.';
+
+  @override
+  String get errorEnterCurrentPassword => 'Please enter your current password.';
+
+  @override
+  String get errorSameAsCurrentPassword =>
+      'New password cannot be the same as the current password.';
+
+  @override
   String get errorAmountFormat =>
       'Invalid number format. Use only digits and a decimal separator.';
-
-  @override
-  String get lbMonthlyProgress => 'Monthly Progress';
-
-  @override
-  String get lbEcoFootprint => 'Carbon Footprint';
 
   @override
   String ecoFootprintValue(String value) {

@@ -1,4 +1,5 @@
 import 'package:eco_wallet/features/login/presentation/pages/login_page.dart';
+import 'package:eco_wallet/features/register/presentation/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -40,7 +41,9 @@ class EcoWalletApp extends StatelessWidget {
         Locale('en'),
         Locale('pt'),
       ],
-      home: const LoginPage(),
+      home:
+          // const RegisterPage(),
+          const LoginPage(),
     ); //const MainPage());
   }
 }
