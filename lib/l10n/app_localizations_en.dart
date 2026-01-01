@@ -336,6 +336,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbNewPassword => 'New Password';
 
   @override
+  String get lbBudgetLimit => 'Budget Limit';
+
+  @override
   String get lbPersonalInfo => 'Personal Info';
 
   @override
@@ -354,7 +357,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbEntertainment => 'Entertainment';
 
   @override
+  String get lbEditThreshold => 'Edit Threshold';
+
+  @override
   String get lbPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get lbBillsReminder => 'Bills Reminder';
+
+  @override
+  String get lbDailyReminder => 'Daily Reminder';
+
+  @override
+  String get lbExpensesLimit => 'Expenses Limit';
+
+  @override
+  String get lbMonthlyReport => 'Monthly Report';
 
   @override
   String get lbCreateAccount => 'Create Account';
@@ -364,6 +382,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbChangePassword => 'Change Password';
+
+  @override
+  String get lbCurrencyFormat => 'Currency Format';
+
+  @override
+  String get lbColorBlindMode => 'Color Blind Mode';
 
   @override
   String get lbTermsOfService => 'Terms of Service';
@@ -387,31 +411,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbBiometrics => 'Biometric Authentication';
 
   @override
-  String get lbConfirmNewPassword => 'Confirm New Password';
-
-  @override
-  String get lbCreateAccountSubtitle => 'Sign up to get started!';
-
-  @override
-  String get lbBillsReminder => 'Bills Reminder';
-
-  @override
-  String get lbDailyReminder => 'Daily Reminder';
-
-  @override
-  String get lbExpensesLimit => 'Expenses Limit';
-
-  @override
-  String get lbMonthlyReport => 'Monthly Report';
-
-  @override
-  String get lbCurrencyFormat => 'Currency Format';
-
-  @override
-  String get lbColorBlindMode => 'Color Blind Mode';
-
-  @override
   String get lbEnergySavingTips => 'Energy Saving Tips';
+
+  @override
+  String get lbConfirmNewPassword => 'Confirm New Password';
 
   @override
   String get lbInitialDayOfMonth => 'Initial Day of the Month';
@@ -420,11 +423,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lbHighConsumptionAlert => 'High Consumption Alert';
 
   @override
-  String get lbAgreeTerms =>
-      'I agree to the Terms of Service and Privacy Policy.';
+  String get lbCreateAccountSubtitle => 'Sign up to get started!';
 
   @override
-  String get lbBudgetLimit => 'Budget Limit';
+  String get lbAgreeTerms =>
+      'I agree to the Terms of Service and Privacy Policy.';
 
   @override
   String get msgTestNotificationSent => 'Test notification sent!';
@@ -442,7 +445,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msgTransactionDeleted => 'Transaction deleted successfully.';
 
   @override
+  String get hintDateBirth => 'DD/MM/YYYY';
+
+  @override
   String get hintEmail => 'Enter your email';
+
+  @override
+  String get hintAddress => 'Enter your address';
 
   @override
   String get hintCategory => 'Write the category';
@@ -454,10 +463,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hintFullName => 'Enter your full name';
 
   @override
+  String get hintPhoneNumber => 'Enter your phone number';
+
+  @override
   String get hintConfirmPassword => 'Confirm your password';
 
   @override
   String get hintTransactionName => 'Enter transaction name';
+
+  @override
+  String get hintConsumptionThreshold => 'Enter consumption threshold';
 
   @override
   String get sectionGeneral => 'General';
@@ -593,22 +608,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorNameInvalid => 'Name is too short.';
 
   @override
-  String get errorDateEmpty => 'Please select a date.';
-
-  @override
-  String get errorNameEmpty => 'Name cannot be empty.';
-
-  @override
   String get errorDateInvalid => 'Invalid date format.';
 
   @override
-  String get errorTitleEmpty => 'Please enter a title.';
+  String get errorEmpty => 'This field cannot be empty.';
 
   @override
   String get errorDateOutOfRange => 'Date out of range.';
-
-  @override
-  String get errorEmailEmpty => 'Email cannot be empty.';
 
   @override
   String get errorEmailInvalid => 'Invalid email format.';
@@ -617,28 +623,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorPasswordWeak => 'Password is too weak.';
 
   @override
-  String get errorAmountEmpty => 'Please enter an amount.';
-
-  @override
   String get errorAddressInvalid => 'Address is too short.';
 
   @override
-  String get errorAddressEmpty => 'Address cannot be empty.';
-
-  @override
-  String get errorPasswordEmpty => 'Password cannot be empty.';
+  String get errorNumberPositive => 'Number must be positive.';
 
   @override
   String get errorPasswordTooShort => 'Password is too short.';
 
   @override
-  String get errorCategoryEmpty => 'Please select a category.';
-
-  @override
   String get errorPasswordMismatch => 'Passwords do not match.';
-
-  @override
-  String get errorPhoneEmpty => 'Phone number cannot be empty.';
 
   @override
   String get errorPhoneInvalid => 'Invalid phone number format.';
@@ -650,10 +644,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorAgreeTerms => 'You must agree to the terms to continue.';
 
   @override
+  String get errorUnknown => 'An unknown error occurred.\nPlease try again.';
+
+  @override
   String get errorAmountMustBePositive => 'Amount must be greater than zero.';
 
   @override
   String get errorEnterCurrentPassword => 'Please enter your current password.';
+
+  @override
+  String get errorPercentageInvalid =>
+      'Please enter a valid percentage (0-100).';
 
   @override
   String get errorSameAsCurrentPassword =>

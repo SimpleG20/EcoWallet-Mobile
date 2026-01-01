@@ -5,53 +5,41 @@ abstract class BaseSettingsState extends Equatable {
   List<Object?> get props => [];
 }
 
-class SettingsInitial extends BaseSettingsState {}
+class SettingsInitialState extends BaseSettingsState {}
 
-class SettingsLoading extends BaseSettingsState {}
+class SettingsLoadingState extends BaseSettingsState {}
 
-class SettingsError extends BaseSettingsState {
+class SettingsErrorState extends BaseSettingsState {
   final String? message;
 
-  SettingsError({required this.message});
+  SettingsErrorState({required this.message});
 
   @override
   List<Object?> get props => [message];
 }
 
-class SettingsLoaded extends BaseSettingsState {
+class SettingsLoadedState extends BaseSettingsState {
   final User user;
-  final BudgetPreferences? budgetPreferences;
-  final AppearancePreferences? appearancePreferences;
-  final NotificationPreferences? notificationPreferences;
-  final String? currentPassword;
+  final UserPreferences preferences;
 
-  SettingsLoaded({
+  SettingsLoadedState({
     required this.user,
-    this.budgetPreferences,
-    this.appearancePreferences,
-    this.notificationPreferences,
-    this.currentPassword,
+    required this.preferences,
   });
 
   @override
   List<Object?> get props => [
         user,
-        budgetPreferences,
-        appearancePreferences,
-        notificationPreferences,
+        preferences,
       ];
 
-  SettingsLoaded copyWith({
+  SettingsLoadedState copyWith({
     User? user,
-    BudgetPreferences? budgetPreferences,
-    AppearancePreferences? appearancePreferences,
-    NotificationPreferences? notificationPreferences,
+    UserPreferences? preferences,
   }) {
-    return SettingsLoaded(
+    return SettingsLoadedState(
       user: user ?? this.user,
-      budgetPreferences: budgetPreferences ?? this.budgetPreferences,
-      appearancePreferences: appearancePreferences ?? this.appearancePreferences,
-      notificationPreferences: notificationPreferences ?? this.notificationPreferences,
+      preferences: preferences ?? this.preferences,
     );
   }
 }

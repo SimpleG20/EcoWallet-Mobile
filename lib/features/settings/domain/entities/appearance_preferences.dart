@@ -24,17 +24,6 @@ class AppearancePreferences extends Equatable {
     this.enableAnimations = true,
   });
 
-  factory AppearancePreferences.defaults() {
-    return const AppearancePreferences(
-      themeMode: AppThemeMode.system,
-      colorBlindMode: ColorBlindMode.none,
-      currencyFormat: CurrencyFormat.symbol,
-      fontSize: FontSizePreference.medium,
-      hideValues: false,
-      enableAnimations: false,
-    );
-  }
-
   /// Creates a copy with the given fields replaced.
   AppearancePreferences copyWith({
     AppThemeMode? themeMode,

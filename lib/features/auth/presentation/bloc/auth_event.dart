@@ -40,4 +40,3 @@ class LogOutEvent extends BaseAuthEvent {}
 
 /// Dispatched to re-check authentication status.
 class CheckAuthStatusEvent extends BaseAuthEvent {}
-

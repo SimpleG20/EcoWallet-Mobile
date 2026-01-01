@@ -32,4 +32,25 @@ class User extends Equatable {
         address,
         dateOfBirth,
       ];
+
+  User copyWith({
+    String? fullName,
+    String? email,
+    String? phoneNumber,
+    String? password,
+    String? imageUrl,
+    String? address,
+    DateTime? dateOfBirth,
+  }) {
+    return User(
+      id: id,
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      password: password ?? this.password,
+      imageUrl: imageUrl ?? this.imageUrl,
+      address: address ?? this.address,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+    );
+  }
 }

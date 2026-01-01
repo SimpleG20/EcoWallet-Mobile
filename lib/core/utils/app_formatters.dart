@@ -1,3 +1,4 @@
+import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -32,13 +33,24 @@ class AppFormatters {
 
   static TimeOfDay parseTimeOfDay(String timeString) {
     final parts = timeString.split(':');
-    final hour = int.parse(parts[0]);
-    final minute = int.parse(parts[1]);
+    final hour = int.tryParse(parts[0]) ?? 0;
+    final minute = int.tryParse(parts[1]) ?? 0;
     return TimeOfDay(hour: hour, minute: minute);
   }
 
   static String formatTimeOfDay(TimeOfDay reminderTime) {
-    return '${reminderTime.hour.toString().padLeft(2, '0')}:${reminderTime.minute.toString().padLeft(2, '0')}';
+    final hour = reminderTime.hour.toString().padLeft(2, '0');
+    final minute = reminderTime.minute.toString().padLeft(2, '0');
+    final result = '$hour:$minute';
+    return result;
+  }
+
+  static DateTime? parseDate(String text, AppLocalizations loc) {
+    try {
+      return dateOnlyFormatter.parseStrict(text);
+    } catch (e) {
+      return null;
+    }
   }
 }
 

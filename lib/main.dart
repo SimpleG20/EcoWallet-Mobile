@@ -4,6 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/router/app_router.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/settings/presentation/bloc/settings_bloc.dart';
+import 'features/user/presentation/bloc/user_bloc.dart';
 import 'injection_container.dart' as di;
 import 'core/theme/app_theme.dart';
 import '/l10n/app_localizations.dart';
@@ -28,8 +30,47 @@ class EcoWalletApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>.value(
-      value: di.sl<AuthBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>.value(value: di.sl<AuthBloc>()),
+        BlocProvider<UserBloc>.value(value: di.sl<UserBloc>()),
+        BlocProvider<SettingsBloc>.value(value: di.sl<SettingsBloc>()),
+      ],
+      child: const _AuthUserSyncWrapper(),
+    );
+  }
+}
+
+/// Wrapper widget that synchronizes AuthBloc and UserBloc states.
+/// It checks the initial auth state and continues listening for future changes.
+class _AuthUserSyncWrapper extends StatefulWidget {
+  const _AuthUserSyncWrapper();
+
+  @override
+  State<_AuthUserSyncWrapper> createState() => _AuthUserSyncWrapperState();
+}
+
+class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
+  @override
+  void initState() {
+    super.initState();
+    // Check if already authenticated on startup
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _syncUserFromAuthState(context.read<AuthBloc>().state);
+    });
+  }
+
+  void _syncUserFromAuthState(BaseAuthState state) {
+    if (state is AuthAuthenticatedState) {
+      context.read<UserBloc>().add(LoadUserEvent(id: state.userId));
+      context.read<SettingsBloc>().add(LoadSettingsEvent());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AuthBloc, BaseAuthState>(
+      listener: (context, state) => _syncUserFromAuthState(state),
       child: MaterialApp.router(
         title: 'EcoWallet',
         theme: AppTheme.lightTheme,

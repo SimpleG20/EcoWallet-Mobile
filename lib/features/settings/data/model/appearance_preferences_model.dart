@@ -11,21 +11,32 @@ class AppearancePreferencesModel extends AppearancePreferences {
     required super.enableAnimations,
   });
 
+  factory AppearancePreferencesModel.defaults() {
+    return const AppearancePreferencesModel(
+      themeMode: AppThemeMode.system,
+      colorBlindMode: ColorBlindMode.none,
+      currencyFormat: CurrencyFormat.symbol,
+      fontSize: FontSizePreference.medium,
+      hideValues: false,
+      enableAnimations: true,
+    );
+  }
+
   factory AppearancePreferencesModel.fromJson(Map<String, dynamic> json) {
-    final themeMode = json['themeMode'] as String;
-    final colorBlindMode = json['colorBlindMode'] as String;
-    final currencyFormat = json['currencyFormat'] as String;
-    final fontSize = json['fontSize'] as String;
-    final enableAnimations = json['enableAnimations'] as bool;
-    final hideValues = json['hideValues'] as bool;
+    final themeMode = json['themeMode'];
+    final colorBlindMode = json['colorBlindMode'];
+    final currencyFormat = json['currencyFormat'];
+    final fontSize = json['fontSize'];
+    final enableAnimations = int.tryParse(json['enableAnimations']) == 1;
+    final hideValues = int.tryParse(json['hideValues']) == 1;
 
     return AppearancePreferencesModel(
       colorBlindMode: ColorBlindMode.fromString(colorBlindMode),
       currencyFormat: CurrencyFormat.fromString(currencyFormat),
-      enableAnimations: enableAnimations,
       fontSize: FontSizePreference.fromString(fontSize),
-      hideValues: hideValues,
       themeMode: AppThemeMode.fromString(themeMode),
+      enableAnimations: enableAnimations,
+      hideValues: hideValues,
     );
   }
 

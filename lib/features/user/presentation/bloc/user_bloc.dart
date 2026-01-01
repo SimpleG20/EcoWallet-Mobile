@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,6 +7,7 @@ import '../../domain/entities/user.dart';
 import '../../domain/usecases/get_user.dart';
 import '../../domain/usecases/delete_user.dart';
 import '../../domain/usecases/update_user.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
 
 part 'user_state.dart';
 part 'user_event.dart';
@@ -14,11 +17,15 @@ class UserBloc extends Bloc<BaseUserEvent, BaseUserState> {
   final UpdateUser updateUser;
   final DeleteUser deleteUser;
 
+  final AuthBloc _authBloc;
+
   UserBloc({
     required this.getUser,
     required this.updateUser,
     required this.deleteUser,
-  }) : super(UserInitialState()) {
+    required AuthBloc authBloc,
+  })  : _authBloc = authBloc,
+        super(UserInitialState()) {
     on<LoadUserEvent>(_onLoadUser);
     on<UpdateUserEvent>(_onUpdateUser);
     on<DeleteUserEvent>(_onDeleteUser);
@@ -48,7 +55,10 @@ class UserBloc extends Bloc<BaseUserEvent, BaseUserState> {
     final result = await deleteUser(event.id);
     result.fold(
       (failure) => emit(UserErrorState(message: failure.message)),
-      (_) => emit(UserInitialState()),
+      (_) {
+        _authBloc.add(LogOutEvent());
+        emit(UserInitialState());
+      },
     );
   }
 }

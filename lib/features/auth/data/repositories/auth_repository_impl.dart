@@ -70,6 +70,18 @@ class AuthRepositoryImpl implements BaseAuthRepository {
   }
 
   @override
+  Future<Either<BaseFailure, User>> getCurrentSessionUser() async {
+    try {
+      final user = await dataSource.getLoggedUser();
+      return Right(user);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(e.message));
+    } catch (e) {
+      return Left(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<BaseFailure, Unit>> logOut() async {
     try {
       await dataSource.deleteSession();

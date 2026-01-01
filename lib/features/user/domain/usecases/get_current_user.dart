@@ -1,19 +1,20 @@
 import 'package:fpdart/fpdart.dart';
 
+import '../entities/user.dart';
 import '../repositories/base_user_repository.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/base_failure.dart';
 import '../../../../core/usecases/base_usecase.dart';
 
-class DeleteUser implements BaseUsecase<void, String> {
+class GetCurrentUser implements BaseUsecase<User, NoParams> {
   final BaseUserRepository repository;
 
-  DeleteUser(this.repository);
+  GetCurrentUser(this.repository);
 
   @override
-  Future<Either<BaseFailure, void>> call(String id) async {
+  Future<Either<BaseFailure, User>> call(NoParams params) async {
     try {
-      return await repository.deleteUser(id);
+      return await repository.getCurrentUser();
     } on CacheException catch (e) {
       return Left(CacheFailure(e.message));
     } on AuthenticationException catch (e) {

@@ -10,14 +10,25 @@ class BudgetPreferencesModel extends BudgetPreferences {
     required super.dailyAlertPercentage,
   });
 
+  factory BudgetPreferencesModel.defaults() {
+    return const BudgetPreferencesModel(
+      monthStartDay: 1,
+      monthlyExpenseLimit: null,
+      weeklyBudgetLimit: null,
+      weeklyAlertPercentage: null,
+      dailyBudgetLimit: null,
+      dailyAlertPercentage: null,
+    );
+  }
+
   factory BudgetPreferencesModel.fromJson(Map<String, dynamic> json) {
     return BudgetPreferencesModel(
-      monthStartDay: json['monthStartDay'] as int,
-      monthlyExpenseLimit: json['monthlyExpenseLimit'] as double,
-      weeklyBudgetLimit: json['weeklyBudgetLimit'] as double,
-      weeklyAlertPercentage: json['weeklyAlertPercentage'] as double,
-      dailyBudgetLimit: json['dailyBudgetLimit'] as double,
-      dailyAlertPercentage: json['dailyAlertPercentage'] as double,
+      monthStartDay: int.tryParse(json['monthStartDay']) ?? 1,
+      monthlyExpenseLimit: double.tryParse(json['monthlyExpenseLimit']),
+      weeklyBudgetLimit: double.tryParse(json['weeklyBudgetLimit']),
+      weeklyAlertPercentage: int.tryParse(json['weeklyAlertPercentage']),
+      dailyBudgetLimit: double.tryParse(json['dailyBudgetLimit']),
+      dailyAlertPercentage: int.tryParse(json['dailyAlertPercentage']),
     );
   }
 

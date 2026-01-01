@@ -11,33 +11,38 @@ class TermsPage extends StatelessWidget {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return Column(
-      children: [
-        SettingsSubPageHeader(
-          title: loc.lbTermsOfService,
-          subtitle: loc.termsSubTitle,
-          complement: null,
-        ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(12.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
-            clipBehavior: Clip.hardEdge,
-            child: _buildTermsContent(context, theme, loc),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
+      body: Column(
+        children: [
+          SettingsSubPageHeader(
+            title: loc.lbTermsOfService,
+            subtitle: loc.termsSubTitle,
+            complement: null,
           ),
-        ),
-      ],
+          const SizedBox(height: 24),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface,
+                borderRadius: BorderRadius.circular(12.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.15),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+              clipBehavior: Clip.hardEdge,
+              child: _buildTermsContent(context, theme, loc),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

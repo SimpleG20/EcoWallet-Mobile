@@ -1,12 +1,13 @@
+import 'package:eco_wallet/core/utils/app_validators.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:eco_wallet/core/presentation/widgets/dropdown_row.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
+import 'package:eco_wallet/core/utils/app_formatters.dart';
 
-import '../widgets/settings_section_list.dart';
-import '../widgets/settings_section_title.dart';
-import '../widgets/settings_sub_page_header.dart';
+import '../../../../core/presentation/widgets/core_widgets.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../bloc/settings_bloc.dart';
+import '../widgets/settings_widgets.dart';
 
 class BudgetInfoPage extends StatefulWidget {
   const BudgetInfoPage({super.key});
@@ -16,6 +17,9 @@ class BudgetInfoPage extends StatefulWidget {
 }
 
 class _BudgetInfoPageState extends State<BudgetInfoPage> {
+  int _monthStartDay = 1;
+  final _formKey = GlobalKey<FormState>();
+
   final _expensesMonthlyController = TextEditingController();
   final _weeklyBudgetLimitAlertController = TextEditingController();
   final _weeklyBudgetLimitController = TextEditingController();
@@ -23,24 +27,87 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
   final _dailyBudgetLimitController = TextEditingController();
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final currentState = context.read<SettingsBloc>().state;
+    if (currentState is SettingsLoadedState) {
+      final settings = currentState.preferences.budgetPreferences;
+
+      _monthStartDay = settings.monthStartDay;
+      _dailyBudgetLimitController.text = settings.dailyBudgetLimit?.toString() ?? '';
+      _weeklyBudgetLimitController.text = settings.weeklyBudgetLimit?.toString() ?? '';
+      _expensesMonthlyController.text = settings.monthlyExpenseLimit?.toString() ?? '';
+      _dailyBudgetLimitAlertController.text = settings.dailyAlertPercentage?.toString() ?? '';
+      _weeklyBudgetLimitAlertController.text = settings.weeklyAlertPercentage?.toString() ?? '';
+    }
+  }
+
+  @override
+  void dispose() {
+    _expensesMonthlyController.dispose();
+    _dailyBudgetLimitController.dispose();
+    _weeklyBudgetLimitController.dispose();
+    _dailyBudgetLimitAlertController.dispose();
+    _weeklyBudgetLimitAlertController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return Column(
-      children: [
-        SettingsSubPageHeader(
-          title: loc.lbBudgetInfo,
-          subtitle: loc.budgetInfoSubTitle,
-          complement: null,
-        ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: SettingsCard(
-            child: _buildBudgetOptions(context, theme, loc),
-          ),
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
+      body: BlocBuilder<SettingsBloc, BaseSettingsState>(
+        builder: (context, state) {
+          if (state is SettingsLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (state is SettingsErrorState) {
+            return Center(
+              child: Text(
+                state.message ?? loc.errorUnknown,
+                style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error),
+              ),
+            );
+          }
+
+          if (state is SettingsLoadedState) {
+            return Stack(
+              children: [
+                Column(
+                  children: [
+                    SettingsSubPageHeader(
+                      title: loc.lbBudgetInfo,
+                      subtitle: loc.budgetInfoSubTitle,
+                      complement: null,
+                    ),
+                    const SizedBox(height: 24),
+                    Expanded(
+                      child: SettingsCard(
+                        child: Form(
+                          key: _formKey,
+                          child: _buildBudgetOptions(context, theme, loc),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SettingsConfirmEditionBtn(
+                  onPressed: (ctx) => _submitChanges(ctx),
+                ),
+              ],
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
+      ),
     );
   }
 
@@ -70,11 +137,20 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
   Widget _buildMonthlyInitialDay(BuildContext context, ThemeData theme, AppLocalizations loc) {
     const icon = Icons.calendar_today;
     final label = loc.lbInitialDayOfMonth;
-    final value = "1";
     final items = List<String>.generate(31, (index) => (index + 1).toString())
         .map((day) => DropdownMenuItem<String>(value: day, child: Text(day)))
         .toList();
-    return DropdownRow(icon: icon, label: label, value: value, items: items, onChanged: (value) {}, theme: theme);
+    return DropdownRow(
+      icon: icon,
+      label: label,
+      value: _monthStartDay.toString(),
+      items: items,
+      onChanged: (value) => setState(() {
+        var newValue = int.tryParse(value!) ?? _monthStartDay;
+        _monthStartDay = newValue;
+      }),
+      theme: theme,
+    );
   }
 
   Widget _buildMonthlyExpensesLimit(BuildContext context, ThemeData theme, AppLocalizations loc) {
@@ -140,14 +216,26 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              TextField(
+              TextFormField(
                 controller: _expensesMonthlyController,
                 keyboardType: TextInputType.number,
+                inputFormatters: [
+                  CurrencyInputFormatter(locale: loc.localeName),
+                ],
                 decoration: InputDecoration(
-                  labelText: loc.lbExpensesLimit,
+                  hintText: loc.lbExpensesLimit,
                   prefixIcon: Icon(Icons.attach_money, color: theme.colorScheme.onSurfaceVariant),
-                  border: const OutlineInputBorder(),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return null;
+                  }
+                  final number = double.tryParse(value);
+                  if (number == null || number < 0) {
+                    return loc.errorAmountInvalid;
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 24),
               SizedBox(
@@ -224,16 +312,15 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
               color: theme.colorScheme.primary,
               fontWeight: FontWeight.w600,
             ),
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: theme.colorScheme.outline),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              isDense: true,
-            ),
+            decoration: InputDecoration(hintText: '0%'),
             controller: controller,
             keyboardType: TextInputType.number,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return null;
+              }
+              return AppValidators.isValidPercentage(loc, value);
+            },
           ),
         )
       ],
@@ -251,12 +338,37 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
             controller: controller,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: loc.lbBudgetLimit,
-              border: const OutlineInputBorder(),
+              hintText: loc.lbBudgetLimit,
             ),
           ),
         ),
       ],
     );
+  }
+
+  void _submitChanges(BuildContext context) {
+    if (!_formKey.currentState!.validate()) return;
+
+    final bloc = context.read<SettingsBloc>();
+    final settingsState = bloc.state;
+    if (settingsState is! SettingsLoadedState) return;
+
+    final dailyLimit = double.tryParse(_dailyBudgetLimitController.text);
+    final weeklyLimit = double.tryParse(_weeklyBudgetLimitController.text);
+    final monthlyExpensesLimit = double.tryParse(_expensesMonthlyController.text);
+    final dailyAlertPercentage = int.tryParse(_dailyBudgetLimitAlertController.text);
+    final weeklyAlertPercentage = int.tryParse(_weeklyBudgetLimitAlertController.text);
+
+    final newPreferences = settingsState.preferences.copyWith(
+      budgetPreferences: settingsState.preferences.budgetPreferences.copyWith(
+        dailyBudgetLimit: dailyLimit,
+        weeklyBudgetLimit: weeklyLimit,
+        monthlyExpenseLimit: monthlyExpensesLimit,
+        dailyAlertPercentage: dailyAlertPercentage,
+        weeklyAlertPercentage: weeklyAlertPercentage,
+      ),
+    );
+
+    bloc.add(UpdateUserPreferencesEvent(userPreferences: newPreferences));
   }
 }

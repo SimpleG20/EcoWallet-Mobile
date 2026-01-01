@@ -1,3 +1,4 @@
+import 'package:eco_wallet/features/user/domain/usecases/get_current_user.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,27 +40,27 @@ import 'features/wallet/domain/repositories/base_wallet_repository.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  sl.registerFactory(
+  sl.registerLazySingleton(
     () => UserBloc(
       getUser: sl(),
       updateUser: sl(),
       deleteUser: sl(),
+      authBloc: sl(),
     ),
   );
-
-  sl.registerFactory(
-    () => SettingsBloc(
-      getUser: sl(),
-      getUserPreferences: sl(),
-    ),
-  );
-
   sl.registerLazySingleton(
     () => AuthBloc(
       signIn: sl(),
       signUp: sl(),
       logOut: sl(),
       checkAuthStatus: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(
+    () => SettingsBloc(
+      getCurrentUser: sl(),
+      getUserPreferences: sl(),
     ),
   );
 
@@ -85,12 +86,13 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => AppRouter(authBloc: sl()));
 
-  sl.registerLazySingleton(() => GetUser(sl()));
   sl.registerLazySingleton(() => SignIn(sl()));
   sl.registerLazySingleton(() => SignUp(sl()));
   sl.registerLazySingleton(() => LogOut(sl()));
-
   sl.registerLazySingleton(() => CheckAuthStatus(sl()));
+
+  sl.registerLazySingleton(() => GetUser(sl()));
+  sl.registerLazySingleton(() => GetCurrentUser(sl()));
   sl.registerLazySingleton(() => UpdateUser(sl()));
   sl.registerLazySingleton(() => DeleteUser(sl()));
 
@@ -105,7 +107,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetTransaction(sl()));
 
   sl.registerLazySingleton<BaseAuthRepository>(() => AuthRepositoryImpl(dataSource: sl()));
-  sl.registerLazySingleton<BaseUserRepository>(() => UserRepositoryImpl(dataSource: sl()));
+  sl.registerLazySingleton<BaseUserRepository>(() => UserRepositoryImpl(dataSource: sl(), authDataSource: sl()));
   sl.registerLazySingleton<BaseSettingRepository>(() => SettingsRepositoryImpl(dataSource: sl()));
   sl.registerLazySingleton<BaseWalletRepository>(() => WalletRepositoryImpl(dataSource: sl()));
 

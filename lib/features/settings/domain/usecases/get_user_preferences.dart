@@ -4,12 +4,12 @@ import 'package:eco_wallet/features/settings/domain/entities/user_preferences.da
 import 'package:eco_wallet/features/settings/domain/repositories/base_setting_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetUserPreferences implements BaseUsecase<UserPreferences, NoParams> {
+class GetUserPreferences implements BaseUsecase<UserPreferences, String> {
   final BaseSettingRepository repository;
   GetUserPreferences(this.repository);
 
   @override
-  Future<Either<BaseFailure, UserPreferences>> call(NoParams params) async {
-    return await repository.getUserPreferences();
+  Future<Either<BaseFailure, UserPreferences>> call(String id) async {
+    return await repository.getUserPreferences(id);
   }
 }

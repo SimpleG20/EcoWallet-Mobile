@@ -8,11 +8,19 @@ class DataPreferencesModel extends DataPreferences {
     required super.backupFrequency,
   });
 
+  factory DataPreferencesModel.defaults() {
+    return const DataPreferencesModel(
+      cloudBackupEnabled: false,
+      encryptedBackup: false,
+      backupFrequency: BackupFrequency.weekly,
+    );
+  }
+
   factory DataPreferencesModel.fromJson(Map<String, dynamic> json) {
     return DataPreferencesModel(
-      cloudBackupEnabled: json['cloudBackupEnabled'] as bool,
-      encryptedBackup: json['encryptedBackup'] as bool,
-      backupFrequency: BackupFrequency.fromString(json['backupFrequency'] as String),
+      cloudBackupEnabled: int.tryParse(json['cloudBackupEnabled']) == 1,
+      encryptedBackup: int.tryParse(json['encryptedBackup']) == 1,
+      backupFrequency: BackupFrequency.fromString(json['backupFrequency']),
     );
   }
 

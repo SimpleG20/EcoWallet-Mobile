@@ -39,6 +39,18 @@ class AppTheme {
         outlineVariant: AppColors.lightRing,
       ),
 
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.lightPrimary,
+        foregroundColor: AppColors.lightPrimaryForeground,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: _fontSemiBold,
+          color: AppColors.lightPrimaryForeground,
+        ),
+      ),
+
       // Input Decoration (Matches CSS input styles)
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -96,6 +108,21 @@ class AppTheme {
         displaySmall: TextStyle(fontSize: 18, fontWeight: _fontMedium, height: 1.5), // h3
         bodyLarge: TextStyle(fontSize: 16, fontWeight: _fontNormal, height: 1.5), // p/base
         labelLarge: TextStyle(fontSize: 16, fontWeight: _fontBold, height: 1.5), // button/label
+      ),
+
+      snackBarTheme: SnackBarThemeData(
+        showCloseIcon: true,
+        behavior: SnackBarBehavior.floating,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_radius),
+        ),
+        contentTextStyle: const TextStyle(
+          fontSize: 15,
+          fontWeight: _fontSemiBold,
+          color: AppColors.lightPrimaryForeground,
+        ),
+        actionTextColor: AppColors.lightPrimaryForeground,
       ),
 
       // Extensions for custom properties
@@ -169,6 +196,21 @@ class AppTheme {
         displayLarge: TextStyle(fontSize: 24, fontWeight: _fontMedium, height: 1.5, color: AppColors.darkForeground),
         bodyLarge: TextStyle(fontSize: 16, fontWeight: _fontNormal, height: 1.5, color: AppColors.darkForeground),
       ),
+      // snackBarTheme: SnackBarThemeData(
+      //   showCloseIcon: true,
+      //   behavior: SnackBarBehavior.floating,
+      //   insetPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(_radius),
+      //   ),
+      //   contentTextStyle: const TextStyle(
+      //     backgroundColor: AppColors.darkForeground,
+      //     fontSize: 15,
+      //     fontWeight: _fontSemiBold,
+      //     color: AppColors.darkPrimaryForeground,
+      //   ),
+      //   actionTextColor: AppColors.darkPrimaryForeground,
+      // ),
       extensions: [
         const ExtraColors(
           sidebar: AppColors.darkSidebar,

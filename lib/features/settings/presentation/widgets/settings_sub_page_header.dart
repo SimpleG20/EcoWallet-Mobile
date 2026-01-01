@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../l10n/app_localizations.dart';
 
@@ -45,7 +46,7 @@ class SettingsSubPageHeader extends StatelessWidget {
                       backgroundColor: theme.colorScheme.onPrimaryContainer.withAlpha(30),
                       child: IconButton(
                         onPressed: () {
-                          // TODO: implement navigation back
+                          context.pop();
                         },
                         icon: Icon(
                           Icons.arrow_back,

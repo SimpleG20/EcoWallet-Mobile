@@ -1,21 +1,15 @@
-import 'package:eco_wallet/features/settings/presentation/pages/budget_info_page.dart';
-import 'package:eco_wallet/features/settings/presentation/pages/notifications_page.dart';
-import 'package:eco_wallet/features/settings/presentation/pages/password_change_page.dart';
-import 'package:eco_wallet/features/settings/presentation/pages/terms_page.dart';
+import 'package:eco_wallet/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/router/app_routes.dart';
 import '../../../../injection_container.dart' as di;
 import '../bloc/settings_bloc.dart';
 import '../widgets/settings_container.dart';
 import '../widgets/settings_option_item.dart';
-import 'appearance_page.dart';
-import 'feedback_page.dart';
-import 'help_page.dart';
-import 'manage_data_page.dart';
-import 'personal_page.dart';
-import 'policy_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -38,14 +32,14 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         body: BlocBuilder<SettingsBloc, BaseSettingsState>(
           builder: (context, state) {
-            if (state is SettingsLoading) {
+            if (state is SettingsLoadingState) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is SettingsError) {
+            if (state is SettingsErrorState) {
               return Center(
                 child: Text(
-                  state.message ?? "Unknown error", //loc.errorUnknown,
+                  state.message ?? loc.errorUnknown,
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.error,
                   ),
@@ -53,8 +47,8 @@ class _SettingsPageState extends State<SettingsPage> {
               );
             }
 
-            if (state is SettingsLoaded) {
-              return _buildBody(context, loc, theme);
+            if (state is SettingsLoadedState) {
+              return _buildBody(context, loc, theme, state);
             }
 
             return const SizedBox.shrink();
@@ -64,17 +58,27 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildBody(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildBody(
+    BuildContext context,
+    AppLocalizations loc,
+    ThemeData theme,
+    SettingsLoadedState state,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _buildHeader(context, loc, theme),
+        _buildHeader(context, loc, theme, state),
         _buildSettingsOptions(context, loc, theme),
       ],
     );
   }
 
-  Widget _buildHeader(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildHeader(
+    BuildContext context,
+    AppLocalizations loc,
+    ThemeData theme,
+    SettingsLoadedState state,
+  ) {
     return SizedBox(
       height: 180,
       child: Stack(
@@ -128,12 +132,28 @@ class _SettingsPageState extends State<SettingsPage> {
                       CircleAvatar(
                         radius: 32,
                         backgroundColor: theme.colorScheme.primary.withAlpha(50),
-                        child: Icon(
-                          //state.profilePictureUrl != null ? --- IGNORE ---
-                          Icons.person_outline,
-                          color: theme.colorScheme.primary,
-                          size: 40,
-                        ),
+                        child: state.user.imageUrl != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(32),
+                                child: Image.network(
+                                  state.user.imageUrl!,
+                                  width: 64,
+                                  height: 64,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(
+                                      Icons.person_outline,
+                                      color: theme.colorScheme.primary,
+                                      size: 40,
+                                    );
+                                  },
+                                ),
+                              )
+                            : Icon(
+                                Icons.person_outline,
+                                color: theme.colorScheme.primary,
+                                size: 40,
+                              ),
                       ),
                       const SizedBox(width: 16),
                       Column(
@@ -141,11 +161,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Fulano", //state.name,
+                            state.user.fullName,
                             style: theme.textTheme.titleMedium,
                           ),
                           Text(
-                            "example@email.com", //state.email,
+                            state.user.email,
                             style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                           ),
                         ],
@@ -161,7 +181,11 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildSettingsOptions(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildSettingsOptions(
+    BuildContext context,
+    AppLocalizations loc,
+    ThemeData theme,
+  ) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
@@ -198,19 +222,19 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.person_outline,
           title: loc.lbPersonalInfo,
-          onTap: () => _navigateToPage(PersonalPage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsProfile),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.analytics_outlined,
           title: loc.lbBudgetInfo,
-          onTap: () => _navigateToPage(BudgetInfoPage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsBudget),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.data_object_outlined,
           title: loc.lbManageData,
-          onTap: () => _navigateToPage(ManageDataPage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsData),
         ),
       ],
     );
@@ -223,13 +247,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.notifications_outlined,
           title: loc.lbNotifications,
-          onTap: () => _navigateToPage(NotificationsPage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsNotifications),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.color_lens_outlined,
           title: loc.lbAppearance,
-          onTap: () => _navigateToPage(AppearancePage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsAppearance),
         ),
       ],
     );
@@ -242,7 +266,7 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.lock_outline,
           title: loc.lbChangePassword,
-          onTap: () => _navigateToPage(PasswordChangePage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsPassword),
         ),
       ],
     );
@@ -255,13 +279,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.help_outline,
           title: loc.lbHelpCenter,
-          onTap: () => _navigateToPage(HelpPage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsHelper),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.feedback_outlined,
           title: loc.lbSendFeedback,
-          onTap: () => _navigateToPage(FeedbackPage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsFeedback),
         ),
       ],
     );
@@ -274,13 +298,13 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingsOptionItem(
           icon: Icons.description_outlined,
           title: loc.lbTermsOfService,
-          onTap: () => _navigateToPage(TermsPage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsTerms),
         ),
         const SizedBox(height: 8),
         SettingsOptionItem(
           icon: Icons.privacy_tip_outlined,
           title: loc.lbPrivacyPolicy,
-          onTap: () => _navigateToPage(PolicyPage()),
+          onTap: () => _navigateToPage(AppRoutes.settingsPrivacy),
         ),
       ],
     );
@@ -293,7 +317,9 @@ class _SettingsPageState extends State<SettingsPage> {
         foregroundColor: theme.colorScheme.onSecondaryContainer,
       ),
       child: Text(loc.lbLogout),
-      onPressed: () {},
+      onPressed: () {
+        context.read<AuthBloc>().add(LogOutEvent());
+      },
     );
   }
 
@@ -304,13 +330,15 @@ class _SettingsPageState extends State<SettingsPage> {
         foregroundColor: theme.colorScheme.onErrorContainer,
       ),
       child: Text(loc.deleteAccount),
-      onPressed: () {},
+      onPressed: () {
+        final state = context.read<SettingsBloc>().state;
+        if (state is! SettingsLoadedState) return;
+        context.read<UserBloc>().add(DeleteUserEvent(id: state.user.id));
+      },
     );
   }
 
-  void _navigateToPage(Widget page) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => page),
-    );
+  void _navigateToPage(String pageRoute) {
+    context.push(pageRoute);
   }
 }

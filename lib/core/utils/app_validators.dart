@@ -4,42 +4,42 @@ import 'package:eco_wallet/l10n/app_localizations.dart';
 class AppValidators {
   static String? validateTitle(String? value, AppLocalizations loc) {
     if (value == null || value.trim().isEmpty) {
-      return loc.errorTitleEmpty;
+      return loc.errorEmpty;
     }
     return null;
   }
 
-  static String? validateAmount(String? value, AppLocalizations loc) {
+  static String? validateAmount(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
-      return loc.errorAmountInvalid;
+      return output ?? loc.errorEmpty;
     }
 
     final parsedValue = AppFormatters.getCurrencyValue(value, loc.localeName);
 
     if (parsedValue <= 0) {
-      return loc.errorAmountMustBePositive;
+      return output ?? loc.errorAmountMustBePositive;
     }
 
     return null;
   }
 
-  static String? isValidEmail(AppLocalizations loc, String? value) {
+  static String? isValidEmail(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
-      return loc.errorEmailEmpty;
+      return loc.errorEmpty;
     }
     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
     if (!emailRegex.hasMatch(value)) {
-      return loc.errorEmailInvalid;
+      return output ?? loc.errorEmailInvalid;
     }
     return null;
   }
 
-  static String? isValidPassword(String? value, AppLocalizations loc) {
+  static String? isValidPassword(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
-      return loc.errorPasswordEmpty;
+      return loc.errorEmpty;
     }
     if (value.length < 8) {
-      return loc.errorPasswordTooShort;
+      return output ?? loc.errorPasswordTooShort;
     }
     final hasUppercase = value.contains(RegExp(r'[A-Z]'));
     final hasLowercase = value.contains(RegExp(r'[a-z]'));
@@ -47,41 +47,41 @@ class AppValidators {
     final hasSpecialChar = value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
 
     if (!hasUppercase || !hasLowercase || !hasDigit || !hasSpecialChar) {
-      return loc.errorPasswordWeak;
+      return output ?? loc.errorPasswordWeak;
     }
     return null;
   }
 
-  static String? isValidPhoneNumber(AppLocalizations loc, String? value) {
+  static String? isValidPhoneNumber(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
-      return loc.errorPhoneEmpty;
+      return loc.errorEmpty;
     }
 
     final phoneRegex = RegExp(r'^(\+\d{1,2}\s?)?\d{1,4}[\s.-]?\d{1,4}[\s.-]?\d{1,4}[\s.-]?\d{1,4}$');
     if (!phoneRegex.hasMatch(value)) {
-      return loc.errorPhoneInvalid;
+      return output ?? loc.errorPhoneInvalid;
     }
     return null;
   }
 
-  static String? isValidAddress(AppLocalizations loc, String? value) {
+  static String? isValidAddress(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
-      return loc.errorAddressEmpty;
+      return loc.errorEmpty;
     }
     if (value.length < 5) {
-      return loc.errorAddressInvalid;
+      return output ?? loc.errorAddressInvalid;
     }
     return null;
   }
 
-  static String? isValidDate(AppLocalizations loc, String? value) {
+  static String? isValidDate(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
-      return loc.errorDateEmpty;
+      return loc.errorEmpty;
     }
     try {
       final parts = value.split('/');
       if (parts.length != 3) {
-        return loc.errorDateInvalid;
+        return output ?? loc.errorDateInvalid;
       }
 
       var minDate = DateTime.now().subtract(const Duration(days: 365 * 120));
@@ -104,12 +104,23 @@ class AppValidators {
     return null;
   }
 
-  static String? isValidName(AppLocalizations loc, String? value) {
+  static String? isValidName(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
-      return loc.errorNameEmpty;
+      return loc.errorEmpty;
     }
     if (value.length < 2) {
-      return loc.errorNameInvalid;
+      return output ?? loc.errorNameInvalid;
+    }
+    return null;
+  }
+
+  static String? isValidPercentage(AppLocalizations loc, String? value, {String? output}) {
+    if (value == null || value.isEmpty) {
+      return loc.errorEmpty;
+    }
+    final number = int.tryParse(value);
+    if (number == null || number < 0 || number > 100) {
+      return output ?? loc.errorPercentageInvalid;
     }
     return null;
   }

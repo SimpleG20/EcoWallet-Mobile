@@ -3,11 +3,11 @@ import 'package:equatable/equatable.dart';
 /// Entity representing budget configuration.
 class BudgetPreferences extends Equatable {
   final int monthStartDay;
+  final double? dailyBudgetLimit;
   final double? monthlyExpenseLimit;
   final double? weeklyBudgetLimit;
-  final double? weeklyAlertPercentage;
-  final double? dailyBudgetLimit;
-  final double? dailyAlertPercentage;
+  final int? dailyAlertPercentage;
+  final int? weeklyAlertPercentage;
 
   const BudgetPreferences({
     this.monthStartDay = 1,
@@ -18,24 +18,13 @@ class BudgetPreferences extends Equatable {
     this.dailyAlertPercentage,
   });
 
-  factory BudgetPreferences.defaults() {
-    return const BudgetPreferences(
-      monthStartDay: 1,
-      monthlyExpenseLimit: null,
-      weeklyBudgetLimit: null,
-      weeklyAlertPercentage: null,
-      dailyBudgetLimit: null,
-      dailyAlertPercentage: null,
-    );
-  }
-
   BudgetPreferences copyWith({
     int? monthStartDay,
     double? monthlyExpenseLimit,
     double? weeklyBudgetLimit,
-    double? weeklyAlertPercentage,
+    int? weeklyAlertPercentage,
     double? dailyBudgetLimit,
-    double? dailyAlertPercentage,
+    int? dailyAlertPercentage,
   }) {
     return BudgetPreferences(
       monthStartDay: monthStartDay ?? this.monthStartDay,

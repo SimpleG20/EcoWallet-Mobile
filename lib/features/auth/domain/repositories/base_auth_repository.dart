@@ -8,7 +8,7 @@ import '../entities/sign_up_params.dart';
 abstract class BaseAuthRepository {
   Future<Either<BaseFailure, User>> signIn(SignInParams params);
   Future<Either<BaseFailure, User>> signUp(SignUpParams params);
-  Future<Either<BaseFailure, Unit>> logOut();
   Future<Either<BaseFailure, User>> checkAuthStatus();
+  Future<Either<BaseFailure, User>> getCurrentSessionUser();
+  Future<Either<BaseFailure, Unit>> logOut();
 }
-

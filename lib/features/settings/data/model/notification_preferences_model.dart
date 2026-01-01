@@ -1,5 +1,6 @@
 import 'package:eco_wallet/core/utils/app_formatters.dart';
 import 'package:eco_wallet/features/settings/domain/entities/notification_preferences.dart';
+import 'package:flutter/material.dart';
 
 class NotificationPreferencesModel extends NotificationPreferences {
   const NotificationPreferencesModel({
@@ -15,18 +16,33 @@ class NotificationPreferencesModel extends NotificationPreferences {
     required super.highConsumptionThreshold,
   });
 
+  factory NotificationPreferencesModel.defaults() {
+    return const NotificationPreferencesModel(
+      dailyReminderEnabled: false,
+      reminderTime: TimeOfDay(hour: 9, minute: 0),
+      billsReminderEnabled: false,
+      monthlyReportEnabled: false,
+      quietHoursEnabled: false,
+      quietHoursStart: TimeOfDay(hour: 22, minute: 0),
+      quietHoursEnd: TimeOfDay(hour: 7, minute: 0),
+      energySavingTipsEnabled: false,
+      highConsumptionAlertEnabled: false,
+      highConsumptionThreshold: 500.0,
+    );
+  }
+
   factory NotificationPreferencesModel.fromJson(Map<String, dynamic> json) {
     return NotificationPreferencesModel(
-      dailyReminderEnabled: json['dailyReminderEnabled'] as bool,
-      reminderTime: AppFormatters.parseTimeOfDay(json['reminderTime'] as String),
-      billsReminderEnabled: json['billsReminderEnabled'] as bool,
-      monthlyReportEnabled: json['monthlyReportEnabled'] as bool,
-      quietHoursEnabled: json['quietHoursEnabled'] as bool,
-      quietHoursStart: AppFormatters.parseTimeOfDay(json['quietHoursStart'] as String),
-      quietHoursEnd: AppFormatters.parseTimeOfDay(json['quietHoursEnd'] as String),
-      energySavingTipsEnabled: json['energySavingTipsEnabled'] as bool,
-      highConsumptionAlertEnabled: json['highConsumptionAlertEnabled'] as bool,
-      highConsumptionThreshold: json['highConsumptionThreshold'] as double,
+      dailyReminderEnabled: int.tryParse(json['dailyReminderEnabled']) == 1,
+      reminderTime: AppFormatters.parseTimeOfDay(json['reminderTime']),
+      billsReminderEnabled: int.tryParse(json['billsReminderEnabled']) == 1,
+      monthlyReportEnabled: int.tryParse(json['monthlyReportEnabled']) == 1,
+      quietHoursEnabled: int.tryParse(json['quietHoursEnabled']) == 1,
+      quietHoursStart: AppFormatters.parseTimeOfDay(json['quietHoursStart']),
+      quietHoursEnd: AppFormatters.parseTimeOfDay(json['quietHoursEnd']),
+      energySavingTipsEnabled: int.tryParse(json['energySavingTipsEnabled']) == 1,
+      highConsumptionAlertEnabled: int.tryParse(json['highConsumptionAlertEnabled']) == 1,
+      highConsumptionThreshold: double.tryParse(json['highConsumptionThreshold']) ?? 500.0,
     );
   }
 
