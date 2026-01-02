@@ -1,17 +1,11 @@
-import 'package:eco_wallet/core/presentation/widgets/any_text_field.dart';
-import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_confirm_edition_btn.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_sub_page_header.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/notification_option_row.dart';
-import 'package:eco_wallet/injection_container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/notification_service.dart';
-import '../widgets/settings_section_list.dart';
+import '../bloc/settings_bloc.dart';
+import '../widgets/settings_widgets.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../widgets/settings_section_title.dart';
+import '../../../../injection_container.dart' as di;
+import '../../../../core/services/notification_service.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -23,14 +17,10 @@ class NotificationsPage extends StatefulWidget {
 class _NotificationsPageState extends State<NotificationsPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final _consumptionThresholdController = TextEditingController();
-
   bool _dailyReminderEnabled = false;
   bool _billsReminderEnabled = false;
   bool _monthlyReportEnabled = false;
   bool _quietHoursEnabled = false;
-  bool _energySavingTipsEnabled = false;
-  bool _highConsumptionAlertEnabled = false;
 
   TimeOfDay _reminderTime = const TimeOfDay(hour: 9, minute: 0);
   TimeOfDay _quietHoursStart = const TimeOfDay(hour: 22, minute: 0);
@@ -65,9 +55,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
     _quietHoursEnabled = settings.quietHoursEnabled;
     _quietHoursStart = settings.quietHoursStart;
     _quietHoursEnd = settings.quietHoursEnd;
-    _energySavingTipsEnabled = settings.energySavingTipsEnabled;
-    _highConsumptionAlertEnabled = settings.highConsumptionAlertEnabled;
-    _consumptionThresholdController.text = settings.highConsumptionThreshold.toString();
   }
 
   @override
@@ -157,7 +144,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
       _buildRemindersSection(context, theme, loc),
       _buildReportsSection(context, theme, loc),
       _buildDoNotDisturbSection(context, theme, loc),
-      _buildEcoSection(context, theme, loc),
       _buildTestNotificationButton(context, theme, loc),
     ];
     return SettingsSectionList(sections: sections, theme: theme);
@@ -289,93 +275,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildEcoSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SettingsSectionTitle(title: loc.sectionEcoNotifications),
-        const SizedBox(height: 16),
-        _buildEnergySavingTipsOption(context, theme, loc),
-        const SizedBox(height: 16),
-        _buildHighConsumptionAlertOption(context, theme, loc)
-      ],
-    );
-  }
-
-  Widget _buildEnergySavingTipsOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return NotificationOptionRow(
-      icon: Icons.energy_savings_leaf_outlined,
-      title: loc.lbEnergySavingTips,
-      description: loc.energySavingTipsDescription,
-      value: _energySavingTipsEnabled,
-      onChanged: (bool newValue) {
-        setState(() {
-          _energySavingTipsEnabled = newValue;
-        });
-      },
-    );
-  }
-
-  Widget _buildHighConsumptionAlertOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Icon(Icons.warning_amber_outlined, color: theme.colorScheme.onSurfaceVariant),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    loc.lbHighConsumptionAlert,
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onSurface,
-                    ),
-                  ),
-                  Text(
-                    loc.highConsumptionAlertDescription,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Switch(
-              value: _highConsumptionAlertEnabled,
-              onChanged: (bool newValue) {
-                setState(() {
-                  _highConsumptionAlertEnabled = newValue;
-                });
-              },
-            ),
-          ],
-        ),
-        if (_highConsumptionAlertEnabled)
-          Padding(
-            padding: const EdgeInsets.only(left: 40, top: 8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    loc.thresholdLabel(_consumptionThresholdController.text),
-                    style: theme.textTheme.bodyMedium,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    _showModalToEditThreshold(context, theme, loc);
-                  },
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-
   Widget _buildTestNotificationButton(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -395,50 +294,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  void _showModalToEditThreshold(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext ctx) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AnyTextField(
-                label: loc.lbEditThreshold,
-                hintText: loc.hintConsumptionThreshold,
-                controller: _consumptionThresholdController,
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return loc.errorEmpty;
-                  }
-                  final parsed = double.tryParse(value);
-                  if (parsed == null || parsed <= 0) {
-                    return loc.errorNumberPositive;
-                  }
-                  return null;
-                },
-                prefixIcon: const Icon(Icons.warning_amber_outlined),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop();
-                  },
-                  child: Text(loc.btnSave),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   void _submitChanges(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
 
@@ -452,8 +307,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
       billsReminderEnabled: _billsReminderEnabled,
       monthlyReportEnabled: _monthlyReportEnabled,
       reminderTime: _reminderTime,
-      energySavingTipsEnabled: _energySavingTipsEnabled,
-      highConsumptionAlertEnabled: _highConsumptionAlertEnabled,
     );
 
     final updatedPreferences = currentState.preferences.copyWith(
