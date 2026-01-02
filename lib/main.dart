@@ -1,3 +1,4 @@
+import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -35,6 +36,7 @@ class EcoWalletApp extends StatelessWidget {
         BlocProvider<AuthBloc>.value(value: di.sl<AuthBloc>()),
         BlocProvider<UserBloc>.value(value: di.sl<UserBloc>()),
         BlocProvider<SettingsBloc>.value(value: di.sl<SettingsBloc>()),
+        BlocProvider<WalletBloc>(create: (_) => di.sl<WalletBloc>()),
       ],
       child: const _AuthUserSyncWrapper(),
     );

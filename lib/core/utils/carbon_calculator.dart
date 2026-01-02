@@ -9,7 +9,7 @@ class CarbonCalculator {
     double totalCo2 = 0.0;
 
     for (var t in transactions) {
-      if (t.type == ETransactionType.income || t.type == ETransactionType.reserve) continue;
+      if (t.type == ETransactionType.income) continue;
 
       double factor = 0.1;
 
