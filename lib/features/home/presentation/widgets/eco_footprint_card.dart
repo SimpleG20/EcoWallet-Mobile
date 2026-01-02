@@ -1,13 +1,15 @@
+import 'package:eco_wallet/features/home/domain/entities/eco_data.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
 class EcoFootprintCard extends StatelessWidget {
-  const EcoFootprintCard({super.key, required this.co2Emissions, required this.treesNeeded});
+  const EcoFootprintCard({super.key, required this.ecoData});
 
-  final double co2Emissions;
-  final int treesNeeded;
+  static const double kMaxCarbonFootprint = 400.0;
+
+  final EcoData ecoData;
 
   @override
   Widget build(BuildContext context) {
@@ -57,17 +59,17 @@ class EcoFootprintCard extends StatelessWidget {
                         width: 80,
                         height: 80,
                         child: CircularProgressIndicator(
-                          value: (co2Emissions / 50).clamp(0, 1),
+                          value: 1 - (ecoData.carbonFootprint / kMaxCarbonFootprint).clamp(0, 1),
                           strokeWidth: 6,
-                          valueColor: AlwaysStoppedAnimation(_getDangerColor(co2Emissions)),
+                          valueColor: AlwaysStoppedAnimation(_getDangerColor(ecoData.carbonFootprint)),
                           backgroundColor: Colors.white.withValues(alpha: 0.2),
                         ),
                       ),
                       Column(
                         children: [
-                          Icon(Icons.eco, color: _getDangerColor(co2Emissions), size: 40),
+                          Icon(Icons.eco, color: _getDangerColor(ecoData.carbonFootprint), size: 40),
                           Text(
-                            '${(co2Emissions / 50 * 100).toStringAsFixed(0)}%',
+                            '${(100 - (ecoData.carbonFootprint / kMaxCarbonFootprint * 100)).toStringAsFixed(0)}%',
                             style: theme.textTheme.labelMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -91,7 +93,7 @@ class EcoFootprintCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      loc.ecoFootprintValue(co2Emissions.toStringAsFixed(1)),
+                      loc.ecoFootprintValue(ecoData.carbonFootprint.toStringAsFixed(1)),
                       style: theme.textTheme.titleLarge?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -105,7 +107,7 @@ class EcoFootprintCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      loc.ecoFootprintCompensation(treesNeeded),
+                      loc.ecoFootprintCompensation(ecoData.treesPlanted),
                       style: theme.textTheme.titleSmall?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
@@ -122,9 +124,9 @@ class EcoFootprintCard extends StatelessWidget {
   }
 
   Color _getDangerColor(double value) {
-    if (value < 10) {
+    if (value < kMaxCarbonFootprint / 3) {
       return Colors.white;
-    } else if (value < 30) {
+    } else if (value < 2 * kMaxCarbonFootprint / 3) {
       return Colors.orange;
     } else {
       return Colors.red;

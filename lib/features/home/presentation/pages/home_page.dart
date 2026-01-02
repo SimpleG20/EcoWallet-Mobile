@@ -1,3 +1,4 @@
+import 'package:eco_wallet/features/home/domain/entities/eco_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,6 +60,7 @@ class HomePage extends StatelessWidget {
                 loc: loc,
                 theme: theme,
                 state: state,
+                ecoData: EcoData.fromTransactions(loc, state.transactions),
                 weeklyData: _calculateWeeklyTransactions(state.recentTransactions),
                 onAddTransaction: (type, {Transaction? transaction}) =>
                     _showAddTransactionModal(context, type, transactionToEdit: transaction),
@@ -97,6 +99,7 @@ class _HomeBody extends StatelessWidget {
     required this.loc,
     required this.theme,
     required this.state,
+    required this.ecoData,
     required this.weeklyData,
     required this.onAddTransaction,
   });
@@ -104,6 +107,7 @@ class _HomeBody extends StatelessWidget {
   final AppLocalizations loc;
   final ThemeData theme;
   final WalletLoaded state;
+  final EcoData ecoData;
   final WeeklyTransactionData weeklyData;
   final void Function(ETransactionType type, {Transaction? transaction}) onAddTransaction;
 
@@ -125,8 +129,7 @@ class _HomeBody extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // TODO: Calculate CO2 emissions from transactions
-                const EcoFootprintCard(co2Emissions: 10.0, treesNeeded: 0),
+                EcoFootprintCard(ecoData: ecoData),
                 const SizedBox(height: 8),
                 _TransactionsSection(
                   loc: loc,
