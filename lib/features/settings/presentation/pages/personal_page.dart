@@ -1,5 +1,3 @@
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_confirm_edition_btn.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +7,7 @@ import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../user/domain/entities/user.dart';
-import '../widgets/settings_sub_page_header.dart';
+import '../widgets/settings_widgets.dart';
 
 class PersonalPage extends StatefulWidget {
   const PersonalPage({super.key});
@@ -162,19 +160,21 @@ class _PersonalPageState extends State<PersonalPage> {
                       height: 280,
                     ),
                     const SizedBox(height: 24),
-                    SettingsCard(
-                      child: Form(
-                        key: _formKey,
-                        child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          itemCount: _fields.length,
-                          separatorBuilder: (context, index) => Divider(
-                            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                    Expanded(
+                      child: SettingsCard(
+                        child: Form(
+                          key: _formKey,
+                          child: ListView.separated(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            itemCount: _fields.length,
+                            separatorBuilder: (context, index) => Divider(
+                              color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                            ),
+                            itemBuilder: (context, index) {
+                              final field = _fields[index];
+                              return _buildTopicItem(context, theme, field);
+                            },
                           ),
-                          itemBuilder: (context, index) {
-                            final field = _fields[index];
-                            return _buildTopicItem(context, theme, field);
-                          },
                         ),
                       ),
                     )
