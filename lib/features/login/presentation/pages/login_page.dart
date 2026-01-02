@@ -172,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
-            validator: (value) => AppValidators.isValidEmail(value, loc),
+            validator: (value) => AppValidators.isValidEmail(loc, value),
             prefixIcon: Icon(
               Icons.email_outlined,
               color: theme.colorScheme.primary,

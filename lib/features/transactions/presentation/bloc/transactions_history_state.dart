@@ -61,7 +61,7 @@ class TransactionsHistoryLoaded extends BaseTransactionsHistoryState {
     return TransactionsHistoryLoaded(
       allTransactions: allTransactions ?? this.allTransactions,
       visibleTransactions: visibleTransactions ?? this.visibleTransactions,
-      filter: filterType ?? this.filter,
+      filter: filterType ?? filter,
       searchQuery: searchQuery ?? this.searchQuery,
     );
   }

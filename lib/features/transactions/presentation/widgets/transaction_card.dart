@@ -52,7 +52,7 @@ class TransactionCard extends StatelessWidget {
               style: theme.textTheme.bodyMedium?.copyWith(
                   color: isIncome
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.onSurfaceVariant)),
+                      : theme.colorScheme.onSurface)),
           Text(
             AppFormatters.formatDateShort(transaction.date, loc.localeName),
             style: theme.textTheme.bodySmall,

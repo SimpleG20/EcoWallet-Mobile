@@ -23,7 +23,7 @@ class AppValidators {
     return null;
   }
 
-  static String? isValidEmail(String? value, AppLocalizations loc) {
+  static String? isValidEmail(AppLocalizations loc, String? value) {
     if (value == null || value.isEmpty) {
       return loc.errorEmailEmpty;
     }
@@ -52,7 +52,7 @@ class AppValidators {
     return null;
   }
 
-  static String? isValidPhoneNumber(String? value, AppLocalizations loc) {
+  static String? isValidPhoneNumber(AppLocalizations loc, String? value) {
     if (value == null || value.isEmpty) {
       return loc.errorPhoneEmpty;
     }

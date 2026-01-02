@@ -63,16 +63,14 @@ class AppColors {
 
   // --- Sidebar (Light) ---
   static const Color lightSidebar = Color(0xFFFAFAFA); // oklch(0.985 0 0)
-  static const Color lightSidebarForeground =
-      Color(0xFF242424); // oklch(0.145 0 0)
+  static const Color lightSidebarForeground = Color(0xFF242424); // oklch(0.145 0 0)
   static const Color lightSidebarPrimary = Color(0xFF030213);
   static const Color lightSidebarPrimaryForeground = Color(0xFFFAFAFA);
 
   // --- Sidebar (Dark) ---
   static const Color darkSidebar = Color(0xFF333333); // oklch(0.205 0 0)
   static const Color darkSidebarForeground = Color(0xFFFAFAFA);
-  static const Color darkSidebarPrimary =
-      Color(0xFF4ADE80); // Adjusted for visibility
+  static const Color darkSidebarPrimary = Color(0xFF4ADE80); // Adjusted for visibility
   static const Color darkSidebarPrimaryForeground = Color(0xFFFAFAFA);
 
   static Color getColorFromTransactionType(ETransactionType type) {
