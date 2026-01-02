@@ -1,3 +1,4 @@
+import 'package:eco_wallet/core/config/app_config.dart';
 import 'package:eco_wallet/features/user/domain/usecases/get_current_user.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,6 +42,14 @@ import 'features/wallet/domain/repositories/base_wallet_repository.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  sl.registerSingleton<AppConfig>(
+    AppConfig(
+      appName: 'EcoWallet',
+      apiBaseUrl: '',
+      flavor: Environment.dev,
+    ),
+  );
+
   sl.registerLazySingleton(
     () => UserBloc(
       getUser: sl(),
