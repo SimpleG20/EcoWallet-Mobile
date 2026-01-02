@@ -52,25 +52,48 @@ class AppValidators {
     return null;
   }
 
+  /// Validates phone number based on locale-specific format.
+  /// - PT (Brazil): 11 digits in format (XX) XXXXX-XXXX
+  /// - EN (US): 10 digits in format (XXX) XXX-XXXX
   static String? isValidPhoneNumber(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
       return loc.errorEmpty;
     }
 
-    final phoneRegex = RegExp(r'^(\+\d{1,2}\s?)?\d{1,4}[\s.-]?\d{1,4}[\s.-]?\d{1,4}[\s.-]?\d{1,4}$');
-    if (!phoneRegex.hasMatch(value)) {
+    // Extract only digits from the input
+    final digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
+    final locale = loc.localeName;
+    final expectedDigits = AppFormatters.getPhoneMaxDigits(locale);
+
+    // Validate digit count based on locale
+    if (digitsOnly.length != expectedDigits) {
       return output ?? loc.errorPhoneInvalid;
     }
+
     return null;
   }
 
+  /// Validates address in the format: `City, State, Country`
+  /// Must contain exactly 3 non-empty parts separated by commas.
   static String? isValidAddress(AppLocalizations loc, String? value, {String? output}) {
     if (value == null || value.isEmpty) {
       return loc.errorEmpty;
     }
-    if (value.length < 5) {
+
+    // Split by comma and validate 3 parts exist
+    final parts = value.split(',').map((p) => p.trim()).toList();
+
+    if (parts.length != 3) {
       return output ?? loc.errorAddressInvalid;
     }
+
+    // Validate each part is not empty and has minimum length
+    for (final part in parts) {
+      if (part.isEmpty || part.length < 2) {
+        return output ?? loc.errorAddressInvalid;
+      }
+    }
+
     return null;
   }
 
