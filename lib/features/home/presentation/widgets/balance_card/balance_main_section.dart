@@ -1,13 +1,17 @@
+import 'package:eco_wallet/features/settings/domain/entities/settings_entities.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/constants/ui_data.dart';
+import '../../../../../core/presentation/widgets/sensitive_text.dart';
 import '../../../../../core/utils/app_formatters.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../settings/domain/enums/currency_format.dart';
 
 /// Main section of the balance card showing total balance and monthly savings.
 class BalanceMainSection extends StatelessWidget {
   const BalanceMainSection({
     super.key,
+    required this.appearancePreferences,
     required this.totalBalance,
     required this.monthlySavings,
     required this.onToggleSection,
@@ -16,6 +20,7 @@ class BalanceMainSection extends StatelessWidget {
   final double totalBalance;
   final double monthlySavings;
   final VoidCallback onToggleSection;
+  final AppearancePreferences appearancePreferences;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +34,15 @@ class BalanceMainSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildBalanceSection(theme, loc),
+          _buildBalanceSection(theme, loc, appearancePreferences.currencyFormat),
           const SizedBox(height: 20),
-          _buildSavingsSection(theme, loc),
+          _buildSavingsSection(theme, loc, appearancePreferences.currencyFormat),
         ],
       ),
     );
   }
 
-  Widget _buildBalanceSection(ThemeData theme, AppLocalizations loc) {
+  Widget _buildBalanceSection(ThemeData theme, AppLocalizations loc, CurrencyFormat currencyFormat) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -48,8 +53,8 @@ class BalanceMainSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          AppFormatters.formatCurrency(totalBalance, loc.localeName),
+        SensitiveText(
+          text: AppFormatters.formatCurrencyWithPreference(totalBalance, currencyFormat, loc.localeName),
           style: theme.textTheme.headlineSmall?.copyWith(
             color: theme.colorScheme.onPrimaryContainer,
             fontWeight: FontWeight.bold,
@@ -59,7 +64,7 @@ class BalanceMainSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSavingsSection(ThemeData theme, AppLocalizations loc) {
+  Widget _buildSavingsSection(ThemeData theme, AppLocalizations loc, CurrencyFormat currencyFormat) {
     final savingsTextStyle = theme.textTheme.bodyLarge?.copyWith(
       fontWeight: FontWeight.w600,
       color: theme.colorScheme.onPrimaryContainer,
@@ -81,8 +86,8 @@ class BalanceMainSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(loc.dashboardMonthlySavings, style: savingsTextStyle),
-            Text(
-              AppFormatters.formatCurrency(monthlySavings, loc.localeName),
+            SensitiveText(
+              text: AppFormatters.formatCurrencyWithPreference(monthlySavings, currencyFormat, loc.localeName),
               style: savingsTextStyle,
             ),
           ],

@@ -1,5 +1,8 @@
 import 'package:eco_wallet/core/constants/transaction_type_data.dart';
 import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/core/presentation/widgets/sensitive_text.dart';
+import 'package:eco_wallet/features/settings/domain/enums/settings_enums.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,66 +59,76 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
     final loc = AppLocalizations.of(context)!;
     final mediaQuery = MediaQuery.of(context);
 
-    return Container(
-      height: mediaQuery.size.height * kModalHeightFactor,
-      width: double.infinity,
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
+    return BlocBuilder<SettingsBloc, BaseSettingsState>(
+      builder: (context, state) {
+        if (state is! SettingsLoadedState) {
+          return const SizedBox.shrink();
+        }
+
+        final appearancePreferences = state.preferences.appearancePreferences;
+
+        return Container(
+          height: mediaQuery.size.height * kModalHeightFactor,
+          width: double.infinity,
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(32.0)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                loc.filterTransactions,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.onSurface,
+              Row(
+                children: [
+                  Text(
+                    loc.filterTransactions,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => _clearFilters(loc),
+                    child: Text(loc.btnClear),
+                  ),
+                ],
+              ),
+              const Divider(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 16),
+
+                      // Type
+                      _buildTypeSection(theme, loc),
+                      const SizedBox(height: 24),
+
+                      // Amount
+                      _buildPriceRangeSection(theme, loc, appearancePreferences.currencyFormat),
+                      const SizedBox(height: 24),
+
+                      // Date
+                      _buildDateSection(theme, loc),
+                      const SizedBox(height: 24),
+
+                      // Category
+                      _buildCategorySection(theme, loc)
+                    ],
+                  ),
                 ),
               ),
-              const Spacer(),
-              TextButton(
-                onPressed: () => _clearFilters(loc),
-                child: Text(loc.btnClear),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => _applyFilters(loc),
+                child: Text(loc.btnApply),
               ),
             ],
           ),
-          const Divider(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 16),
-
-                  // Type
-                  _buildTypeSection(theme, loc),
-                  const SizedBox(height: 24),
-
-                  // Amount
-                  _buildPriceRangeSection(theme, loc),
-                  const SizedBox(height: 24),
-
-                  // Date
-                  _buildDateSection(theme, loc),
-                  const SizedBox(height: 24),
-
-                  // Category
-                  _buildCategorySection(theme, loc)
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => _applyFilters(loc),
-            child: Text(loc.btnApply),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -178,11 +191,12 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
     );
   }
 
-  Widget _buildPriceRangeSection(ThemeData theme, AppLocalizations loc) {
-    final startLabel = AppFormatters.formatCurrency(_currentRangeValues.start, loc.localeName);
+  Widget _buildPriceRangeSection(ThemeData theme, AppLocalizations loc, CurrencyFormat currencyFormat) {
+    final startLabel =
+        AppFormatters.formatCurrencyWithPreference(_currentRangeValues.start, currencyFormat, loc.localeName);
     final endLabel = _currentRangeValues.end >= kMaxAmountLimit
         ? "$kMaxAmountLimit+"
-        : AppFormatters.formatCurrency(_currentRangeValues.end, loc.localeName);
+        : AppFormatters.formatCurrencyWithPreference(_currentRangeValues.end, currencyFormat, loc.localeName);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -232,9 +246,13 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(AppFormatters.formatCurrency(_currentMinAmount, loc.localeName), style: theme.textTheme.bodySmall),
-              Text("${AppFormatters.formatCurrency(_currentMaxAmount, loc.localeName)}+",
+              Text(AppFormatters.formatCurrencyWithPreference(_currentMinAmount, currencyFormat, loc.localeName),
                   style: theme.textTheme.bodySmall),
+              SensitiveText(
+                text:
+                    "${AppFormatters.formatCurrencyWithPreference(_currentMaxAmount, currencyFormat, loc.localeName)}+",
+                style: theme.textTheme.bodySmall,
+              ),
             ],
           ),
         ),

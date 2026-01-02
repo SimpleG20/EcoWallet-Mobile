@@ -42,23 +42,44 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dashboardWeeklyOverview => 'Visão Geral Semanal';
 
   @override
-  String get dashboardWeeklyOverviewInfo =>
-      'Mostra a visão geral das transações da semana.\nA barra mais à direita representa hoje.';
-
-  @override
   String get dashboardRecentTransactions => 'Transações Recentes';
 
   @override
   String get dashboardNoTransactions => 'Nenhuma transação disponível.';
 
   @override
+  String get dashboardWeeklyOverviewInfo =>
+      'Mostra a visão geral das transações da semana.\nA barra mais à direita representa hoje.';
+
+  @override
+  String get helpSubTitle => 'Obtenha ajuda e suporte';
+
+  @override
+  String get feedbackSubTitle => 'Fale-nos mais sobre sua experiência';
+
+  @override
+  String get termsSubTitle => 'Leia nossos termos de serviço';
+
+  @override
   String get settingsSubTitle => 'Gerencie as configurações do seu app';
+
+  @override
+  String get privacySubTitle => 'Revise nossas políticas de privacidade';
+
+  @override
+  String get policySubTitle => 'Entenda nossa política de privacidade';
+
+  @override
+  String get passwordSubTitle => 'Altere a senha da sua conta';
 
   @override
   String get securitySubTitle => 'Melhore a segurança da sua conta';
 
   @override
   String get budgetInfoSubTitle => 'Visualize e gerencie seu orçamento';
+
+  @override
+  String get manageDataSubTitle => 'Gerencie suas preferências de dados';
 
   @override
   String get personalInfoSubTitle => 'Atualize suas informações pessoais';
@@ -71,25 +92,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appearanceSubTitle => 'Personalize a aparência e o estilo do app';
 
   @override
-  String get passwordSubTitle => 'Altere a senha da sua conta';
-
-  @override
-  String get helpSubTitle => 'Obtenha ajuda e suporte';
-
-  @override
-  String get privacySubTitle => 'Revise nossas políticas de privacidade';
-
-  @override
-  String get feedbackSubTitle => 'Fale-nos mais sobre sua experiência';
-
-  @override
-  String get termsSubTitle => 'Leia nossos termos de serviço';
-
-  @override
-  String get policySubTitle => 'Entenda nossa política de privacidade';
-
-  @override
-  String get manageDataSubTitle => 'Gerencie suas preferências de dados';
+  String get unsavedChangesTitle => 'Alterações Não Salvas';
 
   @override
   String get askForgotPassword => 'Esqueceu a Senha?';
@@ -98,10 +101,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get askAlreadyHaveAccount => 'Já tem uma conta?';
 
   @override
-  String get forgotPassword => 'Esqueceu a senha?';
-
-  @override
-  String get dontHaveAccount => 'Não tem uma conta?';
+  String get askDontHaveAccount => 'Não tem uma conta?';
 
   @override
   String get deleteAccount => 'Excluir Conta';
@@ -156,6 +156,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get btnSave => 'Salvar Transação';
+
+  @override
+  String get btnDiscardChanges => 'Descartar Alterações';
 
   @override
   String get btnSendTestNotification => 'Enviar Notificação de Teste';
@@ -445,6 +448,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get msgTransactionDeleted => 'Transação removida com sucesso.';
+
+  @override
+  String get msgUnsavedChanges =>
+      'Você tem alterações não salvas.\nTem certeza de que deseja descartá-las?';
 
   @override
   String get hintDateBirth => 'DD/MM/YYYY';

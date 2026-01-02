@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class SettingsConfirmEditionBtn extends StatelessWidget {
   final Function(BuildContext) onPressed;
+  final bool pendingChanges;
 
   const SettingsConfirmEditionBtn({
     super.key,
     required this.onPressed,
+    required this.pendingChanges,
   });
 
   @override
@@ -27,7 +29,11 @@ class SettingsConfirmEditionBtn extends StatelessWidget {
           elevation: 6,
         ),
         onPressed: () => onPressed(context),
-        icon: Icon(Icons.edit_outlined),
+        icon: Badge(
+          isLabelVisible: pendingChanges,
+          smallSize: 8,
+          child: Icon(Icons.edit_outlined),
+        ),
       ),
     );
   }

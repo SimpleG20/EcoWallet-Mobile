@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'transaction_card.dart';
 import '../../domain/entities/transaction_group.dart';
+import '../../../settings/domain/entities/settings_entities.dart';
+import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 import '../../../home/presentation/widgets/add_transaction_modal.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -23,6 +25,15 @@ class TransactionGroupCard extends StatelessWidget {
     // Capture bloc reference early to ensure it's available in callbacks
     // even after the widget is dismissed from the tree
     final walletBloc = context.read<WalletBloc>();
+
+    // Reactive and type-safe access to appearance preferences
+    final appearancePreferences = context.select((SettingsBloc bloc) {
+      final state = bloc.state;
+      if (state is SettingsLoadedState) {
+        return state.preferences.appearancePreferences;
+      }
+      return const AppearancePreferences();
+    });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,6 +86,7 @@ class TransactionGroupCard extends StatelessWidget {
                         );
                       },
                       child: TransactionCard(
+                        appearance: appearancePreferences,
                         transaction: transaction,
                         onTap: () {
                           showModalBottomSheet(

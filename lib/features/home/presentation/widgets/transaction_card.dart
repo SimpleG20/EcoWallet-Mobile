@@ -1,5 +1,7 @@
+import 'package:eco_wallet/features/settings/domain/entities/settings_entities.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/presentation/widgets/sensitive_text.dart';
 import '../../../wallet/domain/entities/transaction.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/utils/app_formatters.dart';
@@ -7,15 +9,20 @@ import '../../../../core/constants/category_data.dart';
 import '../../../../core/constants/transaction_type_data.dart';
 
 class TransactionCard extends StatelessWidget {
-  const TransactionCard(
-      {super.key,
-      required this.transaction,
-      required this.onTap,
-      this.blackAndWhite = false});
+  const TransactionCard({
+    super.key,
+    required this.appearancePreferences,
+    required this.transaction,
+    required this.onTap,
+    this.blackAndWhite = false,
+    this.hideValue = false,
+  });
 
+  final AppearancePreferences appearancePreferences;
   final Transaction transaction;
   final VoidCallback onTap;
   final bool blackAndWhite;
+  final bool hideValue;
 
   @override
   Widget build(BuildContext context) {
@@ -42,21 +49,24 @@ class TransactionCard extends StatelessWidget {
             : CategoryRepository.getIconByLabel(transaction.category, loc)),
       ),
       title: Text(transaction.name),
-      subtitle: Text(
-          transaction.category.isNotEmpty
-              ? transaction.category
-              : loc.lbUncategorized,
-          style: theme.textTheme.bodyMedium
-              ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+      subtitle: Text(transaction.category.isNotEmpty ? transaction.category : loc.lbUncategorized,
+          style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(AppFormatters.formatCurrency(value, loc.localeName),
-              style: theme.textTheme.bodyMedium?.copyWith(
-                  color: isIncome
-                      ? theme.colorScheme.primary
-                      : theme.colorScheme.onSurface)),
+          if (hideValue)
+            SensitiveText(
+              text: AppFormatters.formatCurrencyWithPreference(
+                  value, appearancePreferences.currencyFormat, loc.localeName),
+              style: theme.textTheme.bodyMedium
+                  ?.copyWith(color: isIncome ? theme.colorScheme.primary : theme.colorScheme.onSurface),
+            )
+          else
+            Text(
+                AppFormatters.formatCurrencyWithPreference(value, appearancePreferences.currencyFormat, loc.localeName),
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(color: isIncome ? theme.colorScheme.primary : theme.colorScheme.onSurface)),
           Text(
             AppFormatters.formatDateShort(transaction.date, loc.localeName),
             style: theme.textTheme.bodySmall,

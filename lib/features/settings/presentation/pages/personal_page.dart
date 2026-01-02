@@ -117,7 +117,6 @@ class _PersonalPageState extends State<PersonalPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: theme.colorScheme.primaryContainer,
         automaticallyImplyLeading: false,
       ),
       body: BlocBuilder<UserBloc, BaseUserState>(
@@ -180,19 +179,21 @@ class _PersonalPageState extends State<PersonalPage> {
                     )
                   ],
                 ),
-                SettingsConfirmEditionBtn(onPressed: (ctx) {
-                  if (_isEditing) {
-                    if (_submitForm(ctx, loc)) {
-                      setState(() {
-                        _isEditing = !_isEditing;
-                      });
-                    }
-                  } else {
-                    setState(() {
-                      _isEditing = !_isEditing;
-                    });
-                  }
-                })
+                SettingsConfirmEditionBtn(
+                    onPressed: (ctx) {
+                      if (_isEditing) {
+                        if (_submitForm(ctx, loc)) {
+                          setState(() {
+                            _isEditing = !_isEditing;
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          _isEditing = !_isEditing;
+                        });
+                      }
+                    },
+                    pendingChanges: false),
               ],
             );
           }

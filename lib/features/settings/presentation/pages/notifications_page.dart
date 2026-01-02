@@ -34,6 +34,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
   TimeOfDay _quietHoursStart = const TimeOfDay(hour: 22, minute: 0);
   TimeOfDay _quietHoursEnd = const TimeOfDay(hour: 7, minute: 0);
 
+  bool _pendingChanges = false;
+
   Future<void> _selectTime(BuildContext context, TimeOfDay initialTime) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -89,15 +91,15 @@ class _NotificationsPageState extends State<NotificationsPage> {
         }
 
         if (state is SettingsLoadedState) {
-          // You can use state.settings to get the current settings if needed
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+            ),
+            body: _buildContent(context, theme, loc),
+          );
         }
 
-        return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-          ),
-          body: _buildContent(context, theme, loc),
-        );
+        return const SizedBox.shrink();
       },
     );
   }
@@ -123,7 +125,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
             ),
           ],
         ),
-        SettingsConfirmEditionBtn(onPressed: (ctx) => _submitChanges(ctx)),
+        SettingsConfirmEditionBtn(
+          onPressed: (ctx) => _submitChanges(ctx),
+          pendingChanges: _pendingChanges,
+        ),
       ],
     );
   }

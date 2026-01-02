@@ -35,9 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.colorScheme.primaryContainer,
-      ),
+      appBar: AppBar(),
       body: BlocBuilder<SettingsBloc, BaseSettingsState>(
         builder: (context, state) {
           if (state is SettingsLoadingState) {

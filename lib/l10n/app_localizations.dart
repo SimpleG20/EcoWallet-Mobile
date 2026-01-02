@@ -164,12 +164,6 @@ abstract class AppLocalizations {
   /// **'Weekly Overview'**
   String get dashboardWeeklyOverview;
 
-  /// No description provided for @dashboardWeeklyOverviewInfo.
-  ///
-  /// In en, this message translates to:
-  /// **'Shows weekly transaction overview.\nThe rightmost bar represents today.'**
-  String get dashboardWeeklyOverviewInfo;
-
   /// No description provided for @dashboardRecentTransactions.
   ///
   /// In en, this message translates to:
@@ -182,11 +176,53 @@ abstract class AppLocalizations {
   /// **'No transactions available.'**
   String get dashboardNoTransactions;
 
+  /// No description provided for @dashboardWeeklyOverviewInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Shows weekly transaction overview.\nThe rightmost bar represents today.'**
+  String get dashboardWeeklyOverviewInfo;
+
+  /// No description provided for @helpSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get help and support'**
+  String get helpSubTitle;
+
+  /// No description provided for @feedbackSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send us your feedback'**
+  String get feedbackSubTitle;
+
+  /// No description provided for @termsSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Read our terms of service'**
+  String get termsSubTitle;
+
   /// No description provided for @settingsSubTitle.
   ///
   /// In en, this message translates to:
   /// **'Manage your app settings'**
   String get settingsSubTitle;
+
+  /// No description provided for @privacySubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review our privacy policies'**
+  String get privacySubTitle;
+
+  /// No description provided for @policySubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Understand our privacy policy'**
+  String get policySubTitle;
+
+  /// No description provided for @passwordSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change your account password'**
+  String get passwordSubTitle;
 
   /// No description provided for @securitySubTitle.
   ///
@@ -199,6 +235,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View and manage your budget'**
   String get budgetInfoSubTitle;
+
+  /// No description provided for @manageDataSubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your data preferences'**
+  String get manageDataSubTitle;
 
   /// No description provided for @personalInfoSubTitle.
   ///
@@ -218,47 +260,11 @@ abstract class AppLocalizations {
   /// **'Customize the look and feel of the app'**
   String get appearanceSubTitle;
 
-  /// No description provided for @passwordSubTitle.
+  /// No description provided for @unsavedChangesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Change your account password'**
-  String get passwordSubTitle;
-
-  /// No description provided for @helpSubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Get help and support'**
-  String get helpSubTitle;
-
-  /// No description provided for @privacySubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Review our privacy policies'**
-  String get privacySubTitle;
-
-  /// No description provided for @feedbackSubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Send us your feedback'**
-  String get feedbackSubTitle;
-
-  /// No description provided for @termsSubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Read our terms of service'**
-  String get termsSubTitle;
-
-  /// No description provided for @policySubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Understand our privacy policy'**
-  String get policySubTitle;
-
-  /// No description provided for @manageDataSubTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Manage your data preferences'**
-  String get manageDataSubTitle;
+  /// **'Unsaved Changes'**
+  String get unsavedChangesTitle;
 
   /// No description provided for @askForgotPassword.
   ///
@@ -272,17 +278,11 @@ abstract class AppLocalizations {
   /// **'Already have an account?'**
   String get askAlreadyHaveAccount;
 
-  /// No description provided for @forgotPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Forgot Password?'**
-  String get forgotPassword;
-
-  /// No description provided for @dontHaveAccount.
+  /// No description provided for @askDontHaveAccount.
   ///
   /// In en, this message translates to:
   /// **'Don\'t have an account?'**
-  String get dontHaveAccount;
+  String get askDontHaveAccount;
 
   /// No description provided for @deleteAccount.
   ///
@@ -385,6 +385,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save Transaction'**
   String get btnSave;
+
+  /// No description provided for @btnDiscardChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard Changes'**
+  String get btnDiscardChanges;
 
   /// No description provided for @btnSendTestNotification.
   ///
@@ -961,6 +967,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transaction deleted successfully.'**
   String get msgTransactionDeleted;
+
+  /// No description provided for @msgUnsavedChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'You have unsaved changes.\nAre you sure you want to discard them?'**
+  String get msgUnsavedChanges;
 
   /// No description provided for @hintDateBirth.
   ///

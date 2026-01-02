@@ -25,41 +25,50 @@ class AppColors {
   static const Color lightInputBackground = Color(0xFFF3F3F5);
   static const Color lightRing = Color(0xFFB4B4B4); // approx oklch(0.708 0 0)
 
-  // --- Dark Mode Palette (Converted from OKLCH) ---
-  // oklch(0.145 0 0) -> #242424
-  static const Color darkBackground = Color(0xFF242424);
-  // oklch(0.985 0 0) -> #FAFAFA
-  static const Color darkForeground = Color(0xFFFAFAFA);
-  // oklch(0.145 0 0) -> #242424
-  static const Color darkCard = Color(0xFF242424);
-  static const Color darkCardForeground = Color(0xFFFAFAFA);
-  // oklch(0.985 0 0) -> #FAFAFA
-  static const Color darkPrimary = Color(0xFFFAFAFA);
-  // oklch(0.205 0 0) -> #333333
-  static const Color darkPrimaryForeground = Color(0xFF333333);
-  // oklch(0.269 0 0) -> #454545
-  static const Color darkSecondary = Color(0xFF454545);
-  static const Color darkSecondaryForeground = Color(0xFFFAFAFA);
-  static const Color darkMuted = Color(0xFF454545);
-  // oklch(0.708 0 0) -> #B4B4B4
-  static const Color darkMutedForeground = Color(0xFFB4B4B4);
-  // oklch(0.396 0.141 25.723) -> #993333 (Approx Red)
-  static const Color darkDestructive = Color(0xFF993333);
-  // oklch(0.637 0.237 25.331) -> #FF6666 (Approx Lighter Red)
-  static const Color darkDestructiveForeground = Color(0xFFFF6666);
-  static const Color darkBorder = Color(0xFF454545);
-  static const Color darkRing = Color(0xFF6E6E6E); // approx oklch(0.439 0 0)
+  // --- Dark Mode Palette (Revitalized with subtle saturation) ---
+  /// Deep dark background with subtle cool undertone for depth
+  static const Color darkBackground = Color(0xFF121418);
+  /// High contrast foreground for readability
+  static const Color darkForeground = Color(0xFFF5F5F7);
+  /// Card slightly elevated from background for visual hierarchy
+  static const Color darkCard = Color(0xFF1C1E24);
+  static const Color darkCardForeground = Color(0xFFF5F5F7);
+  /// Primary green maintained for brand identity - vibrant emerald
+  static const Color darkPrimary = Color(0xFF34D399);
+  /// Dark foreground for contrast on primary buttons
+  static const Color darkPrimaryForeground = Color(0xFF0D1117);
+  /// Secondary with subtle blue undertone for modern feel
+  static const Color darkSecondary = Color(0xFF2A2D36);
+  static const Color darkSecondaryForeground = Color(0xFFF5F5F7);
+  static const Color darkMuted = Color(0xFF2A2D36);
+  /// Muted foreground with good contrast
+  static const Color darkMutedForeground = Color(0xFF9CA3AF);
+  /// Destructive red adapted for dark mode visibility
+  static const Color darkDestructive = Color(0xFFEF4444);
+  /// Light foreground for destructive buttons
+  static const Color darkDestructiveForeground = Color(0xFFF5F5F7);
+  /// Subtle border with cool undertone
+  static const Color darkBorder = Color(0xFF2E3039);
+  /// Ring color matching primary for focus states
+  static const Color darkRing = Color(0xFF34D399);
 
   // --- Shared Accent Colors ---
   /// Primary green used for balance cards and positive indicators.
   static const Color primaryGreen = Color(0xFF10C085);
 
-  // --- Eco Footprint Gradient ---
+  // --- Eco Footprint Gradient (Light Mode) ---
   /// Dark green for eco footprint card gradient start.
   static const Color ecoGradientStart = Color(0xFF108E41);
 
   /// Light green for eco footprint card gradient end.
   static const Color ecoGradientEnd = Color(0xFF1BD386);
+
+  // --- Eco Footprint Gradient (Dark Mode) ---
+  /// Deeper green for dark mode eco footprint card gradient start.
+  static const Color ecoGradientStartDark = Color(0xFF0A5C2A);
+
+  /// Muted emerald for dark mode eco footprint card gradient end.
+  static const Color ecoGradientEndDark = Color(0xFF10996B);
 
   // --- Charts (Shared or Specific) ---
   static const Color chart1 = Color(0xFF10B981);
@@ -75,10 +84,10 @@ class AppColors {
   static const Color lightSidebarPrimaryForeground = Color(0xFFFAFAFA);
 
   // --- Sidebar (Dark) ---
-  static const Color darkSidebar = Color(0xFF333333); // oklch(0.205 0 0)
-  static const Color darkSidebarForeground = Color(0xFFFAFAFA);
-  static const Color darkSidebarPrimary = Color(0xFF4ADE80); // Adjusted for visibility
-  static const Color darkSidebarPrimaryForeground = Color(0xFFFAFAFA);
+  static const Color darkSidebar = Color(0xFF161920);
+  static const Color darkSidebarForeground = Color(0xFFF5F5F7);
+  static const Color darkSidebarPrimary = Color(0xFF34D399);
+  static const Color darkSidebarPrimaryForeground = Color(0xFF0D1117);
 
   static Color getColorFromTransactionType(ETransactionType type) {
     switch (type) {

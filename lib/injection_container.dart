@@ -17,6 +17,7 @@ import 'features/settings/data/datasources/base_settings_data_source.dart';
 import 'features/settings/data/repositories/settings_repository_impl.dart';
 import 'features/settings/data/datasources/settings_local_data_source.dart';
 import 'features/settings/domain/usecases/get_user_preferences.dart';
+import 'features/settings/domain/usecases/update_user_preferences.dart';
 import 'features/settings/domain/repositories/base_setting_repository.dart';
 
 import 'features/transactions/domain/usecases/transactions_usescases.dart';
@@ -61,6 +62,7 @@ Future<void> init() async {
     () => SettingsBloc(
       getCurrentUser: sl(),
       getUserPreferences: sl(),
+      updateUserPreferences: sl(),
     ),
   );
 
@@ -97,6 +99,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteUser(sl()));
 
   sl.registerLazySingleton(() => GetUserPreferences(sl()));
+  sl.registerLazySingleton(() => UpdateUserPreferences(sl()));
 
   sl.registerLazySingleton(() => FilterTransactions());
   sl.registerLazySingleton(() => SearchQueryTransactions());
