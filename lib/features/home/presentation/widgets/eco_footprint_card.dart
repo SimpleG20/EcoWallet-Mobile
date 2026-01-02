@@ -69,7 +69,7 @@ class EcoFootprintCard extends StatelessWidget {
                         children: [
                           Icon(Icons.eco, color: _getDangerColor(ecoData.carbonFootprint), size: 40),
                           Text(
-                            '${(100 - (ecoData.carbonFootprint / kMaxCarbonFootprint * 100)).toStringAsFixed(0)}%',
+                            '${(100 - (ecoData.carbonFootprint / kMaxCarbonFootprint * 100)).clamp(0, 100).toStringAsFixed(0)}%',
                             style: theme.textTheme.labelMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

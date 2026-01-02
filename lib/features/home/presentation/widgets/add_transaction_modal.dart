@@ -221,15 +221,6 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
         ),
         const SizedBox(height: 8),
         TextFormField(
-          errorBuilder: (context, errorText) => Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: FittedBox(
-              child: Text(
-                errorText,
-                style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error),
-              ),
-            ),
-          ),
           decoration: InputDecoration(
             hintText: loc.hintTransactionName,
           ),
@@ -258,16 +249,12 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
             inputFormatters: [
               CurrencyInputFormatter(locale: loc.localeName),
             ],
-            errorBuilder: (context, errorText) => Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    errorText,
-                    style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.error),
-                  ),
-                ),
             decoration: InputDecoration(
               hintText: _amountController.text.isEmpty ? "0.00" : null,
               contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
+              hintStyle: theme.textTheme.headlineMedium?.copyWith(
+                color: theme.colorScheme.outlineVariant,
+              ),
             ),
             validator: (value) => AppValidators.validateAmount(loc, value))
       ],

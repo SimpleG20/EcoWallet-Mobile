@@ -1,4 +1,4 @@
-import 'package:eco_wallet/features/home/domain/entities/eco_data.dart';
+import 'package:eco_wallet/core/presentation/controllers/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +9,7 @@ import '../widgets/home_action_buttons.dart';
 import '../widgets/add_transaction_modal.dart';
 import '../widgets/balance_card/balance_card.dart';
 import '../widgets/skeletons/home_page_skeleton.dart';
+import '../../domain/entities/eco_data.dart';
 import '../../domain/entities/weekly_transaction_data.dart';
 import '../../domain/usecases/calculate_weekly_transactions.dart';
 import '../../../wallet/domain/entities/transaction.dart';
@@ -237,14 +238,14 @@ class _TransactionsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildHeader(),
+        _buildHeader(context),
         const SizedBox(height: 8),
         _buildList(),
       ],
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -256,7 +257,7 @@ class _TransactionsSection extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              // TODO: Navigate to all transactions screen
+              context.read<NavigationCubit>().goToWallet();
             },
             child: Text(loc.btnViewAll),
           ),
