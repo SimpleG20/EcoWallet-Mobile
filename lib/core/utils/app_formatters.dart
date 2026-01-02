@@ -1,9 +1,10 @@
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class AppFormatters {
-  static String formatCurrency(double value, String locale,
-      {bool noSymbol = false}) {
+  static String formatCurrency(double value, String locale, {bool noSymbol = false}) {
     final format = NumberFormat.simpleCurrency(locale: locale);
     if (noSymbol) {
       return format.format(value).replaceAll(format.currencySymbol, '').trim();
@@ -28,8 +29,29 @@ class AppFormatters {
 
   static final DateFormat weekdayDateFormatter = DateFormat('EEEE, MMM d');
 
-  static String currencySymbol(String locale) =>
-      NumberFormat.simpleCurrency(locale: locale).currencySymbol;
+  static String currencySymbol(String locale) => NumberFormat.simpleCurrency(locale: locale).currencySymbol;
+
+  static TimeOfDay parseTimeOfDay(String timeString) {
+    final parts = timeString.split(':');
+    final hour = int.tryParse(parts[0]) ?? 0;
+    final minute = int.tryParse(parts[1]) ?? 0;
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  static String formatTimeOfDay(TimeOfDay reminderTime) {
+    final hour = reminderTime.hour.toString().padLeft(2, '0');
+    final minute = reminderTime.minute.toString().padLeft(2, '0');
+    final result = '$hour:$minute';
+    return result;
+  }
+
+  static DateTime? parseDate(String text, AppLocalizations loc) {
+    try {
+      return dateOnlyFormatter.parseStrict(text);
+    } catch (e) {
+      return null;
+    }
+  }
 }
 
 class CurrencyInputFormatter extends TextInputFormatter {
@@ -43,8 +65,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
         );
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     // 1. Remove everything that is not a number
     String newText = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
 

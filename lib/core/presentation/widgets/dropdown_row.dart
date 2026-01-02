@@ -35,6 +35,7 @@ class DropdownRow<T> extends StatelessWidget {
         ),
         DropdownButtonHideUnderline(
           child: DropdownButton<T>(
+            alignment: Alignment.centerRight,
             value: value,
             items: items,
             menuMaxHeight: 150,

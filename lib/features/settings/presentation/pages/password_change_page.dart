@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:eco_wallet/core/utils/app_validators.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/settings_sub_page_header.dart';
+import 'package:eco_wallet/core/utils/password_utils.dart';
+import 'package:eco_wallet/core/utils/app_validators.dart';
+
+import '../bloc/settings_bloc.dart';
+import '../widgets/settings_widgets.dart';
+import '../../../user/presentation/bloc/user_bloc.dart';
 import '../../../../l10n/app_localizations.dart';
 
 enum EPasswordStates {
@@ -30,11 +34,6 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
   final _confirmNewPasswordController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     _newPasswordController.dispose();
     _currentPasswordController.dispose();
@@ -47,20 +46,39 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return Column(
-      children: [
-        SettingsSubPageHeader(
-          title: loc.lbChangePassword,
-          subtitle: loc.passwordSubTitle,
-          complement: null,
-        ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: SettingsCard(
-            child: _buildPasswordState(context, theme, loc),
+    return BlocBuilder<SettingsBloc, BaseSettingsState>(
+      builder: (context, state) {
+        if (state is SettingsLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (state is SettingsErrorState) {
+          return Center(child: Text(state.message ?? loc.errorUnknown));
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
           ),
-        ),
-      ],
+          body: Column(
+            children: [
+              SettingsSubPageHeader(
+                title: loc.lbChangePassword,
+                subtitle: loc.passwordSubTitle,
+                complement: null,
+              ),
+              const SizedBox(height: 24),
+              Expanded(
+                child: SettingsCard(
+                  child: SingleChildScrollView(
+                    child: _buildPasswordState(context, theme, loc),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -102,25 +120,22 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
             _buildCurrentPasswordField(theme, loc),
             const Divider(),
             const SizedBox(height: 12),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _buildNewPasswordField(theme, loc),
-                    const SizedBox(height: 24),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildNewPasswordField(theme, loc),
+                  const SizedBox(height: 24),
 
-                    _buildConfirmPasswordField(theme, loc),
-                    const SizedBox(height: 12),
-
-                    // Submit Button
-                    ElevatedButton(
-                      onPressed: () => _submitChangePassword(context, loc),
-                      child: Text(loc.btnApply),
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-                ),
+                  _buildConfirmPasswordField(theme, loc),
+                  const SizedBox(height: 32),
+                  // Submit Button
+                  ElevatedButton(
+                    onPressed: () => _submitChangePassword(context, loc),
+                    child: Text(loc.btnApply),
+                  ),
+                  const SizedBox(height: 16),
+                ],
               ),
             ),
           ],
@@ -139,7 +154,8 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.lock_outline, color: theme.colorScheme.primary),
             suffixIcon: IconButton(
-              icon: Icon(_showCurrentPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, color: theme.colorScheme.primary),
+              icon: Icon(_showCurrentPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  color: theme.colorScheme.primary),
               onPressed: () {
                 setState(() {
                   _showCurrentPassword = !_showCurrentPassword;
@@ -155,12 +171,18 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
           children: [
             TextButton(
               onPressed: () {
-                setState(() {
-                  _newPasswordController.clear();
-                  _currentPasswordController.clear();
-                  _confirmNewPasswordController.clear();
-                  _passwordState = EPasswordStates.waitingForConfirmation;
-                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: const Duration(seconds: 3),
+                    content: Text(loc.msgFeatureComingSoon),
+                  ),
+                );
+                // setState(() {
+                //   _newPasswordController.clear();
+                //   _currentPasswordController.clear();
+                //   _confirmNewPasswordController.clear();
+                //   _passwordState = EPasswordStates.waitingForConfirmation;
+                // });
               },
               child: Text(
                 loc.forgotPassword,
@@ -184,7 +206,8 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
         TextFormField(
           decoration: InputDecoration(
             suffixIcon: IconButton(
-              icon: Icon(_showNewsPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, color: theme.colorScheme.primary),
+              icon: Icon(_showNewsPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  color: theme.colorScheme.primary),
               onPressed: () {
                 setState(() {
                   _showNewsPassword = !_showNewsPassword;
@@ -195,7 +218,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
           obscureText: !_showNewsPassword,
           controller: _newPasswordController,
           validator: (value) {
-            return AppValidators.isValidPassword(value, loc);
+            return AppValidators.isValidPassword(loc, value);
           },
         ),
         const SizedBox(height: 8),
@@ -239,7 +262,8 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
         TextFormField(
           decoration: InputDecoration(
             suffixIcon: IconButton(
-              icon: Icon(_showNewsPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined, color: theme.colorScheme.primary),
+              icon: Icon(_showNewsPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  color: theme.colorScheme.primary),
               onPressed: () {
                 setState(() {
                   _showNewsPassword = !_showNewsPassword;
@@ -250,7 +274,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
           obscureText: !_showNewsPassword,
           controller: _confirmNewPasswordController,
           validator: (value) {
-            var passwordValidation = AppValidators.isValidPassword(value, loc);
+            var passwordValidation = AppValidators.isValidPassword(loc, value);
             if (passwordValidation != null) {
               return passwordValidation;
             }
@@ -307,7 +331,15 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
       return;
     }
 
-    // Add your password change logic here
+    final bloc = context.read<UserBloc>();
+    final userState = bloc.state;
+    if (userState is! UserLoadedState) return;
+
+    final newUserConfig = userState.user.copyWith(
+      password: PasswordUtils.hashPassword(_newPasswordController.text, userState.user.email),
+    );
+
+    bloc.add(UpdateUserEvent(user: newUserConfig));
 
     _newPasswordController.clear();
     _currentPasswordController.clear();

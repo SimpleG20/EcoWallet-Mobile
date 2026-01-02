@@ -1,8 +1,14 @@
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_confirm_edition_btn.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:eco_wallet/core/utils/app_validators.dart';
+import 'package:eco_wallet/core/utils/app_formatters.dart';
+import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../user/domain/entities/user.dart';
 import '../widgets/settings_sub_page_header.dart';
 
 class PersonalPage extends StatefulWidget {
@@ -15,6 +21,8 @@ class PersonalPage extends StatefulWidget {
 class _PersonalPageState extends State<PersonalPage> {
   bool _isEditing = false;
 
+  late User _user;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
@@ -24,13 +32,15 @@ class _PersonalPageState extends State<PersonalPage> {
   final _dateBirthController = TextEditingController();
 
   @override
-  void initState() {
-    _nameController.text = "Fulano";
-    _emailController.text = "fulano@email.com";
-    _phoneController.text = "+55 11 91234-5678";
-    _addressController.text = "Rua Exemplo, 123, São Paulo";
-    _dateBirthController.text = "01/01/1990";
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    var currentState = context.read<UserBloc>().state;
+    if (currentState is UserLoadedState) {
+      _updateControllers(context, currentState.user);
+    } else {
+      print('[debug] User not loaded yet in PersonalPage');
+    }
   }
 
   @override
@@ -48,7 +58,6 @@ class _PersonalPageState extends State<PersonalPage> {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    // 1. Definição da Estrutura dos Campos (Data-Driven)
     final fields = [
       _ProfileFieldConfig(
         label: loc.lbName,
@@ -69,85 +78,130 @@ class _PersonalPageState extends State<PersonalPage> {
         icon: Icons.phone_outlined,
         controller: _phoneController,
         keyboardType: TextInputType.phone,
-        validator: (value) => AppValidators.isValidPhoneNumber(loc, value),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return null; // Phone number is optional
+          }
+          return AppValidators.isValidPhoneNumber(loc, value);
+        },
+        hint: loc.hintPhoneNumber,
       ),
       _ProfileFieldConfig(
         label: loc.lbAddress,
         icon: Icons.location_on_outlined,
         controller: _addressController,
         keyboardType: TextInputType.streetAddress,
-        validator: (value) => AppValidators.isValidAddress(loc, value),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return null; // Address is optional
+          }
+          return AppValidators.isValidAddress(loc, value);
+        },
+        hint: loc.hintAddress,
       ),
       _ProfileFieldConfig(
         label: loc.lbDateBirth,
         icon: Icons.cake_outlined,
         controller: _dateBirthController,
         keyboardType: TextInputType.datetime,
-        validator: (value) => AppValidators.isValidDate(loc, value),
-        // Dica: Para datas, idealmente usaríamos um DatePicker e readOnly: true
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return null; // Date of birth is optional
+          }
+          return AppValidators.isValidDate(loc, value);
+        },
+        hint: loc.hintDateBirth,
       ),
     ];
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (_isEditing) {
-            if (_submitForm(context, loc)) {
-              setState(() {
-                _isEditing = !_isEditing;
-              });
-            }
-          } else {
-            setState(() {
-              _isEditing = !_isEditing;
-            });
-          }
-        },
-        child: Icon(_isEditing ? Icons.check : Icons.edit),
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.primaryContainer,
+        automaticallyImplyLeading: false,
       ),
-      body: Column(
-        children: [
-          SettingsSubPageHeader(
-            title: loc.lbPersonalInfo,
-            subtitle: loc.personalInfoSubTitle,
-            complement: (t, l) => _buildHeaderComplement(theme, loc),
-            height: 280,
-          ),
-          const SizedBox(height: 24),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surface,
-                borderRadius: BorderRadius.circular(12.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.15),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
-              clipBehavior: Clip.hardEdge,
-              child: Form(
-                key: _formKey,
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  itemCount: fields.length,
-                  separatorBuilder: (context, index) => Divider(
-                    color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-                  ),
-                  itemBuilder: (context, index) {
-                    final field = fields[index];
-                    return _buildTopicItem(theme, field);
-                  },
+      body: BlocBuilder<UserBloc, BaseUserState>(
+        builder: (context, state) {
+          if (state is UserLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (state is UserErrorState) {
+            return Center(
+              child: Text(
+                state.message ?? loc.errorUnknown,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.error,
                 ),
               ),
-            ),
-          ),
-        ],
+            );
+          }
+
+          if (state is UserLoadedState) {
+            return Stack(
+              children: [
+                Column(
+                  children: [
+                    SettingsSubPageHeader(
+                      title: loc.lbPersonalInfo,
+                      subtitle: loc.personalInfoSubTitle,
+                      complement: (t, l) => _buildHeaderComplement(theme, loc),
+                      height: 280,
+                    ),
+                    const SizedBox(height: 24),
+                    SettingsCard(
+                      child: Form(
+                        key: _formKey,
+                        child: ListView.separated(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          itemCount: fields.length,
+                          separatorBuilder: (context, index) => Divider(
+                            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
+                          ),
+                          itemBuilder: (context, index) {
+                            final field = fields[index];
+                            return _buildTopicItem(context, theme, field);
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SettingsConfirmEditionBtn(onPressed: (ctx) {
+                  if (_isEditing) {
+                    if (_submitForm(ctx, loc)) {
+                      setState(() {
+                        _isEditing = !_isEditing;
+                      });
+                    }
+                  } else {
+                    setState(() {
+                      _isEditing = !_isEditing;
+                    });
+                  }
+                })
+              ],
+            );
+          }
+
+          return const Center(
+            child: AboutDialog(),
+          );
+        },
       ),
     );
+  }
+
+  void _updateControllers(BuildContext context, User user) {
+    _nameController.text = user.fullName;
+    _emailController.text = user.email;
+    _phoneController.text = user.phoneNumber ?? '';
+    _addressController.text = user.address ?? '';
+    _dateBirthController.text = user.dateOfBirth != null
+        ? AppFormatters.formatDateShort(
+            user.dateOfBirth!,
+            AppLocalizations.of(context)!.localeName,
+          )
+        : '';
   }
 
   Widget _buildHeaderComplement(ThemeData theme, AppLocalizations loc) {
@@ -228,7 +282,14 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  Widget _buildTopicItem(ThemeData theme, _ProfileFieldConfig field) {
+  Widget _buildTopicItem(BuildContext context, ThemeData theme, _ProfileFieldConfig field) {
+    final label = field.controller.text.isNotEmpty ? field.controller.text : field.hint ?? '';
+    final style = label == field.hint
+        ? theme.textTheme.titleSmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+          )
+        : theme.textTheme.titleSmall;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Row(
@@ -261,8 +322,7 @@ class _PersonalPageState extends State<PersonalPage> {
                     keyboardType: field.keyboardType,
                     style: theme.textTheme.titleSmall,
                     decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                      hintText: field.hint ?? '',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide(
@@ -283,7 +343,10 @@ class _PersonalPageState extends State<PersonalPage> {
                 else
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
-                    child: Text(field.controller.text, style: theme.textTheme.titleSmall),
+                    child: Text(
+                      label,
+                      style: style,
+                    ),
                   ),
               ],
             ),
@@ -295,7 +358,17 @@ class _PersonalPageState extends State<PersonalPage> {
 
   bool _submitForm(BuildContext context, AppLocalizations loc) {
     if (_formKey.currentState!.validate()) {
-      // Aqui chamaria o BLoC: context.read<SettingsBloc>().add(UpdateProfile(...));
+      context.read<UserBloc>().add(
+            UpdateUserEvent(
+              user: _user.copyWith(
+                fullName: _nameController.text,
+                email: _emailController.text,
+                phoneNumber: _phoneController.text,
+                address: _addressController.text,
+                dateOfBirth: AppFormatters.parseDate(_dateBirthController.text, loc),
+              ),
+            ),
+          );
       return true;
     }
     return false;
@@ -308,6 +381,7 @@ class _ProfileFieldConfig {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final String? Function(String?) validator;
+  final String? hint;
 
   _ProfileFieldConfig({
     required this.label,
@@ -315,5 +389,6 @@ class _ProfileFieldConfig {
     required this.controller,
     required this.keyboardType,
     required this.validator,
+    this.hint,
   });
 }

@@ -746,6 +746,12 @@ abstract class AppLocalizations {
   /// **'New Password'**
   String get lbNewPassword;
 
+  /// No description provided for @lbBudgetLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Limit'**
+  String get lbBudgetLimit;
+
   /// No description provided for @lbPersonalInfo.
   ///
   /// In en, this message translates to:
@@ -782,11 +788,41 @@ abstract class AppLocalizations {
   /// **'Entertainment'**
   String get lbEntertainment;
 
+  /// No description provided for @lbEditThreshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Threshold'**
+  String get lbEditThreshold;
+
   /// No description provided for @lbPrivacyPolicy.
   ///
   /// In en, this message translates to:
   /// **'Privacy Policy'**
   String get lbPrivacyPolicy;
+
+  /// No description provided for @lbBillsReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills Reminder'**
+  String get lbBillsReminder;
+
+  /// No description provided for @lbDailyReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Reminder'**
+  String get lbDailyReminder;
+
+  /// No description provided for @lbExpensesLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses Limit'**
+  String get lbExpensesLimit;
+
+  /// No description provided for @lbMonthlyReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Report'**
+  String get lbMonthlyReport;
 
   /// No description provided for @lbCreateAccount.
   ///
@@ -805,6 +841,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change Password'**
   String get lbChangePassword;
+
+  /// No description provided for @lbCurrencyFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency Format'**
+  String get lbCurrencyFormat;
+
+  /// No description provided for @lbColorBlindMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Color Blind Mode'**
+  String get lbColorBlindMode;
 
   /// No description provided for @lbTermsOfService.
   ///
@@ -848,59 +896,17 @@ abstract class AppLocalizations {
   /// **'Biometric Authentication'**
   String get lbBiometrics;
 
-  /// No description provided for @lbConfirmNewPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm New Password'**
-  String get lbConfirmNewPassword;
-
-  /// No description provided for @lbCreateAccountSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign up to get started!'**
-  String get lbCreateAccountSubtitle;
-
-  /// No description provided for @lbBillsReminder.
-  ///
-  /// In en, this message translates to:
-  /// **'Bills Reminder'**
-  String get lbBillsReminder;
-
-  /// No description provided for @lbDailyReminder.
-  ///
-  /// In en, this message translates to:
-  /// **'Daily Reminder'**
-  String get lbDailyReminder;
-
-  /// No description provided for @lbExpensesLimit.
-  ///
-  /// In en, this message translates to:
-  /// **'Expenses Limit'**
-  String get lbExpensesLimit;
-
-  /// No description provided for @lbMonthlyReport.
-  ///
-  /// In en, this message translates to:
-  /// **'Monthly Report'**
-  String get lbMonthlyReport;
-
-  /// No description provided for @lbCurrencyFormat.
-  ///
-  /// In en, this message translates to:
-  /// **'Currency Format'**
-  String get lbCurrencyFormat;
-
-  /// No description provided for @lbColorBlindMode.
-  ///
-  /// In en, this message translates to:
-  /// **'Color Blind Mode'**
-  String get lbColorBlindMode;
-
   /// No description provided for @lbEnergySavingTips.
   ///
   /// In en, this message translates to:
   /// **'Energy Saving Tips'**
   String get lbEnergySavingTips;
+
+  /// No description provided for @lbConfirmNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get lbConfirmNewPassword;
 
   /// No description provided for @lbInitialDayOfMonth.
   ///
@@ -914,17 +920,17 @@ abstract class AppLocalizations {
   /// **'High Consumption Alert'**
   String get lbHighConsumptionAlert;
 
+  /// No description provided for @lbCreateAccountSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up to get started!'**
+  String get lbCreateAccountSubtitle;
+
   /// No description provided for @lbAgreeTerms.
   ///
   /// In en, this message translates to:
   /// **'I agree to the Terms of Service and Privacy Policy.'**
   String get lbAgreeTerms;
-
-  /// No description provided for @lbBudgetLimit.
-  ///
-  /// In en, this message translates to:
-  /// **'Budget Limit'**
-  String get lbBudgetLimit;
 
   /// No description provided for @msgTestNotificationSent.
   ///
@@ -956,11 +962,23 @@ abstract class AppLocalizations {
   /// **'Transaction deleted successfully.'**
   String get msgTransactionDeleted;
 
+  /// No description provided for @hintDateBirth.
+  ///
+  /// In en, this message translates to:
+  /// **'DD/MM/YYYY'**
+  String get hintDateBirth;
+
   /// No description provided for @hintEmail.
   ///
   /// In en, this message translates to:
   /// **'Enter your email'**
   String get hintEmail;
+
+  /// No description provided for @hintAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your address'**
+  String get hintAddress;
 
   /// No description provided for @hintCategory.
   ///
@@ -980,6 +998,12 @@ abstract class AppLocalizations {
   /// **'Enter your full name'**
   String get hintFullName;
 
+  /// No description provided for @hintPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get hintPhoneNumber;
+
   /// No description provided for @hintConfirmPassword.
   ///
   /// In en, this message translates to:
@@ -991,6 +1015,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter transaction name'**
   String get hintTransactionName;
+
+  /// No description provided for @hintConsumptionThreshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter consumption threshold'**
+  String get hintConsumptionThreshold;
 
   /// No description provided for @sectionGeneral.
   ///
@@ -1238,41 +1268,23 @@ abstract class AppLocalizations {
   /// **'Name is too short.'**
   String get errorNameInvalid;
 
-  /// No description provided for @errorDateEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Please select a date.'**
-  String get errorDateEmpty;
-
-  /// No description provided for @errorNameEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Name cannot be empty.'**
-  String get errorNameEmpty;
-
   /// No description provided for @errorDateInvalid.
   ///
   /// In en, this message translates to:
   /// **'Invalid date format.'**
   String get errorDateInvalid;
 
-  /// No description provided for @errorTitleEmpty.
+  /// No description provided for @errorEmpty.
   ///
   /// In en, this message translates to:
-  /// **'Please enter a title.'**
-  String get errorTitleEmpty;
+  /// **'This field cannot be empty.'**
+  String get errorEmpty;
 
   /// No description provided for @errorDateOutOfRange.
   ///
   /// In en, this message translates to:
   /// **'Date out of range.'**
   String get errorDateOutOfRange;
-
-  /// No description provided for @errorEmailEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Email cannot be empty.'**
-  String get errorEmailEmpty;
 
   /// No description provided for @errorEmailInvalid.
   ///
@@ -1286,29 +1298,17 @@ abstract class AppLocalizations {
   /// **'Password is too weak.'**
   String get errorPasswordWeak;
 
-  /// No description provided for @errorAmountEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter an amount.'**
-  String get errorAmountEmpty;
-
   /// No description provided for @errorAddressInvalid.
   ///
   /// In en, this message translates to:
   /// **'Address is too short.'**
   String get errorAddressInvalid;
 
-  /// No description provided for @errorAddressEmpty.
+  /// No description provided for @errorNumberPositive.
   ///
   /// In en, this message translates to:
-  /// **'Address cannot be empty.'**
-  String get errorAddressEmpty;
-
-  /// No description provided for @errorPasswordEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Password cannot be empty.'**
-  String get errorPasswordEmpty;
+  /// **'Number must be positive.'**
+  String get errorNumberPositive;
 
   /// No description provided for @errorPasswordTooShort.
   ///
@@ -1316,23 +1316,11 @@ abstract class AppLocalizations {
   /// **'Password is too short.'**
   String get errorPasswordTooShort;
 
-  /// No description provided for @errorCategoryEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Please select a category.'**
-  String get errorCategoryEmpty;
-
   /// No description provided for @errorPasswordMismatch.
   ///
   /// In en, this message translates to:
   /// **'Passwords do not match.'**
   String get errorPasswordMismatch;
-
-  /// No description provided for @errorPhoneEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Phone number cannot be empty.'**
-  String get errorPhoneEmpty;
 
   /// No description provided for @errorPhoneInvalid.
   ///
@@ -1352,6 +1340,12 @@ abstract class AppLocalizations {
   /// **'You must agree to the terms to continue.'**
   String get errorAgreeTerms;
 
+  /// No description provided for @errorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'An unknown error occurred.\nPlease try again.'**
+  String get errorUnknown;
+
   /// No description provided for @errorAmountMustBePositive.
   ///
   /// In en, this message translates to:
@@ -1363,6 +1357,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter your current password.'**
   String get errorEnterCurrentPassword;
+
+  /// No description provided for @errorPercentageInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid percentage (0-100).'**
+  String get errorPercentageInvalid;
 
   /// No description provided for @errorSameAsCurrentPassword.
   ///
@@ -1478,17 +1478,17 @@ abstract class AppLocalizations {
   /// **'{count}/500 characters'**
   String feedbackCharacterCount(int count);
 
-  /// No description provided for @helpSearchHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Search for help topics...'**
-  String get helpSearchHint;
-
   /// No description provided for @helpFaqTitle.
   ///
   /// In en, this message translates to:
   /// **'Frequently Asked Questions'**
   String get helpFaqTitle;
+
+  /// No description provided for @helpSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for help topics...'**
+  String get helpSearchHint;
 
   /// No description provided for @helpFaqAddTransaction.
   ///

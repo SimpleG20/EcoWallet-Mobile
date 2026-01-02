@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:eco_wallet/features/settings/presentation/pages/help_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/terms_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/policy_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/personal_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/feedback_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/appearance_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/budget_info_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/manage_data_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/notifications_page.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/password_change_page.dart';
+
 import 'package:eco_wallet/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:eco_wallet/features/home/presentation/pages/main_page.dart';
 import 'package:eco_wallet/features/login/presentation/pages/login_page.dart';
@@ -53,6 +64,46 @@ class AppRouter {
               ),
             );
           },
+        ),
+        GoRoute(
+          path: AppRoutes.settingsProfile,
+          builder: (context, state) => const PersonalPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsBudget,
+          builder: (context, state) => const BudgetInfoPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsData,
+          builder: (context, state) => const ManageDataPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsNotifications,
+          builder: (context, state) => const NotificationsPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsAppearance,
+          builder: (context, state) => const AppearancePage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsPassword,
+          builder: (context, state) => const PasswordChangePage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsHelper,
+          builder: (context, state) => const HelpPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsFeedback,
+          builder: (context, state) => const FeedbackPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsTerms,
+          builder: (context, state) => const TermsPage(),
+        ),
+        GoRoute(
+          path: AppRoutes.settingsPrivacy,
+          builder: (context, state) => const PolicyPage(),
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:eco_wallet/core/errors/base_failure.dart';
 import 'package:eco_wallet/core/errors/exceptions.dart';
+import 'package:eco_wallet/features/auth/data/datasources/base_auth_data_source.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../model/user_model.dart';
@@ -9,8 +10,21 @@ import '../../domain/repositories/base_user_repository.dart';
 
 class UserRepositoryImpl implements BaseUserRepository {
   final BaseUserDataSource dataSource;
+  final BaseAuthDataSource authDataSource;
 
-  UserRepositoryImpl({required this.dataSource});
+  UserRepositoryImpl({required this.dataSource, required this.authDataSource});
+
+  @override
+  Future<Either<BaseFailure, User>> getCurrentUser() async {
+    try {
+      final user = await authDataSource.getLoggedUser();
+      return Right(user);
+    } on CacheException {
+      return Left(CacheFailure("Failed to fetch current user from cache"));
+    } catch (e) {
+      return Left(UnknownFailure(e.toString()));
+    }
+  }
 
   @override
   Future<Either<BaseFailure, User>> getUser(String id) async {

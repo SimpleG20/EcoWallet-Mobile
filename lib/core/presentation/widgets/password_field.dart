@@ -56,7 +56,7 @@ class PasswordField extends StatelessWidget {
           obscureText: obscureText,
           textInputAction: TextInputAction.done,
           controller: controller,
-          validator: (value) => AppValidators.isValidPassword(value, loc),
+          validator: (value) => AppValidators.isValidPassword(loc, value),
         ),
         if (showRequirements) ...[
           const SizedBox(height: 8),

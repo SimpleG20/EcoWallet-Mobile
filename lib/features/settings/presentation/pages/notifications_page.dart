@@ -1,6 +1,10 @@
+import 'package:eco_wallet/core/presentation/widgets/any_text_field.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_confirm_edition_btn.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_sub_page_header.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/settings_section_list.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -14,19 +18,51 @@ class NotificationsPage extends StatefulWidget {
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
-  bool _dailyReminderEnabled = false;
-  TimeOfDay _reminderTime = const TimeOfDay(hour: 9, minute: 0);
+  final _formKey = GlobalKey<FormState>();
 
-  Future<void> _selectTime(BuildContext context) async {
+  final _consumptionThresholdController = TextEditingController();
+
+  bool _dailyReminderEnabled = false;
+  bool _billsReminderEnabled = false;
+  bool _monthlyReportEnabled = false;
+  bool _quietHoursEnabled = false;
+  bool _energySavingTipsEnabled = false;
+  bool _highConsumptionAlertEnabled = false;
+
+  TimeOfDay _reminderTime = const TimeOfDay(hour: 9, minute: 0);
+  TimeOfDay _quietHoursStart = const TimeOfDay(hour: 22, minute: 0);
+  TimeOfDay _quietHoursEnd = const TimeOfDay(hour: 7, minute: 0);
+
+  Future<void> _selectTime(BuildContext context, TimeOfDay initialTime) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: _reminderTime,
+      initialTime: initialTime,
     );
     if (picked != null && picked != _reminderTime) {
       setState(() {
-        _reminderTime = picked;
+        initialTime = picked;
       });
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final settingsState = context.read<SettingsBloc>().state;
+    if (settingsState is! SettingsLoadedState) return;
+
+    final settings = settingsState.preferences.notificationPreferences;
+    _dailyReminderEnabled = settings.dailyReminderEnabled;
+    _reminderTime = settings.reminderTime;
+    _billsReminderEnabled = settings.billsReminderEnabled;
+    _monthlyReportEnabled = settings.monthlyReportEnabled;
+    _quietHoursEnabled = settings.quietHoursEnabled;
+    _quietHoursStart = settings.quietHoursStart;
+    _quietHoursEnd = settings.quietHoursEnd;
+    _energySavingTipsEnabled = settings.energySavingTipsEnabled;
+    _highConsumptionAlertEnabled = settings.highConsumptionAlertEnabled;
+    _consumptionThresholdController.text = settings.highConsumptionThreshold.toString();
   }
 
   @override
@@ -34,19 +70,59 @@ class _NotificationsPageState extends State<NotificationsPage> {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return Column(
-      children: [
-        SettingsSubPageHeader(
-          title: loc.lbNotifications,
-          subtitle: loc.notificationsSubTitle,
-          complement: null,
-        ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: SettingsCard(
-            child: _buildNotificationsOptions(context, theme, loc),
+    return BlocBuilder<SettingsBloc, BaseSettingsState>(
+      builder: (context, state) {
+        if (state is SettingsLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (state is SettingsErrorState) {
+          return Center(
+            child: Text(
+              state.message ?? loc.errorUnknown,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: theme.colorScheme.error,
+              ),
+            ),
+          );
+        }
+
+        if (state is SettingsLoadedState) {
+          // You can use state.settings to get the current settings if needed
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
           ),
+          body: _buildContent(context, theme, loc),
+        );
+      },
+    );
+  }
+
+  Widget _buildContent(BuildContext context, ThemeData theme, AppLocalizations loc) {
+    return Stack(
+      children: [
+        Column(
+          children: [
+            SettingsSubPageHeader(
+              title: loc.lbNotifications,
+              subtitle: loc.notificationsSubTitle,
+              complement: null,
+            ),
+            const SizedBox(height: 24),
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: SettingsCard(
+                  child: _buildNotificationsOptions(context, theme, loc),
+                ),
+              ),
+            ),
+          ],
         ),
+        SettingsConfirmEditionBtn(onPressed: (ctx) => _submitChanges(ctx)),
       ],
     );
   }
@@ -101,7 +177,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
         Switch(
-          value: _dailyReminderEnabled, // Replace with actual state
+          value: _dailyReminderEnabled,
           onChanged: (bool newValue) {
             setState(() {
               _dailyReminderEnabled = newValue;
@@ -110,7 +186,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
         IconButton(
           icon: const Icon(Icons.access_time),
-          onPressed: _dailyReminderEnabled ? () => _selectTime(context) : null,
+          onPressed: _dailyReminderEnabled ? () => _selectTime(context, _reminderTime) : null,
           tooltip: _reminderTime.format(context),
         ),
       ],
@@ -142,9 +218,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
         Switch(
-          value: false, // Replace with actual state
+          value: _billsReminderEnabled,
           onChanged: (bool newValue) {
-            // Handle toggle
+            setState(() {
+              _billsReminderEnabled = newValue;
+            });
           },
         ),
       ],
@@ -187,8 +265,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
         Switch(
-          value: false,
-          onChanged: (bool newValue) {},
+          value: _monthlyReportEnabled,
+          onChanged: (bool newValue) {
+            setState(() {
+              _monthlyReportEnabled = newValue;
+            });
+          },
         ),
       ],
     );
@@ -217,8 +299,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ),
             ),
             Switch(
-              value: false,
-              onChanged: (bool newValue) {},
+              value: _quietHoursEnabled,
+              onChanged: (bool newValue) {
+                setState(() {
+                  _quietHoursEnabled = newValue;
+                });
+              },
             ),
           ],
         ),
@@ -228,14 +314,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
             children: [
               Expanded(child: Text(loc.lbFrom, style: theme.textTheme.bodyMedium)),
               TextButton(
-                onPressed: () {},
-                child: const Text("22:00"),
+                onPressed: () => _selectTime(context, _quietHoursStart),
+                child: Text(_quietHoursStart.format(context)),
               ),
               const SizedBox(width: 16),
               Expanded(child: Text(loc.lbTo, style: theme.textTheme.bodyMedium)),
               TextButton(
-                onPressed: () {},
-                child: const Text("07:00"),
+                onPressed: () => _selectTime(context, _quietHoursEnd),
+                child: Text(_quietHoursEnd.format(context)),
               ),
             ],
           ),
@@ -282,8 +368,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ),
         Switch(
-          value: false,
-          onChanged: (bool newValue) {},
+          value: _energySavingTipsEnabled,
+          onChanged: (bool newValue) {
+            setState(() {
+              _energySavingTipsEnabled = newValue;
+            });
+          },
         ),
       ],
     );
@@ -316,30 +406,35 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ),
             ),
             Switch(
-              value: false,
-              onChanged: (bool newValue) {},
+              value: _highConsumptionAlertEnabled,
+              onChanged: (bool newValue) {
+                setState(() {
+                  _highConsumptionAlertEnabled = newValue;
+                });
+              },
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 40, top: 8),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  loc.thresholdLabel("500"),
-                  style: theme.textTheme.bodyMedium,
+        if (_highConsumptionAlertEnabled)
+          Padding(
+            padding: const EdgeInsets.only(left: 40, top: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    loc.thresholdLabel(_consumptionThresholdController.text),
+                    style: theme.textTheme.bodyMedium,
+                  ),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: () {
-                  // Show dialog to edit threshold
-                },
-              ),
-            ],
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () {
+                    _showModalToEditThreshold(context, theme, loc);
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
       ],
     );
   }
@@ -361,5 +456,73 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
       ),
     );
+  }
+
+  void _showModalToEditThreshold(BuildContext context, ThemeData theme, AppLocalizations loc) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext ctx) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AnyTextField(
+                label: loc.lbEditThreshold,
+                hintText: loc.hintConsumptionThreshold,
+                controller: _consumptionThresholdController,
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return loc.errorEmpty;
+                  }
+                  final parsed = double.tryParse(value);
+                  if (parsed == null || parsed <= 0) {
+                    return loc.errorNumberPositive;
+                  }
+                  return null;
+                },
+                prefixIcon: const Icon(Icons.warning_amber_outlined),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Text(loc.btnSave),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _submitChanges(BuildContext context) {
+    if (!_formKey.currentState!.validate()) return;
+
+    final bloc = context.read<SettingsBloc>();
+    final currentState = bloc.state;
+
+    if (currentState is! SettingsLoadedState) return;
+
+    final updatedNotificationPreferences = currentState.preferences.notificationPreferences.copyWith(
+      dailyReminderEnabled: _dailyReminderEnabled,
+      billsReminderEnabled: _billsReminderEnabled,
+      monthlyReportEnabled: _monthlyReportEnabled,
+      reminderTime: _reminderTime,
+      energySavingTipsEnabled: _energySavingTipsEnabled,
+      highConsumptionAlertEnabled: _highConsumptionAlertEnabled,
+    );
+
+    final updatedPreferences = currentState.preferences.copyWith(
+      notificationPreferences: updatedNotificationPreferences,
+    );
+
+    bloc.add(UpdateUserPreferencesEvent(userPreferences: updatedPreferences));
   }
 }

@@ -33,33 +33,38 @@ class _FeedbackPageState extends State<FeedbackPage> {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return Column(
-      children: [
-        SettingsSubPageHeader(
-          title: loc.lbSendFeedback,
-          subtitle: loc.feedbackSubTitle,
-          complement: null,
-        ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(12.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.15),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
-            clipBehavior: Clip.hardEdge,
-            child: _buildFeedbackForm(context, theme, loc),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
+      body: Column(
+        children: [
+          SettingsSubPageHeader(
+            title: loc.lbSendFeedback,
+            subtitle: loc.feedbackSubTitle,
+            complement: null,
           ),
-        ),
-      ],
+          const SizedBox(height: 24),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface,
+                borderRadius: BorderRadius.circular(12.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.15),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              margin: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 4.0),
+              clipBehavior: Clip.hardEdge,
+              child: _buildFeedbackForm(context, theme, loc),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -135,8 +140,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
           runSpacing: 8,
           children: [
             _buildCategoryChip(EFeedbackCategory.bug, Icons.bug_report_outlined, loc.feedbackCategoryBug, theme),
-            _buildCategoryChip(EFeedbackCategory.suggestion, Icons.lightbulb_outlined, loc.feedbackCategorySuggestion, theme),
-            _buildCategoryChip(EFeedbackCategory.compliment, Icons.thumb_up_outlined, loc.feedbackCategoryCompliment, theme),
+            _buildCategoryChip(
+                EFeedbackCategory.suggestion, Icons.lightbulb_outlined, loc.feedbackCategorySuggestion, theme),
+            _buildCategoryChip(
+                EFeedbackCategory.compliment, Icons.thumb_up_outlined, loc.feedbackCategoryCompliment, theme),
             _buildCategoryChip(EFeedbackCategory.other, Icons.more_horiz, loc.feedbackCategoryOther, theme),
           ],
         ),
@@ -188,7 +195,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
           ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
-              return loc.errorTitleEmpty;
+              return loc.errorEmpty;
             }
             return null;
           },
@@ -259,7 +266,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
     // Simulate API call
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
-      
+
       setState(() {
         _isSubmitting = false;
       });

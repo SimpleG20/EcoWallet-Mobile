@@ -11,22 +11,21 @@ import '../datasources/base_wallet_local_data_source.dart';
 import '../models/transaction_model.dart';
 
 class WalletRepositoryImpl implements BaseWalletRepository {
-  final BaseWalletLocalDataSource localDataSource;
+  final BaseWalletLocalDataSource dataSource;
 
   final _changeController = StreamController<void>.broadcast();
 
-  WalletRepositoryImpl({required this.localDataSource});
+  WalletRepositoryImpl({required this.dataSource});
 
   @override
   Stream<void> get onTransactionsChanged => _changeController.stream;
 
   @override
-  Future<Either<BaseFailure, Transaction>> addTransaction(
-      Transaction transaction) async {
+  Future<Either<BaseFailure, Transaction>> addTransaction(Transaction transaction) async {
     try {
       final transactionModel = TransactionModel.fromEntity(transaction);
 
-      await localDataSource.cacheTransaction(transactionModel);
+      await dataSource.cacheTransaction(transactionModel);
       _changeController.add(null); // Notify listeners of the change
       return Right(transactionModel);
     } on CacheException {
@@ -37,26 +36,22 @@ class WalletRepositoryImpl implements BaseWalletRepository {
   }
 
   @override
-  Future<Either<BaseFailure, Unit>> deleteTransaction(
-      String transactionId) async {
+  Future<Either<BaseFailure, Unit>> deleteTransaction(String transactionId) async {
     try {
-      await localDataSource.deleteTransaction(transactionId);
+      await dataSource.deleteTransaction(transactionId);
       _changeController.add(null); // Notify listeners of the change
       return const Right(unit);
     } on CacheException {
-      return Left(
-          CacheFailure('Failed to delete transaction from local storage'));
+      return Left(CacheFailure('Failed to delete transaction from local storage'));
     } catch (e) {
       return Left(UnknownFailure('An unknown error occurred: $e'));
     }
   }
 
   @override
-  Future<Either<BaseFailure, Transaction>> getTransactionById(
-      String transactionId) async {
+  Future<Either<BaseFailure, Transaction>> getTransactionById(String transactionId) async {
     try {
-      final transactionModel =
-          await localDataSource.getTransactionById(transactionId);
+      final transactionModel = await dataSource.getTransactionById(transactionId);
       return Right(transactionModel);
     } on CacheException {
       return Left(CacheFailure('Failed to get transaction from local storage'));
@@ -68,27 +63,24 @@ class WalletRepositoryImpl implements BaseWalletRepository {
   @override
   Future<Either<BaseFailure, List<Transaction>>> getTransactions() async {
     try {
-      final transactionModels = await localDataSource.getLastTransactions();
+      final transactionModels = await dataSource.getLastTransactions();
       return Right(transactionModels);
     } on CacheException {
-      return Left(
-          CacheFailure('Failed to get transactions from local storage'));
+      return Left(CacheFailure('Failed to get transactions from local storage'));
     } catch (e) {
       return Left(UnknownFailure('An unknown error occurred: $e'));
     }
   }
 
   @override
-  Future<Either<BaseFailure, Transaction>> updateTransaction(
-      Transaction transaction) async {
+  Future<Either<BaseFailure, Transaction>> updateTransaction(Transaction transaction) async {
     try {
       final transactionModel = TransactionModel.fromEntity(transaction);
-      await localDataSource.cacheTransaction(transactionModel);
+      await dataSource.cacheTransaction(transactionModel);
       _changeController.add(null); // Notify listeners of the change
       return Right(transactionModel);
     } on CacheException {
-      return Left(
-          CacheFailure('Failed to update transaction in local storage'));
+      return Left(CacheFailure('Failed to update transaction in local storage'));
     } catch (e) {
       return Left(UnknownFailure('An unknown error occurred: $e'));
     }

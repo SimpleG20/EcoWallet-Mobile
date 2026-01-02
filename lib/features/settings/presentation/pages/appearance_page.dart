@@ -1,13 +1,12 @@
-import 'package:eco_wallet/core/presentation/widgets/dropdown_row.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_section_list.dart';
-import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
-import 'package:eco_wallet/features/settings/domain/enums/settings_enums.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/settings_section_title.dart';
-import '../widgets/settings_sub_page_header.dart';
+import '../bloc/settings_bloc.dart';
+import '../widgets/settings_widgets.dart';
+import '../../domain/enums/settings_enums.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/presentation/widgets/switch_row.dart';
+import '../../../../core/presentation/widgets/dropdown_row.dart';
 
 class AppearancePage extends StatefulWidget {
   const AppearancePage({super.key});
@@ -24,26 +23,67 @@ class _AppearancePageState extends State<AppearancePage> {
   bool _hideCurrency = false;
   bool _enableAnimations = true;
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final settingsState = context.read<SettingsBloc>().state;
+    if (settingsState is! SettingsLoadedState) return;
+
+    final appearanceSettings = settingsState.preferences.appearancePreferences;
+    _selectedTheme = appearanceSettings.themeMode;
+    _colorBlindMode = appearanceSettings.colorBlindMode;
+    _currencyFormat = appearanceSettings.currencyFormat;
+    _fontSize = appearanceSettings.fontSize;
+    _hideCurrency = appearanceSettings.hideValues;
+    _enableAnimations = appearanceSettings.enableAnimations;
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return Column(
-      children: [
-        SettingsSubPageHeader(
-          title: loc.lbAppearance,
-          subtitle: loc.appearanceSubTitle,
-          complement: null,
-        ),
-        const SizedBox(height: 24),
-        Expanded(
-          child: SettingsCard(
-            child: _buildOptions(context, theme, loc),
-          ),
-        ),
-      ],
+    return BlocBuilder<SettingsBloc, BaseSettingsState>(
+      builder: (context, state) {
+        if (state is SettingsLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (state is SettingsErrorState) {
+          return Center(child: Text(state.message ?? loc.errorUnknown));
+        }
+
+        if (state is SettingsLoadedState) {
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+            ),
+            body: Stack(
+              children: [
+                Column(
+                  children: [
+                    SettingsSubPageHeader(
+                      title: loc.lbAppearance,
+                      subtitle: loc.appearanceSubTitle,
+                      complement: null,
+                    ),
+                    const SizedBox(height: 24),
+                    Expanded(
+                      child: SettingsCard(
+                        child: _buildOptions(context, theme, loc),
+                      ),
+                    ),
+                  ],
+                ),
+                SettingsConfirmEditionBtn(onPressed: (ctx) => _submitChanges(ctx)),
+              ],
+            ),
+          );
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 
@@ -58,7 +98,7 @@ class _AppearancePageState extends State<AppearancePage> {
 
   Widget _buildGeneralSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 16),
         SettingsSectionTitle(title: loc.sectionGeneral),
@@ -171,5 +211,27 @@ class _AppearancePageState extends State<AppearancePage> {
       },
       theme: theme,
     );
+  }
+
+  void _submitChanges(BuildContext context) {
+    final bloc = context.read<SettingsBloc>();
+    final currentState = bloc.state;
+
+    if (currentState is SettingsLoadedState) {
+      final updatedAppearance = currentState.preferences.appearancePreferences.copyWith(
+        themeMode: _selectedTheme,
+        colorBlindMode: _colorBlindMode,
+        currencyFormat: _currencyFormat,
+        fontSize: _fontSize,
+        hideValues: _hideCurrency,
+        enableAnimations: _enableAnimations,
+      );
+
+      final updatedPreferences = currentState.preferences.copyWith(
+        appearancePreferences: updatedAppearance,
+      );
+
+      bloc.add(UpdateUserPreferencesEvent(userPreferences: updatedPreferences));
+    }
   }
 }

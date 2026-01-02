@@ -5,12 +5,6 @@ import '/l10n/app_localizations.dart';
 import '../../../settings/presentation/pages/settings_page.dart';
 import '../../../transactions/presentation/pages/transactions_page.dart';
 
-class AnalyticsPage extends StatelessWidget {
-  const AnalyticsPage({super.key});
-  @override
-  Widget build(BuildContext context) => const Center(child: Text("Analytics"));
-}
-
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
