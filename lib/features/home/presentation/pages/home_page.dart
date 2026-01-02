@@ -1,3 +1,5 @@
+import 'package:eco_wallet/features/home/presentation/widgets/skeletons/home_header_skeleton.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/skeletons/home_page_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,6 +40,8 @@ class HomePage extends StatelessWidget {
         ),
         body: BlocBuilder<WalletBloc, BaseWalletState>(
           builder: (context, state) {
+            return const HomePageSkeleton();
+
             if (state is WalletLoading) {
               // TODO: Skeleton loader
               return const Center(child: CircularProgressIndicator());
