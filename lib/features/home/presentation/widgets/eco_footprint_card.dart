@@ -15,23 +15,29 @@ class EcoFootprintCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
+    final isDark = theme.brightness == Brightness.dark;
+
+    // Theme-aware colors
+    final gradientStart = isDark ? AppColors.ecoGradientStartDark : AppColors.ecoGradientStart;
+    final gradientEnd = isDark ? AppColors.ecoGradientEndDark : AppColors.ecoGradientEnd;
+    final textColor = isDark ? AppColors.darkForeground : Colors.white;
+    final shadowColor = isDark 
+        ? AppColors.darkPrimary.withValues(alpha: 0.2) 
+        : Colors.green.withValues(alpha: 0.3);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            AppColors.ecoGradientStart,
-            AppColors.ecoGradientEnd,
-          ],
+        gradient: LinearGradient(
+          colors: [gradientStart, gradientEnd],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.green.withValues(alpha: 0.3),
+            color: shadowColor,
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -43,7 +49,7 @@ class EcoFootprintCard extends StatelessWidget {
           Text(
             loc.lbMonthlyProgress,
             style: theme.textTheme.titleSmall?.copyWith(
-              color: Colors.white,
+              color: textColor,
             ),
           ),
           Row(
@@ -61,17 +67,17 @@ class EcoFootprintCard extends StatelessWidget {
                         child: CircularProgressIndicator(
                           value: 1 - (ecoData.carbonFootprint / kMaxCarbonFootprint).clamp(0, 1),
                           strokeWidth: 6,
-                          valueColor: AlwaysStoppedAnimation(_getDangerColor(ecoData.carbonFootprint)),
-                          backgroundColor: Colors.white.withValues(alpha: 0.2),
+                          valueColor: AlwaysStoppedAnimation(_getDangerColor(ecoData.carbonFootprint, isDark)),
+                          backgroundColor: textColor.withValues(alpha: 0.2),
                         ),
                       ),
                       Column(
                         children: [
-                          Icon(Icons.eco, color: _getDangerColor(ecoData.carbonFootprint), size: 40),
+                          Icon(Icons.eco, color: _getDangerColor(ecoData.carbonFootprint, isDark), size: 40),
                           Text(
                             '${(100 - (ecoData.carbonFootprint / kMaxCarbonFootprint * 100)).clamp(0, 100).toStringAsFixed(0)}%',
                             style: theme.textTheme.labelMedium?.copyWith(
-                              color: Colors.white,
+                              color: textColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -89,13 +95,13 @@ class EcoFootprintCard extends StatelessWidget {
                     Text(
                       loc.lbEcoFootprint,
                       style: theme.textTheme.labelMedium?.copyWith(
-                        color: Colors.white,
+                        color: textColor,
                       ),
                     ),
                     Text(
                       loc.ecoFootprintValue(ecoData.carbonFootprint.toStringAsFixed(1)),
                       style: theme.textTheme.titleLarge?.copyWith(
-                        color: Colors.white,
+                        color: textColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -103,13 +109,13 @@ class EcoFootprintCard extends StatelessWidget {
                     Text(
                       loc.lbEcoFootprintCompensation,
                       style: theme.textTheme.labelMedium?.copyWith(
-                        color: Colors.white,
+                        color: textColor,
                       ),
                     ),
                     Text(
                       loc.ecoFootprintCompensation(ecoData.treesPlanted),
                       style: theme.textTheme.titleSmall?.copyWith(
-                        color: Colors.white,
+                        color: textColor,
                         fontWeight: FontWeight.w600,
                       ),
                     )
@@ -123,13 +129,14 @@ class EcoFootprintCard extends StatelessWidget {
     );
   }
 
-  Color _getDangerColor(double value) {
+  Color _getDangerColor(double value, bool isDark) {
+    final goodColor = isDark ? AppColors.darkForeground : Colors.white;
     if (value < kMaxCarbonFootprint / 3) {
-      return Colors.white;
+      return goodColor;
     } else if (value < 2 * kMaxCarbonFootprint / 3) {
-      return Colors.orange;
+      return isDark ? Colors.orange.shade300 : Colors.orange;
     } else {
-      return Colors.red;
+      return isDark ? Colors.red.shade300 : Colors.red;
     }
   }
 }

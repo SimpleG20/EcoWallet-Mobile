@@ -19,6 +19,8 @@ class _ManageDataPageState extends State<ManageDataPage> {
   bool isEncryptedBackup = false;
   BackupFrequency backupFrequency = BackupFrequency.none;
 
+  bool _pendingChanges = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -57,7 +59,6 @@ class _ManageDataPageState extends State<ManageDataPage> {
         if (state is SettingsLoadedState) {
           return Scaffold(
               appBar: AppBar(
-                backgroundColor: theme.colorScheme.primaryContainer,
                 automaticallyImplyLeading: false,
               ),
               body: Stack(
@@ -78,7 +79,10 @@ class _ManageDataPageState extends State<ManageDataPage> {
                       const SizedBox(height: 24),
                     ],
                   ),
-                  SettingsConfirmEditionBtn(onPressed: (ctx) => _submitChanges(ctx)),
+                  SettingsConfirmEditionBtn(
+                    onPressed: (ctx) => _submitChanges(ctx),
+                    pendingChanges: _pendingChanges,
+                  ),
                 ],
               ));
         }

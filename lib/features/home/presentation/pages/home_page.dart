@@ -2,8 +2,9 @@ import 'package:eco_wallet/core/presentation/controllers/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../widgets/home_header.dart';
-import '../widgets/dismissible_card.dart';
+import '../widgets/dismissible_transaction_card.dart';
 import '../widgets/eco_footprint_card.dart';
 import '../widgets/home_action_buttons.dart';
 import '../widgets/add_transaction_modal.dart';
@@ -236,11 +237,19 @@ class _TransactionsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hideValue = context.select((SettingsBloc bloc) {
+      final state = bloc.state;
+      if (state is SettingsLoadedState) {
+        return state.preferences.appearancePreferences.hideValues;
+      }
+      return false;
+    });
+
     return Column(
       children: [
         _buildHeader(context),
         const SizedBox(height: 8),
-        _buildList(),
+        _buildList(hideValue),
       ],
     );
   }
@@ -266,7 +275,7 @@ class _TransactionsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildList() {
+  Widget _buildList(bool hideValue) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
@@ -276,14 +285,14 @@ class _TransactionsSection extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(
-              color: theme.colorScheme.shadow.withOpacity(0.2),
+              color: theme.colorScheme.shadow.withValues(alpha: 0.2),
               blurRadius: 8,
             ),
           ],
         ),
         child: ClipRRect(
           clipBehavior: Clip.antiAlias,
-          child: transactions.isEmpty ? _buildEmptyState() : _buildTransactionsList(),
+          child: transactions.isEmpty ? _buildEmptyState() : _buildTransactionsList(hideValue),
         ),
       ),
     );
@@ -301,7 +310,7 @@ class _TransactionsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildTransactionsList() {
+  Widget _buildTransactionsList(bool hideValue) {
     final visibleCount = transactions.length > _maxVisibleTransactions ? _maxVisibleTransactions : transactions.length;
 
     return ListView.builder(
@@ -314,6 +323,7 @@ class _TransactionsSection extends StatelessWidget {
         return DismissibleTransactionCard(
           transaction: transaction,
           onTap: () => onTransactionTap(transaction),
+          hideValue: hideValue,
         );
       },
     );

@@ -49,6 +49,17 @@ class UserPreferencesModel extends UserPreferences {
       'dataPreferences': DataPreferencesModel.toJson(dataPreferences),
     };
   }
+
+  /// Converts a domain [UserPreferences] entity to a [UserPreferencesModel] for persistence.
+  factory UserPreferencesModel.fromEntity(UserPreferences entity) {
+    return UserPreferencesModel(
+      id: entity.id,
+      appearancePreferences: entity.appearancePreferences,
+      notificationPreferences: entity.notificationPreferences,
+      budgetPreferences: entity.budgetPreferences,
+      dataPreferences: entity.dataPreferences,
+    );
+  }
 }
 
 Map<String, dynamic> makeMap(String value) {

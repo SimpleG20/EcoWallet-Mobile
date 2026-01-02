@@ -3,7 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+import '../../features/settings/domain/enums/currency_format.dart';
+
 class AppFormatters {
+  /// Formats currency with the user's preferred display format.
+  ///
+  /// [format] determines whether to show symbol ($1,234.56) or code (1,234.56 USD).
+  /// [hideValue] replaces the value with asterisks for privacy mode.
+  static String formatCurrencyWithPreference(double value, CurrencyFormat format, String locale) {
+    final formatter = NumberFormat.simpleCurrency(locale: locale);
+
+    if (format == CurrencyFormat.code) {
+      // Display as "1,234.56 USD" (value + currency code)
+      final valueOnly = formatter.format(value).replaceAll(formatter.currencySymbol, '').trim();
+      return '$valueOnly ${formatter.currencyName ?? 'USD'}';
+    }
+
+    // Default: symbol format "$1,234.56"
+    return formatter.format(value);
+  }
+
   static String formatCurrency(double value, String locale, {bool noSymbol = false}) {
     final format = NumberFormat.simpleCurrency(locale: locale);
     if (noSymbol) {
@@ -29,7 +48,9 @@ class AppFormatters {
 
   static final DateFormat weekdayDateFormatter = DateFormat('EEEE, MMM d');
 
-  static String currencySymbol(String locale) => NumberFormat.simpleCurrency(locale: locale).currencySymbol;
+  static String currencySymbol(String locale) {
+    return NumberFormat.simpleCurrency(locale: locale).currencySymbol;
+  }
 
   static TimeOfDay parseTimeOfDay(String timeString) {
     final parts = timeString.split(':');

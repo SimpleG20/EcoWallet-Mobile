@@ -42,23 +42,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardWeeklyOverview => 'Weekly Overview';
 
   @override
-  String get dashboardWeeklyOverviewInfo =>
-      'Shows weekly transaction overview.\nThe rightmost bar represents today.';
-
-  @override
   String get dashboardRecentTransactions => 'Recent Transactions';
 
   @override
   String get dashboardNoTransactions => 'No transactions available.';
 
   @override
+  String get dashboardWeeklyOverviewInfo =>
+      'Shows weekly transaction overview.\nThe rightmost bar represents today.';
+
+  @override
+  String get helpSubTitle => 'Get help and support';
+
+  @override
+  String get feedbackSubTitle => 'Send us your feedback';
+
+  @override
+  String get termsSubTitle => 'Read our terms of service';
+
+  @override
   String get settingsSubTitle => 'Manage your app settings';
+
+  @override
+  String get privacySubTitle => 'Review our privacy policies';
+
+  @override
+  String get policySubTitle => 'Understand our privacy policy';
+
+  @override
+  String get passwordSubTitle => 'Change your account password';
 
   @override
   String get securitySubTitle => 'Enhance your account security';
 
   @override
   String get budgetInfoSubTitle => 'View and manage your budget';
+
+  @override
+  String get manageDataSubTitle => 'Manage your data preferences';
 
   @override
   String get personalInfoSubTitle => 'Update your personal information';
@@ -70,25 +91,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appearanceSubTitle => 'Customize the look and feel of the app';
 
   @override
-  String get passwordSubTitle => 'Change your account password';
-
-  @override
-  String get helpSubTitle => 'Get help and support';
-
-  @override
-  String get privacySubTitle => 'Review our privacy policies';
-
-  @override
-  String get feedbackSubTitle => 'Send us your feedback';
-
-  @override
-  String get termsSubTitle => 'Read our terms of service';
-
-  @override
-  String get policySubTitle => 'Understand our privacy policy';
-
-  @override
-  String get manageDataSubTitle => 'Manage your data preferences';
+  String get unsavedChangesTitle => 'Unsaved Changes';
 
   @override
   String get askForgotPassword => 'Forgot Password?';
@@ -97,10 +100,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get askAlreadyHaveAccount => 'Already have an account?';
 
   @override
-  String get forgotPassword => 'Forgot Password?';
-
-  @override
-  String get dontHaveAccount => 'Don\'t have an account?';
+  String get askDontHaveAccount => 'Don\'t have an account?';
 
   @override
   String get deleteAccount => 'Delete Account';
@@ -154,6 +154,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get btnSave => 'Save Transaction';
+
+  @override
+  String get btnDiscardChanges => 'Discard Changes';
 
   @override
   String get btnSendTestNotification => 'Send Test Notification';
@@ -443,6 +446,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get msgTransactionDeleted => 'Transaction deleted successfully.';
+
+  @override
+  String get msgUnsavedChanges =>
+      'You have unsaved changes.\nAre you sure you want to discard them?';
 
   @override
   String get hintDateBirth => 'DD/MM/YYYY';

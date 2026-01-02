@@ -1,12 +1,14 @@
-import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/router/app_router.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/settings/domain/enums/color_blind_mode.dart';
+import 'features/settings/domain/enums/font_size_preference.dart';
 import 'features/settings/presentation/bloc/settings_bloc.dart';
 import 'features/user/presentation/bloc/user_bloc.dart';
+import 'features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'injection_container.dart' as di;
 import 'core/theme/app_theme.dart';
 import '/l10n/app_localizations.dart';
@@ -73,24 +75,62 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, BaseAuthState>(
       listener: (context, state) => _syncUserFromAuthState(state),
-      child: MaterialApp.router(
-        title: 'EcoWallet',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('pt'),
-        ],
-        routerConfig: di.sl<AppRouter>().router,
+      child: BlocBuilder<SettingsBloc, BaseSettingsState>(
+        buildWhen: (previous, current) => _conditionsToRebuild(previous, current),
+        builder: (context, settingsState) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: TextScaler.linear(
+              _getTextScaleFactor(settingsState),
+            ),
+          ),
+          child: ColorFiltered(
+            colorFilter: AppTheme.getColorFilter(
+              settingsState is SettingsLoadedState
+                  ? settingsState.preferences.appearancePreferences.colorBlindMode
+                  : ColorBlindMode.none,
+            ),
+            child: MaterialApp.router(
+              title: 'EcoWallet',
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: settingsState is SettingsLoadedState
+                  ? settingsState.preferences.appearancePreferences.flutterThemeMode
+                  : ThemeMode.system,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en'),
+                Locale('pt'),
+              ],
+              routerConfig: di.sl<AppRouter>().router,
+            ),
+          ),
+        ),
       ),
     );
+  }
+
+  double _getTextScaleFactor(BaseSettingsState state) {
+    if (state is SettingsLoadedState) {
+      return AppTheme.getTextScaleFactor(state.preferences.appearancePreferences.fontSize);
+    }
+    return AppTheme.getTextScaleFactor(FontSizePreference.medium);
+  }
+
+  bool _conditionsToRebuild(BaseSettingsState previous, BaseSettingsState current) {
+    if (previous != current) return true;
+
+    if (previous is SettingsLoadedState && current is SettingsLoadedState) {
+      if (previous.preferences != current.preferences) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
 

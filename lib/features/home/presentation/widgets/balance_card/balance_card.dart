@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constants/ui_data.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../settings/domain/entities/settings_entities.dart';
+import '../../../../settings/presentation/bloc/settings_bloc.dart';
 import '../../../domain/entities/weekly_transaction_data.dart';
 import '../../../domain/enum/balance_section.dart';
 import 'balance_main_section.dart';
@@ -34,9 +37,7 @@ class _BalanceCardState extends State<BalanceCard> {
 
   void _toggleSection() {
     setState(() {
-      _currentSection = _currentSection == EBalanceSection.main
-          ? EBalanceSection.graph
-          : EBalanceSection.main;
+      _currentSection = _currentSection == EBalanceSection.main ? EBalanceSection.graph : EBalanceSection.main;
     });
   }
 
@@ -49,6 +50,15 @@ class _BalanceCardState extends State<BalanceCard> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    // Reactive and type-safe access to appearance preferences
+    final appearancePreferences = context.select((SettingsBloc bloc) {
+      final state = bloc.state;
+      if (state is SettingsLoadedState) {
+        return state.preferences.appearancePreferences;
+      }
+      return const AppearancePreferences();
+    });
 
     return Container(
       width: double.infinity,
@@ -65,6 +75,7 @@ class _BalanceCardState extends State<BalanceCard> {
       ),
       child: _currentSection == EBalanceSection.main
           ? BalanceMainSection(
+              appearancePreferences: appearancePreferences,
               totalBalance: widget.totalBalance,
               monthlySavings: widget.monthlySavings,
               onToggleSection: _toggleSection,

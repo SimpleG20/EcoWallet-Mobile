@@ -1,3 +1,4 @@
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_confirm_edition_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,8 +7,9 @@ import '../../../../l10n/app_localizations.dart';
 class SettingsSubPageHeader extends StatelessWidget {
   final String title;
   final String subtitle;
-  final Widget Function(ThemeData, AppLocalizations)? complement;
   final double height;
+  final SettingsConfirmEditionBtn? confirmEditionBtn;
+  final Widget Function(ThemeData, AppLocalizations)? complement;
 
   const SettingsSubPageHeader({
     super.key,
@@ -15,6 +17,7 @@ class SettingsSubPageHeader extends StatelessWidget {
     required this.subtitle,
     this.complement,
     this.height = 180,
+    this.confirmEditionBtn,
   });
 
   @override
@@ -46,7 +49,33 @@ class SettingsSubPageHeader extends StatelessWidget {
                       backgroundColor: theme.colorScheme.onPrimaryContainer.withAlpha(30),
                       child: IconButton(
                         onPressed: () {
-                          context.pop();
+                          confirmEditionBtn == null
+                              ? context.pop()
+                              : confirmEditionBtn!.pendingChanges
+                                  ? showDialog(
+                                      context: context,
+                                      builder: (ctx) {
+                                        final loc = AppLocalizations.of(ctx)!;
+                                        return AlertDialog(
+                                          title: Text(loc.unsavedChangesTitle),
+                                          content: Text(loc.msgUnsavedChanges),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(context),
+                                              child: Text(loc.btnCancel),
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.pop(context); // Close dialog
+                                                context.pop(); // Navigate back
+                                              },
+                                              child: Text(loc.btnDiscardChanges),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    )
+                                  : context.pop();
                         },
                         icon: Icon(
                           Icons.arrow_back,

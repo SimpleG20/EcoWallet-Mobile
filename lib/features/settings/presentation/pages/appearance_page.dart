@@ -1,3 +1,4 @@
+import 'package:eco_wallet/features/settings/domain/entities/settings_entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,12 +17,10 @@ class AppearancePage extends StatefulWidget {
 }
 
 class _AppearancePageState extends State<AppearancePage> {
-  AppThemeMode _selectedTheme = AppThemeMode.system;
-  ColorBlindMode _colorBlindMode = ColorBlindMode.none;
-  CurrencyFormat _currencyFormat = CurrencyFormat.symbol;
-  FontSizePreference _fontSize = FontSizePreference.medium;
-  bool _hideCurrency = false;
-  bool _enableAnimations = true;
+  AppearancePreferences _currentPreferences = AppearancePreferences();
+  late AppearancePreferences _initialPreferences;
+
+  bool _pendingChanges = false;
 
   @override
   void didChangeDependencies() {
@@ -30,13 +29,8 @@ class _AppearancePageState extends State<AppearancePage> {
     final settingsState = context.read<SettingsBloc>().state;
     if (settingsState is! SettingsLoadedState) return;
 
-    final appearanceSettings = settingsState.preferences.appearancePreferences;
-    _selectedTheme = appearanceSettings.themeMode;
-    _colorBlindMode = appearanceSettings.colorBlindMode;
-    _currencyFormat = appearanceSettings.currencyFormat;
-    _fontSize = appearanceSettings.fontSize;
-    _hideCurrency = appearanceSettings.hideValues;
-    _enableAnimations = appearanceSettings.enableAnimations;
+    _initialPreferences = settingsState.preferences.appearancePreferences;
+    _currentPreferences = _initialPreferences;
   }
 
   @override
@@ -45,6 +39,9 @@ class _AppearancePageState extends State<AppearancePage> {
     final loc = AppLocalizations.of(context)!;
 
     return BlocBuilder<SettingsBloc, BaseSettingsState>(
+      buildWhen: (previous, current) {
+        return current is SettingsLoadingState || current is SettingsErrorState || current is SettingsLoadedState;
+      },
       builder: (context, state) {
         if (state is SettingsLoadingState) {
           return const Center(child: CircularProgressIndicator());
@@ -55,6 +52,10 @@ class _AppearancePageState extends State<AppearancePage> {
         }
 
         if (state is SettingsLoadedState) {
+          final confirmEditionBtn = SettingsConfirmEditionBtn(
+            onPressed: (ctx) => _submitChanges(ctx),
+            pendingChanges: _pendingChanges,
+          );
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -66,7 +67,7 @@ class _AppearancePageState extends State<AppearancePage> {
                     SettingsSubPageHeader(
                       title: loc.lbAppearance,
                       subtitle: loc.appearanceSubTitle,
-                      complement: null,
+                      confirmEditionBtn: confirmEditionBtn,
                     ),
                     const SizedBox(height: 24),
                     Expanded(
@@ -76,7 +77,7 @@ class _AppearancePageState extends State<AppearancePage> {
                     ),
                   ],
                 ),
-                SettingsConfirmEditionBtn(onPressed: (ctx) => _submitChanges(ctx)),
+                confirmEditionBtn,
               ],
             ),
           );
@@ -106,13 +107,16 @@ class _AppearancePageState extends State<AppearancePage> {
         DropdownRow<AppThemeMode>(
           icon: Icons.brightness_6,
           label: loc.lbTheme,
-          value: _selectedTheme,
+          value: _currentPreferences.themeMode,
           items: [
             DropdownMenuItem(value: AppThemeMode.system, child: Text(loc.themeSystem)),
             DropdownMenuItem(value: AppThemeMode.light, child: Text(loc.themeLight)),
             DropdownMenuItem(value: AppThemeMode.dark, child: Text(loc.themeDark)),
           ],
-          onChanged: (v) => setState(() => _selectedTheme = v!),
+          onChanged: (v) => setState(() {
+            _currentPreferences = _currentPreferences.copyWith(themeMode: v!);
+            _submitChanges(context);
+          }),
           theme: theme,
         ),
       ],
@@ -128,20 +132,28 @@ class _AppearancePageState extends State<AppearancePage> {
         DropdownRow<CurrencyFormat>(
           icon: Icons.attach_money,
           label: loc.lbCurrencyFormat,
-          value: _currencyFormat,
+          value: _currentPreferences.currencyFormat,
           items: [
             DropdownMenuItem(value: CurrencyFormat.symbol, child: Text(loc.currencySymbol)),
             DropdownMenuItem(value: CurrencyFormat.code, child: Text(loc.currencyCode)),
           ],
-          onChanged: (v) => setState(() => _currencyFormat = v!),
+          onChanged: (v) {
+            setState(() {
+              _currentPreferences = _currentPreferences.copyWith(currencyFormat: v!);
+              _pendingChanges = _currentPreferences != _initialPreferences;
+            });
+          },
           theme: theme,
         ),
         SwitchRow(
-          icon: _hideCurrency ? Icons.visibility_off : Icons.visibility,
-          label: loc.lbHideValues,
-          value: _hideCurrency,
-          onChanged: (v) => setState(() => _hideCurrency = v),
           theme: theme,
+          label: loc.lbHideValues,
+          icon: _currentPreferences.hideValues ? Icons.visibility_off : Icons.visibility,
+          value: _currentPreferences.hideValues,
+          onChanged: (v) => setState(() {
+            _currentPreferences = _currentPreferences.copyWith(hideValues: v);
+            _pendingChanges = _currentPreferences != _initialPreferences;
+          }),
         ),
       ],
     );
@@ -164,7 +176,7 @@ class _AppearancePageState extends State<AppearancePage> {
     return DropdownRow<ColorBlindMode>(
       icon: Icons.color_lens_outlined,
       label: loc.lbColorBlindMode,
-      value: _colorBlindMode,
+      value: _currentPreferences.colorBlindMode,
       items: [
         DropdownMenuItem(value: ColorBlindMode.none, child: Text(loc.colorBlindNone)),
         DropdownMenuItem(value: ColorBlindMode.protanopia, child: Text(loc.colorBlindProtanopia)),
@@ -173,7 +185,8 @@ class _AppearancePageState extends State<AppearancePage> {
       ],
       onChanged: (ColorBlindMode? newValue) {
         setState(() {
-          _colorBlindMode = newValue!;
+          _currentPreferences = _currentPreferences.copyWith(colorBlindMode: newValue!);
+          _pendingChanges = _currentPreferences != _initialPreferences;
         });
       },
       theme: theme,
@@ -184,10 +197,11 @@ class _AppearancePageState extends State<AppearancePage> {
     return SwitchRow(
       icon: Icons.auto_awesome,
       label: loc.lbAnimations,
-      value: _enableAnimations,
+      value: _currentPreferences.enableAnimations,
       onChanged: (bool newValue) {
         setState(() {
-          _enableAnimations = newValue;
+          _currentPreferences = _currentPreferences.copyWith(enableAnimations: newValue);
+          _pendingChanges = _currentPreferences != _initialPreferences;
         });
       },
       theme: theme,
@@ -198,7 +212,7 @@ class _AppearancePageState extends State<AppearancePage> {
     return DropdownRow<FontSizePreference>(
       icon: Icons.text_fields,
       label: loc.lbFontSize,
-      value: _fontSize,
+      value: _currentPreferences.fontSize,
       items: [
         DropdownMenuItem(value: FontSizePreference.small, child: Text(loc.fontSizeSmall)),
         DropdownMenuItem(value: FontSizePreference.medium, child: Text(loc.fontSizeMedium)),
@@ -206,7 +220,8 @@ class _AppearancePageState extends State<AppearancePage> {
       ],
       onChanged: (FontSizePreference? newValue) {
         setState(() {
-          _fontSize = newValue!;
+          _currentPreferences = _currentPreferences.copyWith(fontSize: newValue!);
+          _pendingChanges = _currentPreferences != _initialPreferences;
         });
       },
       theme: theme,
@@ -218,18 +233,12 @@ class _AppearancePageState extends State<AppearancePage> {
     final currentState = bloc.state;
 
     if (currentState is SettingsLoadedState) {
-      final updatedAppearance = currentState.preferences.appearancePreferences.copyWith(
-        themeMode: _selectedTheme,
-        colorBlindMode: _colorBlindMode,
-        currencyFormat: _currencyFormat,
-        fontSize: _fontSize,
-        hideValues: _hideCurrency,
-        enableAnimations: _enableAnimations,
+      final updatedPreferences = currentState.preferences.copyWith(
+        appearancePreferences: _currentPreferences,
       );
 
-      final updatedPreferences = currentState.preferences.copyWith(
-        appearancePreferences: updatedAppearance,
-      );
+      _initialPreferences = _currentPreferences;
+      _pendingChanges = false;
 
       bloc.add(UpdateUserPreferencesEvent(userPreferences: updatedPreferences));
     }

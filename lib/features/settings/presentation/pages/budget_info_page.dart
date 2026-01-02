@@ -26,6 +26,8 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
   final _dailyBudgetLimitAlertController = TextEditingController();
   final _dailyBudgetLimitController = TextEditingController();
 
+  bool _pendingChanges = false;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -100,6 +102,7 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
                 ),
                 SettingsConfirmEditionBtn(
                   onPressed: (ctx) => _submitChanges(ctx),
+                  pendingChanges: _pendingChanges,
                 ),
               ],
             );

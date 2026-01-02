@@ -4,6 +4,8 @@ import 'package:fpdart/fpdart.dart';
 
 import '../../domain/entities/user_preferences.dart';
 import '../../domain/usecases/get_user_preferences.dart';
+import '../../domain/usecases/update_user_preferences.dart';
+import '../../data/model/settings_data_model.dart';
 import '../../../user/domain/entities/user.dart';
 import '../../../user/domain/usecases/get_current_user.dart';
 import '../../../../core/usecases/base_usecase.dart';
@@ -14,10 +16,12 @@ part 'settings_state.dart';
 class SettingsBloc extends Bloc<BaseSettingsEvent, BaseSettingsState> {
   final GetCurrentUser getCurrentUser;
   final GetUserPreferences getUserPreferences;
+  final UpdateUserPreferences updateUserPreferences;
 
   SettingsBloc({
     required this.getCurrentUser,
     required this.getUserPreferences,
+    required this.updateUserPreferences,
   }) : super(SettingsInitialState()) {
     on<LoadSettingsEvent>(_onLoadSettings);
     on<UpdateUserPreferencesEvent>(_onUpdateUserPreferences);
@@ -63,18 +67,20 @@ class SettingsBloc extends Bloc<BaseSettingsEvent, BaseSettingsState> {
       return;
     }
 
-    emit(SettingsLoadingState());
+    // Convert entity to model for persistence
+    final preferencesModel = UserPreferencesModel.fromEntity(event.userPreferences);
 
-    final result = await getUserPreferences(currentState.user.id);
+    // Save to database
+    final result = await updateUserPreferences(preferencesModel);
     result.fold(
-      (failure) async {
+      (failure) {
         emit(SettingsErrorState(message: failure.message));
       },
-      (preferences) async {
+      (updatedPreferences) {
         emit(
           SettingsLoadedState(
             user: currentState.user,
-            preferences: preferences,
+            preferences: updatedPreferences,
           ),
         );
       },

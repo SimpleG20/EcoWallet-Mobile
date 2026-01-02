@@ -185,7 +185,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                 // });
               },
               child: Text(
-                loc.forgotPassword,
+                loc.askForgotPassword,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.primary,
                 ),
