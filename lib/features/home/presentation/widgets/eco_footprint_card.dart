@@ -7,7 +7,7 @@ import '../../../../core/theme/app_colors.dart';
 class EcoFootprintCard extends StatelessWidget {
   const EcoFootprintCard({super.key, required this.ecoData});
 
-  static const double kMaxCarbonFootprint = 400.0;
+  static const double kMaxCarbonFootprint = 4800.0;
 
   final EcoData ecoData;
 
@@ -21,9 +21,7 @@ class EcoFootprintCard extends StatelessWidget {
     final gradientStart = isDark ? AppColors.ecoGradientStartDark : AppColors.ecoGradientStart;
     final gradientEnd = isDark ? AppColors.ecoGradientEndDark : AppColors.ecoGradientEnd;
     final textColor = isDark ? AppColors.darkForeground : Colors.white;
-    final shadowColor = isDark 
-        ? AppColors.darkPrimary.withValues(alpha: 0.2) 
-        : Colors.green.withValues(alpha: 0.3);
+    final shadowColor = isDark ? AppColors.darkPrimary.withValues(alpha: 0.2) : Colors.green.withValues(alpha: 0.3);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
