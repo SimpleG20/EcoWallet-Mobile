@@ -1,6 +1,8 @@
+import 'package:eco_wallet/core/constants/transaction_type_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../home/presentation/widgets/add_transaction_modal.dart';
 import '/l10n/app_localizations.dart';
 import '../bloc/transactions_history_bloc.dart';
 import '../bloc/transactions_history_event.dart';
@@ -65,7 +67,13 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+                context: context,
+                builder: (ctx) {
+                  return const AddTransactionModal(transactionType: ETransactionType.expense);
+                });
+          },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
       ),

@@ -4,18 +4,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'transaction_card.dart';
 import '../../domain/entities/transaction_group.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
+import '../../../home/presentation/widgets/add_transaction_modal.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/utils/app_formatters.dart';
 
 class TransactionGroupCard extends StatelessWidget {
   final TransactionGroup transactionGroup;
 
-  const TransactionGroupCard({super.key, required this.transactionGroup});
+  const TransactionGroupCard({
+    super.key,
+    required this.transactionGroup,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
+    // Capture bloc reference early to ensure it's available in callbacks
+    // even after the widget is dismissed from the tree
+    final walletBloc = context.read<WalletBloc>();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,8 +60,6 @@ class TransactionGroupCard extends StatelessWidget {
                         child: const Icon(Icons.delete, color: Colors.white),
                       ),
                       onDismissed: (direction) {
-                        final walletBloc = context.read<WalletBloc>();
-
                         walletBloc.add(DeleteTransactionEvent(transaction.id));
 
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -71,7 +76,20 @@ class TransactionGroupCard extends StatelessWidget {
                       },
                       child: TransactionCard(
                         transaction: transaction,
-                        onTap: () {},
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (ctx) {
+                              return BlocProvider.value(
+                                value: context.read<WalletBloc>(),
+                                child: AddTransactionModal(
+                                  transactionType: transaction.type,
+                                  transactionToEdit: transaction,
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
                   );

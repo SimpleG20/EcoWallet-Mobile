@@ -132,12 +132,8 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
   Widget _buildTypeSection(ThemeData theme, AppLocalizations loc) {
     var options = [
       _TransactionEnumData(null, loc.lbAll),
-      _TransactionEnumData(ETransactionType.income,
-          TransactionTypeRepository.getLabel(ETransactionType.income, loc)),
-      _TransactionEnumData(ETransactionType.expense,
-          TransactionTypeRepository.getLabel(ETransactionType.expense, loc)),
-      _TransactionEnumData(ETransactionType.reserve,
-          TransactionTypeRepository.getLabel(ETransactionType.reserve, loc)),
+      _TransactionEnumData(ETransactionType.income, TransactionTypeRepository.getLabel(ETransactionType.income, loc)),
+      _TransactionEnumData(ETransactionType.expense, TransactionTypeRepository.getLabel(ETransactionType.expense, loc)),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,17 +172,14 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
       checkmarkColor: theme.colorScheme.onPrimaryContainer,
       selectedColor: theme.colorScheme.primaryContainer,
       labelStyle: TextStyle(
-        color: isSelected
-            ? theme.colorScheme.onPrimaryContainer
-            : theme.colorScheme.onSurface,
+        color: isSelected ? theme.colorScheme.onPrimaryContainer : theme.colorScheme.onSurface,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
       ),
     );
   }
 
   Widget _buildPriceRangeSection(ThemeData theme, AppLocalizations loc) {
-    final startLabel =
-        AppFormatters.formatCurrency(_currentRangeValues.start, loc.localeName);
+    final startLabel = AppFormatters.formatCurrency(_currentRangeValues.start, loc.localeName);
     final endLabel = _currentRangeValues.end >= kMaxAmountLimit
         ? "$kMaxAmountLimit+"
         : AppFormatters.formatCurrency(_currentRangeValues.end, loc.localeName);
@@ -198,8 +191,7 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
           children: [
             _buildSectionTitle(theme, loc.lbAmount),
             const Spacer(),
-            if (_currentRangeValues.start != 0 ||
-                _currentRangeValues.end != kMaxAmountLimit)
+            if (_currentRangeValues.start != 0 || _currentRangeValues.end != kMaxAmountLimit)
               TextButton(
                 onPressed: () {
                   setState(() {
@@ -240,12 +232,8 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                  AppFormatters.formatCurrency(
-                      _currentMinAmount, loc.localeName),
-                  style: theme.textTheme.bodySmall),
-              Text(
-                  "${AppFormatters.formatCurrency(_currentMaxAmount, loc.localeName)}+",
+              Text(AppFormatters.formatCurrency(_currentMinAmount, loc.localeName), style: theme.textTheme.bodySmall),
+              Text("${AppFormatters.formatCurrency(_currentMaxAmount, loc.localeName)}+",
                   style: theme.textTheme.bodySmall),
             ],
           ),
@@ -362,9 +350,7 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
       dateRange: _selectedDateRange,
       categories: List.from(_selectedCategories),
       minAmount: _currentRangeValues.start,
-      maxAmount: _currentRangeValues.end >= kMaxAmountLimit
-          ? kMaxAmountLimit
-          : _currentRangeValues.end,
+      maxAmount: _currentRangeValues.end >= kMaxAmountLimit ? kMaxAmountLimit : _currentRangeValues.end,
     );
 
     context.read<TransactionsHistoryBloc>().add(UpdateFiltersEvent(newFilter));

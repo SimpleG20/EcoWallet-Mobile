@@ -57,6 +57,7 @@ class AppColors {
   // --- Eco Footprint Gradient ---
   /// Dark green for eco footprint card gradient start.
   static const Color ecoGradientStart = Color(0xFF108E41);
+
   /// Light green for eco footprint card gradient end.
   static const Color ecoGradientEnd = Color(0xFF1BD386);
 
@@ -85,8 +86,6 @@ class AppColors {
         return lightPrimary;
       case ETransactionType.expense:
         return lightDestructive;
-      case ETransactionType.reserve:
-        return chart4;
     }
   }
 }
