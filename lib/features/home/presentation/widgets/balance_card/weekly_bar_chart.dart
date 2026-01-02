@@ -6,14 +6,22 @@ import '../../../../../core/constants/ui_data.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../domain/entities/weekly_transaction_data.dart';
 
-/// Stateless bar chart widget for displaying weekly transaction data.
-class WeeklyBarChart extends StatelessWidget {
+/// Stateful bar chart widget for displaying weekly transaction data with
+/// interactive tooltips that show the value when a bar is tapped.
+class WeeklyBarChart extends StatefulWidget {
   const WeeklyBarChart({
     super.key,
     required this.weeklyData,
   });
 
   final WeeklyTransactionData weeklyData;
+
+  @override
+  State<WeeklyBarChart> createState() => _WeeklyBarChartState();
+}
+
+class _WeeklyBarChartState extends State<WeeklyBarChart> {
+  int? _selectedBarIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +31,64 @@ class WeeklyBarChart extends StatelessWidget {
     return BarChart(
       BarChartData(
         alignment: BarChartAlignment.spaceAround,
-        maxY: weeklyData.maxAmount,
-        barTouchData: BarTouchData(enabled: false),
+        maxY: widget.weeklyData.maxAmount,
+        barTouchData: _buildBarTouchData(theme, loc),
         gridData: FlGridData(show: false),
         titlesData: _buildTitlesData(theme, loc),
         borderData: FlBorderData(show: false),
         barGroups: _buildBarGroups(theme),
       ),
+    );
+  }
+
+  BarTouchData _buildBarTouchData(ThemeData theme, AppLocalizations loc) {
+    return BarTouchData(
+      enabled: true,
+      touchTooltipData: BarTouchTooltipData(
+        tooltipPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        tooltipMargin: 8,
+        getTooltipColor: (_) => theme.colorScheme.inverseSurface,
+        getTooltipItem: (group, groupIndex, rod, rodIndex) {
+          final dayData = widget.weeklyData.dailyAmounts[group.x];
+          final weekday = DateFormat.EEEE(loc.localeName).format(dayData.date);
+          final formattedAmount = NumberFormat.currency(
+            locale: loc.localeName,
+            symbol: r'$',
+            decimalDigits: 2,
+          ).format(dayData.amount);
+
+          return BarTooltipItem(
+            '$weekday\n',
+            theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onInverseSurface,
+                  fontWeight: FontWeight.w500,
+                ) ??
+                const TextStyle(),
+            children: [
+              TextSpan(
+                text: formattedAmount,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onInverseSurface,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+      touchCallback: (event, response) {
+        if (event is FlTapUpEvent) {
+          final touchedIndex = response?.spot?.touchedBarGroupIndex;
+          setState(() {
+            // Toggle tooltip: tap same bar to dismiss, tap different bar to show
+            if (_selectedBarIndex == touchedIndex || touchedIndex == null) {
+              _selectedBarIndex = null;
+            } else {
+              _selectedBarIndex = touchedIndex;
+            }
+          });
+        }
+      },
     );
   }
 
@@ -45,11 +104,11 @@ class WeeklyBarChart extends StatelessWidget {
           showTitles: true,
           getTitlesWidget: (value, meta) {
             final index = value.toInt();
-            if (index < 0 || index >= weeklyData.dailyAmounts.length) {
+            if (index < 0 || index >= widget.weeklyData.dailyAmounts.length) {
               return const SizedBox.shrink();
             }
 
-            final dayData = weeklyData.dailyAmounts[index];
+            final dayData = widget.weeklyData.dailyAmounts[index];
             final weekday = DateFormat.E(loc.localeName).format(dayData.date);
             final isToday = today == weekday;
 
@@ -67,20 +126,22 @@ class WeeklyBarChart extends StatelessWidget {
   }
 
   List<BarChartGroupData> _buildBarGroups(ThemeData theme) {
-    return List.generate(weeklyData.dailyAmounts.length, (index) {
-      final dayData = weeklyData.dailyAmounts[index];
+    return List.generate(widget.weeklyData.dailyAmounts.length, (index) {
+      final dayData = widget.weeklyData.dailyAmounts[index];
+      final isSelected = _selectedBarIndex == index;
+
       return BarChartGroupData(
         x: index,
-        showingTooltipIndicators: [],
+        showingTooltipIndicators: isSelected ? [0] : [],
         barRods: [
           BarChartRodData(
             backDrawRodData: BackgroundBarChartRodData(
               show: true,
-              toY: weeklyData.maxAmount,
+              toY: widget.weeklyData.maxAmount,
               color: theme.colorScheme.onTertiaryContainer.withAlpha(30),
             ),
             toY: dayData.amount,
-            color: theme.colorScheme.onPrimaryContainer,
+            color: isSelected ? theme.colorScheme.onSecondaryContainer : theme.colorScheme.onPrimaryContainer,
             width: kBalanceCardBarWidth,
             borderRadius: BorderRadius.circular(4),
           ),
