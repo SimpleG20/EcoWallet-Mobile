@@ -451,7 +451,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hintEmail => 'Enter your email';
 
   @override
-  String get hintAddress => 'Enter your address';
+  String get hintAddress => '<City>, <State>, <Country>';
+
+  @override
+  String get hintAddressFormat => '<City>, <State>, <Country>';
 
   @override
   String get hintCategory => 'Write the category';
@@ -463,7 +466,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hintFullName => 'Enter your full name';
 
   @override
-  String get hintPhoneNumber => 'Enter your phone number';
+  String get hintPhoneNumber => '+1 (XXX) XXX-XXXX';
 
   @override
   String get hintConfirmPassword => 'Confirm your password';

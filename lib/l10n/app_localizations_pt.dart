@@ -453,7 +453,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get hintEmail => 'Insira seu email';
 
   @override
-  String get hintAddress => 'Insira seu endereço';
+  String get hintAddress => '<Cidade>, <Estado>, <País>';
+
+  @override
+  String get hintAddressFormat => '<Cidade>, <Estado>, <País>';
 
   @override
   String get hintCategory => 'Escreva a categoria';
@@ -465,7 +468,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get hintFullName => 'Insira seu nome completo';
 
   @override
-  String get hintPhoneNumber => 'Insira seu número de telefone';
+  String get hintPhoneNumber => '+55 (XX) XXXXX-XXXX';
 
   @override
   String get hintConfirmPassword => 'Confirme sua senha';

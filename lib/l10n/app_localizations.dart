@@ -977,8 +977,14 @@ abstract class AppLocalizations {
   /// No description provided for @hintAddress.
   ///
   /// In en, this message translates to:
-  /// **'Enter your address'**
+  /// **'<City>, <State>, <Country>'**
   String get hintAddress;
+
+  /// No description provided for @hintAddressFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'<City>, <State>, <Country>'**
+  String get hintAddressFormat;
 
   /// No description provided for @hintCategory.
   ///
@@ -1001,7 +1007,7 @@ abstract class AppLocalizations {
   /// No description provided for @hintPhoneNumber.
   ///
   /// In en, this message translates to:
-  /// **'Enter your phone number'**
+  /// **'+1 (XXX) XXX-XXXX'**
   String get hintPhoneNumber;
 
   /// No description provided for @hintConfirmPassword.
