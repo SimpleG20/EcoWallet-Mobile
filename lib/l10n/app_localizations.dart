@@ -1307,7 +1307,7 @@ abstract class AppLocalizations {
   /// No description provided for @errorAddressInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Address is too short.'**
+  /// **'Invalid address format.'**
   String get errorAddressInvalid;
 
   /// No description provided for @errorNumberPositive.

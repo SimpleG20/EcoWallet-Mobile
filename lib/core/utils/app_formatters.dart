@@ -57,8 +57,8 @@ class AppFormatters {
   static const Map<String, PhoneFormatConfig> _phoneFormats = {
     'pt': PhoneFormatConfig(
       countryCode: '55',
-      pattern: '(XX) XXXXX-XXXX',
-      maxDigits: 11,
+      pattern: '(XX) XX XXXXX-XXXX',
+      maxDigits: 13,
     ),
     'en': PhoneFormatConfig(
       countryCode: '1',
@@ -70,8 +70,7 @@ class AppFormatters {
   /// Returns the phone country code for the given locale
   static String getPhoneCountryCode(String locale) {
     final langCode = locale.split('_').first;
-    return _phoneFormats[langCode]?.countryCode ??
-        _phoneFormats['en']!.countryCode;
+    return _phoneFormats[langCode]?.countryCode ?? _phoneFormats['en']!.countryCode;
   }
 
   /// Returns the phone number format pattern for the given locale

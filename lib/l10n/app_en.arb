@@ -208,7 +208,7 @@
   "errorDateOutOfRange": "Date out of range.",
   "errorEmailInvalid": "Invalid email format.",
   "errorPasswordWeak": "Password is too weak.",
-  "errorAddressInvalid": "Address is too short.",
+  "errorAddressInvalid": "Invalid address format.",
   "errorNumberPositive": "Number must be positive.",
   "errorPasswordTooShort": "Password is too short.",
   "errorPasswordMismatch": "Passwords do not match.",

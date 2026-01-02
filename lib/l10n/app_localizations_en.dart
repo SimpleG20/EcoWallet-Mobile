@@ -626,7 +626,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorPasswordWeak => 'Password is too weak.';
 
   @override
-  String get errorAddressInvalid => 'Address is too short.';
+  String get errorAddressInvalid => 'Invalid address format.';
 
   @override
   String get errorNumberPositive => 'Number must be positive.';
