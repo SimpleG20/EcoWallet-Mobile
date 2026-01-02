@@ -52,6 +52,58 @@ class AppFormatters {
       return null;
     }
   }
+
+  // Phone format configurations per locale
+  static const Map<String, PhoneFormatConfig> _phoneFormats = {
+    'pt': PhoneFormatConfig(
+      countryCode: '55',
+      pattern: '(XX) XXXXX-XXXX',
+      maxDigits: 11,
+    ),
+    'en': PhoneFormatConfig(
+      countryCode: '1',
+      pattern: '(XXX) XXX-XXXX',
+      maxDigits: 10,
+    ),
+  };
+
+  /// Returns the phone country code for the given locale
+  static String getPhoneCountryCode(String locale) {
+    final langCode = locale.split('_').first;
+    return _phoneFormats[langCode]?.countryCode ??
+        _phoneFormats['en']!.countryCode;
+  }
+
+  /// Returns the phone number format pattern for the given locale
+  static String getPhoneFormatPattern(String locale) {
+    final langCode = locale.split('_').first;
+    return _phoneFormats[langCode]?.pattern ?? _phoneFormats['en']!.pattern;
+  }
+
+  /// Returns the maximum number of digits for a phone number in the locale
+  static int getPhoneMaxDigits(String locale) {
+    final langCode = locale.split('_').first;
+    return _phoneFormats[langCode]?.maxDigits ?? _phoneFormats['en']!.maxDigits;
+  }
+
+  /// Returns the localized address format hint
+  /// Format: "{city}, {state}, {country}"
+  static String getAddressFormatHint(AppLocalizations loc) {
+    return loc.hintAddressFormat;
+  }
+}
+
+/// Configuration class for phone format per locale
+class PhoneFormatConfig {
+  final String countryCode;
+  final String pattern;
+  final int maxDigits;
+
+  const PhoneFormatConfig({
+    required this.countryCode,
+    required this.pattern,
+    required this.maxDigits,
+  });
 }
 
 class CurrencyInputFormatter extends TextInputFormatter {
