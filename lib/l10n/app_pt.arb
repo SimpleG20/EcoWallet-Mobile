@@ -204,6 +204,19 @@
       }
     }
   },
+  "ntfAlertConsumptionTitle": "Alerta de Consumo! ⚠️",
+  "ntfAlertConsumptionBody": "Você ultrapassou seu limite de {value}",
+  "@ntfAlertConsumptionBody": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "ntfDailyReminderTitle": "Lembrete EcoWallet",
+  "ntfDailyReminderBody": "Não se esqueça de registrar suas despesas hoje! 🌱",
+  "ntfDailyReminderChannelName": "Lembretes Diários",
+  "ntfDailyReminderChannelDescription": "Notifica para registrar despesas diariamente",
   "errorNameInvalid": "Nome muito curto.",
   "errorPasswordWeak": "Senha é muito fraca.",
   "errorAddressInvalid": "Endereço muito curto.",

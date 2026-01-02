@@ -1280,6 +1280,42 @@ abstract class AppLocalizations {
   /// **'Threshold: {value} kWh'**
   String thresholdLabel(String value);
 
+  /// No description provided for @ntfAlertConsumptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption Alert! ⚠️'**
+  String get ntfAlertConsumptionTitle;
+
+  /// No description provided for @ntfAlertConsumptionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve exceeded your limit of {value}'**
+  String ntfAlertConsumptionBody(String value);
+
+  /// No description provided for @ntfDailyReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EcoWallet Reminder'**
+  String get ntfDailyReminderTitle;
+
+  /// No description provided for @ntfDailyReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget to log your expenses today! 🌱'**
+  String get ntfDailyReminderBody;
+
+  /// No description provided for @ntfDailyReminderChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Reminders'**
+  String get ntfDailyReminderChannelName;
+
+  /// No description provided for @ntfDailyReminderChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifies to log expenses daily'**
+  String get ntfDailyReminderChannelDescription;
+
   /// No description provided for @errorNameInvalid.
   ///
   /// In en, this message translates to:

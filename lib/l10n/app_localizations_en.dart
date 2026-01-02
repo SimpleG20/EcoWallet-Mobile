@@ -615,6 +615,28 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get ntfAlertConsumptionTitle => 'Consumption Alert! ⚠️';
+
+  @override
+  String ntfAlertConsumptionBody(String value) {
+    return 'You\'ve exceeded your limit of $value';
+  }
+
+  @override
+  String get ntfDailyReminderTitle => 'EcoWallet Reminder';
+
+  @override
+  String get ntfDailyReminderBody =>
+      'Don\'t forget to log your expenses today! 🌱';
+
+  @override
+  String get ntfDailyReminderChannelName => 'Daily Reminders';
+
+  @override
+  String get ntfDailyReminderChannelDescription =>
+      'Notifies to log expenses daily';
+
+  @override
   String get errorNameInvalid => 'Name is too short.';
 
   @override

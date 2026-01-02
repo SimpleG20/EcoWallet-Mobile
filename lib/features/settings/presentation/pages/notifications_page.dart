@@ -4,9 +4,11 @@ import 'package:eco_wallet/features/settings/presentation/widgets/settings_confi
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_sub_page_header.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/notification_option_row.dart';
+import 'package:eco_wallet/injection_container.dart' as di;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/services/notification_service.dart';
 import '../widgets/settings_section_list.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../widgets/settings_section_title.dart';
@@ -73,34 +75,51 @@ class _NotificationsPageState extends State<NotificationsPage> {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
 
-    return BlocBuilder<SettingsBloc, BaseSettingsState>(
-      builder: (context, state) {
-        if (state is SettingsLoadingState) {
-          return const Center(child: CircularProgressIndicator());
+    return BlocListener<SettingsBloc, BaseSettingsState>(
+      listener: (context, state) async {
+        if (state is PreferencesUpdatedState) {
+          final settingsBloc = context.read<SettingsBloc>();
+          final loc = AppLocalizations.of(context)!;
+          final notificationService = di.sl<NotificationService>();
+          final notifs = state.preferences.notificationPreferences;
+          if (notifs.dailyReminderEnabled) {
+            await notificationService.requestPermissions();
+            await notificationService.scheduleDailyReminder(loc, notifs.reminderTime);
+          } else {
+            await notificationService.cancelDailyReminder();
+          }
+          settingsBloc.add(LoadSettingsEvent());
         }
-
-        if (state is SettingsErrorState) {
-          return Center(
-            child: Text(
-              state.message ?? loc.errorUnknown,
-              style: theme.textTheme.titleMedium?.copyWith(
-                color: theme.colorScheme.error,
-              ),
-            ),
-          );
-        }
-
-        if (state is SettingsLoadedState) {
-          return Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-            ),
-            body: _buildContent(context, theme, loc),
-          );
-        }
-
-        return const SizedBox.shrink();
       },
+      child: BlocBuilder<SettingsBloc, BaseSettingsState>(
+        builder: (context, state) {
+          if (state is SettingsLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (state is SettingsErrorState) {
+            return Center(
+              child: Text(
+                state.message ?? loc.errorUnknown,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.error,
+                ),
+              ),
+            );
+          }
+
+          if (state is SettingsLoadedState) {
+            return Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+              ),
+              body: _buildContent(context, theme, loc),
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
+      ),
     );
   }
 

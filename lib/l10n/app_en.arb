@@ -204,6 +204,19 @@
       }
     }
   },
+  "ntfAlertConsumptionTitle": "Consumption Alert! ⚠️",
+  "ntfAlertConsumptionBody": "You've exceeded your limit of {value}",
+  "@ntfAlertConsumptionBody": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "ntfDailyReminderTitle": "EcoWallet Reminder",
+  "ntfDailyReminderBody": "Don't forget to log your expenses today! 🌱",
+  "ntfDailyReminderChannelName": "Daily Reminders",
+  "ntfDailyReminderChannelDescription": "Notifies to log expenses daily",
   "errorNameInvalid": "Name is too short.",
   "errorDateInvalid": "Invalid date format.",
   "errorEmpty": "This field cannot be empty.",

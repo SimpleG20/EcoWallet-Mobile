@@ -14,8 +14,7 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
     try {
       final db = await dbHelper.database;
 
-      final List<Map<String, dynamic>> maps =
-          await db.query('transactions', orderBy: 'date DESC');
+      final List<Map<String, dynamic>> maps = await db.query('transactions', orderBy: 'date DESC');
 
       if (maps.isEmpty) {
         return [];
@@ -83,6 +82,109 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       rethrow;
     } catch (e) {
       throw CacheException('Failed to get transaction from db');
+    }
+  }
+
+  @override
+  Future<double> getTotalBalance() async {
+    try {
+      final db = await dbHelper.database;
+
+      final incomeResult =
+          await db.rawQuery('SELECT SUM(amount) as totalIncome FROM transactions WHERE type = ?', ['income']);
+      final expenseResult =
+          await db.rawQuery('SELECT SUM(amount) as totalExpense FROM transactions WHERE type = ?', ['expense']);
+
+      final totalIncome = incomeResult.first['totalIncome'] as double? ?? 0.0;
+      final totalExpense = expenseResult.first['totalExpense'] as double? ?? 0.0;
+
+      return totalIncome - totalExpense;
+    } catch (e) {
+      throw CacheException('Failed to calculate total balance from db');
+    }
+  }
+
+  @override
+  Future<double> getTotalIncome() async {
+    try {
+      final db = await dbHelper.database;
+
+      final incomeResult =
+          await db.rawQuery('SELECT SUM(amount) as totalIncome FROM transactions WHERE type = ?', ['income']);
+
+      return incomeResult.first['totalIncome'] as double? ?? 0.0;
+    } catch (e) {
+      throw CacheException('Failed to calculate total income from db');
+    }
+  }
+
+  @override
+  Future<double> getTotalExpense() async {
+    try {
+      final db = await dbHelper.database;
+      final expenseResult =
+          await db.rawQuery('SELECT SUM(amount) as totalExpense FROM transactions WHERE type = ?', ['expense']);
+      return expenseResult.first['totalExpense'] as double? ?? 0.0;
+    } catch (e) {
+      throw CacheException('Failed to calculate total expense from db');
+    }
+  }
+
+  @override
+  Future<double> getCurrentMonthExpense() async {
+    try {
+      final db = await dbHelper.database;
+      final now = DateTime.now();
+      final firstDayOfMonth = DateTime(now.year, now.month, 1);
+      final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+
+      final expenseResult = await db.rawQuery(
+        'SELECT SUM(amount) as monthlyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        [
+          'expense',
+          firstDayOfMonth.toIso8601String(),
+          lastDayOfMonth.toIso8601String(),
+        ],
+      );
+
+      return expenseResult.first['monthlyExpense'] as double? ?? 0.0;
+    } catch (e) {
+      throw CacheException('Failed to calculate current month expenses from db');
+    }
+  }
+
+  @override
+  Future<double> getMonthlySavings() async {
+    try {
+      final db = await dbHelper.database;
+      final now = DateTime.now();
+      final firstDayOfMonth = DateTime(now.year, now.month, 1);
+      final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+
+      final incomeResult = await db.rawQuery(
+        'SELECT SUM(amount) as monthlyIncome FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        [
+          'income',
+          firstDayOfMonth.toIso8601String(),
+          lastDayOfMonth.toIso8601String(),
+        ],
+      );
+
+      final expenseResult = await db.rawQuery(
+        'SELECT SUM(amount) as monthlyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        [
+          'expense',
+          firstDayOfMonth.toIso8601String(),
+          lastDayOfMonth.toIso8601String(),
+        ],
+      );
+
+      final monthlyIncome = incomeResult.first['monthlyIncome'] as double? ?? 0.0;
+      final monthlyExpense = expenseResult.first['monthlyExpense'] as double? ?? 0.0;
+
+      return monthlyIncome - monthlyExpense;
+    } catch (e) {
+      throw CacheException('Failed to calculate monthly savings from db');
     }
   }
 }

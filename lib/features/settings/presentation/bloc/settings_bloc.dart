@@ -77,12 +77,7 @@ class SettingsBloc extends Bloc<BaseSettingsEvent, BaseSettingsState> {
         emit(SettingsErrorState(message: failure.message));
       },
       (updatedPreferences) {
-        emit(
-          SettingsLoadedState(
-            user: currentState.user,
-            preferences: updatedPreferences,
-          ),
-        );
+        emit(PreferencesUpdatedState(preferences: updatedPreferences));
       },
     );
   }

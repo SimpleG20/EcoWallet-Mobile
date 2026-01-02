@@ -43,3 +43,12 @@ class SettingsLoadedState extends BaseSettingsState {
     );
   }
 }
+
+class PreferencesUpdatedState extends BaseSettingsState {
+  final UserPreferences preferences;
+
+  PreferencesUpdatedState({required this.preferences});
+
+  @override
+  List<Object?> get props => [preferences];
+}

@@ -2,7 +2,6 @@ import 'package:eco_wallet/core/presentation/controllers/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../widgets/home_header.dart';
 import '../widgets/dismissible_transaction_card.dart';
 import '../widgets/eco_footprint_card.dart';
@@ -15,6 +14,7 @@ import '../../domain/entities/weekly_transaction_data.dart';
 import '../../domain/usecases/calculate_weekly_transactions.dart';
 import '../../../wallet/domain/entities/transaction.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
+import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../injection_container.dart' as di;
 import '../../../../core/constants/transaction_type_data.dart';
@@ -40,36 +40,43 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: theme.colorScheme.primaryContainer,
         ),
-        body: BlocBuilder<WalletBloc, BaseWalletState>(
-          builder: (context, state) {
-            if (state is WalletLoading) {
-              return const HomePageSkeleton();
+        body: BlocListener<WalletBloc, BaseWalletState>(
+          listener: (context, state) {
+            if (state is TransactionAddedSuccess) {
+              _checkHighConsumptionAlert(context, state.totalExpense);
             }
-
-            if (state is WalletError) {
-              return Center(
-                child: Text(
-                  state.message,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: theme.colorScheme.error,
-                  ),
-                ),
-              );
-            }
-
-            if (state is WalletLoaded) {
-              return _HomeBody(
-                loc: loc,
-                theme: theme,
-                state: state,
-                ecoData: EcoData.fromTransactions(loc, state.transactions),
-                weeklyData: _calculateWeeklyTransactions(state.recentTransactions),
-                onAddTransaction: (type, {Transaction? transaction}) =>
-                    _showAddTransactionModal(context, type, transactionToEdit: transaction),
-              );
-            }
-            return const SizedBox.shrink();
           },
+          child: BlocBuilder<WalletBloc, BaseWalletState>(
+            builder: (context, state) {
+              if (state is WalletLoading) {
+                return const HomePageSkeleton();
+              }
+
+              if (state is WalletError) {
+                return Center(
+                  child: Text(
+                    state.message,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.error,
+                    ),
+                  ),
+                );
+              }
+
+              if (state is WalletLoaded) {
+                return _HomeBody(
+                  loc: loc,
+                  theme: theme,
+                  state: state,
+                  ecoData: EcoData.fromTransactions(loc, state.transactions),
+                  weeklyData: _calculateWeeklyTransactions(state.recentTransactions),
+                  onAddTransaction: (type, {Transaction? transaction}) =>
+                      _showAddTransactionModal(context, type, transactionToEdit: transaction),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ),
       ),
     );
@@ -92,6 +99,32 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _checkHighConsumptionAlert(BuildContext context, double amount) {
+    final loc = AppLocalizations.of(context)!;
+    final settingsBloc = context.read<SettingsBloc>();
+    final settingsState = settingsBloc.state;
+    if (settingsState is! SettingsLoadedState) {
+      return;
+    }
+
+    final highExpenseThreshold = settingsState.preferences.notificationPreferences.highConsumptionThreshold;
+    if (amount > highExpenseThreshold) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(loc.ntfAlertConsumptionTitle),
+          content: Text(loc.ntfAlertConsumptionBody(amount.toStringAsPrecision(2))),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(loc.btnCancel),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
 

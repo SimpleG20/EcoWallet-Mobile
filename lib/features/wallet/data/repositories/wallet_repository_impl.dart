@@ -85,4 +85,64 @@ class WalletRepositoryImpl implements BaseWalletRepository {
       return Left(UnknownFailure('An unknown error occurred: $e'));
     }
   }
+
+  @override
+  Future<Either<BaseFailure, double>> getCurrentMonthExpense() async {
+    try {
+      final totalExpense = await dataSource.getCurrentMonthExpense();
+      return Right(totalExpense);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get current month expense from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getTotalIncome() async {
+    try {
+      final totalIncome = await dataSource.getTotalIncome();
+      return Right(totalIncome);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get total income from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getTotalBalance() async {
+    try {
+      final totalBalance = await dataSource.getTotalBalance();
+      return Right(totalBalance);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get total balance from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getTotalExpense() async {
+    try {
+      final totalExpense = await dataSource.getTotalExpense();
+      return Right(totalExpense);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get total expense from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getMonthlySavings() async {
+    try {
+      final monthlySavings = await dataSource.getMonthlySavings();
+      return Right(monthlySavings);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get monthly savings from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
 }

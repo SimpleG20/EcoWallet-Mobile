@@ -1,4 +1,5 @@
 import 'package:eco_wallet/core/config/app_config.dart';
+import 'package:eco_wallet/core/services/notification_service.dart';
 import 'package:eco_wallet/features/user/domain/usecases/get_current_user.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,9 +92,15 @@ Future<void> init() async {
       deleteTransaction: sl(),
       updateTransaction: sl(),
       getTransactionById: sl(),
-      repository: sl(),
+      getTotalBalance: sl(),
+      getTotalIncome: sl(),
+      getTotalExpense: sl(),
+      getMonthlySavings: sl(),
+      walletRepository: sl(),
     ),
   );
+
+  sl.registerLazySingleton(() => NotificationService());
 
   sl.registerLazySingleton(() => AppRouter(authBloc: sl()));
 
@@ -117,6 +124,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteTransaction(sl()));
   sl.registerLazySingleton(() => UpdateTransaction(sl()));
   sl.registerLazySingleton(() => GetTransaction(sl()));
+  sl.registerLazySingleton(() => GetTotalBalance(sl()));
+  sl.registerLazySingleton(() => GetTotalIncome(sl()));
+  sl.registerLazySingleton(() => GetTotalExpense(sl()));
+  sl.registerLazySingleton(() => GetMonthlySavings(sl()));
 
   sl.registerLazySingleton<BaseAuthRepository>(() => AuthRepositoryImpl(dataSource: sl()));
   sl.registerLazySingleton<BaseUserRepository>(() => UserRepositoryImpl(dataSource: sl(), authDataSource: sl()));
