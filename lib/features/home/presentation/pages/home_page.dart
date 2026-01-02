@@ -265,12 +265,19 @@ class _TransactionsSection extends StatelessWidget {
   Widget _buildList() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: SizedBox(
+      child: Container(
         height: 300,
-        child: Material(
-          elevation: 4,
-          borderRadius: BorderRadius.circular(12.0),
+        decoration: BoxDecoration(
           color: theme.colorScheme.surface,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: theme.colorScheme.shadow.withOpacity(0.2),
+              blurRadius: 8,
+            ),
+          ],
+        ),
+        child: ClipRRect(
           clipBehavior: Clip.antiAlias,
           child: transactions.isEmpty ? _buildEmptyState() : _buildTransactionsList(),
         ),
@@ -291,9 +298,7 @@ class _TransactionsSection extends StatelessWidget {
   }
 
   Widget _buildTransactionsList() {
-    final visibleCount = transactions.length > _maxVisibleTransactions
-        ? _maxVisibleTransactions
-        : transactions.length;
+    final visibleCount = transactions.length > _maxVisibleTransactions ? _maxVisibleTransactions : transactions.length;
 
     return ListView.builder(
       shrinkWrap: true,

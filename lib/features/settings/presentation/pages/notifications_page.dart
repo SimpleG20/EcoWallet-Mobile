@@ -3,6 +3,7 @@ import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dar
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_confirm_edition_btn.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_sub_page_header.dart';
 import 'package:eco_wallet/features/settings/presentation/widgets/settings_card.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/notification_option_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -153,79 +154,35 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   Widget _buildDailyReminderOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Icon(Icons.notifications_outlined, color: theme.colorScheme.onSurfaceVariant),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                loc.lbDailyReminder,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
-              Text(
-                loc.dailyReminderDescription,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Switch(
-          value: _dailyReminderEnabled,
-          onChanged: (bool newValue) {
-            setState(() {
-              _dailyReminderEnabled = newValue;
-            });
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.access_time),
-          onPressed: _dailyReminderEnabled ? () => _selectTime(context, _reminderTime) : null,
-          tooltip: _reminderTime.format(context),
-        ),
-      ],
+    return NotificationOptionRow(
+      icon: Icons.notifications_outlined,
+      title: loc.lbDailyReminder,
+      description: loc.dailyReminderDescription,
+      value: _dailyReminderEnabled,
+      onChanged: (bool newValue) {
+        setState(() {
+          _dailyReminderEnabled = newValue;
+        });
+      },
+      trailing: IconButton(
+        icon: const Icon(Icons.access_time),
+        onPressed: _dailyReminderEnabled ? () => _selectTime(context, _reminderTime) : null,
+        tooltip: _reminderTime.format(context),
+      ),
     );
   }
 
   Widget _buildBillsReminderOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Icon(Icons.receipt_long_outlined, color: theme.colorScheme.onSurfaceVariant),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                loc.lbBillsReminder,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
-              Text(
-                loc.billsReminderDescription,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Switch(
-          value: _billsReminderEnabled,
-          onChanged: (bool newValue) {
-            setState(() {
-              _billsReminderEnabled = newValue;
-            });
-          },
-        ),
-      ],
+    return NotificationOptionRow(
+      icon: Icons.receipt_long_outlined,
+      title: loc.lbBillsReminder,
+      description: loc.billsReminderDescription,
+      value: _billsReminderEnabled,
+      onChanged: (bool newValue) {
+        setState(() {
+          _billsReminderEnabled = newValue;
+        });
+      },
     );
   }
 
@@ -241,38 +198,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   Widget _buildMonthlyReportOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Icon(Icons.calendar_month_outlined, color: theme.colorScheme.onSurfaceVariant),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                loc.lbMonthlyReport,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
-              Text(
-                loc.monthlyReportDescription,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Switch(
-          value: _monthlyReportEnabled,
-          onChanged: (bool newValue) {
-            setState(() {
-              _monthlyReportEnabled = newValue;
-            });
-          },
-        ),
-      ],
+    return NotificationOptionRow(
+      icon: Icons.calendar_month_outlined,
+      title: loc.lbMonthlyReport,
+      description: loc.monthlyReportDescription,
+      value: _monthlyReportEnabled,
+      onChanged: (bool newValue) {
+        setState(() {
+          _monthlyReportEnabled = newValue;
+        });
+      },
     );
   }
 
@@ -344,38 +279,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   Widget _buildEnergySavingTipsOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Icon(Icons.energy_savings_leaf_outlined, color: theme.colorScheme.onSurfaceVariant),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                loc.lbEnergySavingTips,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
-              Text(
-                loc.energySavingTipsDescription,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Switch(
-          value: _energySavingTipsEnabled,
-          onChanged: (bool newValue) {
-            setState(() {
-              _energySavingTipsEnabled = newValue;
-            });
-          },
-        ),
-      ],
+    return NotificationOptionRow(
+      icon: Icons.energy_savings_leaf_outlined,
+      title: loc.lbEnergySavingTips,
+      description: loc.energySavingTipsDescription,
+      value: _energySavingTipsEnabled,
+      onChanged: (bool newValue) {
+        setState(() {
+          _energySavingTipsEnabled = newValue;
+        });
+      },
     );
   }
 

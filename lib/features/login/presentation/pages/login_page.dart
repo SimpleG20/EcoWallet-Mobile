@@ -41,15 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             SnackBar(
               content: Text(state.message ?? loc.loginErrorGeneric),
               backgroundColor: theme.colorScheme.error,
-              behavior: SnackBarBehavior.floating,
               duration: const Duration(seconds: 4),
-              action: SnackBarAction(
-                label: loc.lbDismiss,
-                textColor: theme.colorScheme.onError,
-                onPressed: () {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                },
-              ),
             ),
           );
         }
@@ -143,17 +135,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 64),
         Text(
           loc.welcomeBack,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          loc.loginSignInToContinue,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
           ),
         ),
       ],
@@ -187,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
             onToggleObscureText: () => setState(() {
               _obscurePassword = !_obscurePassword;
             }),
-            validator: (value) => AppValidators.isValidPassword(value, loc),
+            validator: (value) => AppValidators.isValidPassword(loc, value),
           ),
           Align(
             alignment: Alignment.centerRight,
@@ -197,7 +183,6 @@ class _LoginPageState extends State<LoginPage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(loc.msgFeatureComingSoon),
-                    behavior: SnackBarBehavior.floating,
                     duration: const Duration(seconds: 2),
                   ),
                 );

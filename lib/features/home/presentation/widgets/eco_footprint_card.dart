@@ -1,6 +1,8 @@
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
+
 class EcoFootprintCard extends StatelessWidget {
   const EcoFootprintCard({super.key, required this.co2Emissions, required this.treesNeeded});
 
@@ -16,10 +18,10 @@ class EcoFootprintCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
-            const Color.fromARGB(255, 16, 142, 65), // Verde Escuro
-            const Color.fromARGB(255, 27, 211, 134), // Verde Eco
+            AppColors.ecoGradientStart,
+            AppColors.ecoGradientEnd,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

@@ -41,40 +41,40 @@ class TransactionGroupCard extends StatelessWidget {
             children: [
               ...transactionGroup.transactions.map(
                 (transaction) {
-                    return ClipRRect(
+                  return ClipRRect(
                     borderRadius: BorderRadius.circular(12.0),
                     child: Dismissible(
                       key: ValueKey(transaction.id),
                       direction: DismissDirection.endToStart,
                       background: Container(
-                      color: Colors.red,
-                      alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Icon(Icons.delete, color: Colors.white),
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: const Icon(Icons.delete, color: Colors.white),
                       ),
                       onDismissed: (direction) {
-                      final walletBloc = context.read<WalletBloc>();
+                        final walletBloc = context.read<WalletBloc>();
 
-                      walletBloc.add(DeleteTransactionEvent(transaction.id));
+                        walletBloc.add(DeleteTransactionEvent(transaction.id));
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                        content: Text(loc.msgTransactionDeleted),
-                        action: SnackBarAction(
-                          label: loc.btnUndo,
-                          onPressed: () {
-                          walletBloc.add(AddTransactionEvent(transaction));
-                          },
-                        ),
-                        ),
-                      );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(loc.msgTransactionDeleted),
+                            action: SnackBarAction(
+                              label: loc.btnUndo,
+                              onPressed: () {
+                                walletBloc.add(AddTransactionEvent(transaction));
+                              },
+                            ),
+                          ),
+                        );
                       },
                       child: TransactionCard(
-                      transaction: transaction,
-                      onTap: () {},
+                        transaction: transaction,
+                        onTap: () {},
                       ),
                     ),
-                    );
+                  );
                 },
               )
             ],

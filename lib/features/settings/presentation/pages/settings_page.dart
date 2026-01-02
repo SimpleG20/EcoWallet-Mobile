@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/presentation/widgets/user_avatar_circle.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../injection_container.dart' as di;
 import '../bloc/settings_bloc.dart';
@@ -129,32 +130,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        radius: 32,
-                        backgroundColor: theme.colorScheme.primary.withAlpha(50),
-                        child: state.user.imageUrl != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(32),
-                                child: Image.network(
-                                  state.user.imageUrl!,
-                                  width: 64,
-                                  height: 64,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Icon(
-                                      Icons.person_outline,
-                                      color: theme.colorScheme.primary,
-                                      size: 40,
-                                    );
-                                  },
-                                ),
-                              )
-                            : Icon(
-                                Icons.person_outline,
-                                color: theme.colorScheme.primary,
-                                size: 40,
-                              ),
-                      ),
+                      UserAvatarCircle(imageUrl: state.user.imageUrl),
                       const SizedBox(width: 16),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,

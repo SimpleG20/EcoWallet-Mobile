@@ -20,8 +20,10 @@ class PersonalPage extends StatefulWidget {
 
 class _PersonalPageState extends State<PersonalPage> {
   bool _isEditing = false;
+  bool _fieldsInitialized = false;
 
   late User _user;
+  late List<_ProfileFieldConfig> _fields;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -35,30 +37,20 @@ class _PersonalPageState extends State<PersonalPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    var currentState = context.read<UserBloc>().state;
+    final currentState = context.read<UserBloc>().state;
     if (currentState is UserLoadedState) {
+      _user = currentState.user;
       _updateControllers(context, currentState.user);
-    } else {
-      print('[debug] User not loaded yet in PersonalPage');
+      _initializeFieldsIfNeeded();
     }
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _addressController.dispose();
-    _dateBirthController.dispose();
-    super.dispose();
-  }
+  /// Initializes the fields list once to avoid recreation on rebuild.
+  void _initializeFieldsIfNeeded() {
+    if (_fieldsInitialized) return;
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final loc = AppLocalizations.of(context)!;
-
-    final fields = [
+    _fields = [
       _ProfileFieldConfig(
         label: loc.lbName,
         icon: Icons.person_outline,
@@ -79,9 +71,7 @@ class _PersonalPageState extends State<PersonalPage> {
         controller: _phoneController,
         keyboardType: TextInputType.phone,
         validator: (value) {
-          if (value == null || value.isEmpty) {
-            return null; // Phone number is optional
-          }
+          if (value == null || value.isEmpty) return null;
           return AppValidators.isValidPhoneNumber(loc, value);
         },
         hint: loc.hintPhoneNumber,
@@ -92,9 +82,7 @@ class _PersonalPageState extends State<PersonalPage> {
         controller: _addressController,
         keyboardType: TextInputType.streetAddress,
         validator: (value) {
-          if (value == null || value.isEmpty) {
-            return null; // Address is optional
-          }
+          if (value == null || value.isEmpty) return null;
           return AppValidators.isValidAddress(loc, value);
         },
         hint: loc.hintAddress,
@@ -105,14 +93,29 @@ class _PersonalPageState extends State<PersonalPage> {
         controller: _dateBirthController,
         keyboardType: TextInputType.datetime,
         validator: (value) {
-          if (value == null || value.isEmpty) {
-            return null; // Date of birth is optional
-          }
+          if (value == null || value.isEmpty) return null;
           return AppValidators.isValidDate(loc, value);
         },
         hint: loc.hintDateBirth,
       ),
     ];
+    _fieldsInitialized = true;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    _dateBirthController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -127,11 +130,22 @@ class _PersonalPageState extends State<PersonalPage> {
 
           if (state is UserErrorState) {
             return Center(
-              child: Text(
-                state.message ?? loc.errorUnknown,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  color: theme.colorScheme.error,
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    state.message ?? loc.errorUnknown,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.error,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<UserBloc>().add(LoadUserEvent(id: _user.id));
+                    },
+                    child: Text(loc.btnRedo),
+                  ),
+                ],
               ),
             );
           }
@@ -153,12 +167,12 @@ class _PersonalPageState extends State<PersonalPage> {
                         key: _formKey,
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          itemCount: fields.length,
+                          itemCount: _fields.length,
                           separatorBuilder: (context, index) => Divider(
                             color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
                           ),
                           itemBuilder: (context, index) {
-                            final field = fields[index];
+                            final field = _fields[index];
                             return _buildTopicItem(context, theme, field);
                           },
                         ),

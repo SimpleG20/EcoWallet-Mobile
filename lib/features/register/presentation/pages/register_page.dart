@@ -182,7 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
             },
             label: loc.lbPassword,
             hintText: loc.hintPassword,
-            validator: (value) => AppValidators.isValidPassword(value, loc),
+            validator: (value) => AppValidators.isValidPassword(loc, value),
             showRequirements: true,
           ),
           const SizedBox(height: 20),
@@ -197,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
             label: loc.lbConfirmPassword,
             hintText: loc.hintConfirmPassword,
             validator: (value) {
-              var result = AppValidators.isValidPassword(value, loc);
+              var result = AppValidators.isValidPassword(loc, value);
               if (result != null) {
                 return result;
               }

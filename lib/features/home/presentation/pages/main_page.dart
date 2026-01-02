@@ -15,10 +15,10 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const TransactionWalletPage(),
-    const SettingsPage(),
+  static const List<Widget> _pages = [
+    HomePage(),
+    TransactionWalletPage(),
+    SettingsPage(),
   ];
 
   @override
