@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/widgets/user_avatar_circle.dart';
 import '../../../../core/router/app_routes.dart';
-import '../../../../injection_container.dart' as di;
 import '../bloc/settings_bloc.dart';
 import '../widgets/settings_container.dart';
 import '../widgets/settings_option_item.dart';
@@ -21,40 +20,47 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   @override
+  void initState() {
+    super.initState();
+    // Trigger settings load when the page opens
+    // SettingsBloc is provided globally via main.dart
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<SettingsBloc>().add(LoadSettingsEvent());
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    return BlocProvider(
-      create: (_) => di.sl<SettingsBloc>()..add(LoadSettingsEvent()),
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: theme.colorScheme.primaryContainer,
-        ),
-        body: BlocBuilder<SettingsBloc, BaseSettingsState>(
-          builder: (context, state) {
-            if (state is SettingsLoadingState) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.primaryContainer,
+      ),
+      body: BlocBuilder<SettingsBloc, BaseSettingsState>(
+        builder: (context, state) {
+          if (state is SettingsLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            if (state is SettingsErrorState) {
-              return Center(
-                child: Text(
-                  state.message ?? loc.errorUnknown,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: theme.colorScheme.error,
-                  ),
+          if (state is SettingsErrorState) {
+            return Center(
+              child: Text(
+                state.message ?? loc.errorUnknown,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.error,
                 ),
-              );
-            }
+              ),
+            );
+          }
 
-            if (state is SettingsLoadedState) {
-              return _buildBody(context, loc, theme, state);
-            }
+          if (state is SettingsLoadedState) {
+            return _buildBody(context, loc, theme, state);
+          }
 
-            return const SizedBox.shrink();
-          },
-        ),
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
