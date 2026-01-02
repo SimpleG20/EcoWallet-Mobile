@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/presentation/controllers/navigation_cubit.dart';
 import 'home_page.dart';
 import '/l10n/app_localizations.dart';
 import '../../../settings/presentation/pages/settings_page.dart';
@@ -13,8 +15,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0;
-
   static const List<Widget> _pages = [
     HomePage(),
     TransactionWalletPage(),
@@ -26,33 +26,36 @@ class _MainPageState extends State<MainPage> {
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    return Scaffold(
-        // IndexedStack builds all pages at once and keeps their state,
-        // but only shows the one at the current index.
-        body: IndexedStack(
-          index: _currentIndex,
-          children: _pages,
-        ),
-        bottomNavigationBar: _buildBottomNavigation(loc, theme));
+    return BlocProvider<NavigationCubit>(
+      create: (_) => NavigationCubit(),
+      child: BlocBuilder<NavigationCubit, int>(
+        builder: (context, state) => Scaffold(
+            // IndexedStack builds all pages at once and keeps their state,
+            // but only shows the one at the current index.
+            body: IndexedStack(
+              index: state,
+              children: _pages,
+            ),
+            bottomNavigationBar: _buildBottomNavigation(context, loc, theme, state)),
+      ),
+    );
   }
 
   /// Builds the bottom navigation bar.
-  Widget _buildBottomNavigation(AppLocalizations loc, ThemeData theme) {
+  Widget _buildBottomNavigation(BuildContext context, AppLocalizations loc, ThemeData theme, int currentIndex) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       backgroundColor: theme.colorScheme.surface,
       selectedItemColor: theme.colorScheme.primary,
       showUnselectedLabels: true,
-      currentIndex: _currentIndex,
+      currentIndex: currentIndex,
       onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
+        context.read<NavigationCubit>().goToIndex(index);
       },
       items: [
-        _navigationBarItem(_currentIndex, 0, loc.lbHome, Icons.home_outlined, theme, loc),
-        _navigationBarItem(_currentIndex, 1, loc.lbWallet, Icons.account_balance_wallet_outlined, theme, loc),
-        _navigationBarItem(_currentIndex, 2, loc.lbSettings, Icons.settings_outlined, theme, loc),
+        _navigationBarItem(currentIndex, 0, loc.lbHome, Icons.home_outlined, theme, loc),
+        _navigationBarItem(currentIndex, 1, loc.lbWallet, Icons.account_balance_wallet_outlined, theme, loc),
+        _navigationBarItem(currentIndex, 2, loc.lbSettings, Icons.settings_outlined, theme, loc),
       ],
     );
   }

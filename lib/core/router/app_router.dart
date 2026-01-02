@@ -1,3 +1,4 @@
+import 'package:eco_wallet/features/settings/presentation/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -57,13 +58,7 @@ class AppRouter {
         ),
         GoRoute(
           path: AppRoutes.settings,
-          builder: (context, state) {
-            return const Scaffold(
-              body: Center(
-                child: Text('Settings Page - To be implemented'),
-              ),
-            );
-          },
+          builder: (context, state) => const SettingsPage(),
         ),
         GoRoute(
           path: AppRoutes.settingsProfile,
