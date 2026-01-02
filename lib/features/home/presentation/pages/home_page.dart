@@ -1,14 +1,13 @@
-import 'package:eco_wallet/features/home/presentation/widgets/skeletons/home_header_skeleton.dart';
-import 'package:eco_wallet/features/home/presentation/widgets/skeletons/home_page_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/add_transaction_modal.dart';
-import '../widgets/balance_card/balance_card.dart';
+import '../widgets/home_header.dart';
 import '../widgets/dismissible_card.dart';
 import '../widgets/eco_footprint_card.dart';
-import '../widgets/home_header.dart';
 import '../widgets/home_action_buttons.dart';
+import '../widgets/add_transaction_modal.dart';
+import '../widgets/balance_card/balance_card.dart';
+import '../widgets/skeletons/home_page_skeleton.dart';
 import '../../domain/entities/weekly_transaction_data.dart';
 import '../../domain/usecases/calculate_weekly_transactions.dart';
 import '../../../wallet/domain/entities/transaction.dart';
@@ -40,11 +39,8 @@ class HomePage extends StatelessWidget {
         ),
         body: BlocBuilder<WalletBloc, BaseWalletState>(
           builder: (context, state) {
-            return const HomePageSkeleton();
-
             if (state is WalletLoading) {
-              // TODO: Skeleton loader
-              return const Center(child: CircularProgressIndicator());
+              return const HomePageSkeleton();
             }
 
             if (state is WalletError) {
