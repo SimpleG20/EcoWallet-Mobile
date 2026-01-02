@@ -54,6 +54,12 @@ class AppColors {
   /// Primary green used for balance cards and positive indicators.
   static const Color primaryGreen = Color(0xFF10C085);
 
+  // --- Eco Footprint Gradient ---
+  /// Dark green for eco footprint card gradient start.
+  static const Color ecoGradientStart = Color(0xFF108E41);
+  /// Light green for eco footprint card gradient end.
+  static const Color ecoGradientEnd = Color(0xFF1BD386);
+
   // --- Charts (Shared or Specific) ---
   static const Color chart1 = Color(0xFF10B981);
   static const Color chart2 = Color(0xFF3B82F6);

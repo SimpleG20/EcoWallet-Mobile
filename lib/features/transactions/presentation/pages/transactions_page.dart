@@ -28,6 +28,10 @@ class TransactionWalletPage extends StatefulWidget {
 class _TransactionWalletPageState extends State<TransactionWalletPage> {
   bool _showFilters = false;
 
+  // Memoization for transaction grouping
+  List<Transaction>? _lastTransactions;
+  List<TransactionGroup>? _cachedGroups;
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
@@ -124,7 +128,8 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
     );
   }
 
-  SizedBox _buildFilterSection(BuildContext context, ThemeData theme, AppLocalizations loc, TransactionsHistoryLoaded state) {
+  SizedBox _buildFilterSection(
+      BuildContext context, ThemeData theme, AppLocalizations loc, TransactionsHistoryLoaded state) {
     return SizedBox(
       height: 40,
       child: Row(
@@ -209,22 +214,33 @@ class _TransactionWalletPageState extends State<TransactionWalletPage> {
     );
   }
 
+  /// Groups transactions by date with memoization to avoid recalculation.
+  ///
+  /// Only recalculates when the transactions list reference changes.
   List<TransactionGroup> _getGroupTransactionsByDate(List<Transaction> transactions) {
-    Map<String, List<Transaction>> groupedMap = {};
-
-    for (var transaction in transactions) {
-      String dateKey = AppFormatters.dateOnlyFormatter.format(transaction.date);
-      if (!groupedMap.containsKey(dateKey)) {
-        groupedMap[dateKey] = [];
-      }
-      groupedMap[dateKey]!.add(transaction);
+    // Return cached result if transactions haven't changed
+    if (identical(_lastTransactions, transactions) && _cachedGroups != null) {
+      return _cachedGroups!;
     }
 
-    List<TransactionGroup> groups = [];
-    groupedMap.forEach((dateStr, txns) {
-      DateTime date = AppFormatters.dateOnlyFormatter.parse(dateStr);
-      groups.add(TransactionGroup(date: date, transactions: txns));
-    });
+    _lastTransactions = transactions;
+    _cachedGroups = _calculateGroups(transactions);
+    return _cachedGroups!;
+  }
+
+  /// Performs the actual grouping calculation.
+  List<TransactionGroup> _calculateGroups(List<Transaction> transactions) {
+    final groupedMap = <String, List<Transaction>>{};
+
+    for (final transaction in transactions) {
+      final dateKey = AppFormatters.dateOnlyFormatter.format(transaction.date);
+      groupedMap.putIfAbsent(dateKey, () => []).add(transaction);
+    }
+
+    final groups = groupedMap.entries.map((entry) {
+      final date = AppFormatters.dateOnlyFormatter.parse(entry.key);
+      return TransactionGroup(date: date, transactions: entry.value);
+    }).toList();
 
     groups.sort((a, b) => b.date.compareTo(a.date));
 

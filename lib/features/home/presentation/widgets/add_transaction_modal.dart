@@ -269,7 +269,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
               hintText: _amountController.text.isEmpty ? "0.00" : null,
               contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20.0),
             ),
-            validator: (value) => AppValidators.validateAmount(value, loc))
+            validator: (value) => AppValidators.validateAmount(loc, value))
       ],
     );
   }
@@ -417,8 +417,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
     if (_selectedTransactionCategory.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(loc.errorCategoryEmpty),
-          behavior: SnackBarBehavior.floating,
+          content: Text(loc.errorEmpty),
           margin: const EdgeInsets.all(16.0),
         ),
       );
