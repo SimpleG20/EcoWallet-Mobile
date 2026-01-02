@@ -11,9 +11,6 @@ class NotificationPreferencesModel extends NotificationPreferences {
     required super.quietHoursEnabled,
     required super.quietHoursStart,
     required super.quietHoursEnd,
-    required super.energySavingTipsEnabled,
-    required super.highConsumptionAlertEnabled,
-    required super.highConsumptionThreshold,
   });
 
   factory NotificationPreferencesModel.defaults() {
@@ -25,9 +22,6 @@ class NotificationPreferencesModel extends NotificationPreferences {
       quietHoursEnabled: false,
       quietHoursStart: TimeOfDay(hour: 22, minute: 0),
       quietHoursEnd: TimeOfDay(hour: 7, minute: 0),
-      energySavingTipsEnabled: false,
-      highConsumptionAlertEnabled: false,
-      highConsumptionThreshold: 500.0,
     );
   }
 
@@ -40,9 +34,6 @@ class NotificationPreferencesModel extends NotificationPreferences {
       quietHoursEnabled: int.tryParse(json['quietHoursEnabled']) == 1,
       quietHoursStart: AppFormatters.parseTimeOfDay(json['quietHoursStart']),
       quietHoursEnd: AppFormatters.parseTimeOfDay(json['quietHoursEnd']),
-      energySavingTipsEnabled: int.tryParse(json['energySavingTipsEnabled']) == 1,
-      highConsumptionAlertEnabled: int.tryParse(json['highConsumptionAlertEnabled']) == 1,
-      highConsumptionThreshold: double.tryParse(json['highConsumptionThreshold']) ?? 500.0,
     );
   }
 
@@ -55,9 +46,6 @@ class NotificationPreferencesModel extends NotificationPreferences {
       'quietHoursEnabled': preferences.quietHoursEnabled,
       'quietHoursStart': AppFormatters.formatTimeOfDay(preferences.quietHoursStart),
       'quietHoursEnd': AppFormatters.formatTimeOfDay(preferences.quietHoursEnd),
-      'energySavingTipsEnabled': preferences.energySavingTipsEnabled,
-      'highConsumptionAlertEnabled': preferences.highConsumptionAlertEnabled,
-      'highConsumptionThreshold': preferences.highConsumptionThreshold,
     };
   }
 }

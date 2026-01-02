@@ -10,9 +10,6 @@ class NotificationPreferences extends Equatable {
   final bool quietHoursEnabled;
   final TimeOfDay quietHoursStart;
   final TimeOfDay quietHoursEnd;
-  final bool energySavingTipsEnabled;
-  final bool highConsumptionAlertEnabled;
-  final double highConsumptionThreshold;
 
   const NotificationPreferences({
     this.dailyReminderEnabled = false,
@@ -22,9 +19,6 @@ class NotificationPreferences extends Equatable {
     this.quietHoursEnabled = false,
     this.quietHoursStart = const TimeOfDay(hour: 22, minute: 0),
     this.quietHoursEnd = const TimeOfDay(hour: 7, minute: 0),
-    this.energySavingTipsEnabled = false,
-    this.highConsumptionAlertEnabled = false,
-    this.highConsumptionThreshold = 500.0,
   });
 
   NotificationPreferences copyWith({
@@ -35,9 +29,6 @@ class NotificationPreferences extends Equatable {
     bool? quietHoursEnabled,
     TimeOfDay? quietHoursStart,
     TimeOfDay? quietHoursEnd,
-    bool? energySavingTipsEnabled,
-    bool? highConsumptionAlertEnabled,
-    double? highConsumptionThreshold,
   }) {
     return NotificationPreferences(
       dailyReminderEnabled: dailyReminderEnabled ?? this.dailyReminderEnabled,
@@ -47,9 +38,6 @@ class NotificationPreferences extends Equatable {
       quietHoursEnabled: quietHoursEnabled ?? this.quietHoursEnabled,
       quietHoursStart: quietHoursStart ?? this.quietHoursStart,
       quietHoursEnd: quietHoursEnd ?? this.quietHoursEnd,
-      energySavingTipsEnabled: energySavingTipsEnabled ?? this.energySavingTipsEnabled,
-      highConsumptionAlertEnabled: highConsumptionAlertEnabled ?? this.highConsumptionAlertEnabled,
-      highConsumptionThreshold: highConsumptionThreshold ?? this.highConsumptionThreshold,
     );
   }
 
@@ -62,8 +50,5 @@ class NotificationPreferences extends Equatable {
         quietHoursEnabled,
         quietHoursStart,
         quietHoursEnd,
-        energySavingTipsEnabled,
-        highConsumptionAlertEnabled,
-        highConsumptionThreshold,
       ];
 }
