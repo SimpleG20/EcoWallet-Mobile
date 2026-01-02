@@ -45,7 +45,7 @@ Future<void> init() async {
   sl.registerSingleton<AppConfig>(
     AppConfig(
       appName: 'EcoWallet',
-      apiBaseUrl: '',
+      apiBaseUrl: 'https://api.dev.ecowallet.local',
       flavor: Environment.dev,
     ),
   );

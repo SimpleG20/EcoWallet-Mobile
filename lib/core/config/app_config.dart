@@ -1,5 +1,8 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform, kIsWeb;
+
+// Conditional import: uses dart:io on native platforms, stub on web
+import 'app_config_stub.dart'
+    if (dart.library.io) 'app_config_io.dart' as platform_info;
 
 enum Environment { dev, stage, prod }
 
@@ -34,10 +37,13 @@ class AppConfig {
   bool get isWeb => kIsWeb;
 
   /// Verifica se é Desktop (Windows, Linux, macOS)
-  bool get isDesktop => !isWeb && (isWindows || isLinux || isMacOS); // Helpers abaixo usam dart:io com segurança
+  bool get isDesktop =>
+      _platform == TargetPlatform.windows ||
+      _platform == TargetPlatform.linux ||
+      _platform == TargetPlatform.macOS;
 
   // Helpers seguros para dart:io (evita crash na web)
-  bool get isWindows => !isWeb && Platform.isWindows;
-  bool get isLinux => !isWeb && Platform.isLinux;
-  bool get isMacOS => !isWeb && Platform.isMacOS;
+  bool get isWindows => !isWeb && platform_info.isWindows;
+  bool get isLinux => !isWeb && platform_info.isLinux;
+  bool get isMacOS => !isWeb && platform_info.isMacOS;
 }
