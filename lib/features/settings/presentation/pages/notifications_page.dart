@@ -23,16 +23,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   bool _pendingChanges = false;
 
-  Future<void> _selectTime(BuildContext context, TimeOfDay initialTime) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: initialTime,
-    );
-    if (picked != null && picked != _currentPreferences.reminderTime) {
-      setState(() {
-        _currentPreferences = _currentPreferences.copyWith(reminderTime: picked);
-      });
-    }
+  Future<TimeOfDay> _selectTime(
+      BuildContext context, TimeOfDay initialTime) async {
+    final picked =
+        await showTimePicker(context: context, initialTime: initialTime);
+
+    return picked ?? initialTime;
   }
 
   @override
@@ -59,12 +55,27 @@ class _NotificationsPageState extends State<NotificationsPage> {
           final loc = AppLocalizations.of(context)!;
           final notificationService = di.sl<NotificationService>();
           final notifs = state.preferences.notificationPreferences;
+
+          // Update quiet hours preferences for Do Not Disturb filtering
+          notificationService.updatePreferences(notifs);
+
+          // Handle Daily Reminder
           if (notifs.dailyReminderEnabled) {
             await notificationService.requestPermissions();
-            await notificationService.scheduleDailyReminder(loc, notifs.reminderTime);
+            await notificationService.scheduleDailyReminder(
+                loc, notifs.reminderTime);
           } else {
             await notificationService.cancelDailyReminder();
           }
+
+          // Handle Monthly Report
+          if (notifs.monthlyReportEnabled) {
+            await notificationService.requestPermissions();
+            await notificationService.scheduleMonthlyReport(loc);
+          } else {
+            await notificationService.cancelMonthlyReport();
+          }
+
           settingsBloc.add(LoadSettingsEvent());
         }
       },
@@ -85,7 +96,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
             );
           }
 
-          if (state is SettingsLoadedState) {
+          if (state is SettingsLoadedState ||
+              state is PreferencesUpdatedState) {
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -100,7 +112,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildContent(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildContent(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Stack(
       children: [
         Column(
@@ -129,7 +142,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildNotificationsOptions(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildNotificationsOptions(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     final sections = [
       _buildRemindersSection(context, theme, loc),
       _buildReportsSection(context, theme, loc),
@@ -139,7 +153,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return SettingsSectionList(sections: sections, theme: theme);
   }
 
-  Widget _buildRemindersSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildRemindersSection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -147,13 +162,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
         SettingsSectionTitle(title: loc.sectionReminders),
         const SizedBox(height: 16),
         _buildDailyReminderOption(context, theme, loc),
-        const SizedBox(height: 16),
-        _buildBillsReminderOption(context, theme, loc),
       ],
     );
   }
 
-  Widget _buildDailyReminderOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDailyReminderOption(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return NotificationOptionRow(
       icon: Icons.notifications_outlined,
       title: loc.lbDailyReminder,
@@ -161,36 +175,34 @@ class _NotificationsPageState extends State<NotificationsPage> {
       value: _currentPreferences.dailyReminderEnabled,
       onChanged: (bool newValue) {
         setState(() {
-          _currentPreferences = _currentPreferences.copyWith(dailyReminderEnabled: newValue);
+          _currentPreferences =
+              _currentPreferences.copyWith(dailyReminderEnabled: newValue);
           _pendingChanges = _currentPreferences != _initialPreferences;
         });
       },
-      trailing: IconButton(
-        icon: const Icon(Icons.access_time),
+      trailing: TextButton(
         onPressed: _currentPreferences.dailyReminderEnabled
-            ? () => _selectTime(context, _currentPreferences.reminderTime)
+            ? () {
+                _selectTime(context, _currentPreferences.reminderTime)
+                    .then((value) {
+                  if (value != _currentPreferences.reminderTime) {
+                    setState(() {
+                      _currentPreferences =
+                          _currentPreferences.copyWith(reminderTime: value);
+                      _pendingChanges =
+                          _currentPreferences != _initialPreferences;
+                    });
+                  }
+                });
+              }
             : null,
-        tooltip: _currentPreferences.reminderTime.format(context),
+        child: Text(_currentPreferences.reminderTime.format(context)),
       ),
     );
   }
 
-  Widget _buildBillsReminderOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return NotificationOptionRow(
-      icon: Icons.receipt_long_outlined,
-      title: loc.lbBillsReminder,
-      description: loc.billsReminderDescription,
-      value: _currentPreferences.billsReminderEnabled,
-      onChanged: (bool newValue) {
-        setState(() {
-          _currentPreferences = _currentPreferences.copyWith(billsReminderEnabled: newValue);
-          _pendingChanges = _currentPreferences != _initialPreferences;
-        });
-      },
-    );
-  }
-
-  Widget _buildReportsSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildReportsSection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -201,7 +213,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildMonthlyReportOption(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildMonthlyReportOption(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return NotificationOptionRow(
       icon: Icons.calendar_month_outlined,
       title: loc.lbMonthlyReport,
@@ -209,14 +222,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
       value: _currentPreferences.monthlyReportEnabled,
       onChanged: (bool newValue) {
         setState(() {
-          _currentPreferences = _currentPreferences.copyWith(monthlyReportEnabled: newValue);
+          _currentPreferences =
+              _currentPreferences.copyWith(monthlyReportEnabled: newValue);
           _pendingChanges = _currentPreferences != _initialPreferences;
         });
       },
     );
   }
 
-  Widget _buildDoNotDisturbSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDoNotDisturbSection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -230,7 +245,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
         const SizedBox(height: 8),
         Row(
           children: [
-            Icon(Icons.nightlight_outlined, color: theme.colorScheme.onSurfaceVariant),
+            Icon(Icons.nightlight_outlined,
+                color: theme.colorScheme.onSurfaceVariant),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
@@ -242,7 +258,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
               value: _currentPreferences.quietHoursEnabled,
               onChanged: (bool newValue) {
                 setState(() {
-                  _currentPreferences = _currentPreferences.copyWith(quietHoursEnabled: newValue);
+                  _currentPreferences =
+                      _currentPreferences.copyWith(quietHoursEnabled: newValue);
                   _pendingChanges = _currentPreferences != _initialPreferences;
                 });
               },
@@ -253,15 +270,42 @@ class _NotificationsPageState extends State<NotificationsPage> {
           padding: const EdgeInsets.only(left: 40, top: 8),
           child: Row(
             children: [
-              Expanded(child: Text(loc.lbFrom, style: theme.textTheme.bodyMedium)),
+              Expanded(
+                  child: Text(loc.lbFrom, style: theme.textTheme.bodyMedium)),
               TextButton(
-                onPressed: () => _selectTime(context, _currentPreferences.quietHoursStart),
-                child: Text(_currentPreferences.quietHoursStart.format(context)),
+                onPressed: () {
+                  _selectTime(context, _currentPreferences.quietHoursStart)
+                      .then((value) {
+                    if (value != _currentPreferences.quietHoursStart) {
+                      setState(() {
+                        _currentPreferences = _currentPreferences.copyWith(
+                            quietHoursStart: value);
+                        _pendingChanges =
+                            _currentPreferences != _initialPreferences;
+                      });
+                    }
+                  });
+                },
+                child:
+                    Text(_currentPreferences.quietHoursStart.format(context)),
               ),
               const SizedBox(width: 16),
-              Expanded(child: Text(loc.lbTo, style: theme.textTheme.bodyMedium)),
+              Expanded(
+                  child: Text(loc.lbTo, style: theme.textTheme.bodyMedium)),
               TextButton(
-                onPressed: () => _selectTime(context, _currentPreferences.quietHoursEnd),
+                onPressed: () {
+                  _selectTime(context, _currentPreferences.quietHoursEnd)
+                      .then((value) {
+                    if (value != _currentPreferences.quietHoursEnd) {
+                      setState(() {
+                        _currentPreferences =
+                            _currentPreferences.copyWith(quietHoursEnd: value);
+                        _pendingChanges =
+                            _currentPreferences != _initialPreferences;
+                      });
+                    }
+                  });
+                },
                 child: Text(_currentPreferences.quietHoursEnd.format(context)),
               ),
             ],
@@ -271,14 +315,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  Widget _buildTestNotificationButton(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildTestNotificationButton(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: OutlinedButton.icon(
         onPressed: () async {
           final notificationService = di.sl<NotificationService>();
           await notificationService.requestPermissions();
-          await notificationService.showTestNotification(loc.ntfTestTitle, loc.ntfTestBody);
+          await notificationService.showTestNotification(
+              loc.ntfTestTitle, loc.ntfTestBody);
         },
         icon: const Icon(Icons.send_outlined),
         label: Text(loc.btnSendTestNotification),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../domain/entities/user_preferences.dart';
 
 import 'data_preferences_model.dart';
@@ -26,15 +28,18 @@ class UserPreferencesModel extends UserPreferences {
 
   factory UserPreferencesModel.fromJson(Map<String, dynamic> json) {
     final id = json['id'] as String;
-    final appearance = makeMap(json['appearancePreferences']);
-    final notifications = makeMap(json['notificationPreferences']);
-    final budget = makeMap(json['budgetPreferences']);
-    final data = makeMap(json['dataPreferences']);
+
+    // Decode JSON strings from database TEXT columns into Maps
+    final appearance = _decodeJsonField(json['appearancePreferences']);
+    final notifications = _decodeJsonField(json['notificationPreferences']);
+    final budget = _decodeJsonField(json['budgetPreferences']);
+    final data = _decodeJsonField(json['dataPreferences']);
 
     return UserPreferencesModel(
       id: id,
       appearancePreferences: AppearancePreferencesModel.fromJson(appearance),
-      notificationPreferences: NotificationPreferencesModel.fromJson(notifications),
+      notificationPreferences:
+          NotificationPreferencesModel.fromJson(notifications),
       budgetPreferences: BudgetPreferencesModel.fromJson(budget),
       dataPreferences: DataPreferencesModel.fromJson(data),
     );
@@ -43,10 +48,15 @@ class UserPreferencesModel extends UserPreferences {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'appearancePreferences': AppearancePreferencesModel.toJson(appearancePreferences),
-      'notificationPreferences': NotificationPreferencesModel.toJson(notificationPreferences),
-      'budgetPreferences': BudgetPreferencesModel.toJson(budgetPreferences),
-      'dataPreferences': DataPreferencesModel.toJson(dataPreferences),
+      // Encode Maps as JSON strings for database TEXT columns
+      'appearancePreferences':
+          jsonEncode(AppearancePreferencesModel.toJson(appearancePreferences)),
+      'notificationPreferences':
+          jsonEncode(NotificationPreferencesModel.toJson(notificationPreferences)),
+      'budgetPreferences': 
+          jsonEncode(BudgetPreferencesModel.toJson(budgetPreferences)),
+      'dataPreferences': 
+          jsonEncode(DataPreferencesModel.toJson(dataPreferences)),
     };
   }
 
@@ -60,19 +70,25 @@ class UserPreferencesModel extends UserPreferences {
       dataPreferences: entity.dataPreferences,
     );
   }
-}
 
-Map<String, dynamic> makeMap(String value) {
-  value = value.replaceAll('{', '');
-  value = value.replaceAll('}', '');
-  var split = value.split(';');
-  Map<String, dynamic> map = {};
-  for (var item in split) {
-    item = item.trim();
-    var keyValue = item.split('=');
-    if (keyValue.length == 2) {
-      map[keyValue[0].trim()] = keyValue[1].trim();
+  /// Decodes a JSON field that may be a String (from DB) or already a Map.
+  static Map<String, dynamic> _decodeJsonField(dynamic value) {
+    if (value == null) {
+      return {};
     }
+    if (value is Map<String, dynamic>) {
+      return value;
+    }
+    if (value is String) {
+      try {
+        final decoded = jsonDecode(value);
+        if (decoded is Map<String, dynamic>) {
+          return decoded;
+        }
+      } catch (_) {
+        // If JSON decode fails, return empty map to use defaults
+      }
+    }
+    return {};
   }
-  return map;
 }

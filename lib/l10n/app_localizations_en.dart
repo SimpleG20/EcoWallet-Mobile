@@ -643,6 +643,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Notifies to log expenses daily';
 
   @override
+  String get ntfMonthlyReportTitle => 'Monthly Report 📊';
+
+  @override
+  String get ntfMonthlyReportBody =>
+      'Your monthly spending summary is ready. Open EcoWallet to view!';
+
+  @override
+  String get ntfMonthlyReportChannelName => 'Monthly Reports';
+
+  @override
+  String get ntfMonthlyReportChannelDescription =>
+      'Monthly consumption summary notifications';
+
+  @override
   String get errorNameInvalid => 'Name is too short.';
 
   @override

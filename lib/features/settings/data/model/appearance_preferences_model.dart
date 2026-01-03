@@ -23,12 +23,12 @@ class AppearancePreferencesModel extends AppearancePreferences {
   }
 
   factory AppearancePreferencesModel.fromJson(Map<String, dynamic> json) {
-    final themeMode = json['themeMode'];
-    final colorBlindMode = json['colorBlindMode'];
-    final currencyFormat = json['currencyFormat'];
-    final fontSize = json['fontSize'];
-    final enableAnimations = int.tryParse(json['enableAnimations']) == 1;
-    final hideValues = int.tryParse(json['hideValues']) == 1;
+    final themeMode = json['themeMode']?.toString() ?? 'system';
+    final colorBlindMode = json['colorBlindMode']?.toString() ?? 'none';
+    final currencyFormat = json['currencyFormat']?.toString() ?? 'symbol';
+    final fontSize = json['fontSize']?.toString() ?? 'medium';
+    final enableAnimations = _parseBool(json['enableAnimations'], true);
+    final hideValues = _parseBool(json['hideValues'], false);
 
     return AppearancePreferencesModel(
       colorBlindMode: ColorBlindMode.fromString(colorBlindMode),
@@ -38,6 +38,15 @@ class AppearancePreferencesModel extends AppearancePreferences {
       enableAnimations: enableAnimations,
       hideValues: hideValues,
     );
+  }
+
+  /// Parses a boolean value from JSON that may be a bool, int (0/1), or string.
+  static bool _parseBool(dynamic value, bool defaultValue) {
+    if (value == null) return defaultValue;
+    if (value is bool) return value;
+    if (value is int) return value == 1;
+    if (value is String) return int.tryParse(value) == 1 || value.toLowerCase() == 'true';
+    return defaultValue;
   }
 
   static Map<String, dynamic> toJson(AppearancePreferences preferences) {

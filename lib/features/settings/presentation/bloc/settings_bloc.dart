@@ -63,12 +63,14 @@ class SettingsBloc extends Bloc<BaseSettingsEvent, BaseSettingsState> {
   ) async {
     final currentState = state;
     if (currentState is! SettingsLoadedState) {
-      emit(SettingsErrorState(message: 'Cannot update preferences when settings are not loaded.'));
+      emit(SettingsErrorState(
+          message: 'Cannot update preferences when settings are not loaded.'));
       return;
     }
 
     // Convert entity to model for persistence
-    final preferencesModel = UserPreferencesModel.fromEntity(event.userPreferences);
+    final preferencesModel =
+        UserPreferencesModel.fromEntity(event.userPreferences);
 
     // Save to database
     final result = await updateUserPreferences(preferencesModel);
@@ -78,6 +80,12 @@ class SettingsBloc extends Bloc<BaseSettingsEvent, BaseSettingsState> {
       },
       (updatedPreferences) {
         emit(PreferencesUpdatedState(preferences: updatedPreferences));
+        emit(
+          SettingsLoadedState(
+            user: currentState.user,
+            preferences: updatedPreferences,
+          ),
+        );
       },
     );
   }

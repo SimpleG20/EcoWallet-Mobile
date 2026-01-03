@@ -18,10 +18,19 @@ class DataPreferencesModel extends DataPreferences {
 
   factory DataPreferencesModel.fromJson(Map<String, dynamic> json) {
     return DataPreferencesModel(
-      cloudBackupEnabled: int.tryParse(json['cloudBackupEnabled']) == 1,
-      encryptedBackup: int.tryParse(json['encryptedBackup']) == 1,
-      backupFrequency: BackupFrequency.fromString(json['backupFrequency']),
+      cloudBackupEnabled: _parseBool(json['cloudBackupEnabled'], false),
+      encryptedBackup: _parseBool(json['encryptedBackup'], false),
+      backupFrequency: BackupFrequency.fromString(json['backupFrequency']?.toString() ?? 'weekly'),
     );
+  }
+
+  /// Parses a boolean value from JSON that may be a bool, int (0/1), or string.
+  static bool _parseBool(dynamic value, bool defaultValue) {
+    if (value == null) return defaultValue;
+    if (value is bool) return value;
+    if (value is int) return value == 1;
+    if (value is String) return int.tryParse(value) == 1 || value.toLowerCase() == 'true';
+    return defaultValue;
   }
 
   static Map<String, dynamic> toJson(DataPreferences preferences) {

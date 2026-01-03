@@ -136,7 +136,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           Text(
                             state.user.email,
-                            style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -185,7 +186,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildAccountSection(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildAccountSection(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbAccount,
       options: [
@@ -210,7 +212,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildPreferencesSection(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildPreferencesSection(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbPreferences,
       options: [
@@ -229,7 +232,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildSecuritySection(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildSecuritySection(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbSecurity,
       options: [
@@ -242,7 +246,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildSupportSection(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildSupportSection(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbSupport,
       options: [
@@ -261,7 +266,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildLegalSection(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildLegalSection(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
     return SettingsContainer(
       sectionLabel: loc.lbAboutLegal,
       options: [
@@ -280,7 +286,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildLogoutBtn(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildLogoutBtn(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: theme.colorScheme.secondaryContainer,
@@ -293,7 +300,8 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Widget _buildDeleteAccountBtn(BuildContext context, AppLocalizations loc, ThemeData theme) {
+  Widget _buildDeleteAccountBtn(
+      BuildContext context, AppLocalizations loc, ThemeData theme) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: theme.colorScheme.errorContainer,

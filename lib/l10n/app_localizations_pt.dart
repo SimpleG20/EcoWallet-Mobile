@@ -646,6 +646,20 @@ class AppLocalizationsPt extends AppLocalizations {
       'Notifica para registrar despesas diariamente';
 
   @override
+  String get ntfMonthlyReportTitle => 'Relatório Mensal 📊';
+
+  @override
+  String get ntfMonthlyReportBody =>
+      'Seu resumo mensal de gastos está pronto. Abra o EcoWallet para ver!';
+
+  @override
+  String get ntfMonthlyReportChannelName => 'Relatórios Mensais';
+
+  @override
+  String get ntfMonthlyReportChannelDescription =>
+      'Notificações de resumo mensal de consumo';
+
+  @override
   String get errorNameInvalid => 'Nome muito curto.';
 
   @override

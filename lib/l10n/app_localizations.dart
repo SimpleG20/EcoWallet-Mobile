@@ -1328,6 +1328,30 @@ abstract class AppLocalizations {
   /// **'Notifies to log expenses daily'**
   String get ntfDailyReminderChannelDescription;
 
+  /// No description provided for @ntfMonthlyReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Report 📊'**
+  String get ntfMonthlyReportTitle;
+
+  /// No description provided for @ntfMonthlyReportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your monthly spending summary is ready. Open EcoWallet to view!'**
+  String get ntfMonthlyReportBody;
+
+  /// No description provided for @ntfMonthlyReportChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Reports'**
+  String get ntfMonthlyReportChannelName;
+
+  /// No description provided for @ntfMonthlyReportChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly consumption summary notifications'**
+  String get ntfMonthlyReportChannelDescription;
+
   /// No description provided for @errorNameInvalid.
   ///
   /// In en, this message translates to:
