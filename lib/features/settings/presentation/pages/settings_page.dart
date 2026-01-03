@@ -20,16 +20,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   @override
-  void initState() {
-    super.initState();
-    // Trigger settings load when the page opens
-    // SettingsBloc is provided globally via main.dart
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<SettingsBloc>().add(LoadSettingsEvent());
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fpdart/fpdart.dart';
+import 'package:eco_wallet/features/settings/domain/entities/budget_preferences.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -79,23 +79,25 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
 
     final result = await getTransactions(NoParams());
 
-    result.fold(
-      (failure) => emit(const WalletError("Erro ao carregar dados")),
-      (transactions) async {
-        final totalBalance = await getTotalBalance(NoParams());
-        final totalIncome = await getTotalIncome(NoParams());
-        final totalExpense = await getTotalExpense(NoParams());
-        final monthlySavings = await getMonthlySavings(NoParams());
-        emit(
-          WalletLoaded(
-            transactions: transactions,
-            totalBalance: totalBalance.fold((l) => 0.0, (r) => r),
-            totalIncome: totalIncome.fold((l) => 0.0, (r) => r),
-            totalExpense: totalExpense.fold((l) => 0.0, (r) => r),
-            monthlySavings: monthlySavings.fold((l) => 0.0, (r) => r),
-          ),
-        );
-      },
+    if (result.isLeft()) {
+      emit(const WalletError("Erro ao carregar dados"));
+      return;
+    }
+
+    final transactions = result.getOrElse((_) => []);
+    final totalBalance = await getTotalBalance(NoParams());
+    final totalIncome = await getTotalIncome(NoParams());
+    final totalExpense = await getTotalExpense(NoParams());
+    final monthlySavings = await getMonthlySavings(event.budgetPreferences.monthStartDay);
+
+    emit(
+      WalletLoaded(
+        transactions: transactions,
+        totalBalance: totalBalance.fold((l) => 0.0, (r) => r),
+        totalIncome: totalIncome.fold((l) => 0.0, (r) => r),
+        totalExpense: totalExpense.fold((l) => 0.0, (r) => r),
+        monthlySavings: monthlySavings.fold((l) => 0.0, (r) => r),
+      ),
     );
   }
 
@@ -114,30 +116,30 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     emit(WalletLoading());
 
     final result = await addTransaction(event.transaction);
-    switch (result) {
-      case Left(value: final _):
-        emit(const WalletError("Erro ao adicionar transação"));
-        return;
-      case Right(value: final _):
-        final totalBalance = await getTotalBalance(NoParams());
-        final totalIncome = await getTotalIncome(NoParams());
-        final totalExpense = await getTotalExpense(NoParams());
-        final dailyExpenseResult = await getDailyExpense(NoParams());
-        final weeklyExpenseResult = await getWeeklyExpense(NoParams());
-        final monthlyExpenseResult = await getMonthlyExpense(NoParams());
-        emit(
-          TransactionAddedSuccess(
-            transaction: event.transaction,
-            totalBalance: totalBalance.fold((l) => 0.0, (r) => r),
-            totalIncome: totalIncome.fold((l) => 0.0, (r) => r),
-            totalExpense: totalExpense.fold((l) => 0.0, (r) => r),
-            dailyExpense: dailyExpenseResult.fold((l) => 0.0, (r) => r),
-            weeklyExpense: weeklyExpenseResult.fold((l) => 0.0, (r) => r),
-            monthlyExpense: monthlyExpenseResult.fold((l) => 0.0, (r) => r),
-          ),
-        );
-        return;
+
+    if (result.isLeft()) {
+      emit(const WalletError("Erro ao adicionar transação"));
+      return;
     }
+
+    final totalBalance = await getTotalBalance(NoParams());
+    final totalIncome = await getTotalIncome(NoParams());
+    final totalExpense = await getTotalExpense(NoParams());
+    final dailyExpenseResult = await getDailyExpense(NoParams());
+    final weeklyExpenseResult = await getWeeklyExpense(NoParams());
+    final monthlyExpenseResult = await getMonthlyExpense(event.initialDay);
+
+    emit(
+      TransactionAddedSuccess(
+        transaction: event.transaction,
+        totalBalance: totalBalance.fold((l) => 0.0, (r) => r),
+        totalIncome: totalIncome.fold((l) => 0.0, (r) => r),
+        totalExpense: totalExpense.fold((l) => 0.0, (r) => r),
+        dailyExpense: dailyExpenseResult.fold((l) => 0.0, (r) => r),
+        weeklyExpense: weeklyExpenseResult.fold((l) => 0.0, (r) => r),
+        monthlyExpense: monthlyExpenseResult.fold((l) => 0.0, (r) => r),
+      ),
+    );
   }
 
   Future<void> _onDeleteTransaction(DeleteTransactionEvent event, Emitter<BaseWalletState> emit) async {

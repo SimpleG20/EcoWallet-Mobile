@@ -623,6 +623,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get ntfTestTitle => 'EcoWallet Test Notification';
+
+  @override
+  String get ntfTestBody => 'This is a test notification from EcoWallet. 🌿';
+
+  @override
   String get ntfDailyReminderTitle => 'EcoWallet Reminder';
 
   @override

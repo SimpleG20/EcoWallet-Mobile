@@ -1,9 +1,12 @@
-import 'package:eco_wallet/injection_container.dart';
-import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/browser.dart' as tz;
-import 'package:timezone/data/latest_10y.dart' as tz;
+import 'package:flutter_timezone/flutter_timezone.dart';
+
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_10y.dart' as tz_data;
+
+import 'package:eco_wallet/injection_container.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
 import '../config/app_config.dart';
 
@@ -13,7 +16,11 @@ class NotificationService {
   static const int _dailyReminderId = 1;
 
   Future<void> init() async {
-    tz.initializeTimeZones();
+    tz_data.initializeTimeZones();
+
+    // Set the local timezone based on device settings
+    final timezoneInfo = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
 
     const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings();
@@ -51,6 +58,7 @@ class NotificationService {
           importance: Importance.max,
           priority: Priority.high,
         ),
+        iOS: DarwinNotificationDetails(categoryIdentifier: 'test_notification'),
       ),
     );
   }
@@ -82,7 +90,7 @@ class NotificationService {
   }
 
   tz.TZDateTime _nextInstanceOfTime(TimeOfDay time) {
-    final local = tz.getLocation('UTC');
+    final local = tz.local;
     final now = tz.TZDateTime.now(local);
     tz.TZDateTime scheduledDate = tz.TZDateTime(local, now.year, now.month, now.day, time.hour, time.minute);
 

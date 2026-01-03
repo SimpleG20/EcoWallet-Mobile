@@ -22,13 +22,14 @@ abstract class BaseWalletRepository {
 
   Future<Either<BaseFailure, Unit>> deleteTransaction(String transactionId);
 
-  Future<Either<BaseFailure, double>> getCurrentMonthExpense();
   Future<Either<BaseFailure, double>> getTotalIncome();
   Future<Either<BaseFailure, double>> getTotalBalance();
   Future<Either<BaseFailure, double>> getTotalExpense();
-  Future<Either<BaseFailure, double>> getMonthlySavings();
   Future<Either<BaseFailure, double>> getDailyExpense();
   Future<Either<BaseFailure, double>> getWeeklyExpense();
+
+  Future<Either<BaseFailure, double>> getMonthlySavings(int initialDay);
+  Future<Either<BaseFailure, double>> getCurrentMonthExpense(int initialDay);
 
   Stream<void> get onTransactionsChanged;
 }

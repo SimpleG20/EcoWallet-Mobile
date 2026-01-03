@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/transaction_type_data.dart';
+import '../enums/enums.dart';
 
 /// Defines the raw palette based on the provided CSS variables.
 /// OKLCH values have been pre-converted to sRGB Color objects for performance.
@@ -28,27 +28,37 @@ class AppColors {
   // --- Dark Mode Palette (Revitalized with subtle saturation) ---
   /// Deep dark background with subtle cool undertone for depth
   static const Color darkBackground = Color(0xFF121418);
+
   /// High contrast foreground for readability
   static const Color darkForeground = Color(0xFFF5F5F7);
+
   /// Card slightly elevated from background for visual hierarchy
   static const Color darkCard = Color(0xFF1C1E24);
   static const Color darkCardForeground = Color(0xFFF5F5F7);
+
   /// Primary green maintained for brand identity - vibrant emerald
   static const Color darkPrimary = Color(0xFF34D399);
+
   /// Dark foreground for contrast on primary buttons
   static const Color darkPrimaryForeground = Color(0xFF0D1117);
+
   /// Secondary with subtle blue undertone for modern feel
   static const Color darkSecondary = Color(0xFF2A2D36);
   static const Color darkSecondaryForeground = Color(0xFFF5F5F7);
   static const Color darkMuted = Color(0xFF2A2D36);
+
   /// Muted foreground with good contrast
   static const Color darkMutedForeground = Color(0xFF9CA3AF);
+
   /// Destructive red adapted for dark mode visibility
   static const Color darkDestructive = Color(0xFFEF4444);
+
   /// Light foreground for destructive buttons
   static const Color darkDestructiveForeground = Color(0xFFF5F5F7);
+
   /// Subtle border with cool undertone
   static const Color darkBorder = Color(0xFF2E3039);
+
   /// Ring color matching primary for focus states
   static const Color darkRing = Color(0xFF34D399);
 

@@ -626,6 +626,12 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get ntfTestTitle => 'Notificação de Teste EcoWallet';
+
+  @override
+  String get ntfTestBody => 'Esta é uma notificação de teste do EcoWallet. 🌿';
+
+  @override
   String get ntfDailyReminderTitle => 'Lembrete EcoWallet';
 
   @override

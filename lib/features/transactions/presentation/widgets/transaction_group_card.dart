@@ -1,9 +1,10 @@
+import 'package:eco_wallet/features/settings/domain/entities/budget_preferences.dart';
+import 'package:eco_wallet/features/settings/domain/entities/settings_entities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'transaction_card.dart';
 import '../../domain/entities/transaction_group.dart';
-import '../../../settings/domain/entities/settings_entities.dart';
 import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 import '../../../home/presentation/widgets/add_transaction_modal.dart';
@@ -27,12 +28,14 @@ class TransactionGroupCard extends StatelessWidget {
     final walletBloc = context.read<WalletBloc>();
 
     // Reactive and type-safe access to appearance preferences
-    final appearancePreferences = context.select((SettingsBloc bloc) {
+    AppearancePreferences appearancePreferences = AppearancePreferences();
+    BudgetPreferences budgetPreferences = BudgetPreferences();
+    context.select((SettingsBloc bloc) {
       final state = bloc.state;
       if (state is SettingsLoadedState) {
-        return state.preferences.appearancePreferences;
+        appearancePreferences = state.preferences.appearancePreferences;
+        budgetPreferences = state.preferences.budgetPreferences;
       }
-      return const AppearancePreferences();
     });
 
     return Column(
@@ -79,7 +82,10 @@ class TransactionGroupCard extends StatelessWidget {
                             action: SnackBarAction(
                               label: loc.btnUndo,
                               onPressed: () {
-                                walletBloc.add(AddTransactionEvent(transaction));
+                                walletBloc.add(AddTransactionEvent(
+                                  budgetPreferences.monthStartDay,
+                                  transaction,
+                                ));
                               },
                             ),
                           ),

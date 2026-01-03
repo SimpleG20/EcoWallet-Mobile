@@ -213,6 +213,8 @@
       }
     }
   },
+  "ntfTestTitle": "EcoWallet Test Notification",
+  "ntfTestBody": "This is a test notification from EcoWallet. 🌿",
   "ntfDailyReminderTitle": "EcoWallet Reminder",
   "ntfDailyReminderBody": "Don't forget to log your expenses today! 🌱",
   "ntfDailyReminderChannelName": "Daily Reminders",

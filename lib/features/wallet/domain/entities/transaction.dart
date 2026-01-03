@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/constants/transaction_type_data.dart';
+import '../../../../core/enums/enums.dart';
 
 class Transaction extends Equatable {
   final String id;

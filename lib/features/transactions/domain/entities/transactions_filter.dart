@@ -2,6 +2,7 @@ import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../../wallet/domain/entities/transaction.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../../core/constants/transaction_type_data.dart';
 
 class TransactionFilter {
@@ -81,7 +82,8 @@ class TransactionFilter {
     }
 
     if (dateRange != null) {
-      filters.add('${dateRange!.start.toLocal().toString().split(' ')[0]} / ${dateRange!.end.toLocal().toString().split(' ')[0]}');
+      filters.add(
+          '${dateRange!.start.toLocal().toString().split(' ')[0]} / ${dateRange!.end.toLocal().toString().split(' ')[0]}');
     }
 
     if (minAmount != null) {
@@ -99,7 +101,9 @@ class TransactionFilter {
     return copyWith(
       type: (type != null && type.toString() == filter) ? null : type,
       categories: categories.where((category) => category != filter).toList(),
-      dateRange: (dateRange != null && '${dateRange!.start.toLocal()} - ${dateRange!.end.toLocal()}' == filter) ? null : dateRange,
+      dateRange: (dateRange != null && '${dateRange!.start.toLocal()} - ${dateRange!.end.toLocal()}' == filter)
+          ? null
+          : dateRange,
       // minAmount and maxAmount removal logic can be added here if needed
     );
   }

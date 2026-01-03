@@ -1,3 +1,4 @@
+import 'package:eco_wallet/features/settings/domain/entities/notification_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,14 +18,8 @@ class NotificationsPage extends StatefulWidget {
 class _NotificationsPageState extends State<NotificationsPage> {
   final _formKey = GlobalKey<FormState>();
 
-  bool _dailyReminderEnabled = false;
-  bool _billsReminderEnabled = false;
-  bool _monthlyReportEnabled = false;
-  bool _quietHoursEnabled = false;
-
-  TimeOfDay _reminderTime = const TimeOfDay(hour: 9, minute: 0);
-  TimeOfDay _quietHoursStart = const TimeOfDay(hour: 22, minute: 0);
-  TimeOfDay _quietHoursEnd = const TimeOfDay(hour: 7, minute: 0);
+  NotificationPreferences _currentPreferences = NotificationPreferences();
+  NotificationPreferences _initialPreferences = NotificationPreferences();
 
   bool _pendingChanges = false;
 
@@ -33,9 +28,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
       context: context,
       initialTime: initialTime,
     );
-    if (picked != null && picked != _reminderTime) {
+    if (picked != null && picked != _currentPreferences.reminderTime) {
       setState(() {
-        initialTime = picked;
+        _currentPreferences = _currentPreferences.copyWith(reminderTime: picked);
       });
     }
   }
@@ -48,13 +43,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
     if (settingsState is! SettingsLoadedState) return;
 
     final settings = settingsState.preferences.notificationPreferences;
-    _dailyReminderEnabled = settings.dailyReminderEnabled;
-    _reminderTime = settings.reminderTime;
-    _billsReminderEnabled = settings.billsReminderEnabled;
-    _monthlyReportEnabled = settings.monthlyReportEnabled;
-    _quietHoursEnabled = settings.quietHoursEnabled;
-    _quietHoursStart = settings.quietHoursStart;
-    _quietHoursEnd = settings.quietHoursEnd;
+    _currentPreferences = settings.copyWith();
+    _initialPreferences = settings.copyWith();
   }
 
   @override
@@ -168,16 +158,19 @@ class _NotificationsPageState extends State<NotificationsPage> {
       icon: Icons.notifications_outlined,
       title: loc.lbDailyReminder,
       description: loc.dailyReminderDescription,
-      value: _dailyReminderEnabled,
+      value: _currentPreferences.dailyReminderEnabled,
       onChanged: (bool newValue) {
         setState(() {
-          _dailyReminderEnabled = newValue;
+          _currentPreferences = _currentPreferences.copyWith(dailyReminderEnabled: newValue);
+          _pendingChanges = _currentPreferences != _initialPreferences;
         });
       },
       trailing: IconButton(
         icon: const Icon(Icons.access_time),
-        onPressed: _dailyReminderEnabled ? () => _selectTime(context, _reminderTime) : null,
-        tooltip: _reminderTime.format(context),
+        onPressed: _currentPreferences.dailyReminderEnabled
+            ? () => _selectTime(context, _currentPreferences.reminderTime)
+            : null,
+        tooltip: _currentPreferences.reminderTime.format(context),
       ),
     );
   }
@@ -187,10 +180,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
       icon: Icons.receipt_long_outlined,
       title: loc.lbBillsReminder,
       description: loc.billsReminderDescription,
-      value: _billsReminderEnabled,
+      value: _currentPreferences.billsReminderEnabled,
       onChanged: (bool newValue) {
         setState(() {
-          _billsReminderEnabled = newValue;
+          _currentPreferences = _currentPreferences.copyWith(billsReminderEnabled: newValue);
+          _pendingChanges = _currentPreferences != _initialPreferences;
         });
       },
     );
@@ -212,10 +206,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
       icon: Icons.calendar_month_outlined,
       title: loc.lbMonthlyReport,
       description: loc.monthlyReportDescription,
-      value: _monthlyReportEnabled,
+      value: _currentPreferences.monthlyReportEnabled,
       onChanged: (bool newValue) {
         setState(() {
-          _monthlyReportEnabled = newValue;
+          _currentPreferences = _currentPreferences.copyWith(monthlyReportEnabled: newValue);
+          _pendingChanges = _currentPreferences != _initialPreferences;
         });
       },
     );
@@ -244,10 +239,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ),
             ),
             Switch(
-              value: _quietHoursEnabled,
+              value: _currentPreferences.quietHoursEnabled,
               onChanged: (bool newValue) {
                 setState(() {
-                  _quietHoursEnabled = newValue;
+                  _currentPreferences = _currentPreferences.copyWith(quietHoursEnabled: newValue);
+                  _pendingChanges = _currentPreferences != _initialPreferences;
                 });
               },
             ),
@@ -259,14 +255,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
             children: [
               Expanded(child: Text(loc.lbFrom, style: theme.textTheme.bodyMedium)),
               TextButton(
-                onPressed: () => _selectTime(context, _quietHoursStart),
-                child: Text(_quietHoursStart.format(context)),
+                onPressed: () => _selectTime(context, _currentPreferences.quietHoursStart),
+                child: Text(_currentPreferences.quietHoursStart.format(context)),
               ),
               const SizedBox(width: 16),
               Expanded(child: Text(loc.lbTo, style: theme.textTheme.bodyMedium)),
               TextButton(
-                onPressed: () => _selectTime(context, _quietHoursEnd),
-                child: Text(_quietHoursEnd.format(context)),
+                onPressed: () => _selectTime(context, _currentPreferences.quietHoursEnd),
+                child: Text(_currentPreferences.quietHoursEnd.format(context)),
               ),
             ],
           ),
@@ -279,11 +275,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: OutlinedButton.icon(
-        onPressed: () {
-          // Send test notification
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(loc.msgTestNotificationSent)),
-          );
+        onPressed: () async {
+          final notificationService = di.sl<NotificationService>();
+          await notificationService.requestPermissions();
+          await notificationService.showTestNotification(loc.ntfTestTitle, loc.ntfTestBody);
         },
         icon: const Icon(Icons.send_outlined),
         label: Text(loc.btnSendTestNotification),
@@ -295,6 +290,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   void _submitChanges(BuildContext context) {
+    if (_pendingChanges == false) return;
     if (!_formKey.currentState!.validate()) return;
 
     final bloc = context.read<SettingsBloc>();
@@ -302,16 +298,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
     if (currentState is! SettingsLoadedState) return;
 
-    final updatedNotificationPreferences = currentState.preferences.notificationPreferences.copyWith(
-      dailyReminderEnabled: _dailyReminderEnabled,
-      billsReminderEnabled: _billsReminderEnabled,
-      monthlyReportEnabled: _monthlyReportEnabled,
-      reminderTime: _reminderTime,
+    final updatedPreferences = currentState.preferences.copyWith(
+      notificationPreferences: _currentPreferences,
     );
 
-    final updatedPreferences = currentState.preferences.copyWith(
-      notificationPreferences: updatedNotificationPreferences,
-    );
+    _initialPreferences = _currentPreferences.copyWith();
+    _pendingChanges = false;
 
     bloc.add(UpdateUserPreferencesEvent(userPreferences: updatedPreferences));
   }

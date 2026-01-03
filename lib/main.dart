@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/router/app_router.dart';
+import 'core/services/notification_service.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/settings/domain/enums/color_blind_mode.dart';
 import 'features/settings/domain/enums/font_size_preference.dart';
@@ -18,6 +19,7 @@ void main() async {
 
   try {
     await di.init();
+    await di.sl<NotificationService>().init();
     // Dispatch AppStartedEvent immediately after DI initialization
     di.sl<AuthBloc>().add(AppStartedEvent());
     runApp(const EcoWalletApp());

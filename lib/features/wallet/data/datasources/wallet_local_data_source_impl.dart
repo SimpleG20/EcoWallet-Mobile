@@ -131,12 +131,12 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
   }
 
   @override
-  Future<double> getCurrentMonthExpense() async {
+  Future<double> getCurrentMonthExpense(int initialDay) async {
     try {
       final db = await dbHelper.database;
       final now = DateTime.now();
-      final firstDayOfMonth = DateTime(now.year, now.month, 1);
-      final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+      final firstDayOfMonth = DateTime(now.year, now.month, initialDay);
+      final lastDayOfMonth = DateTime(now.year, now.month + 1, initialDay - 1);
 
       final expenseResult = await db.rawQuery(
         'SELECT SUM(amount) as monthlyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
@@ -154,12 +154,12 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
   }
 
   @override
-  Future<double> getMonthlySavings() async {
+  Future<double> getMonthlySavings(int initialDay) async {
     try {
       final db = await dbHelper.database;
       final now = DateTime.now();
-      final firstDayOfMonth = DateTime(now.year, now.month, 1);
-      final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+      final firstDayOfMonth = DateTime(now.year, now.month, initialDay);
+      final lastDayOfMonth = DateTime(now.year, now.month + 1, initialDay - 1);
 
       final incomeResult = await db.rawQuery(
         'SELECT SUM(amount) as monthlyIncome FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
@@ -236,4 +236,3 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
     }
   }
 }
-

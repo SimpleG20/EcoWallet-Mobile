@@ -213,6 +213,8 @@
       }
     }
   },
+  "ntfTestTitle": "Notificação de Teste EcoWallet",
+  "ntfTestBody": "Esta é uma notificação de teste do EcoWallet. 🌿",
   "ntfDailyReminderTitle": "Lembrete EcoWallet",
   "ntfDailyReminderBody": "Não se esqueça de registrar suas despesas hoje! 🌱",
   "ntfDailyReminderChannelName": "Lembretes Diários",

@@ -29,7 +29,7 @@ abstract class BaseWalletLocalDataSource {
   /// Calculates the total expenses for the current month.
   ///
   /// Throws a [CacheException] if the calculation fails.
-  Future<double> getCurrentMonthExpense();
+  Future<double> getCurrentMonthExpense(int initialDay);
 
   /// Calculates the total income for the current month.
   ///
@@ -49,7 +49,7 @@ abstract class BaseWalletLocalDataSource {
   /// Calculates the monthly savings based on income and expenses.
   ///
   /// Throws a [CacheException] if the calculation fails.
-  Future<double> getMonthlySavings();
+  Future<double> getMonthlySavings(int initialDay);
 
   /// Calculates the total expenses for the current day.
   ///

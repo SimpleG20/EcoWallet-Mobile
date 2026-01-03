@@ -1292,6 +1292,18 @@ abstract class AppLocalizations {
   /// **'You\'ve exceeded your limit of {value}'**
   String ntfAlertConsumptionBody(String value);
 
+  /// No description provided for @ntfTestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EcoWallet Test Notification'**
+  String get ntfTestTitle;
+
+  /// No description provided for @ntfTestBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a test notification from EcoWallet. 🌿'**
+  String get ntfTestBody;
+
   /// No description provided for @ntfDailyReminderTitle.
   ///
   /// In en, this message translates to:

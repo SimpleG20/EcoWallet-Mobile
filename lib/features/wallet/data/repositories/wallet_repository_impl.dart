@@ -87,9 +87,9 @@ class WalletRepositoryImpl implements BaseWalletRepository {
   }
 
   @override
-  Future<Either<BaseFailure, double>> getCurrentMonthExpense() async {
+  Future<Either<BaseFailure, double>> getCurrentMonthExpense(int initialDay) async {
     try {
-      final totalExpense = await dataSource.getCurrentMonthExpense();
+      final totalExpense = await dataSource.getCurrentMonthExpense(initialDay);
       return Right(totalExpense);
     } on CacheException {
       return Left(CacheFailure('Failed to get current month expense from local storage'));
@@ -135,9 +135,9 @@ class WalletRepositoryImpl implements BaseWalletRepository {
   }
 
   @override
-  Future<Either<BaseFailure, double>> getMonthlySavings() async {
+  Future<Either<BaseFailure, double>> getMonthlySavings(int initialDay) async {
     try {
-      final monthlySavings = await dataSource.getMonthlySavings();
+      final monthlySavings = await dataSource.getMonthlySavings(initialDay);
       return Right(monthlySavings);
     } on CacheException {
       return Left(CacheFailure('Failed to get monthly savings from local storage'));
