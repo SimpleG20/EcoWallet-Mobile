@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../settings/presentation/bloc/settings_bloc.dart';
+import '../../../user/presentation/bloc/user_bloc.dart';
 import '/core/utils/app_formatters.dart';
 import '/core/utils/app_validators.dart';
 import '/core/constants/category_data.dart';
@@ -107,7 +108,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
               ),
             ),
           ),
-          _buildSubmitBtn(theme, loc),
+          _buildSubmitBtn(context, theme, loc),
           const SizedBox(height: 20),
         ],
       ),
@@ -370,7 +371,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
     }
   }
 
-  Widget _buildSubmitBtn(ThemeData theme, AppLocalizations loc) {
+  Widget _buildSubmitBtn(BuildContext context, ThemeData theme, AppLocalizations loc) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -381,7 +382,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
           ),
           backgroundColor: theme.colorScheme.primary,
         ),
-        onPressed: () => _submitForm(),
+        onPressed: () => _submitForm(context),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -397,7 +398,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
     );
   }
 
-  Future<void> _submitForm() async {
+  Future<void> _submitForm(BuildContext context) async {
     final loc = AppLocalizations.of(context)!;
 
     if (!_formKey.currentState!.validate()) return;
@@ -419,7 +420,11 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
 
     const uuid = Uuid();
     final id = isEditing ? widget.transactionToEdit!.id : uuid.v4();
-    final userId = isEditing ? widget.transactionToEdit!.userId : '';
+    
+    // Get current user ID for new transactions
+    final userBloc = context.read<UserBloc>();
+    final currentUserId = (userBloc.state as UserLoadedState).user.id;
+    final userId = isEditing ? widget.transactionToEdit!.userId : currentUserId;
 
     // Convert category label to enum
     final categoryEnum = CategoryRepository.fromLabel(_selectedTransactionCategory, loc);

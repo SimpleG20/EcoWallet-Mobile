@@ -9,9 +9,9 @@ class DataPreferences extends Equatable {
   final BackupFrequency backupFrequency;
 
   const DataPreferences({
-    required this.cloudBackupEnabled,
-    required this.encryptedBackup,
-    required this.backupFrequency,
+    this.cloudBackupEnabled = false,
+    this.encryptedBackup = false,
+    this.backupFrequency = BackupFrequency.none,
   });
 
   DataPreferences copyWith({

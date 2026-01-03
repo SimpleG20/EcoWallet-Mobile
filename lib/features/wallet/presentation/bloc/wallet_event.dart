@@ -37,6 +37,15 @@ class DeleteTransactionEvent extends WalletEvent {
   List<Object> get props => [transactionId];
 }
 
+class DeleteAllTransactionsEvent extends WalletEvent {
+  final String userId;
+
+  const DeleteAllTransactionsEvent(this.userId);
+
+  @override
+  List<Object> get props => [userId];
+}
+
 class UpdateTransactionEvent extends WalletEvent {
   final Transaction transaction;
 
@@ -48,7 +57,8 @@ class UpdateTransactionEvent extends WalletEvent {
 
 class LoadWalletDataEvent extends WalletEvent {
   final BudgetPreferences budgetPreferences;
-  const LoadWalletDataEvent({this.budgetPreferences = const BudgetPreferences()});
+  const LoadWalletDataEvent(
+      {this.budgetPreferences = const BudgetPreferences()});
 
   @override
   List<Object> get props => [budgetPreferences];

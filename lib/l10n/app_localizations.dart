@@ -284,11 +284,23 @@ abstract class AppLocalizations {
   /// **'Don\'t have an account?'**
   String get askDontHaveAccount;
 
+  /// No description provided for @askConfirmDeleteData.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete all your data? This action cannot be undone.'**
+  String get askConfirmDeleteData;
+
   /// No description provided for @deleteAccount.
   ///
   /// In en, this message translates to:
   /// **'Delete Account'**
   String get deleteAccount;
+
+  /// No description provided for @confirmDeleteDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Data Deletion'**
+  String get confirmDeleteDataTitle;
 
   /// No description provided for @loginSignInToContinue.
   ///

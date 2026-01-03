@@ -66,6 +66,18 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
   }
 
   @override
+  Future<void> deleteAllTransactions(String userId) async {
+    try {
+      final db = await dbHelper.database;
+
+      await db
+          .delete('transactions', where: 'user_id = ?', whereArgs: [userId]);
+    } catch (e) {
+      throw CacheException('Failed to delete all transactions from db');
+    }
+  }
+
+  @override
   Future<TransactionModel> getTransactionById(String transactionId) async {
     try {
       final db = await dbHelper.database;
@@ -164,10 +176,12 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
         ],
       );
 
-      final monthlyExpense = (expenseResult.first['monthlyExpense'] as int?) ?? 0;
+      final monthlyExpense =
+          (expenseResult.first['monthlyExpense'] as int?) ?? 0;
       return monthlyExpense / 100.0;
     } catch (e) {
-      throw CacheException('Failed to calculate current month expenses from db');
+      throw CacheException(
+          'Failed to calculate current month expenses from db');
     }
   }
 
@@ -198,7 +212,8 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       );
 
       final monthlyIncome = (incomeResult.first['monthlyIncome'] as int?) ?? 0;
-      final monthlyExpense = (expenseResult.first['monthlyExpense'] as int?) ?? 0;
+      final monthlyExpense =
+          (expenseResult.first['monthlyExpense'] as int?) ?? 0;
 
       return (monthlyIncome - monthlyExpense) / 100.0;
     } catch (e) {
@@ -237,7 +252,8 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       final now = DateTime.now();
       // Get start of the week (Monday)
       final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
-      final startOfWeekDate = DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
+      final startOfWeekDate =
+          DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
       final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
 
       final expenseResult = await db.rawQuery(
@@ -256,4 +272,3 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
     }
   }
 }
-

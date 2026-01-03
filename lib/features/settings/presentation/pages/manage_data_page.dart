@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../user/presentation/bloc/user_bloc.dart';
+import '../../../wallet/presentation/bloc/wallet_bloc.dart';
+import '../../domain/entities/data_preferences.dart';
 import '../bloc/settings_bloc.dart';
 import '../widgets/settings_widgets.dart';
 import '../../domain/enums/backup_frequency.dart';
@@ -15,9 +18,8 @@ class ManageDataPage extends StatefulWidget {
 }
 
 class _ManageDataPageState extends State<ManageDataPage> {
-  bool isCloudBackupEnabled = false;
-  bool isEncryptedBackup = false;
-  BackupFrequency backupFrequency = BackupFrequency.none;
+  DataPreferences _currentPreferences = DataPreferences();
+  DataPreferences _initialPreferences = DataPreferences();
 
   bool _pendingChanges = false;
 
@@ -28,9 +30,8 @@ class _ManageDataPageState extends State<ManageDataPage> {
     final settingsState = context.read<SettingsBloc>().state;
     if (settingsState is SettingsLoadedState) {
       final settings = settingsState.preferences.dataPreferences;
-      isCloudBackupEnabled = settings.cloudBackupEnabled;
-      isEncryptedBackup = settings.encryptedBackup;
-      backupFrequency = settings.backupFrequency;
+      _currentPreferences = settings.copyWith();
+      _initialPreferences = settings.copyWith();
     }
   }
 
@@ -92,13 +93,18 @@ class _ManageDataPageState extends State<ManageDataPage> {
     );
   }
 
-  Widget _buildDataOptions(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    final sections = [_buildDataSection(context, theme, loc), _buildBackupSection(context, theme, loc)];
+  Widget _buildDataOptions(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    final sections = [
+      _buildDataSection(context, theme, loc),
+      _buildBackupSection(context, theme, loc),
+    ];
 
     return SettingsSectionList(sections: sections, theme: theme);
   }
 
-  Widget _buildDataSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDataSection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -114,7 +120,8 @@ class _ManageDataPageState extends State<ManageDataPage> {
     );
   }
 
-  Widget _buildExportData(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildExportData(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
         Expanded(
@@ -146,7 +153,8 @@ class _ManageDataPageState extends State<ManageDataPage> {
     );
   }
 
-  Widget _buildImportData(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildImportData(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
         Expanded(
@@ -178,7 +186,8 @@ class _ManageDataPageState extends State<ManageDataPage> {
     );
   }
 
-  Widget _buildDeleteData(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildDeleteData(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Row(
       children: [
         Expanded(
@@ -186,7 +195,8 @@ class _ManageDataPageState extends State<ManageDataPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildOptionTitle(context, theme, loc.lbDelete, color: theme.colorScheme.error),
+              _buildOptionTitle(context, theme, loc.lbDelete,
+                  color: theme.colorScheme.error),
               const SizedBox(height: 8),
               Text(
                 loc.deleteDataDescription,
@@ -201,7 +211,35 @@ class _ManageDataPageState extends State<ManageDataPage> {
             backgroundColor: theme.colorScheme.error,
           ),
           onPressed: () {
-            // Implement delete data functionality
+            final userBloc = context.read<UserBloc>();
+            final walletBloc = context.read<WalletBloc>();
+
+            showDialog(
+                context: context,
+                builder: (ctx) {
+                  return AlertDialog(
+                    title: Text(loc.confirmDeleteDataTitle),
+                    content: Text(loc.askConfirmDeleteData),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: Text(loc.btnCancel),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          final userId =
+                              (userBloc.state as UserLoadedState).user.id;
+                          walletBloc.add(DeleteAllTransactionsEvent(userId));
+                        },
+                        child: Text(
+                          loc.lbDelete,
+                          style: TextStyle(color: theme.colorScheme.error),
+                        ),
+                      ),
+                    ],
+                  );
+                });
           },
           child: Icon(Icons.delete, size: 24),
         ),
@@ -209,57 +247,74 @@ class _ManageDataPageState extends State<ManageDataPage> {
     );
   }
 
-  Widget _buildBackupSection(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildBackupSection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SettingsSectionTitle(title: loc.sectionBackup),
-        const SizedBox(height: 16),
-        SwitchRow(
-          icon: Icons.cloud_upload,
-          label: loc.lbEnableCloud,
-          value: isCloudBackupEnabled, // Replace with actual state
-          onChanged: (bool newValue) {
-            setState(() {
-              isCloudBackupEnabled = newValue;
-            });
-          },
-          theme: theme,
-        ),
+        // TODO: Re-enable cloud backup when implemented
+        // const SizedBox(height: 16),
+        // SwitchRow(
+        //   icon: Icons.cloud_upload,
+        //   label: loc.lbEnableCloud,
+        //   value: isCloudBackupEnabled, // Replace with actual state
+        //   onChanged: (bool newValue) {
+        //     setState(() {
+        //       isCloudBackupEnabled = newValue;
+        //     });
+        //   },
+        //   theme: theme,
+        // ),
         const SizedBox(height: 8),
         SwitchRow(
           icon: Icons.lock,
           label: loc.lbEncrypted,
-          value: isEncryptedBackup, // Replace with actual state
+          value:
+              _currentPreferences.encryptedBackup, // Replace with actual state
           onChanged: (bool newValue) {
             setState(() {
-              isEncryptedBackup = newValue;
+              _currentPreferences = _currentPreferences.copyWith(
+                encryptedBackup: newValue,
+              );
+              _pendingChanges = _currentPreferences != _initialPreferences;
             });
           },
           theme: theme,
         ),
         const SizedBox(height: 8),
         DropdownRow<BackupFrequency>(
-            icon: Icons.schedule,
-            label: loc.lbFrequency,
-            value: backupFrequency,
-            items: [
-              DropdownMenuItem(value: BackupFrequency.none, child: Text(loc.frequencyNone)),
-              DropdownMenuItem(value: BackupFrequency.daily, child: Text(loc.frequencyDaily)),
-              DropdownMenuItem(value: BackupFrequency.weekly, child: Text(loc.frequencyWeekly)),
-              DropdownMenuItem(value: BackupFrequency.monthly, child: Text(loc.frequencyMonthly)),
-            ],
-            onChanged: (BackupFrequency? newValue) {
-              setState(() {
-                backupFrequency = newValue ?? BackupFrequency.none;
-              });
-            },
-            theme: theme)
+          icon: Icons.schedule,
+          label: loc.lbFrequency,
+          value: _currentPreferences.backupFrequency,
+          items: [
+            DropdownMenuItem(
+                value: BackupFrequency.none, child: Text(loc.frequencyNone)),
+            DropdownMenuItem(
+                value: BackupFrequency.daily, child: Text(loc.frequencyDaily)),
+            DropdownMenuItem(
+                value: BackupFrequency.weekly,
+                child: Text(loc.frequencyWeekly)),
+            DropdownMenuItem(
+                value: BackupFrequency.monthly,
+                child: Text(loc.frequencyMonthly)),
+          ],
+          onChanged: (BackupFrequency? newValue) {
+            setState(() {
+              _currentPreferences = _currentPreferences.copyWith(
+                backupFrequency: newValue ?? BackupFrequency.none,
+              );
+              _pendingChanges = _currentPreferences != _initialPreferences;
+            });
+          },
+          theme: theme,
+        )
       ],
     );
   }
 
-  Widget _buildOptionTitle(BuildContext context, ThemeData theme, String title, {Color? color}) {
+  Widget _buildOptionTitle(BuildContext context, ThemeData theme, String title,
+      {Color? color}) {
     return Text(
       title,
       style: theme.textTheme.titleSmall?.copyWith(
@@ -270,17 +325,16 @@ class _ManageDataPageState extends State<ManageDataPage> {
   }
 
   void _submitChanges(BuildContext context) {
+    if (!_pendingChanges) return;
+
     final settingsState = context.read<SettingsBloc>().state;
     if (settingsState is! SettingsLoadedState) return;
 
-    final newPreferences = settingsState.preferences.copyWith(
-      dataPreferences: settingsState.preferences.dataPreferences.copyWith(
-        cloudBackupEnabled: isCloudBackupEnabled,
-        encryptedBackup: isEncryptedBackup,
-        backupFrequency: backupFrequency,
-      ),
-    );
+    final newPreferences = settingsState.preferences
+        .copyWith(dataPreferences: _currentPreferences);
 
-    context.read<SettingsBloc>().add(UpdateUserPreferencesEvent(userPreferences: newPreferences));
+    context
+        .read<SettingsBloc>()
+        .add(UpdateUserPreferencesEvent(userPreferences: newPreferences));
   }
 }

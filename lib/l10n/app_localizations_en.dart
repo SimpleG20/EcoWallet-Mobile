@@ -103,7 +103,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get askDontHaveAccount => 'Don\'t have an account?';
 
   @override
+  String get askConfirmDeleteData =>
+      'Are you sure you want to delete all your data? This action cannot be undone.';
+
+  @override
   String get deleteAccount => 'Delete Account';
+
+  @override
+  String get confirmDeleteDataTitle => 'Confirm Data Deletion';
 
   @override
   String get loginSignInToContinue => 'Sign in to continue to your EcoWallet';

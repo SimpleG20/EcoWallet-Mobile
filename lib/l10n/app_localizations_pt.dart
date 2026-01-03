@@ -104,7 +104,14 @@ class AppLocalizationsPt extends AppLocalizations {
   String get askDontHaveAccount => 'Não tem uma conta?';
 
   @override
+  String get askConfirmDeleteData =>
+      'Tem certeza de que deseja excluir todos os seus dados? Esta ação não pode ser desfeita.';
+
+  @override
   String get deleteAccount => 'Excluir Conta';
+
+  @override
+  String get confirmDeleteDataTitle => 'Confirmar Exclusão de Dados';
 
   @override
   String get loginSignInToContinue =>

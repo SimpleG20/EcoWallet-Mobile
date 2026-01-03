@@ -5,7 +5,7 @@ import 'db_seeds.dart';
 
 class DbHelper {
   static Database? _database;
-  static int get _dbVersion => 4;
+  static int get _dbVersion => 5;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -200,6 +200,21 @@ class DbHelper {
       await db.execute('CREATE INDEX IF NOT EXISTS idx_transactions_category ON transactions(category_id)');
       await db.execute('CREATE INDEX IF NOT EXISTS idx_transactions_type ON transactions(type_id)');
       await db.execute('CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)');
+    }
+
+    // Migration v5: Fix transactions with empty user_id
+    if (oldVersion < 5) {
+      // Get the first user's ID
+      final users = await db.query('users', limit: 1);
+      if (users.isNotEmpty) {
+        final userId = users.first['id'] as String;
+        // Update all transactions with empty user_id
+        await db.update(
+          'transactions',
+          {'user_id': userId},
+          where: "user_id = '' OR user_id IS NULL",
+        );
+      }
     }
   }
 }
