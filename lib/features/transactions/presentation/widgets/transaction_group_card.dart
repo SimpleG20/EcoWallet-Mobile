@@ -42,7 +42,8 @@ class TransactionGroupCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppFormatters.weekdayDateFormatter.format(transactionGroup.date),
+          AppFormatters.formatWeekdayDate(
+              transactionGroup.date, loc.localeName),
           style: theme.textTheme.titleMedium,
         ),
         const SizedBox(height: 8),

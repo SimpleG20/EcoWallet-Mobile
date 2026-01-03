@@ -46,7 +46,14 @@ class AppFormatters {
   static final DateFormat dateOnlyFormatter = DateFormat('yyyy-MM-dd');
   static final DateFormat fullDateFormatter = DateFormat.yMMMMd();
 
+  /// @deprecated Use [formatWeekdayDate] instead for localized output.
   static final DateFormat weekdayDateFormatter = DateFormat('EEEE, MMM d');
+
+  /// Formats a date as "Monday, Jan 1" in the given locale.
+  static String formatWeekdayDate(DateTime date, String locale) {
+    return DateFormat('EEEE, MMM d', locale).format(date);
+  }
+
 
   static String currencySymbol(String locale) {
     return NumberFormat.simpleCurrency(locale: locale).currencySymbol;
