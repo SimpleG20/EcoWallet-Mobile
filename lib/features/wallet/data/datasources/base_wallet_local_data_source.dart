@@ -21,6 +21,11 @@ abstract class BaseWalletLocalDataSource {
   /// Throws a [CacheException] if the delete operation fails.
   Future<void> deleteTransaction(String transactionId);
 
+  /// Deletes all transactions from local storage.
+  ///
+  /// Throws a [CacheException] if the delete operation fails.
+  Future<void> deleteAllTransactions(String userId);
+
   /// Retrieves a transaction by its ID from local storage.
   ///
   /// Throws a [CacheException] if the retrieval operation fails.

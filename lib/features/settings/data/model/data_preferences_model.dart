@@ -6,6 +6,7 @@ class DataPreferencesModel extends DataPreferences {
     required super.cloudBackupEnabled,
     required super.encryptedBackup,
     required super.backupFrequency,
+    super.lastBackupDate,
   });
 
   factory DataPreferencesModel.defaults() {
@@ -17,10 +18,16 @@ class DataPreferencesModel extends DataPreferences {
   }
 
   factory DataPreferencesModel.fromJson(Map<String, dynamic> json) {
+    DateTime? lastBackup;
+    if (json['lastBackupDate'] != null) {
+      lastBackup = DateTime.tryParse(json['lastBackupDate'].toString());
+    }
+
     return DataPreferencesModel(
       cloudBackupEnabled: _parseBool(json['cloudBackupEnabled'], false),
       encryptedBackup: _parseBool(json['encryptedBackup'], false),
       backupFrequency: BackupFrequency.fromString(json['backupFrequency']?.toString() ?? 'weekly'),
+      lastBackupDate: lastBackup,
     );
   }
 
@@ -38,6 +45,8 @@ class DataPreferencesModel extends DataPreferences {
       'cloudBackupEnabled': preferences.cloudBackupEnabled,
       'encryptedBackup': preferences.encryptedBackup,
       'backupFrequency': preferences.backupFrequency.name,
+      'lastBackupDate': preferences.lastBackupDate?.toIso8601String(),
     };
   }
 }
+

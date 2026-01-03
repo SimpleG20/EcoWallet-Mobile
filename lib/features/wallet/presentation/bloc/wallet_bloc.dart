@@ -62,8 +62,10 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     on<GetTransactionsEvent>(_onGetTransactions);
     on<DeleteTransactionEvent>(_onDeleteTransaction);
     on<UpdateTransactionEvent>(_onUpdateTransaction);
+    on<DeleteAllTransactionsEvent>(_onDeleteAllTransactions);
 
-    _transactionsSubscription = walletRepository.onTransactionsChanged.listen((_) {
+    _transactionsSubscription =
+        walletRepository.onTransactionsChanged.listen((_) {
       add(LoadWalletDataEvent());
     });
   }
@@ -74,7 +76,8 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     return super.close();
   }
 
-  Future<void> _onLoadWalletData(LoadWalletDataEvent event, Emitter<BaseWalletState> emit) async {
+  Future<void> _onLoadWalletData(
+      LoadWalletDataEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await getTransactions(NoParams());
@@ -88,7 +91,8 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     final totalBalance = await getTotalBalance(NoParams());
     final totalIncome = await getTotalIncome(NoParams());
     final totalExpense = await getTotalExpense(NoParams());
-    final monthlySavings = await getMonthlySavings(event.budgetPreferences.monthStartDay);
+    final monthlySavings =
+        await getMonthlySavings(event.budgetPreferences.monthStartDay);
 
     emit(
       WalletLoaded(
@@ -101,7 +105,8 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     );
   }
 
-  Future<void> _onGetTransactions(GetTransactionsEvent event, Emitter<BaseWalletState> emit) async {
+  Future<void> _onGetTransactions(
+      GetTransactionsEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await getTransactions(NoParams());
@@ -112,7 +117,8 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     );
   }
 
-  Future<void> _onAddTransaction(AddTransactionEvent event, Emitter<BaseWalletState> emit) async {
+  Future<void> _onAddTransaction(
+      AddTransactionEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await addTransaction(event.transaction);
@@ -142,7 +148,8 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     );
   }
 
-  Future<void> _onDeleteTransaction(DeleteTransactionEvent event, Emitter<BaseWalletState> emit) async {
+  Future<void> _onDeleteTransaction(
+      DeleteTransactionEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await deleteTransaction(event.transactionId);
@@ -152,7 +159,19 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     );
   }
 
-  Future<void> _onUpdateTransaction(UpdateTransactionEvent event, Emitter<BaseWalletState> emit) async {
+  Future<void> _onDeleteAllTransactions(
+      DeleteAllTransactionsEvent event, Emitter<BaseWalletState> emit) async {
+    emit(WalletLoading());
+
+    try {
+      await walletRepository.deleteAllTransactions(event.userId);
+    } catch (e) {
+      emit(const WalletError("Erro ao deletar todas as transações"));
+    }
+  }
+
+  Future<void> _onUpdateTransaction(
+      UpdateTransactionEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await updateTransaction(event.transaction);
@@ -162,7 +181,8 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     );
   }
 
-  Future<void> _onGetTransaction(GetTransactionEvent event, Emitter<BaseWalletState> emit) async {
+  Future<void> _onGetTransaction(
+      GetTransactionEvent event, Emitter<BaseWalletState> emit) async {
     emit(WalletLoading());
 
     final result = await getTransactionById(event.transactionId);
