@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import '../../../wallet/domain/entities/transaction.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/constants/transaction_type_data.dart';
+import '../../../../core/constants/category_data.dart';
 
 class TransactionFilter {
   final ETransactionType? type;
-  final List<String> categories;
+  final List<ETransactionCategory> categories;
   final DateTimeRange? dateRange;
   final double? minAmount;
   final double? maxAmount;
@@ -38,7 +39,7 @@ class TransactionFilter {
 
   TransactionFilter copyWith({
     ETransactionType? type,
-    List<String>? categories,
+    List<ETransactionCategory>? categories,
     DateTimeRange? dateRange,
     double? minAmount,
     double? maxAmount,
@@ -63,7 +64,7 @@ class TransactionFilter {
       }
     }
 
-    double absAmount = t.amount.toDouble();
+    double absAmount = t.amountAsDouble;
     if (minAmount != null && absAmount < minAmount!) return false;
     if (maxAmount != null && absAmount > maxAmount!) return false;
 
@@ -78,7 +79,9 @@ class TransactionFilter {
     }
 
     if (categories.isNotEmpty) {
-      filters.addAll(categories);
+      for (final category in categories) {
+        filters.add(CategoryRepository.getLabel(category, loc));
+      }
     }
 
     if (dateRange != null) {
@@ -97,14 +100,25 @@ class TransactionFilter {
     return filters;
   }
 
-  TransactionFilter deleteFilter(String filter) {
+  TransactionFilter deleteFilter(String filter, AppLocalizations loc) {
+    // Find category by label
+    ETransactionCategory? categoryToRemove;
+    for (final category in categories) {
+      if (CategoryRepository.getLabel(category, loc) == filter) {
+        categoryToRemove = category;
+        break;
+      }
+    }
+
     return copyWith(
-      type: (type != null && type.toString() == filter) ? null : type,
-      categories: categories.where((category) => category != filter).toList(),
+      type: (type != null && TransactionTypeRepository.getLabel(type!, loc) == filter) ? null : type,
+      categories: categoryToRemove != null
+          ? categories.where((c) => c != categoryToRemove).toList()
+          : categories,
       dateRange: (dateRange != null && '${dateRange!.start.toLocal()} - ${dateRange!.end.toLocal()}' == filter)
           ? null
           : dateRange,
-      // minAmount and maxAmount removal logic can be added here if needed
     );
   }
 }
+

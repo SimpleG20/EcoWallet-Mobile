@@ -1,11 +1,8 @@
-import 'package:eco_wallet/core/constants/category_data.dart';
-
 import '../../features/wallet/domain/entities/transaction.dart';
-import '../../l10n/app_localizations.dart';
 import '../enums/enums.dart';
 
 class CarbonCalculator {
-  static double calculateCarbonFootprint(List<Transaction> transactions, AppLocalizations loc) {
+  static double calculateCarbonFootprint(List<Transaction> transactions) {
     double totalCo2 = 0.0;
 
     for (var t in transactions) {
@@ -13,8 +10,7 @@ class CarbonCalculator {
 
       double factor = 0.1;
 
-      final cat = t.category;
-      switch (CategoryRepository.fromLabel(cat, loc)) {
+      switch (t.category) {
         case ETransactionCategory.food:
         case ETransactionCategory.shopping:
           factor = 0.25;
@@ -38,3 +34,4 @@ class CarbonCalculator {
     return (co2 / 22).ceil();
   }
 }
+

@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
                   loc: loc,
                   theme: theme,
                   state: state,
-                  ecoData: EcoData.fromTransactions(loc, state.transactions),
+                  ecoData: EcoData.fromTransactions(state.transactions),
                   weeklyData: _calculateWeeklyTransactions(state.recentTransactions),
                   onAddTransaction: (type, {Transaction? transaction}) =>
                       _showAddTransactionModal(context, type, transactionToEdit: transaction),

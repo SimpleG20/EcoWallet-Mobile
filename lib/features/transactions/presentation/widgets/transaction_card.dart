@@ -25,7 +25,7 @@ class TransactionCard extends StatelessWidget {
     final loc = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isIncome = transaction.type == ETransactionType.income;
-    double value = transaction.amount + transaction.cents / 100;
+    double value = transaction.amountAsDouble;
 
     return ListTile(
       onTap: onTap,
@@ -35,10 +35,10 @@ class TransactionCard extends StatelessWidget {
         foregroundColor: isIncome ? theme.colorScheme.primary : theme.colorScheme.outlineVariant,
         child: Icon(transaction.type == ETransactionType.income
             ? Icons.trending_up
-            : CategoryRepository.getIconByLabel(transaction.category, loc)),
+            : CategoryRepository.getIcon(transaction.category)),
       ),
       title: Text(transaction.name),
-      subtitle: Text(transaction.category.isNotEmpty ? transaction.category : loc.lbUncategorized,
+      subtitle: Text(CategoryRepository.getLabel(transaction.category, loc),
           style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant.withAlpha(150))),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,

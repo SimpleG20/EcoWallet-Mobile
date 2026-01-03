@@ -48,14 +48,14 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
     if (!_isInitialized) {
       if (isEditing) {
         final transaction = widget.transactionToEdit!;
-
-        double value = transaction.amount + (transaction.cents / 100);
         final loc = AppLocalizations.of(context)!;
 
         _nameController.text = transaction.name;
-        _amountController.text = AppFormatters.formatCurrency(value, loc.localeName, noSymbol: true);
+        _amountController.text = AppFormatters.formatCurrency(
+            transaction.amountAsDouble, loc.localeName,
+            noSymbol: true);
         _selectedDate = transaction.date;
-        _selectedTransactionCategory = transaction.category;
+        _selectedTransactionCategory = CategoryRepository.getLabel(transaction.category, loc);
         _transactionType = transaction.type;
       }
 
@@ -413,22 +413,25 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
     }
 
     final value = AppFormatters.getCurrencyValue(_amountController.text, loc.localeName);
-    int amount = value.floor();
-    int cents = ((value - amount) * 100).round();
+    final amountCents = (value * 100).round();
 
     final entityType = _transactionType;
 
     const uuid = Uuid();
     final id = isEditing ? widget.transactionToEdit!.id : uuid.v4();
+    final userId = isEditing ? widget.transactionToEdit!.userId : '';
+
+    // Convert category label to enum
+    final categoryEnum = CategoryRepository.fromLabel(_selectedTransactionCategory, loc);
 
     final newTransaction = Transaction(
       id: id,
+      userId: userId,
       name: _nameController.text,
-      amount: amount,
-      cents: cents,
+      amountCents: amountCents,
       date: _selectedDate,
       type: entityType,
-      category: _selectedTransactionCategory,
+      category: categoryEnum,
     );
 
     final walletBloc = context.read<WalletBloc>();

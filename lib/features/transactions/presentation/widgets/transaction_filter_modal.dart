@@ -26,7 +26,7 @@ class TransactionFilterModal extends StatefulWidget {
 
 class _TransactionFilterModalState extends State<TransactionFilterModal> {
   static const double kMaxAmountLimit = 20000.0;
-  final List<String> _selectedCategories = [];
+  final List<ETransactionCategory> _selectedCategories = [];
 
   late RangeValues _currentRangeValues;
 
@@ -331,24 +331,24 @@ class _TransactionFilterModalState extends State<TransactionFilterModal> {
           children: List.generate(CategoryRepository.categoryCount, (index) {
             final category = CategoryRepository.getCategoryByIndex(index);
             final label = CategoryRepository.getLabel(category, loc);
-            return _buildCategoryChip(theme, label);
+            return _buildCategoryChip(theme, category, label);
           }),
         ),
       ],
     );
   }
 
-  Widget _buildCategoryChip(ThemeData theme, String label) {
-    final isSelected = _selectedCategories.contains(label);
+  Widget _buildCategoryChip(ThemeData theme, ETransactionCategory category, String label) {
+    final isSelected = _selectedCategories.contains(category);
     return FilterChip(
       label: Text(label),
       selected: isSelected,
       onSelected: (bool selected) {
         setState(() {
           if (selected) {
-            _selectedCategories.add(label);
+            _selectedCategories.add(category);
           } else {
-            _selectedCategories.remove(label);
+            _selectedCategories.remove(category);
           }
         });
       },
