@@ -64,14 +64,29 @@ class TransactionAddedSuccess extends BaseWalletState {
   final double totalBalance;
   final double totalIncome;
   final double totalExpense;
+  final double dailyExpense;
+  final double weeklyExpense;
+  final double monthlyExpense;
 
-  const TransactionAddedSuccess(
-    this.transaction,
-    this.totalBalance,
-    this.totalIncome,
-    this.totalExpense,
-  );
+  const TransactionAddedSuccess({
+    required this.transaction,
+    required this.totalBalance,
+    required this.totalIncome,
+    required this.totalExpense,
+    required this.dailyExpense,
+    required this.weeklyExpense,
+    required this.monthlyExpense,
+  });
 
   @override
-  List<Object> get props => [transaction, totalBalance, totalIncome, totalExpense];
+  List<Object> get props => [
+        transaction,
+        totalBalance,
+        totalIncome,
+        totalExpense,
+        dailyExpense,
+        weeklyExpense,
+        monthlyExpense,
+      ];
 }
+

@@ -96,6 +96,9 @@ Future<void> init() async {
       getTotalIncome: sl(),
       getTotalExpense: sl(),
       getMonthlySavings: sl(),
+      getDailyExpense: sl(),
+      getWeeklyExpense: sl(),
+      getMonthlyExpense: sl(),
       walletRepository: sl(),
     ),
   );
@@ -128,6 +131,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetTotalIncome(sl()));
   sl.registerLazySingleton(() => GetTotalExpense(sl()));
   sl.registerLazySingleton(() => GetMonthlySavings(sl()));
+  sl.registerLazySingleton(() => GetDailyExpense(sl()));
+  sl.registerLazySingleton(() => GetWeeklyExpense(sl()));
+  sl.registerLazySingleton(() => GetMonthlyExpense(sl()));
 
   sl.registerLazySingleton<BaseAuthRepository>(() => AuthRepositoryImpl(dataSource: sl()));
   sl.registerLazySingleton<BaseUserRepository>(() => UserRepositoryImpl(dataSource: sl(), authDataSource: sl()));

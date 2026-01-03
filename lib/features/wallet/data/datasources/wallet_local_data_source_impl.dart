@@ -187,4 +187,53 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       throw CacheException('Failed to calculate monthly savings from db');
     }
   }
+
+  @override
+  Future<double> getDailyExpense() async {
+    try {
+      final db = await dbHelper.database;
+      final now = DateTime.now();
+      final startOfDay = DateTime(now.year, now.month, now.day);
+      final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
+
+      final expenseResult = await db.rawQuery(
+        'SELECT SUM(amount) as dailyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        [
+          'expense',
+          startOfDay.toIso8601String(),
+          endOfDay.toIso8601String(),
+        ],
+      );
+
+      return expenseResult.first['dailyExpense'] as double? ?? 0.0;
+    } catch (e) {
+      throw CacheException('Failed to calculate daily expenses from db');
+    }
+  }
+
+  @override
+  Future<double> getWeeklyExpense() async {
+    try {
+      final db = await dbHelper.database;
+      final now = DateTime.now();
+      // Get start of the week (Monday)
+      final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+      final startOfWeekDate = DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
+      final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
+
+      final expenseResult = await db.rawQuery(
+        'SELECT SUM(amount) as weeklyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        [
+          'expense',
+          startOfWeekDate.toIso8601String(),
+          endOfDay.toIso8601String(),
+        ],
+      );
+
+      return expenseResult.first['weeklyExpense'] as double? ?? 0.0;
+    } catch (e) {
+      throw CacheException('Failed to calculate weekly expenses from db');
+    }
+  }
 }
+

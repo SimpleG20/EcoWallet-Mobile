@@ -14,6 +14,9 @@ import '../../domain/usecases/get_total_balance.dart';
 import '../../domain/usecases/update_transaction.dart';
 import '../../domain/usecases/delete_transaction.dart';
 import '../../domain/usecases/get_monthly_savings.dart';
+import '../../domain/usecases/get_daily_expense.dart';
+import '../../domain/usecases/get_weekly_expense.dart';
+import '../../domain/usecases/get_monthly_expense.dart';
 import '../../domain/repositories/base_wallet_repository.dart';
 import '../../../../core/usecases/base_usecase.dart';
 
@@ -30,6 +33,9 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
   final GetTotalIncome getTotalIncome;
   final GetTotalExpense getTotalExpense;
   final GetMonthlySavings getMonthlySavings;
+  final GetDailyExpense getDailyExpense;
+  final GetWeeklyExpense getWeeklyExpense;
+  final GetMonthlyExpense getMonthlyExpense;
 
   final BaseWalletRepository walletRepository;
 
@@ -45,6 +51,9 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     required this.getTotalIncome,
     required this.getTotalExpense,
     required this.getMonthlySavings,
+    required this.getDailyExpense,
+    required this.getWeeklyExpense,
+    required this.getMonthlyExpense,
     required this.walletRepository,
   }) : super(WalletInitial()) {
     on<LoadWalletDataEvent>(_onLoadWalletData);
@@ -113,12 +122,18 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
         final totalBalance = await getTotalBalance(NoParams());
         final totalIncome = await getTotalIncome(NoParams());
         final totalExpense = await getTotalExpense(NoParams());
+        final dailyExpenseResult = await getDailyExpense(NoParams());
+        final weeklyExpenseResult = await getWeeklyExpense(NoParams());
+        final monthlyExpenseResult = await getMonthlyExpense(NoParams());
         emit(
           TransactionAddedSuccess(
-            event.transaction,
-            totalBalance.fold((l) => 0.0, (r) => r),
-            totalIncome.fold((l) => 0.0, (r) => r),
-            totalExpense.fold((l) => 0.0, (r) => r),
+            transaction: event.transaction,
+            totalBalance: totalBalance.fold((l) => 0.0, (r) => r),
+            totalIncome: totalIncome.fold((l) => 0.0, (r) => r),
+            totalExpense: totalExpense.fold((l) => 0.0, (r) => r),
+            dailyExpense: dailyExpenseResult.fold((l) => 0.0, (r) => r),
+            weeklyExpense: weeklyExpenseResult.fold((l) => 0.0, (r) => r),
+            monthlyExpense: monthlyExpenseResult.fold((l) => 0.0, (r) => r),
           ),
         );
         return;

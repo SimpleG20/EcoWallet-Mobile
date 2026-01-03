@@ -19,3 +19,5 @@ class TransactionTypeRepository {
     return null;
   }
 }
+
+enum EPeriodType { daily, weekly, monthly, yearly, allTime }

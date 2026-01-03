@@ -50,4 +50,14 @@ abstract class BaseWalletLocalDataSource {
   ///
   /// Throws a [CacheException] if the calculation fails.
   Future<double> getMonthlySavings();
+
+  /// Calculates the total expenses for the current day.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getDailyExpense();
+
+  /// Calculates the total expenses for the current week.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getWeeklyExpense();
 }

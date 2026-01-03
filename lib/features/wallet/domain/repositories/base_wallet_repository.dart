@@ -27,6 +27,8 @@ abstract class BaseWalletRepository {
   Future<Either<BaseFailure, double>> getTotalBalance();
   Future<Either<BaseFailure, double>> getTotalExpense();
   Future<Either<BaseFailure, double>> getMonthlySavings();
+  Future<Either<BaseFailure, double>> getDailyExpense();
+  Future<Either<BaseFailure, double>> getWeeklyExpense();
 
   Stream<void> get onTransactionsChanged;
 }

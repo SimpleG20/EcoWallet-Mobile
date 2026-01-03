@@ -42,8 +42,22 @@ class HomePage extends StatelessWidget {
         ),
         body: BlocListener<WalletBloc, BaseWalletState>(
           listener: (context, state) {
+            final settingsBloc = context.read<SettingsBloc>();
+            final settingsState = settingsBloc.state;
+            if (settingsState is! SettingsLoadedState) {
+              return;
+            }
+
             if (state is TransactionAddedSuccess) {
-              _checkHighConsumptionAlert(context, state.totalExpense);
+              if (settingsState.preferences.budgetPreferences.dailyBudgetLimit != null) {
+                _checkHighConsumptionAlert(context, state.dailyExpense, EPeriodType.daily);
+              }
+              if (settingsState.preferences.budgetPreferences.weeklyBudgetLimit != null) {
+                _checkHighConsumptionAlert(context, state.weeklyExpense, EPeriodType.weekly);
+              }
+              if (settingsState.preferences.budgetPreferences.monthlyExpenseLimit != null) {
+                _checkHighConsumptionAlert(context, state.monthlyExpense, EPeriodType.monthly);
+              }
             }
           },
           child: BlocBuilder<WalletBloc, BaseWalletState>(
@@ -101,7 +115,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _checkHighConsumptionAlert(BuildContext context, double amount) {
+  _checkHighConsumptionAlert(BuildContext context, double amount, EPeriodType period) {
     final loc = AppLocalizations.of(context)!;
     final settingsBloc = context.read<SettingsBloc>();
     final settingsState = settingsBloc.state;
@@ -109,7 +123,18 @@ class HomePage extends StatelessWidget {
       return;
     }
 
-    final highExpenseThreshold = settingsState.preferences.notificationPreferences.highConsumptionThreshold;
+    double highExpenseThreshold = 0.0;
+    switch (period) {
+      case EPeriodType.daily:
+        highExpenseThreshold = settingsState.preferences.budgetPreferences.dailyBudgetLimit ?? 0.0;
+      case EPeriodType.weekly:
+        highExpenseThreshold = settingsState.preferences.budgetPreferences.weeklyBudgetLimit ?? 0.0;
+      case EPeriodType.monthly:
+        highExpenseThreshold = settingsState.preferences.budgetPreferences.monthlyExpenseLimit ?? 0.0;
+      case EPeriodType.yearly:
+      case EPeriodType.allTime:
+        highExpenseThreshold = double.infinity;
+    }
     if (amount > highExpenseThreshold) {
       showDialog(
         context: context,

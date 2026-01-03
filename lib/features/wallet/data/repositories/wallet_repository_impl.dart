@@ -145,4 +145,28 @@ class WalletRepositoryImpl implements BaseWalletRepository {
       return Left(UnknownFailure('An unknown error occurred: $e'));
     }
   }
+
+  @override
+  Future<Either<BaseFailure, double>> getDailyExpense() async {
+    try {
+      final dailyExpense = await dataSource.getDailyExpense();
+      return Right(dailyExpense);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get daily expense from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getWeeklyExpense() async {
+    try {
+      final weeklyExpense = await dataSource.getWeeklyExpense();
+      return Right(weeklyExpense);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get weekly expense from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
 }
