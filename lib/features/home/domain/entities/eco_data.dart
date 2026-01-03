@@ -1,5 +1,4 @@
 import 'package:eco_wallet/core/utils/carbon_calculator.dart';
-import 'package:eco_wallet/l10n/app_localizations.dart';
 
 import '../../../wallet/domain/entities/transaction.dart';
 
@@ -12,8 +11,8 @@ class EcoData {
     required this.treesPlanted,
   });
 
-  factory EcoData.fromTransactions(AppLocalizations loc, List<Transaction> transactions) {
-    final totalEmissions = CarbonCalculator.calculateCarbonFootprint(transactions, loc);
+  factory EcoData.fromTransactions(List<Transaction> transactions) {
+    final totalEmissions = CarbonCalculator.calculateCarbonFootprint(transactions);
     final trees = CarbonCalculator.treesNeeded(totalEmissions);
 
     return EcoData(
@@ -22,3 +21,4 @@ class EcoData {
     );
   }
 }
+

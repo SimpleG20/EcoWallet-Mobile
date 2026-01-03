@@ -14,7 +14,10 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
     try {
       final db = await dbHelper.database;
 
-      final List<Map<String, dynamic>> maps = await db.query('transactions', orderBy: 'date DESC');
+      final List<Map<String, dynamic>> maps = await db.query(
+        'transactions',
+        orderBy: 'date DESC',
+      );
 
       if (maps.isEmpty) {
         return [];
@@ -90,15 +93,21 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
     try {
       final db = await dbHelper.database;
 
-      final incomeResult =
-          await db.rawQuery('SELECT SUM(amount) as totalIncome FROM transactions WHERE type = ?', ['income']);
-      final expenseResult =
-          await db.rawQuery('SELECT SUM(amount) as totalExpense FROM transactions WHERE type = ?', ['expense']);
+      // type_id: 1 = income, 2 = expense
+      final incomeResult = await db.rawQuery(
+        'SELECT SUM(amount_cents) as totalIncome FROM transactions WHERE type_id = ?',
+        [1],
+      );
+      final expenseResult = await db.rawQuery(
+        'SELECT SUM(amount_cents) as totalExpense FROM transactions WHERE type_id = ?',
+        [2],
+      );
 
-      final totalIncome = incomeResult.first['totalIncome'] as double? ?? 0.0;
-      final totalExpense = expenseResult.first['totalExpense'] as double? ?? 0.0;
+      final totalIncome = (incomeResult.first['totalIncome'] as int?) ?? 0;
+      final totalExpense = (expenseResult.first['totalExpense'] as int?) ?? 0;
 
-      return totalIncome - totalExpense;
+      // Return as double (converting from cents)
+      return (totalIncome - totalExpense) / 100.0;
     } catch (e) {
       throw CacheException('Failed to calculate total balance from db');
     }
@@ -109,10 +118,13 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
     try {
       final db = await dbHelper.database;
 
-      final incomeResult =
-          await db.rawQuery('SELECT SUM(amount) as totalIncome FROM transactions WHERE type = ?', ['income']);
+      final incomeResult = await db.rawQuery(
+        'SELECT SUM(amount_cents) as totalIncome FROM transactions WHERE type_id = ?',
+        [1],
+      );
 
-      return incomeResult.first['totalIncome'] as double? ?? 0.0;
+      final totalIncome = (incomeResult.first['totalIncome'] as int?) ?? 0;
+      return totalIncome / 100.0;
     } catch (e) {
       throw CacheException('Failed to calculate total income from db');
     }
@@ -122,9 +134,14 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
   Future<double> getTotalExpense() async {
     try {
       final db = await dbHelper.database;
-      final expenseResult =
-          await db.rawQuery('SELECT SUM(amount) as totalExpense FROM transactions WHERE type = ?', ['expense']);
-      return expenseResult.first['totalExpense'] as double? ?? 0.0;
+
+      final expenseResult = await db.rawQuery(
+        'SELECT SUM(amount_cents) as totalExpense FROM transactions WHERE type_id = ?',
+        [2],
+      );
+
+      final totalExpense = (expenseResult.first['totalExpense'] as int?) ?? 0;
+      return totalExpense / 100.0;
     } catch (e) {
       throw CacheException('Failed to calculate total expense from db');
     }
@@ -139,15 +156,16 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       final lastDayOfMonth = DateTime(now.year, now.month + 1, initialDay - 1);
 
       final expenseResult = await db.rawQuery(
-        'SELECT SUM(amount) as monthlyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        'SELECT SUM(amount_cents) as monthlyExpense FROM transactions WHERE type_id = ? AND date BETWEEN ? AND ?',
         [
-          'expense',
+          2,
           firstDayOfMonth.toIso8601String(),
           lastDayOfMonth.toIso8601String(),
         ],
       );
 
-      return expenseResult.first['monthlyExpense'] as double? ?? 0.0;
+      final monthlyExpense = (expenseResult.first['monthlyExpense'] as int?) ?? 0;
+      return monthlyExpense / 100.0;
     } catch (e) {
       throw CacheException('Failed to calculate current month expenses from db');
     }
@@ -162,27 +180,27 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       final lastDayOfMonth = DateTime(now.year, now.month + 1, initialDay - 1);
 
       final incomeResult = await db.rawQuery(
-        'SELECT SUM(amount) as monthlyIncome FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        'SELECT SUM(amount_cents) as monthlyIncome FROM transactions WHERE type_id = ? AND date BETWEEN ? AND ?',
         [
-          'income',
+          1,
           firstDayOfMonth.toIso8601String(),
           lastDayOfMonth.toIso8601String(),
         ],
       );
 
       final expenseResult = await db.rawQuery(
-        'SELECT SUM(amount) as monthlyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        'SELECT SUM(amount_cents) as monthlyExpense FROM transactions WHERE type_id = ? AND date BETWEEN ? AND ?',
         [
-          'expense',
+          2,
           firstDayOfMonth.toIso8601String(),
           lastDayOfMonth.toIso8601String(),
         ],
       );
 
-      final monthlyIncome = incomeResult.first['monthlyIncome'] as double? ?? 0.0;
-      final monthlyExpense = expenseResult.first['monthlyExpense'] as double? ?? 0.0;
+      final monthlyIncome = (incomeResult.first['monthlyIncome'] as int?) ?? 0;
+      final monthlyExpense = (expenseResult.first['monthlyExpense'] as int?) ?? 0;
 
-      return monthlyIncome - monthlyExpense;
+      return (monthlyIncome - monthlyExpense) / 100.0;
     } catch (e) {
       throw CacheException('Failed to calculate monthly savings from db');
     }
@@ -197,15 +215,16 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
 
       final expenseResult = await db.rawQuery(
-        'SELECT SUM(amount) as dailyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        'SELECT SUM(amount_cents) as dailyExpense FROM transactions WHERE type_id = ? AND date BETWEEN ? AND ?',
         [
-          'expense',
+          2,
           startOfDay.toIso8601String(),
           endOfDay.toIso8601String(),
         ],
       );
 
-      return expenseResult.first['dailyExpense'] as double? ?? 0.0;
+      final dailyExpense = (expenseResult.first['dailyExpense'] as int?) ?? 0;
+      return dailyExpense / 100.0;
     } catch (e) {
       throw CacheException('Failed to calculate daily expenses from db');
     }
@@ -222,17 +241,19 @@ class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
       final endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
 
       final expenseResult = await db.rawQuery(
-        'SELECT SUM(amount) as weeklyExpense FROM transactions WHERE type = ? AND date BETWEEN ? AND ?',
+        'SELECT SUM(amount_cents) as weeklyExpense FROM transactions WHERE type_id = ? AND date BETWEEN ? AND ?',
         [
-          'expense',
+          2,
           startOfWeekDate.toIso8601String(),
           endOfDay.toIso8601String(),
         ],
       );
 
-      return expenseResult.first['weeklyExpense'] as double? ?? 0.0;
+      final weeklyExpense = (expenseResult.first['weeklyExpense'] as int?) ?? 0;
+      return weeklyExpense / 100.0;
     } catch (e) {
       throw CacheException('Failed to calculate weekly expenses from db');
     }
   }
 }
+

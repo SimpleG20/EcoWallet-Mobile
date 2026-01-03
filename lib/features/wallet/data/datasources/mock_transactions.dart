@@ -2,60 +2,61 @@ import '../../../../core/enums/enums.dart';
 import '../../domain/entities/transaction.dart';
 import 'package:uuid/uuid.dart';
 
-// Lista constante para testes ou "seed" (popular banco)
+// Mock transactions for testing or seeding
 final List<Transaction> kMockTransactions = [
   Transaction(
-    id: const Uuid().v4(), // Ou strings fixas '1', '2' se preferir previsibilidade
+    id: const Uuid().v4(),
+    userId: '',
     name: 'Salário Mensal',
-    amount: 5000,
-    cents: 0,
-    date: DateTime.now(), // Hoje
+    amountCents: 500000, // 5000.00
+    date: DateTime.now(),
     type: ETransactionType.income,
-    category: 'Salário',
+    category: ETransactionCategory.salary,
   ),
   Transaction(
     id: const Uuid().v4(),
+    userId: '',
     name: 'Supermercado',
-    amount: 450,
-    cents: 50,
-    date: DateTime.now().subtract(const Duration(days: 1)), // Ontem
+    amountCents: 45050, // 450.50
+    date: DateTime.now().subtract(const Duration(days: 1)),
     type: ETransactionType.expense,
-    category: 'Alimentação',
+    category: ETransactionCategory.food,
   ),
   Transaction(
     id: const Uuid().v4(),
+    userId: '',
     name: 'Freelance Design',
-    amount: 800,
-    cents: 0,
+    amountCents: 80000, // 800.00
     date: DateTime.now().subtract(const Duration(days: 1)),
     type: ETransactionType.income,
-    category: 'Trabalho',
+    category: ETransactionCategory.others,
   ),
   Transaction(
     id: const Uuid().v4(),
+    userId: '',
     name: 'Uber',
-    amount: 24,
-    cents: 90,
+    amountCents: 2490, // 24.90
     date: DateTime.now().subtract(const Duration(days: 2)),
     type: ETransactionType.expense,
-    category: 'Transporte',
+    category: ETransactionCategory.transport,
   ),
   Transaction(
     id: const Uuid().v4(),
+    userId: '',
     name: 'Jantar com Amigos',
-    amount: 120,
-    cents: 75,
+    amountCents: 12075, // 120.75
     date: DateTime.now().subtract(const Duration(days: 3)),
     type: ETransactionType.expense,
-    category: 'Lazer',
+    category: ETransactionCategory.entertainment,
   ),
   Transaction(
     id: const Uuid().v4(),
+    userId: '',
     name: 'Venda de Item Usado',
-    amount: 150,
-    cents: 0,
+    amountCents: 15000, // 150.00
     date: DateTime.now().subtract(const Duration(days: 3)),
     type: ETransactionType.income,
-    category: 'Vendas',
+    category: ETransactionCategory.others,
   ),
 ];
+
