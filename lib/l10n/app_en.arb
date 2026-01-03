@@ -217,6 +217,8 @@
   },
   "ntfTestTitle": "EcoWallet Test Notification",
   "ntfTestBody": "This is a test notification from EcoWallet. 🌿",
+  "ntfBackupCompleteTitle": "Backup Complete ✓",
+  "ntfBackupCompleteBody": "Your data has been backed up automatically.",
   "ntfDailyReminderTitle": "EcoWallet Reminder",
   "ntfDailyReminderBody": "Don't forget to log your expenses today! 🌱",
   "ntfDailyReminderChannelName": "Daily Reminders",
@@ -340,5 +342,45 @@
   "termsLiabilityTitle": "Limitation of Liability",
   "termsLiabilityContent": "EcoWallet is not liable for any financial decisions you make based on the app's data or analytics. Always consult a financial professional for important financial matters.",
   "termsChangesTitle": "Changes to Terms",
-  "termsChangesContent": "We may update these terms periodically. Continued use of the app after changes constitutes acceptance of the new terms."
+  "termsChangesContent": "We may update these terms periodically. Continued use of the app after changes constitutes acceptance of the new terms.",
+  "exportDialogDescription": "Export your data to save a backup. Choose whether to encrypt the backup with a password.",
+  "hintEncryptedBackup": "Protect your backup with a password",
+  "passwordWarning": "Warning: If you forget this password, you will not be able to recover your data.",
+  "importDialogDescription": "Select how to handle the imported data.",
+  "importModeTitle": "Import Mode",
+  "importModeMerge": "Merge",
+  "importModeMergeHint": "Add new data, skip duplicates",
+  "importModeReplace": "Replace",
+  "importModeReplaceHint": "Delete all existing data first",
+  "importReplaceWarning": "This will permanently delete all your existing data before importing.",
+  "encryptedFileDetected": "This file is encrypted. Enter the password used when exporting.",
+  "exportSuccess": "Data exported successfully!",
+  "exportCancelled": "Export cancelled.",
+  "importSuccess": "Imported {count} transactions successfully!",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCancelled": "Import cancelled.",
+  "importError": "Failed to import data. Please check the file and password.",
+  "backupScheduled": "Automatic backup scheduled ({frequency}).",
+  "@backupScheduled": {
+    "placeholders": {
+      "frequency": {
+        "type": "String"
+      }
+    }
+  },
+  "lastBackup": "Last backup: {date}",
+  "@lastBackup": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "noBackupYet": "No backup yet"
 }

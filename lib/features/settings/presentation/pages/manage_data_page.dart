@@ -1,13 +1,23 @@
+import 'dart:io';
+
+import 'package:eco_wallet/core/presentation/widgets/icon_button_field.dart';
+import 'package:eco_wallet/core/utils/transaction_parsing.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../user/presentation/bloc/user_bloc.dart';
-import '../../../wallet/presentation/bloc/wallet_bloc.dart';
-import '../../domain/entities/data_preferences.dart';
 import '../bloc/settings_bloc.dart';
+import '../widgets/export_dialog.dart';
+import '../widgets/import_dialog.dart';
 import '../widgets/settings_widgets.dart';
+import '../../domain/usecases/import_data.dart';
 import '../../domain/enums/backup_frequency.dart';
+import '../../domain/entities/data_preferences.dart';
+import '../../../user/presentation/bloc/user_bloc.dart';
+import '../../../wallet/data/models/transaction_model.dart';
+import '../../../wallet/presentation/bloc/wallet_bloc.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/services/backup_service.dart';
 import '../../../../core/presentation/widgets/core_widgets.dart';
 
 class ManageDataPage extends StatefulWidget {
@@ -111,139 +121,65 @@ class _ManageDataPageState extends State<ManageDataPage> {
         const SizedBox(height: 8),
         SettingsSectionTitle(title: loc.sectionDataManagement),
         const SizedBox(height: 16),
-        _buildExportData(context, theme, loc),
+        IconButtonField(
+          icon: Icons.upload_file_outlined,
+          title: loc.lbExportData,
+          subtitle: loc.exportDataDescription,
+          onPressed: () => _showExportDialog(context, loc),
+        ),
         const SizedBox(height: 16),
-        _buildImportData(context, theme, loc),
+        IconButtonField(
+          icon: Icons.download_outlined,
+          title: loc.lbImport,
+          subtitle: loc.importDataDescription,
+          onPressed: () => _showImportFlow(context, loc),
+        ),
         const SizedBox(height: 16),
-        _buildDeleteData(context, theme, loc),
-      ],
-    );
-  }
-
-  Widget _buildExportData(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildOptionTitle(context, theme, loc.lbExport),
-              const SizedBox(height: 4),
-              Text(
-                loc.exportDataDescription,
-                style: theme.textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
-        const Spacer(),
-        ElevatedButton(
-          onPressed: () {
-            // Shows a popup to choose if it is encrypted or not
-            // Implement export data functionality
-          },
-          child: Icon(
-            Icons.upload,
-            size: 24,
-          ),
+        IconButtonField(
+          icon: Icons.delete_forever_outlined,
+          title: loc.lbDelete,
+          subtitle: loc.deleteDataDescription,
+          onPressed: () => _deleteAction(context, theme, loc),
+          color: theme.colorScheme.error,
         ),
       ],
     );
   }
 
-  Widget _buildImportData(
+  void _deleteAction(
       BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildOptionTitle(context, theme, loc.lbImport),
-              const SizedBox(height: 8),
-              Text(
-                loc.importDataDescription,
-                style: theme.textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
-        const Spacer(),
-        ElevatedButton(
-          onPressed: () {
-            // Show a popup asking if the user want to substitute or merge data
-            // Implement import data functionality
-          },
-          child: Icon(
-            Icons.download,
-            size: 24,
-          ),
-        ),
-      ],
-    );
-  }
+    final userBloc = context.read<UserBloc>();
+    final walletBloc = context.read<WalletBloc>();
 
-  Widget _buildDeleteData(
-      BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildOptionTitle(context, theme, loc.lbDelete,
-                  color: theme.colorScheme.error),
-              const SizedBox(height: 8),
-              Text(
-                loc.deleteDataDescription,
-                style: theme.textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
-        const Spacer(),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: theme.colorScheme.error,
-          ),
-          onPressed: () {
-            final userBloc = context.read<UserBloc>();
-            final walletBloc = context.read<WalletBloc>();
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text(loc.confirmDeleteDataTitle),
+          content: Text(loc.askConfirmDeleteData),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: Text(loc.btnCancel),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+                final userId = (userBloc.state as UserLoadedState).user.id;
+                walletBloc.add(DeleteAllTransactionsEvent(userId));
 
-            showDialog(
-                context: context,
-                builder: (ctx) {
-                  return AlertDialog(
-                    title: Text(loc.confirmDeleteDataTitle),
-                    content: Text(loc.askConfirmDeleteData),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(),
-                        child: Text(loc.btnCancel),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(ctx).pop();
-                          final userId =
-                              (userBloc.state as UserLoadedState).user.id;
-                          walletBloc.add(DeleteAllTransactionsEvent(userId));
-                        },
-                        child: Text(
-                          loc.lbDelete,
-                          style: TextStyle(color: theme.colorScheme.error),
-                        ),
-                      ),
-                    ],
-                  );
-                });
-          },
-          child: Icon(Icons.delete, size: 24),
-        ),
-      ],
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(loc.msgTransactionDeleted)),
+                );
+              },
+              child: Text(
+                loc.lbDelete,
+                style: TextStyle(color: theme.colorScheme.error),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -313,14 +249,148 @@ class _ManageDataPageState extends State<ManageDataPage> {
     );
   }
 
-  Widget _buildOptionTitle(BuildContext context, ThemeData theme, String title,
-      {Color? color}) {
-    return Text(
-      title,
-      style: theme.textTheme.titleSmall?.copyWith(
-        color: color ?? theme.colorScheme.onSurface,
-        fontWeight: FontWeight.w600,
+  Future<void> _showExportDialog(
+      BuildContext context, AppLocalizations loc) async {
+    final result = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (ctx) => ExportDialog(
+        defaultEncrypted: _currentPreferences.encryptedBackup,
       ),
+    );
+
+    if (result == null) {
+      _showSnackBar(context, loc.exportCancelled);
+      return;
+    }
+
+    final encrypted = result['encrypted'] as bool;
+    final password = result['password'] as String?;
+
+    // Get user ID
+    final userBloc = context.read<UserBloc>();
+    if (userBloc.state is! UserLoadedState) return;
+    final userId = (userBloc.state as UserLoadedState).user.id;
+
+    // Get transactions from wallet bloc
+    final walletState = context.read<WalletBloc>().state;
+    if (walletState is! WalletLoaded) return;
+
+    // Convert transactions to JSON format
+    final transactions = walletState.transactions
+        .map((t) => TransactionModel.fromEntity(t).toJson())
+        .toList();
+
+    // Create backup
+    final backupService = BackupService();
+    final backupJson = backupService.exportToJson(
+      userId: userId,
+      transactions: transactions,
+      password: encrypted ? password : null,
+    );
+
+    // Let user choose save location
+    final extension = encrypted ? 'ewb' : 'json';
+    final timestamp =
+        DateTime.now().toIso8601String().replaceAll(':', '-').split('.').first;
+    final fileName = 'ecowallet_backup_$timestamp.$extension';
+
+    final savePath = await FilePicker.platform.saveFile(
+      dialogTitle: loc.lbExport,
+      fileName: fileName,
+      type: FileType.custom,
+      allowedExtensions: [extension],
+    );
+
+    if (savePath == null) {
+      _showSnackBar(context, loc.exportCancelled);
+      return;
+    }
+
+    // Write file
+    final file = File(savePath);
+    await file.writeAsString(backupJson);
+
+    _showSnackBar(context, loc.exportSuccess);
+  }
+
+  Future<void> _showImportFlow(
+      BuildContext context, AppLocalizations loc) async {
+    // First, pick file
+    final result = await FilePicker.platform.pickFiles(
+      dialogTitle: loc.lbImport,
+      type: FileType.custom,
+      allowedExtensions: ['json', 'ewb'],
+    );
+
+    if (result == null || result.files.isEmpty) {
+      _showSnackBar(context, loc.importCancelled);
+      return;
+    }
+
+    final filePath = result.files.first.path;
+    if (filePath == null) return;
+
+    // Read file content to check if encrypted
+    final file = File(filePath);
+    final content = await file.readAsString();
+    final backupService = BackupService();
+    final isEncrypted = backupService.isEncrypted(content);
+
+    // Show import options dialog
+    final options = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (ctx) => ImportDialog(isEncrypted: isEncrypted),
+    );
+
+    if (options == null) {
+      _showSnackBar(context, loc.importCancelled);
+      return;
+    }
+
+    final mode = options['mode'] as ImportMode;
+    final password = options['password'] as String?;
+
+    final userBloc = context.read<UserBloc>();
+    if (userBloc.state is! UserLoadedState) return;
+    final userId = (userBloc.state as UserLoadedState).user.id;
+
+    try {
+      final backupData =
+          backupService.importFromJson(content, password: password);
+
+      if (!backupService.validateBackup(backupData)) {
+        _showSnackBar(context, loc.importError);
+        return;
+      }
+
+      final walletBloc = context.read<WalletBloc>();
+
+      if (mode == ImportMode.replace) {
+        walletBloc.add(DeleteAllTransactionsEvent(userId));
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
+
+      int importedCount = 0;
+      for (final txJson in backupData.transactions) {
+        try {
+          final transaction =
+              TransactionParsingUtils.parseTransactionFromJson(txJson, userId);
+          walletBloc.add(AddTransactionEvent(1, transaction));
+          importedCount++;
+        } catch (_) {}
+      }
+
+      _showSnackBar(context, loc.importSuccess(importedCount));
+
+      walletBloc.add(LoadWalletDataEvent());
+    } catch (e) {
+      _showSnackBar(context, loc.importError);
+    }
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
   }
 
@@ -332,6 +402,7 @@ class _ManageDataPageState extends State<ManageDataPage> {
 
     final newPreferences = settingsState.preferences
         .copyWith(dataPreferences: _currentPreferences);
+    _pendingChanges = false;
 
     context
         .read<SettingsBloc>()

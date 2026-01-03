@@ -7,22 +7,26 @@ class DataPreferences extends Equatable {
   final bool cloudBackupEnabled;
   final bool encryptedBackup;
   final BackupFrequency backupFrequency;
+  final DateTime? lastBackupDate;
 
   const DataPreferences({
     this.cloudBackupEnabled = false,
     this.encryptedBackup = false,
     this.backupFrequency = BackupFrequency.none,
+    this.lastBackupDate,
   });
 
   DataPreferences copyWith({
     bool? cloudBackupEnabled,
     bool? encryptedBackup,
     BackupFrequency? backupFrequency,
+    DateTime? lastBackupDate,
   }) {
     return DataPreferences(
       cloudBackupEnabled: cloudBackupEnabled ?? this.cloudBackupEnabled,
       encryptedBackup: encryptedBackup ?? this.encryptedBackup,
       backupFrequency: backupFrequency ?? this.backupFrequency,
+      lastBackupDate: lastBackupDate ?? this.lastBackupDate,
     );
   }
 
@@ -31,5 +35,7 @@ class DataPreferences extends Equatable {
         cloudBackupEnabled,
         encryptedBackup,
         backupFrequency,
+        lastBackupDate,
       ];
 }
+

@@ -639,6 +639,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get ntfTestBody => 'Esta é uma notificação de teste do EcoWallet. 🌿';
 
   @override
+  String get ntfBackupCompleteTitle => 'Backup Completo ✓';
+
+  @override
+  String get ntfBackupCompleteBody =>
+      'Seus dados foram salvos automaticamente.';
+
+  @override
   String get ntfDailyReminderTitle => 'Lembrete EcoWallet';
 
   @override
@@ -943,4 +950,74 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get termsChangesContent =>
       'Podemos atualizar estes termos periodicamente. O uso continuado do aplicativo após as alterações constitui aceitação dos novos termos.';
+
+  @override
+  String get exportDialogDescription =>
+      'Exporte seus dados para salvar um backup. Escolha se deseja criptografar o backup com uma senha.';
+
+  @override
+  String get hintEncryptedBackup => 'Proteja seu backup com uma senha';
+
+  @override
+  String get passwordWarning =>
+      'Aviso: Se você esquecer esta senha, não será possível recuperar seus dados.';
+
+  @override
+  String get importDialogDescription =>
+      'Selecione como tratar os dados importados.';
+
+  @override
+  String get importModeTitle => 'Modo de Importação';
+
+  @override
+  String get importModeMerge => 'Mesclar';
+
+  @override
+  String get importModeMergeHint => 'Adicionar novos dados, pular duplicados';
+
+  @override
+  String get importModeReplace => 'Substituir';
+
+  @override
+  String get importModeReplaceHint =>
+      'Excluir todos os dados existentes primeiro';
+
+  @override
+  String get importReplaceWarning =>
+      'Isso excluirá permanentemente todos os seus dados existentes antes de importar.';
+
+  @override
+  String get encryptedFileDetected =>
+      'Este arquivo está criptografado. Digite a senha usada ao exportar.';
+
+  @override
+  String get exportSuccess => 'Dados exportados com sucesso!';
+
+  @override
+  String get exportCancelled => 'Exportação cancelada.';
+
+  @override
+  String importSuccess(int count) {
+    return '$count transações importadas com sucesso!';
+  }
+
+  @override
+  String get importCancelled => 'Importação cancelada.';
+
+  @override
+  String get importError =>
+      'Falha ao importar dados. Verifique o arquivo e a senha.';
+
+  @override
+  String backupScheduled(String frequency) {
+    return 'Backup automático agendado ($frequency).';
+  }
+
+  @override
+  String lastBackup(String date) {
+    return 'Último backup: $date';
+  }
+
+  @override
+  String get noBackupYet => 'Nenhum backup ainda';
 }

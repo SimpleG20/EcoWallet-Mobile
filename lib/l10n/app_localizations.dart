@@ -1316,6 +1316,18 @@ abstract class AppLocalizations {
   /// **'This is a test notification from EcoWallet. 🌿'**
   String get ntfTestBody;
 
+  /// No description provided for @ntfBackupCompleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup Complete ✓'**
+  String get ntfBackupCompleteTitle;
+
+  /// No description provided for @ntfBackupCompleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data has been backed up automatically.'**
+  String get ntfBackupCompleteBody;
+
   /// No description provided for @ntfDailyReminderTitle.
   ///
   /// In en, this message translates to:
@@ -1849,6 +1861,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We may update these terms periodically. Continued use of the app after changes constitutes acceptance of the new terms.'**
   String get termsChangesContent;
+
+  /// No description provided for @exportDialogDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Export your data to save a backup. Choose whether to encrypt the backup with a password.'**
+  String get exportDialogDescription;
+
+  /// No description provided for @hintEncryptedBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Protect your backup with a password'**
+  String get hintEncryptedBackup;
+
+  /// No description provided for @passwordWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: If you forget this password, you will not be able to recover your data.'**
+  String get passwordWarning;
+
+  /// No description provided for @importDialogDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select how to handle the imported data.'**
+  String get importDialogDescription;
+
+  /// No description provided for @importModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Mode'**
+  String get importModeTitle;
+
+  /// No description provided for @importModeMerge.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge'**
+  String get importModeMerge;
+
+  /// No description provided for @importModeMergeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new data, skip duplicates'**
+  String get importModeMergeHint;
+
+  /// No description provided for @importModeReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace'**
+  String get importModeReplace;
+
+  /// No description provided for @importModeReplaceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all existing data first'**
+  String get importModeReplaceHint;
+
+  /// No description provided for @importReplaceWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently delete all your existing data before importing.'**
+  String get importReplaceWarning;
+
+  /// No description provided for @encryptedFileDetected.
+  ///
+  /// In en, this message translates to:
+  /// **'This file is encrypted. Enter the password used when exporting.'**
+  String get encryptedFileDetected;
+
+  /// No description provided for @exportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Data exported successfully!'**
+  String get exportSuccess;
+
+  /// No description provided for @exportCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Export cancelled.'**
+  String get exportCancelled;
+
+  /// No description provided for @importSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported {count} transactions successfully!'**
+  String importSuccess(int count);
+
+  /// No description provided for @importCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Import cancelled.'**
+  String get importCancelled;
+
+  /// No description provided for @importError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import data. Please check the file and password.'**
+  String get importError;
+
+  /// No description provided for @backupScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic backup scheduled ({frequency}).'**
+  String backupScheduled(String frequency);
+
+  /// No description provided for @lastBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Last backup: {date}'**
+  String lastBackup(String date);
+
+  /// No description provided for @noBackupYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No backup yet'**
+  String get noBackupYet;
 }
 
 class _AppLocalizationsDelegate

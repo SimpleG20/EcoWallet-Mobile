@@ -243,4 +243,31 @@ class NotificationService {
     
     return scheduledDate;
   }
+
+  /// Shows a notification when automatic backup is completed
+  Future<void> showBackupCompleteNotification({
+    required String title,
+    required String body,
+  }) async {
+    if (isInQuietHours()) {
+      return;
+    }
+
+    await _plugin.show(
+      3, // backup notification id
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'backup_channel',
+          'Backup Notifications',
+          channelDescription: 'Notifications for backup completion',
+          importance: Importance.defaultImportance,
+          priority: Priority.defaultPriority,
+        ),
+        iOS: DarwinNotificationDetails(categoryIdentifier: 'backup_notification'),
+      ),
+    );
+  }
 }
+

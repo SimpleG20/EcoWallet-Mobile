@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'core/router/app_router.dart';
+import 'core/services/auto_backup_service.dart';
 import 'core/services/notification_service.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/settings/domain/enums/color_blind_mode.dart';
@@ -57,6 +58,8 @@ class _AuthUserSyncWrapper extends StatefulWidget {
 }
 
 class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
+  bool _backupChecked = false;
+
   @override
   void initState() {
     super.initState();
@@ -70,6 +73,48 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
     if (state is AuthAuthenticatedState) {
       context.read<UserBloc>().add(LoadUserEvent(id: state.userId));
       context.read<SettingsBloc>().add(LoadSettingsEvent());
+
+      // Trigger backup check after settings are loaded
+      if (!_backupChecked) {
+        _scheduleBackupCheck(context, state.userId);
+      }
+    }
+  }
+
+  /// Schedules a backup check after settings and wallet data are loaded.
+  Future<void> _scheduleBackupCheck(BuildContext context, String userId) async {
+    _backupChecked = true;
+
+    final settingsBloc = context.read<SettingsBloc>();
+    await settingsBloc.stream
+        .firstWhere((state) => state is SettingsLoadedState);
+
+    final settingsState = settingsBloc.state;
+    if (settingsState is! SettingsLoadedState) return;
+
+    final walletBloc = di.sl<WalletBloc>()..add(LoadWalletDataEvent());
+    await walletBloc.stream.firstWhere((state) => state is WalletLoaded);
+
+    final walletState = walletBloc.state;
+    if (walletState is! WalletLoaded) return;
+
+    final autoBackupService = di.sl<AutoBackupService>();
+    final backupPath = await autoBackupService.checkAndPerformBackupIfDue(
+      userId: userId,
+      transactions: walletState.transactions,
+      dataPreferences: settingsState.preferences.dataPreferences,
+    );
+
+    if (backupPath != null) {
+      debugPrint('[App] Automatic backup created: $backupPath');
+
+      final loc = AppLocalizations.of(context)!;
+      // Show notification
+      final notificationService = di.sl<NotificationService>();
+      await notificationService.showBackupCompleteNotification(
+        title: loc.ntfBackupCompleteTitle,
+        body: loc.ntfBackupCompleteBody,
+      );
     }
   }
 
@@ -78,7 +123,8 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
     return BlocListener<AuthBloc, BaseAuthState>(
       listener: (context, state) => _syncUserFromAuthState(state),
       child: BlocBuilder<SettingsBloc, BaseSettingsState>(
-        buildWhen: (previous, current) => _conditionsToRebuild(previous, current),
+        buildWhen: (previous, current) =>
+            _conditionsToRebuild(previous, current),
         builder: (context, settingsState) => MediaQuery(
           data: MediaQuery.of(context).copyWith(
             textScaler: TextScaler.linear(
@@ -88,7 +134,8 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
           child: ColorFiltered(
             colorFilter: AppTheme.getColorFilter(
               settingsState is SettingsLoadedState
-                  ? settingsState.preferences.appearancePreferences.colorBlindMode
+                  ? settingsState
+                      .preferences.appearancePreferences.colorBlindMode
                   : ColorBlindMode.none,
             ),
             child: MaterialApp.router(
@@ -96,7 +143,8 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
               themeMode: settingsState is SettingsLoadedState
-                  ? settingsState.preferences.appearancePreferences.flutterThemeMode
+                  ? settingsState
+                      .preferences.appearancePreferences.flutterThemeMode
                   : ThemeMode.system,
               localizationsDelegates: const [
                 AppLocalizations.delegate,
@@ -118,12 +166,14 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
 
   double _getTextScaleFactor(BaseSettingsState state) {
     if (state is SettingsLoadedState) {
-      return AppTheme.getTextScaleFactor(state.preferences.appearancePreferences.fontSize);
+      return AppTheme.getTextScaleFactor(
+          state.preferences.appearancePreferences.fontSize);
     }
     return AppTheme.getTextScaleFactor(FontSizePreference.medium);
   }
 
-  bool _conditionsToRebuild(BaseSettingsState previous, BaseSettingsState current) {
+  bool _conditionsToRebuild(
+      BaseSettingsState previous, BaseSettingsState current) {
     if (previous != current) return true;
 
     if (previous is SettingsLoadedState && current is SettingsLoadedState) {

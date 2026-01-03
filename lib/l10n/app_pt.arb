@@ -217,6 +217,8 @@
   },
   "ntfTestTitle": "Notificação de Teste EcoWallet",
   "ntfTestBody": "Esta é uma notificação de teste do EcoWallet. 🌿",
+  "ntfBackupCompleteTitle": "Backup Completo ✓",
+  "ntfBackupCompleteBody": "Seus dados foram salvos automaticamente.",
   "ntfDailyReminderTitle": "Lembrete EcoWallet",
   "ntfDailyReminderBody": "Não se esqueça de registrar suas despesas hoje! 🌱",
   "ntfDailyReminderChannelName": "Lembretes Diários",
@@ -340,5 +342,45 @@
   "termsLiabilityTitle": "Limitação de Responsabilidade",
   "termsLiabilityContent": "O EcoWallet não é responsável por quaisquer decisões financeiras que você tome com base nos dados ou análises do aplicativo. Sempre consulte um profissional financeiro para assuntos financeiros importantes.",
   "termsChangesTitle": "Alterações nos Termos",
-  "termsChangesContent": "Podemos atualizar estes termos periodicamente. O uso continuado do aplicativo após as alterações constitui aceitação dos novos termos."
+  "termsChangesContent": "Podemos atualizar estes termos periodicamente. O uso continuado do aplicativo após as alterações constitui aceitação dos novos termos.",
+  "exportDialogDescription": "Exporte seus dados para salvar um backup. Escolha se deseja criptografar o backup com uma senha.",
+  "hintEncryptedBackup": "Proteja seu backup com uma senha",
+  "passwordWarning": "Aviso: Se você esquecer esta senha, não será possível recuperar seus dados.",
+  "importDialogDescription": "Selecione como tratar os dados importados.",
+  "importModeTitle": "Modo de Importação",
+  "importModeMerge": "Mesclar",
+  "importModeMergeHint": "Adicionar novos dados, pular duplicados",
+  "importModeReplace": "Substituir",
+  "importModeReplaceHint": "Excluir todos os dados existentes primeiro",
+  "importReplaceWarning": "Isso excluirá permanentemente todos os seus dados existentes antes de importar.",
+  "encryptedFileDetected": "Este arquivo está criptografado. Digite a senha usada ao exportar.",
+  "exportSuccess": "Dados exportados com sucesso!",
+  "exportCancelled": "Exportação cancelada.",
+  "importSuccess": "{count} transações importadas com sucesso!",
+  "@importSuccess": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCancelled": "Importação cancelada.",
+  "importError": "Falha ao importar dados. Verifique o arquivo e a senha.",
+  "backupScheduled": "Backup automático agendado ({frequency}).",
+  "@backupScheduled": {
+    "placeholders": {
+      "frequency": {
+        "type": "String"
+      }
+    }
+  },
+  "lastBackup": "Último backup: {date}",
+  "@lastBackup": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "noBackupYet": "Nenhum backup ainda"
 }

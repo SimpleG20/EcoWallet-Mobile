@@ -636,6 +636,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ntfTestBody => 'This is a test notification from EcoWallet. 🌿';
 
   @override
+  String get ntfBackupCompleteTitle => 'Backup Complete ✓';
+
+  @override
+  String get ntfBackupCompleteBody =>
+      'Your data has been backed up automatically.';
+
+  @override
   String get ntfDailyReminderTitle => 'EcoWallet Reminder';
 
   @override
@@ -938,4 +945,73 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get termsChangesContent =>
       'We may update these terms periodically. Continued use of the app after changes constitutes acceptance of the new terms.';
+
+  @override
+  String get exportDialogDescription =>
+      'Export your data to save a backup. Choose whether to encrypt the backup with a password.';
+
+  @override
+  String get hintEncryptedBackup => 'Protect your backup with a password';
+
+  @override
+  String get passwordWarning =>
+      'Warning: If you forget this password, you will not be able to recover your data.';
+
+  @override
+  String get importDialogDescription =>
+      'Select how to handle the imported data.';
+
+  @override
+  String get importModeTitle => 'Import Mode';
+
+  @override
+  String get importModeMerge => 'Merge';
+
+  @override
+  String get importModeMergeHint => 'Add new data, skip duplicates';
+
+  @override
+  String get importModeReplace => 'Replace';
+
+  @override
+  String get importModeReplaceHint => 'Delete all existing data first';
+
+  @override
+  String get importReplaceWarning =>
+      'This will permanently delete all your existing data before importing.';
+
+  @override
+  String get encryptedFileDetected =>
+      'This file is encrypted. Enter the password used when exporting.';
+
+  @override
+  String get exportSuccess => 'Data exported successfully!';
+
+  @override
+  String get exportCancelled => 'Export cancelled.';
+
+  @override
+  String importSuccess(int count) {
+    return 'Imported $count transactions successfully!';
+  }
+
+  @override
+  String get importCancelled => 'Import cancelled.';
+
+  @override
+  String get importError =>
+      'Failed to import data. Please check the file and password.';
+
+  @override
+  String backupScheduled(String frequency) {
+    return 'Automatic backup scheduled ($frequency).';
+  }
+
+  @override
+  String lastBackup(String date) {
+    return 'Last backup: $date';
+  }
+
+  @override
+  String get noBackupYet => 'No backup yet';
 }
