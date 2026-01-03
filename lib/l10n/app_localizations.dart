@@ -1280,6 +1280,78 @@ abstract class AppLocalizations {
   /// **'Threshold: {value} kWh'**
   String thresholdLabel(String value);
 
+  /// No description provided for @ntfAlertConsumptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Consumption Alert! ⚠️'**
+  String get ntfAlertConsumptionTitle;
+
+  /// No description provided for @ntfAlertConsumptionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve exceeded your limit of {value}'**
+  String ntfAlertConsumptionBody(String value);
+
+  /// No description provided for @ntfTestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EcoWallet Test Notification'**
+  String get ntfTestTitle;
+
+  /// No description provided for @ntfTestBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a test notification from EcoWallet. 🌿'**
+  String get ntfTestBody;
+
+  /// No description provided for @ntfDailyReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'EcoWallet Reminder'**
+  String get ntfDailyReminderTitle;
+
+  /// No description provided for @ntfDailyReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t forget to log your expenses today! 🌱'**
+  String get ntfDailyReminderBody;
+
+  /// No description provided for @ntfDailyReminderChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Reminders'**
+  String get ntfDailyReminderChannelName;
+
+  /// No description provided for @ntfDailyReminderChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifies to log expenses daily'**
+  String get ntfDailyReminderChannelDescription;
+
+  /// No description provided for @ntfMonthlyReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Report 📊'**
+  String get ntfMonthlyReportTitle;
+
+  /// No description provided for @ntfMonthlyReportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your monthly spending summary is ready. Open EcoWallet to view!'**
+  String get ntfMonthlyReportBody;
+
+  /// No description provided for @ntfMonthlyReportChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Reports'**
+  String get ntfMonthlyReportChannelName;
+
+  /// No description provided for @ntfMonthlyReportChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly consumption summary notifications'**
+  String get ntfMonthlyReportChannelDescription;
+
   /// No description provided for @errorNameInvalid.
   ///
   /// In en, this message translates to:

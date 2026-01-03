@@ -4,12 +4,13 @@ import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/constants/transaction_type_data.dart';
+import '../../../settings/presentation/bloc/settings_bloc.dart';
 import '/core/utils/app_formatters.dart';
 import '/core/utils/app_validators.dart';
 import '/core/constants/category_data.dart';
 import '/features/wallet/domain/entities/transaction.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class AddTransactionModal extends StatefulWidget {
@@ -430,15 +431,22 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
       category: _selectedTransactionCategory,
     );
 
-    final bloc = context.read<WalletBloc>();
-
-    if (isEditing) {
-      bloc.add(UpdateTransactionEvent(newTransaction));
-    } else {
-      bloc.add(AddTransactionEvent(newTransaction));
+    final walletBloc = context.read<WalletBloc>();
+    final settingsState = context.read<SettingsBloc>().state;
+    if (settingsState is! SettingsLoadedState) {
+      return;
     }
 
-    await bloc.stream.firstWhere(
+    if (isEditing) {
+      walletBloc.add(UpdateTransactionEvent(newTransaction));
+    } else {
+      walletBloc.add(AddTransactionEvent(
+        settingsState.preferences.budgetPreferences.monthStartDay,
+        newTransaction,
+      ));
+    }
+
+    await walletBloc.stream.firstWhere(
       (state) => state is WalletLoaded || state is WalletError,
     );
 

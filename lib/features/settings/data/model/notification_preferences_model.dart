@@ -6,7 +6,6 @@ class NotificationPreferencesModel extends NotificationPreferences {
   const NotificationPreferencesModel({
     required super.dailyReminderEnabled,
     required super.reminderTime,
-    required super.billsReminderEnabled,
     required super.monthlyReportEnabled,
     required super.quietHoursEnabled,
     required super.quietHoursStart,
@@ -17,7 +16,6 @@ class NotificationPreferencesModel extends NotificationPreferences {
     return const NotificationPreferencesModel(
       dailyReminderEnabled: false,
       reminderTime: TimeOfDay(hour: 9, minute: 0),
-      billsReminderEnabled: false,
       monthlyReportEnabled: false,
       quietHoursEnabled: false,
       quietHoursStart: TimeOfDay(hour: 22, minute: 0),
@@ -27,24 +25,47 @@ class NotificationPreferencesModel extends NotificationPreferences {
 
   factory NotificationPreferencesModel.fromJson(Map<String, dynamic> json) {
     return NotificationPreferencesModel(
-      dailyReminderEnabled: int.tryParse(json['dailyReminderEnabled']) == 1,
-      reminderTime: AppFormatters.parseTimeOfDay(json['reminderTime']),
-      billsReminderEnabled: int.tryParse(json['billsReminderEnabled']) == 1,
-      monthlyReportEnabled: int.tryParse(json['monthlyReportEnabled']) == 1,
-      quietHoursEnabled: int.tryParse(json['quietHoursEnabled']) == 1,
-      quietHoursStart: AppFormatters.parseTimeOfDay(json['quietHoursStart']),
-      quietHoursEnd: AppFormatters.parseTimeOfDay(json['quietHoursEnd']),
+      dailyReminderEnabled: _parseBool(json['dailyReminderEnabled'], false),
+      reminderTime: _parseTimeOfDay(
+          json['reminderTime'], const TimeOfDay(hour: 9, minute: 0)),
+      monthlyReportEnabled: _parseBool(json['monthlyReportEnabled'], false),
+      quietHoursEnabled: _parseBool(json['quietHoursEnabled'], false),
+      quietHoursStart: _parseTimeOfDay(
+          json['quietHoursStart'], const TimeOfDay(hour: 22, minute: 0)),
+      quietHoursEnd: _parseTimeOfDay(
+          json['quietHoursEnd'], const TimeOfDay(hour: 7, minute: 0)),
     );
+  }
+
+  /// Parses a boolean value from JSON that may be a bool, int (0/1), or string.
+  static bool _parseBool(dynamic value, bool defaultValue) {
+    if (value == null) return defaultValue;
+    if (value is bool) return value;
+    if (value is int) return value == 1;
+    if (value is String)
+      return int.tryParse(value) == 1 || value.toLowerCase() == 'true';
+    return defaultValue;
+  }
+
+  /// Parses a TimeOfDay from a string in "HH:mm" format.
+  static TimeOfDay _parseTimeOfDay(dynamic value, TimeOfDay defaultValue) {
+    if (value == null) return defaultValue;
+    if (value is! String) return defaultValue;
+    try {
+      return AppFormatters.parseTimeOfDay(value);
+    } catch (_) {
+      return defaultValue;
+    }
   }
 
   static Map<String, dynamic> toJson(NotificationPreferences preferences) {
     return {
       'dailyReminderEnabled': preferences.dailyReminderEnabled,
       'reminderTime': AppFormatters.formatTimeOfDay(preferences.reminderTime),
-      'billsReminderEnabled': preferences.billsReminderEnabled,
       'monthlyReportEnabled': preferences.monthlyReportEnabled,
       'quietHoursEnabled': preferences.quietHoursEnabled,
-      'quietHoursStart': AppFormatters.formatTimeOfDay(preferences.quietHoursStart),
+      'quietHoursStart':
+          AppFormatters.formatTimeOfDay(preferences.quietHoursStart),
       'quietHoursEnd': AppFormatters.formatTimeOfDay(preferences.quietHoursEnd),
     };
   }

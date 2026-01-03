@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class NotificationPreferences extends Equatable {
   final bool dailyReminderEnabled;
   final TimeOfDay reminderTime;
-  final bool billsReminderEnabled;
   final bool monthlyReportEnabled;
   final bool quietHoursEnabled;
   final TimeOfDay quietHoursStart;
@@ -14,7 +13,6 @@ class NotificationPreferences extends Equatable {
   const NotificationPreferences({
     this.dailyReminderEnabled = false,
     this.reminderTime = const TimeOfDay(hour: 9, minute: 0),
-    this.billsReminderEnabled = false,
     this.monthlyReportEnabled = false,
     this.quietHoursEnabled = false,
     this.quietHoursStart = const TimeOfDay(hour: 22, minute: 0),
@@ -33,7 +31,6 @@ class NotificationPreferences extends Equatable {
     return NotificationPreferences(
       dailyReminderEnabled: dailyReminderEnabled ?? this.dailyReminderEnabled,
       reminderTime: reminderTime ?? this.reminderTime,
-      billsReminderEnabled: billsReminderEnabled ?? this.billsReminderEnabled,
       monthlyReportEnabled: monthlyReportEnabled ?? this.monthlyReportEnabled,
       quietHoursEnabled: quietHoursEnabled ?? this.quietHoursEnabled,
       quietHoursStart: quietHoursStart ?? this.quietHoursStart,
@@ -45,7 +42,6 @@ class NotificationPreferences extends Equatable {
   List<Object?> get props => [
         dailyReminderEnabled,
         reminderTime,
-        billsReminderEnabled,
         monthlyReportEnabled,
         quietHoursEnabled,
         quietHoursStart,

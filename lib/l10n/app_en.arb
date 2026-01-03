@@ -204,6 +204,25 @@
       }
     }
   },
+  "ntfAlertConsumptionTitle": "Consumption Alert! ⚠️",
+  "ntfAlertConsumptionBody": "You've exceeded your limit of {value}",
+  "@ntfAlertConsumptionBody": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "ntfTestTitle": "EcoWallet Test Notification",
+  "ntfTestBody": "This is a test notification from EcoWallet. 🌿",
+  "ntfDailyReminderTitle": "EcoWallet Reminder",
+  "ntfDailyReminderBody": "Don't forget to log your expenses today! 🌱",
+  "ntfDailyReminderChannelName": "Daily Reminders",
+  "ntfDailyReminderChannelDescription": "Notifies to log expenses daily",
+  "ntfMonthlyReportTitle": "Monthly Report 📊",
+  "ntfMonthlyReportBody": "Your monthly spending summary is ready. Open EcoWallet to view!",
+  "ntfMonthlyReportChannelName": "Monthly Reports",
+  "ntfMonthlyReportChannelDescription": "Monthly consumption summary notifications",
   "errorNameInvalid": "Name is too short.",
   "errorDateInvalid": "Invalid date format.",
   "errorEmpty": "This field cannot be empty.",

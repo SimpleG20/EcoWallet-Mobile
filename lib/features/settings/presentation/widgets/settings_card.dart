@@ -18,7 +18,7 @@ class SettingsCard extends StatelessWidget {
   const SettingsCard({
     super.key,
     required this.child,
-    this.margin = const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 40.0),
+    this.margin = const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
     this.clipBehavior = Clip.hardEdge,
   });
 

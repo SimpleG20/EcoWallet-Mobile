@@ -85,4 +85,88 @@ class WalletRepositoryImpl implements BaseWalletRepository {
       return Left(UnknownFailure('An unknown error occurred: $e'));
     }
   }
+
+  @override
+  Future<Either<BaseFailure, double>> getCurrentMonthExpense(int initialDay) async {
+    try {
+      final totalExpense = await dataSource.getCurrentMonthExpense(initialDay);
+      return Right(totalExpense);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get current month expense from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getTotalIncome() async {
+    try {
+      final totalIncome = await dataSource.getTotalIncome();
+      return Right(totalIncome);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get total income from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getTotalBalance() async {
+    try {
+      final totalBalance = await dataSource.getTotalBalance();
+      return Right(totalBalance);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get total balance from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getTotalExpense() async {
+    try {
+      final totalExpense = await dataSource.getTotalExpense();
+      return Right(totalExpense);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get total expense from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getMonthlySavings(int initialDay) async {
+    try {
+      final monthlySavings = await dataSource.getMonthlySavings(initialDay);
+      return Right(monthlySavings);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get monthly savings from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getDailyExpense() async {
+    try {
+      final dailyExpense = await dataSource.getDailyExpense();
+      return Right(dailyExpense);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get daily expense from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, double>> getWeeklyExpense() async {
+    try {
+      final weeklyExpense = await dataSource.getWeeklyExpense();
+      return Right(weeklyExpense);
+    } on CacheException {
+      return Left(CacheFailure('Failed to get weekly expense from local storage'));
+    } catch (e) {
+      return Left(UnknownFailure('An unknown error occurred: $e'));
+    }
+  }
 }

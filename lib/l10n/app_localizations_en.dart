@@ -615,6 +615,48 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get ntfAlertConsumptionTitle => 'Consumption Alert! ⚠️';
+
+  @override
+  String ntfAlertConsumptionBody(String value) {
+    return 'You\'ve exceeded your limit of $value';
+  }
+
+  @override
+  String get ntfTestTitle => 'EcoWallet Test Notification';
+
+  @override
+  String get ntfTestBody => 'This is a test notification from EcoWallet. 🌿';
+
+  @override
+  String get ntfDailyReminderTitle => 'EcoWallet Reminder';
+
+  @override
+  String get ntfDailyReminderBody =>
+      'Don\'t forget to log your expenses today! 🌱';
+
+  @override
+  String get ntfDailyReminderChannelName => 'Daily Reminders';
+
+  @override
+  String get ntfDailyReminderChannelDescription =>
+      'Notifies to log expenses daily';
+
+  @override
+  String get ntfMonthlyReportTitle => 'Monthly Report 📊';
+
+  @override
+  String get ntfMonthlyReportBody =>
+      'Your monthly spending summary is ready. Open EcoWallet to view!';
+
+  @override
+  String get ntfMonthlyReportChannelName => 'Monthly Reports';
+
+  @override
+  String get ntfMonthlyReportChannelDescription =>
+      'Monthly consumption summary notifications';
+
+  @override
   String get errorNameInvalid => 'Name is too short.';
 
   @override

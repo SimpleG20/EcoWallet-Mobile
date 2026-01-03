@@ -25,4 +25,39 @@ abstract class BaseWalletLocalDataSource {
   ///
   /// Throws a [CacheException] if the retrieval operation fails.
   Future<TransactionModel> getTransactionById(String transactionId);
+
+  /// Calculates the total expenses for the current month.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getCurrentMonthExpense(int initialDay);
+
+  /// Calculates the total income for the current month.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getTotalIncome();
+
+  /// Calculates the total balance from all transactions.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getTotalBalance();
+
+  /// Calculates the total expenses from all transactions.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getTotalExpense();
+
+  /// Calculates the monthly savings based on income and expenses.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getMonthlySavings(int initialDay);
+
+  /// Calculates the total expenses for the current day.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getDailyExpense();
+
+  /// Calculates the total expenses for the current week.
+  ///
+  /// Throws a [CacheException] if the calculation fails.
+  Future<double> getWeeklyExpense();
 }

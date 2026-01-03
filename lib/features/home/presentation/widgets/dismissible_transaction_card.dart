@@ -43,6 +43,11 @@ class DismissibleTransactionCard extends StatelessWidget {
       ),
       onDismissed: (direction) {
         final walletBloc = context.read<WalletBloc>();
+        final settingsBloc = context.read<SettingsBloc>().state;
+
+        if (settingsBloc is! SettingsLoadedState) {
+          return;
+        }
 
         walletBloc.add(DeleteTransactionEvent(transaction.id));
 
@@ -52,7 +57,10 @@ class DismissibleTransactionCard extends StatelessWidget {
             action: SnackBarAction(
               label: loc.btnUndo,
               onPressed: () {
-                walletBloc.add(AddTransactionEvent(transaction));
+                walletBloc.add(AddTransactionEvent(
+                  settingsBloc.preferences.budgetPreferences.monthStartDay,
+                  transaction,
+                ));
               },
             ),
           ),

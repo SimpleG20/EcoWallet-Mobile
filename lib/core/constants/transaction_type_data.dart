@@ -1,6 +1,6 @@
 import 'package:eco_wallet/l10n/app_localizations.dart';
 
-enum ETransactionType { income, expense }
+import '../enums/enums.dart';
 
 class TransactionTypeRepository {
   /// Gets the localized label for a transaction type.

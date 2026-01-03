@@ -204,6 +204,25 @@
       }
     }
   },
+  "ntfAlertConsumptionTitle": "Alerta de Consumo! ⚠️",
+  "ntfAlertConsumptionBody": "Você ultrapassou seu limite de {value}",
+  "@ntfAlertConsumptionBody": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "ntfTestTitle": "Notificação de Teste EcoWallet",
+  "ntfTestBody": "Esta é uma notificação de teste do EcoWallet. 🌿",
+  "ntfDailyReminderTitle": "Lembrete EcoWallet",
+  "ntfDailyReminderBody": "Não se esqueça de registrar suas despesas hoje! 🌱",
+  "ntfDailyReminderChannelName": "Lembretes Diários",
+  "ntfDailyReminderChannelDescription": "Notifica para registrar despesas diariamente",
+  "ntfMonthlyReportTitle": "Relatório Mensal 📊",
+  "ntfMonthlyReportBody": "Seu resumo mensal de gastos está pronto. Abra o EcoWallet para ver!",
+  "ntfMonthlyReportChannelName": "Relatórios Mensais",
+  "ntfMonthlyReportChannelDescription": "Notificações de resumo mensal de consumo",
   "errorNameInvalid": "Nome muito curto.",
   "errorPasswordWeak": "Senha é muito fraca.",
   "errorAddressInvalid": "Endereço muito curto.",

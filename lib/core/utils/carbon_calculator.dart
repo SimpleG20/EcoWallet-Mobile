@@ -1,8 +1,8 @@
 import 'package:eco_wallet/core/constants/category_data.dart';
-import 'package:eco_wallet/core/constants/transaction_type_data.dart';
 
 import '../../features/wallet/domain/entities/transaction.dart';
 import '../../l10n/app_localizations.dart';
+import '../enums/enums.dart';
 
 class CarbonCalculator {
   static double calculateCarbonFootprint(List<Transaction> transactions, AppLocalizations loc) {

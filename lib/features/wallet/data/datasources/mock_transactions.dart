@@ -1,12 +1,11 @@
-import '../../../../core/constants/transaction_type_data.dart';
+import '../../../../core/enums/enums.dart';
 import '../../domain/entities/transaction.dart';
 import 'package:uuid/uuid.dart';
 
 // Lista constante para testes ou "seed" (popular banco)
 final List<Transaction> kMockTransactions = [
   Transaction(
-    id: const Uuid()
-        .v4(), // Ou strings fixas '1', '2' se preferir previsibilidade
+    id: const Uuid().v4(), // Ou strings fixas '1', '2' se preferir previsibilidade
     name: 'Salário Mensal',
     amount: 5000,
     cents: 0,

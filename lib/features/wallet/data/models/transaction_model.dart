@@ -1,6 +1,6 @@
 import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
-import '../../../../core/constants/transaction_type_data.dart';
+import '../../../../core/enums/enums.dart';
 
 class TransactionModel extends Transaction {
   const TransactionModel(
@@ -17,9 +17,7 @@ class TransactionModel extends Transaction {
     final ETransactionType parsedType = rawType is ETransactionType
         ? rawType
         : ETransactionType.values.firstWhere(
-            (e) =>
-                e.toString() == rawType.toString() ||
-                e.name == rawType.toString(),
+            (e) => e.toString() == rawType.toString() || e.name == rawType.toString(),
           );
 
     return TransactionModel(

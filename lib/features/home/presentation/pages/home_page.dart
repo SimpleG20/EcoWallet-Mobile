@@ -1,23 +1,19 @@
-import 'package:eco_wallet/core/presentation/controllers/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../settings/presentation/bloc/settings_bloc.dart';
-import '../widgets/home_header.dart';
-import '../widgets/dismissible_transaction_card.dart';
-import '../widgets/eco_footprint_card.dart';
-import '../widgets/home_action_buttons.dart';
 import '../widgets/add_transaction_modal.dart';
-import '../widgets/balance_card/balance_card.dart';
+import '../widgets/home_widgets.dart';
 import '../widgets/skeletons/home_page_skeleton.dart';
 import '../../domain/entities/eco_data.dart';
 import '../../domain/entities/weekly_transaction_data.dart';
 import '../../domain/usecases/calculate_weekly_transactions.dart';
 import '../../../wallet/domain/entities/transaction.dart';
 import '../../../wallet/presentation/bloc/wallet_bloc.dart';
+import '../../../settings/presentation/bloc/settings_bloc.dart';
+import '../../../../core/enums/enums.dart';
+import '../../../../core/presentation/controllers/navigation_cubit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../injection_container.dart' as di;
-import '../../../../core/constants/transaction_type_data.dart';
 
 /// Main home page of the application.
 ///
@@ -40,36 +36,57 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: theme.colorScheme.primaryContainer,
         ),
-        body: BlocBuilder<WalletBloc, BaseWalletState>(
-          builder: (context, state) {
-            if (state is WalletLoading) {
-              return const HomePageSkeleton();
+        body: BlocListener<WalletBloc, BaseWalletState>(
+          listener: (context, state) {
+            final settingsBloc = context.read<SettingsBloc>();
+            final settingsState = settingsBloc.state;
+            if (settingsState is! SettingsLoadedState) {
+              return;
             }
 
-            if (state is WalletError) {
-              return Center(
-                child: Text(
-                  state.message,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: theme.colorScheme.error,
-                  ),
-                ),
-              );
+            if (state is TransactionAddedSuccess) {
+              if (settingsState.preferences.budgetPreferences.dailyBudgetLimit != null) {
+                _checkHighConsumptionAlert(context, state.dailyExpense, EPeriodType.daily);
+              }
+              if (settingsState.preferences.budgetPreferences.weeklyBudgetLimit != null) {
+                _checkHighConsumptionAlert(context, state.weeklyExpense, EPeriodType.weekly);
+              }
+              if (settingsState.preferences.budgetPreferences.monthlyExpenseLimit != null) {
+                _checkHighConsumptionAlert(context, state.monthlyExpense, EPeriodType.monthly);
+              }
             }
-
-            if (state is WalletLoaded) {
-              return _HomeBody(
-                loc: loc,
-                theme: theme,
-                state: state,
-                ecoData: EcoData.fromTransactions(loc, state.transactions),
-                weeklyData: _calculateWeeklyTransactions(state.recentTransactions),
-                onAddTransaction: (type, {Transaction? transaction}) =>
-                    _showAddTransactionModal(context, type, transactionToEdit: transaction),
-              );
-            }
-            return const SizedBox.shrink();
           },
+          child: BlocBuilder<WalletBloc, BaseWalletState>(
+            builder: (context, state) {
+              if (state is WalletLoading) {
+                return const HomePageSkeleton();
+              }
+
+              if (state is WalletError) {
+                return Center(
+                  child: Text(
+                    state.message,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.error,
+                    ),
+                  ),
+                );
+              }
+
+              if (state is WalletLoaded) {
+                return _HomeBody(
+                  loc: loc,
+                  theme: theme,
+                  state: state,
+                  ecoData: EcoData.fromTransactions(loc, state.transactions),
+                  weeklyData: _calculateWeeklyTransactions(state.recentTransactions),
+                  onAddTransaction: (type, {Transaction? transaction}) =>
+                      _showAddTransactionModal(context, type, transactionToEdit: transaction),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ),
       ),
     );
@@ -92,6 +109,43 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _checkHighConsumptionAlert(BuildContext context, double amount, EPeriodType period) {
+    final loc = AppLocalizations.of(context)!;
+    final settingsBloc = context.read<SettingsBloc>();
+    final settingsState = settingsBloc.state;
+    if (settingsState is! SettingsLoadedState) {
+      return;
+    }
+
+    double highExpenseThreshold = 0.0;
+    switch (period) {
+      case EPeriodType.daily:
+        highExpenseThreshold = settingsState.preferences.budgetPreferences.dailyBudgetLimit ?? 0.0;
+      case EPeriodType.weekly:
+        highExpenseThreshold = settingsState.preferences.budgetPreferences.weeklyBudgetLimit ?? 0.0;
+      case EPeriodType.monthly:
+        highExpenseThreshold = settingsState.preferences.budgetPreferences.monthlyExpenseLimit ?? 0.0;
+      case EPeriodType.yearly:
+      case EPeriodType.allTime:
+        highExpenseThreshold = double.infinity;
+    }
+    if (amount > highExpenseThreshold) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(loc.ntfAlertConsumptionTitle),
+          content: Text(loc.ntfAlertConsumptionBody(amount.toStringAsPrecision(2))),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(loc.btnCancel),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
 

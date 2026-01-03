@@ -1,12 +1,12 @@
-import 'package:eco_wallet/features/settings/domain/entities/settings_entities.dart';
 import 'package:flutter/material.dart';
 
 import 'package:eco_wallet/core/utils/app_formatters.dart';
 
+import '../../../settings/domain/entities/appearance_preferences.dart';
 import '../../../wallet/domain/entities/transaction.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/enums/enums.dart';
 import '../../../../core/constants/category_data.dart';
-import '../../../../core/constants/transaction_type_data.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({

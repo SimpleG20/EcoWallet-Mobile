@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 
-/// Enum representing all available transaction categories.
-/// This provides type-safety and avoids magic strings throughout the codebase.
-enum ETransactionCategory {
-  food,
-  transport,
-  bills,
-  health,
-  shopping,
-  entertainment,
-  salary,
-  others,
-}
+import '../enums/enums.dart';
 
 /// Model class containing the display information for a category.
 class CategoryDisplayInfo {

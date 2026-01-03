@@ -1,8 +1,6 @@
-import 'package:eco_wallet/core/constants/transaction_type_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../home/presentation/widgets/add_transaction_modal.dart';
 import '/l10n/app_localizations.dart';
 import '../bloc/transactions_history_bloc.dart';
 import '../bloc/transactions_history_event.dart';
@@ -12,9 +10,11 @@ import '../widgets/transaction_group_card.dart';
 import '../../domain/entities/transaction_group.dart';
 import '../../domain/entities/transactions_filter.dart';
 import '../../../wallet/domain/entities/transaction.dart';
+import '../../../home/presentation/widgets/add_transaction_modal.dart';
+import '../../../../injection_container.dart' as di;
+import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_formatters.dart';
 import '../../../../core/presentation/widgets/page_header.dart';
-import '../../../../injection_container.dart' as di;
 
 /// Main page for the Wallet feature displaying balance, actions, and transactions.
 ///

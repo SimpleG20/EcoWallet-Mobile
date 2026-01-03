@@ -19,12 +19,13 @@ class GetTransactionEvent extends WalletEvent {
 }
 
 class AddTransactionEvent extends WalletEvent {
+  final int initialDay;
   final Transaction transaction;
 
-  const AddTransactionEvent(this.transaction);
+  const AddTransactionEvent(this.initialDay, this.transaction);
 
   @override
-  List<Object> get props => [transaction];
+  List<Object> get props => [initialDay, transaction];
 }
 
 class DeleteTransactionEvent extends WalletEvent {
@@ -45,4 +46,10 @@ class UpdateTransactionEvent extends WalletEvent {
   List<Object> get props => [transaction];
 }
 
-class LoadWalletDataEvent extends WalletEvent {}
+class LoadWalletDataEvent extends WalletEvent {
+  final BudgetPreferences budgetPreferences;
+  const LoadWalletDataEvent({this.budgetPreferences = const BudgetPreferences()});
+
+  @override
+  List<Object> get props => [budgetPreferences];
+}
