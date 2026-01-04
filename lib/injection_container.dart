@@ -1,5 +1,6 @@
 import 'package:eco_wallet/core/config/app_config.dart';
 import 'package:eco_wallet/core/services/auto_backup_service.dart';
+import 'package:eco_wallet/core/services/budget_alert_service.dart';
 import 'package:eco_wallet/core/services/notification_service.dart';
 import 'package:eco_wallet/features/user/domain/usecases/get_current_user.dart';
 import 'package:get_it/get_it.dart';
@@ -101,10 +102,13 @@ Future<void> init() async {
       getWeeklyExpense: sl(),
       getMonthlyExpense: sl(),
       walletRepository: sl(),
+      budgetAlertService: sl(),
+      notificationService: sl(),
     ),
   );
 
   sl.registerLazySingleton(() => NotificationService());
+  sl.registerLazySingleton(() => BudgetAlertService());
   sl.registerLazySingleton(() => AutoBackupService());
 
   sl.registerLazySingleton(() => AppRouter(authBloc: sl()));

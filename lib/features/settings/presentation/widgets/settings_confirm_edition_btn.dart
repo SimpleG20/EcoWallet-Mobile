@@ -19,9 +19,10 @@ class SettingsConfirmEditionBtn extends StatelessWidget {
       right: 24,
       child: IconButton(
         style: IconButton.styleFrom(
-          backgroundColor: theme.colorScheme.primary,
+          backgroundColor: pendingChanges
+              ? theme.colorScheme.primary
+              : theme.colorScheme.outlineVariant,
           foregroundColor: theme.colorScheme.onPrimary,
-          padding: const EdgeInsets.all(16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -29,10 +30,16 @@ class SettingsConfirmEditionBtn extends StatelessWidget {
           elevation: 6,
         ),
         onPressed: () => onPressed(context),
-        icon: Badge(
-          isLabelVisible: pendingChanges,
-          smallSize: 8,
-          child: Icon(Icons.edit_outlined),
+        icon: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                Icons.edit_outlined,
+                size: 36,
+              ),
+            ),
+          ],
         ),
       ),
     );

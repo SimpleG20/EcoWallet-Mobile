@@ -1020,4 +1020,27 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get noBackupYet => 'Nenhum backup ainda';
+
+  @override
+  String get ntfBudgetAlertChannelName => 'Alertas de Orçamento';
+
+  @override
+  String get ntfBudgetAlertChannelDescription =>
+      'Alertas quando você se aproxima dos seus limites de orçamento';
+
+  @override
+  String get ntfDailyBudgetAlertTitle => 'Alerta de Orçamento Diário ⚠️';
+
+  @override
+  String ntfDailyBudgetAlertBody(int percentage) {
+    return 'Você atingiu $percentage% do seu limite diário de orçamento';
+  }
+
+  @override
+  String get ntfWeeklyBudgetAlertTitle => 'Alerta de Orçamento Semanal ⚠️';
+
+  @override
+  String ntfWeeklyBudgetAlertBody(int percentage) {
+    return 'Você atingiu $percentage% do seu limite semanal de orçamento';
+  }
 }

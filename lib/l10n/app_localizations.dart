@@ -1975,6 +1975,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No backup yet'**
   String get noBackupYet;
+
+  /// No description provided for @ntfBudgetAlertChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget Alerts'**
+  String get ntfBudgetAlertChannelName;
+
+  /// No description provided for @ntfBudgetAlertChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts when you approach your budget limits'**
+  String get ntfBudgetAlertChannelDescription;
+
+  /// No description provided for @ntfDailyBudgetAlertTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Budget Alert ⚠️'**
+  String get ntfDailyBudgetAlertTitle;
+
+  /// No description provided for @ntfDailyBudgetAlertBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve reached {percentage}% of your daily budget limit'**
+  String ntfDailyBudgetAlertBody(int percentage);
+
+  /// No description provided for @ntfWeeklyBudgetAlertTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Budget Alert ⚠️'**
+  String get ntfWeeklyBudgetAlertTitle;
+
+  /// No description provided for @ntfWeeklyBudgetAlertBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve reached {percentage}% of your weekly budget limit'**
+  String ntfWeeklyBudgetAlertBody(int percentage);
 }
 
 class _AppLocalizationsDelegate
