@@ -382,5 +382,25 @@
       }
     }
   },
-  "noBackupYet": "Nenhum backup ainda"
+  "noBackupYet": "Nenhum backup ainda",
+  "ntfBudgetAlertChannelName": "Alertas de Orçamento",
+  "ntfBudgetAlertChannelDescription": "Alertas quando você se aproxima dos seus limites de orçamento",
+  "ntfDailyBudgetAlertTitle": "Alerta de Orçamento Diário ⚠️",
+  "ntfDailyBudgetAlertBody": "Você atingiu {percentage}% do seu limite diário de orçamento",
+  "@ntfDailyBudgetAlertBody": {
+    "placeholders": {
+      "percentage": {
+        "type": "int"
+      }
+    }
+  },
+  "ntfWeeklyBudgetAlertTitle": "Alerta de Orçamento Semanal ⚠️",
+  "ntfWeeklyBudgetAlertBody": "Você atingiu {percentage}% do seu limite semanal de orçamento",
+  "@ntfWeeklyBudgetAlertBody": {
+    "placeholders": {
+      "percentage": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -1,13 +1,14 @@
-import 'package:eco_wallet/core/utils/app_validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:eco_wallet/core/utils/app_formatters.dart';
+import 'package:eco_wallet/core/utils/app_validators.dart';
 
-import '../../../../core/presentation/widgets/core_widgets.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../bloc/settings_bloc.dart';
 import '../widgets/settings_widgets.dart';
+import '../../domain/entities/budget_preferences.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../../core/presentation/widgets/core_widgets.dart';
 
 class BudgetInfoPage extends StatefulWidget {
   const BudgetInfoPage({super.key});
@@ -17,7 +18,6 @@ class BudgetInfoPage extends StatefulWidget {
 }
 
 class _BudgetInfoPageState extends State<BudgetInfoPage> {
-  int _monthStartDay = 1;
   final _formKey = GlobalKey<FormState>();
 
   final _expensesMonthlyController = TextEditingController();
@@ -25,6 +25,9 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
   final _weeklyBudgetLimitController = TextEditingController();
   final _dailyBudgetLimitAlertController = TextEditingController();
   final _dailyBudgetLimitController = TextEditingController();
+
+  BudgetPreferences _currentPreferences = BudgetPreferences();
+  BudgetPreferences _initialPreferences = BudgetPreferences();
 
   bool _pendingChanges = false;
 
@@ -36,12 +39,19 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
     if (currentState is SettingsLoadedState) {
       final settings = currentState.preferences.budgetPreferences;
 
-      _monthStartDay = settings.monthStartDay;
-      _dailyBudgetLimitController.text = settings.dailyBudgetLimit?.toString() ?? '';
-      _weeklyBudgetLimitController.text = settings.weeklyBudgetLimit?.toString() ?? '';
-      _expensesMonthlyController.text = settings.monthlyExpenseLimit?.toString() ?? '';
-      _dailyBudgetLimitAlertController.text = settings.dailyAlertPercentage?.toString() ?? '';
-      _weeklyBudgetLimitAlertController.text = settings.weeklyAlertPercentage?.toString() ?? '';
+      _initialPreferences = settings.copyWith();
+      _currentPreferences = settings.copyWith();
+
+      _dailyBudgetLimitController.text =
+          settings.dailyBudgetLimit?.toString() ?? '';
+      _weeklyBudgetLimitController.text =
+          settings.weeklyBudgetLimit?.toString() ?? '';
+      _expensesMonthlyController.text =
+          settings.monthlyExpenseLimit?.toString() ?? '';
+      _dailyBudgetLimitAlertController.text =
+          settings.dailyAlertPercentage?.toString() ?? '';
+      _weeklyBudgetLimitAlertController.text =
+          settings.weeklyAlertPercentage?.toString() ?? '';
     }
   }
 
@@ -74,7 +84,8 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
             return Center(
               child: Text(
                 state.message ?? loc.errorUnknown,
-                style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error),
+                style: theme.textTheme.bodyLarge
+                    ?.copyWith(color: theme.colorScheme.error),
               ),
             );
           }
@@ -114,7 +125,8 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
     );
   }
 
-  Widget _buildBudgetOptions(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildBudgetOptions(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     final sections = [
       _buildMonthlySection(context, theme, loc),
       _buildWeeklySection(context, theme, loc),
@@ -123,7 +135,8 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
     return SettingsSectionList(sections: sections, theme: theme);
   }
 
-  Widget _buildMonthlySection(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildMonthlySection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -132,12 +145,41 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
         const SizedBox(height: 16),
         _buildMonthlyInitialDay(context, theme, loc),
         const SizedBox(height: 16),
-        _buildMonthlyExpensesLimit(context, theme, loc),
+
+        // Expenses Limit
+        AnyTextField(
+            hintText: _expensesMonthlyController.text.isEmpty
+                ? '000.00'
+                : _expensesMonthlyController.text,
+            controller: _expensesMonthlyController,
+            keyboardType: TextInputType.number,
+            verticalSpacing: false,
+            label: loc.lbExpensesLimit,
+            subtitle: loc.expensesLimitDescription,
+            outsidePrefixIcon: Icon(Icons.attach_money_outlined,
+                color: theme.colorScheme.onSurfaceVariant),
+            inputFormatters: [
+              CurrencyInputFormatter(locale: loc.localeName),
+            ],
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return null;
+              }
+              return AppValidators.validateAmount(loc, value);
+            },
+            onEditingComplete: () => setState(() {
+                  _currentPreferences = _currentPreferences.copyWith(
+                    monthlyExpenseLimit: AppFormatters.getCurrencyValue(
+                        _expensesMonthlyController.text, loc.localeName),
+                  );
+                  _pendingChanges = _currentPreferences != _initialPreferences;
+                }))
       ],
     );
   }
 
-  Widget _buildMonthlyInitialDay(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildMonthlyInitialDay(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     const icon = Icons.calendar_today;
     final label = loc.lbInitialDayOfMonth;
     final items = List<String>.generate(31, (index) => (index + 1).toString())
@@ -146,231 +188,173 @@ class _BudgetInfoPageState extends State<BudgetInfoPage> {
     return DropdownRow(
       icon: icon,
       label: label,
-      value: _monthStartDay.toString(),
+      value: _currentPreferences.monthStartDay.toString(),
       items: items,
       onChanged: (value) => setState(() {
-        var newValue = int.tryParse(value!) ?? _monthStartDay;
-        _monthStartDay = newValue;
+        _currentPreferences = _currentPreferences.copyWith(
+          monthStartDay:
+              int.tryParse(value!) ?? _currentPreferences.monthStartDay,
+        );
+        _pendingChanges = _currentPreferences != _initialPreferences;
       }),
       theme: theme,
     );
   }
 
-  Widget _buildMonthlyExpensesLimit(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Row(
-      children: [
-        Icon(Icons.attach_money, color: theme.colorScheme.onSurfaceVariant),
-        const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              loc.lbExpensesLimit,
-              style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurface),
-            ),
-            const SizedBox(height: 4),
-            SizedBox(
-              width: 200,
-              child: Text(
-                loc.expensesLimitDescription,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            )
-          ],
-        ),
-        const Spacer(),
-        IconButton(
-          icon: Icon(Icons.edit, color: theme.colorScheme.primary),
-          onPressed: () => _showExpensesLimitModal(context, theme, loc),
-        )
-      ],
-    );
-  }
-
-  _showExpensesLimitModal(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.0),
-          topRight: Radius.circular(16.0),
-        ),
-      ),
-      builder: (BuildContext context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 16,
-            right: 16,
-            top: 24,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                loc.setMonthlyExpensesLimit,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _expensesMonthlyController,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  CurrencyInputFormatter(locale: loc.localeName),
-                ],
-                decoration: InputDecoration(
-                  hintText: loc.lbExpensesLimit,
-                  prefixIcon: Icon(Icons.attach_money, color: theme.colorScheme.onSurfaceVariant),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return null;
-                  }
-                  final number = double.tryParse(value);
-                  if (number == null || number < 0) {
-                    return loc.errorAmountInvalid;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(loc.btnSave),
-                ),
-              ),
-              const SizedBox(height: 16),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildWeeklySection(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildWeeklySection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SettingsSectionTitle(title: loc.sectionWeekly),
         const SizedBox(height: 16),
-        _buildBudgetLimitAlertValue(context, theme, loc, _weeklyBudgetLimitAlertController),
-        const SizedBox(height: 16),
-        _buildBudgetLimit(context, theme, loc, _weeklyBudgetLimitController),
-      ],
-    );
-  }
-
-  Widget _buildDailySection(BuildContext context, ThemeData theme, AppLocalizations loc) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SettingsSectionTitle(title: loc.sectionDaily),
-        const SizedBox(height: 16),
-        _buildBudgetLimitAlertValue(context, theme, loc, _dailyBudgetLimitAlertController),
-        const SizedBox(height: 16),
-        _buildBudgetLimit(context, theme, loc, _dailyBudgetLimitController),
-      ],
-    );
-  }
-
-  Widget _buildBudgetLimitAlertValue(
-      BuildContext context, ThemeData theme, AppLocalizations loc, TextEditingController controller) {
-    return Row(
-      children: [
-        Icon(Icons.notifications_active, color: theme.colorScheme.onSurfaceVariant),
-        const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              loc.lbLimitAlert,
-              style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurface),
-            ),
-            const SizedBox(height: 4),
-            SizedBox(
-              width: 200,
-              child: Text(
-                loc.limitAlertDescription,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            )
+        AnyTextField(
+          hintText: loc.lbBudgetLimit,
+          controller: _weeklyBudgetLimitController,
+          keyboardType: TextInputType.number,
+          outsidePrefixIcon: Icon(Icons.attach_money_outlined,
+              color: theme.colorScheme.onSurfaceVariant),
+          inputFormatters: [
+            CurrencyInputFormatter(locale: loc.localeName),
           ],
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return null;
+            }
+            return AppValidators.validateAmount(loc, value);
+          },
+          onEditingComplete: () => setState(() {
+            final value = AppFormatters.getCurrencyValue(
+                _weeklyBudgetLimitController.text, loc.localeName);
+            if (value > 0) {
+              _currentPreferences =
+                  _currentPreferences.copyWith(weeklyBudgetLimit: value);
+            } else {
+              _currentPreferences =
+                  _currentPreferences.copyWith(weeklyBudgetLimit: null);
+            }
+            _pendingChanges = _currentPreferences != _initialPreferences;
+          }),
         ),
-        Expanded(
-          child: TextFormField(
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.w600,
-            ),
-            decoration: InputDecoration(hintText: '0%'),
-            controller: controller,
-            keyboardType: TextInputType.number,
+        if (_currentPreferences.weeklyBudgetLimit != null &&
+            _currentPreferences.weeklyBudgetLimit! > 0) ...[
+          const SizedBox(height: 16),
+          PercentageTextField(
+            verticalSpacing: false,
+            controller: _weeklyBudgetLimitAlertController,
+            outsidePrefixIcon: Icon(Icons.notifications_active_outlined,
+                color: theme.colorScheme.onSurfaceVariant),
+            label: loc.lbLimitAlert,
+            subtitle: loc.limitAlertDescription,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return null;
               }
               return AppValidators.isValidPercentage(loc, value);
             },
+            onEditingComplete: () => setState(() {
+              final value =
+                  int.tryParse(_weeklyBudgetLimitAlertController.text);
+              if (value != null && value > 0) {
+                _currentPreferences = _currentPreferences.copyWith(
+                  weeklyAlertPercentage: value,
+                );
+              } else {
+                _currentPreferences = _currentPreferences.copyWith(
+                  weeklyAlertPercentage: null,
+                );
+              }
+              _pendingChanges = _currentPreferences != _initialPreferences;
+            }),
           ),
-        )
+        ]
       ],
     );
   }
 
-  Widget _buildBudgetLimit(
-      BuildContext context, ThemeData theme, AppLocalizations loc, TextEditingController controller) {
-    return Row(
+  Widget _buildDailySection(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(Icons.attach_money, color: theme.colorScheme.onSurfaceVariant),
-        const SizedBox(width: 16),
-        Expanded(
-          child: TextField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              hintText: loc.lbBudgetLimit,
-            ),
-          ),
+        SettingsSectionTitle(title: loc.sectionDaily),
+        const SizedBox(height: 16),
+        AnyTextField(
+          hintText: loc.lbBudgetLimit,
+          controller: _dailyBudgetLimitController,
+          keyboardType: TextInputType.number,
+          outsidePrefixIcon: Icon(Icons.attach_money_outlined,
+              color: theme.colorScheme.onSurfaceVariant),
+          inputFormatters: [
+            CurrencyInputFormatter(locale: loc.localeName),
+          ],
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return null;
+            }
+            return AppValidators.validateAmount(loc, value);
+          },
+          onEditingComplete: () => setState(() {
+            final value = AppFormatters.getCurrencyValue(
+                _dailyBudgetLimitController.text, loc.localeName);
+
+            if (value > 0) {
+              _currentPreferences =
+                  _currentPreferences.copyWith(dailyBudgetLimit: value);
+            } else {
+              _currentPreferences =
+                  _currentPreferences.copyWith(dailyBudgetLimit: null);
+            }
+            _pendingChanges = _currentPreferences != _initialPreferences;
+          }),
         ),
+        if (_currentPreferences.dailyBudgetLimit != null &&
+            _currentPreferences.dailyBudgetLimit! > 0) ...[
+          const SizedBox(height: 16),
+          PercentageTextField(
+            verticalSpacing: false,
+            controller: _dailyBudgetLimitAlertController,
+            outsidePrefixIcon: Icon(Icons.notifications_active_outlined,
+                color: theme.colorScheme.onSurfaceVariant),
+            label: loc.lbLimitAlert,
+            subtitle: loc.limitAlertDescription,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return null;
+              }
+              return AppValidators.isValidPercentage(loc, value);
+            },
+            onEditingComplete: () => setState(() {
+              final value = int.tryParse(_dailyBudgetLimitAlertController.text);
+
+              if (value != null && value > 0) {
+                _currentPreferences = _currentPreferences.copyWith(
+                  dailyAlertPercentage: value,
+                );
+              } else {
+                _currentPreferences = _currentPreferences.copyWith(
+                  dailyAlertPercentage: null,
+                );
+              }
+              _pendingChanges = _currentPreferences != _initialPreferences;
+            }),
+          ),
+        ],
       ],
     );
   }
 
   void _submitChanges(BuildContext context) {
+    if (_pendingChanges == false) return;
     if (!_formKey.currentState!.validate()) return;
 
     final bloc = context.read<SettingsBloc>();
     final settingsState = bloc.state;
     if (settingsState is! SettingsLoadedState) return;
 
-    final dailyLimit = double.tryParse(_dailyBudgetLimitController.text);
-    final weeklyLimit = double.tryParse(_weeklyBudgetLimitController.text);
-    final monthlyExpensesLimit = double.tryParse(_expensesMonthlyController.text);
-    final dailyAlertPercentage = int.tryParse(_dailyBudgetLimitAlertController.text);
-    final weeklyAlertPercentage = int.tryParse(_weeklyBudgetLimitAlertController.text);
-
-    final newPreferences = settingsState.preferences.copyWith(
-      budgetPreferences: settingsState.preferences.budgetPreferences.copyWith(
-        dailyBudgetLimit: dailyLimit,
-        weeklyBudgetLimit: weeklyLimit,
-        monthlyExpenseLimit: monthlyExpensesLimit,
-        dailyAlertPercentage: dailyAlertPercentage,
-        weeklyAlertPercentage: weeklyAlertPercentage,
-      ),
-    );
+    _pendingChanges = false;
+    final newPreferences = settingsState.preferences
+        .copyWith(budgetPreferences: _currentPreferences);
 
     bloc.add(UpdateUserPreferencesEvent(userPreferences: newPreferences));
   }

@@ -382,5 +382,25 @@
       }
     }
   },
-  "noBackupYet": "No backup yet"
+  "noBackupYet": "No backup yet",
+  "ntfBudgetAlertChannelName": "Budget Alerts",
+  "ntfBudgetAlertChannelDescription": "Alerts when you approach your budget limits",
+  "ntfDailyBudgetAlertTitle": "Daily Budget Alert ⚠️",
+  "ntfDailyBudgetAlertBody": "You've reached {percentage}% of your daily budget limit",
+  "@ntfDailyBudgetAlertBody": {
+    "placeholders": {
+      "percentage": {
+        "type": "int"
+      }
+    }
+  },
+  "ntfWeeklyBudgetAlertTitle": "Weekly Budget Alert ⚠️",
+  "ntfWeeklyBudgetAlertBody": "You've reached {percentage}% of your weekly budget limit",
+  "@ntfWeeklyBudgetAlertBody": {
+    "placeholders": {
+      "percentage": {
+        "type": "int"
+      }
+    }
+  }
 }

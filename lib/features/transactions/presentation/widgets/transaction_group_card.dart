@@ -86,6 +86,7 @@ class TransactionGroupCard extends StatelessWidget {
                                 walletBloc.add(AddTransactionEvent(
                                   budgetPreferences.monthStartDay,
                                   transaction,
+                                  budgetPreferences: budgetPreferences,
                                 ));
                               },
                             ),

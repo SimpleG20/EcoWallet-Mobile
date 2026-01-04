@@ -21,11 +21,16 @@ class GetTransactionEvent extends WalletEvent {
 class AddTransactionEvent extends WalletEvent {
   final int initialDay;
   final Transaction transaction;
+  final BudgetPreferences budgetPreferences;
 
-  const AddTransactionEvent(this.initialDay, this.transaction);
+  const AddTransactionEvent(
+    this.initialDay,
+    this.transaction, {
+    this.budgetPreferences = const BudgetPreferences(),
+  });
 
   @override
-  List<Object> get props => [initialDay, transaction];
+  List<Object> get props => [initialDay, transaction, budgetPreferences];
 }
 
 class DeleteTransactionEvent extends WalletEvent {

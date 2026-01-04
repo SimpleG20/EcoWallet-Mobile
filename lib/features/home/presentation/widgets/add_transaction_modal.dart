@@ -480,6 +480,7 @@ class _AddTransactionModalState extends State<AddTransactionModal> {
       walletBloc.add(AddTransactionEvent(
         settingsState.preferences.budgetPreferences.monthStartDay,
         newTransaction,
+        budgetPreferences: settingsState.preferences.budgetPreferences,
       ));
     }
 

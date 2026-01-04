@@ -41,7 +41,8 @@ class _RegisterPageState extends State<RegisterPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
                 borderRadius: const BorderRadius.only(
@@ -114,7 +115,8 @@ class _RegisterPageState extends State<RegisterPage> {
             Text(
               loc.loginWelcomeMessage,
               style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                color:
+                    theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
             ),
@@ -153,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
             keyboardType: TextInputType.name,
             textInputAction: TextInputAction.next,
             validator: (value) => AppValidators.isValidName(loc, value),
-            prefixIcon: Icon(
+            inisidePrefixIcon: Icon(
               Icons.person_outline,
               color: theme.colorScheme.primary,
             ),
@@ -166,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             validator: (value) => AppValidators.isValidEmail(loc, value),
-            prefixIcon: Icon(
+            inisidePrefixIcon: Icon(
               Icons.email_outlined,
               color: theme.colorScheme.primary,
             ),
@@ -229,7 +231,8 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _buildAlreadyHaveAccount(BuildContext context, ThemeData theme, AppLocalizations loc) {
+  Widget _buildAlreadyHaveAccount(
+      BuildContext context, ThemeData theme, AppLocalizations loc) {
     return Column(
       children: [
         const SizedBox(height: 24),

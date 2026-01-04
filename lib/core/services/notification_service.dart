@@ -17,6 +17,8 @@ class NotificationService {
 
   static const int _dailyReminderId = 1;
   static const int _monthlyReportId = 2;
+  static const int _dailyBudgetAlertId = 4;
+  static const int _weeklyBudgetAlertId = 5;
 
   /// Stores the current quiet hours settings for filtering
   NotificationPreferences? _notificationPreferences;
@@ -266,6 +268,62 @@ class NotificationService {
           priority: Priority.defaultPriority,
         ),
         iOS: DarwinNotificationDetails(categoryIdentifier: 'backup_notification'),
+      ),
+    );
+  }
+
+  /// Shows a notification for daily budget alert
+  Future<void> showDailyBudgetAlert({
+    required String title,
+    required String body,
+    required String channelName,
+    required String channelDescription,
+  }) async {
+    if (isInQuietHours()) return;
+
+    await _plugin.show(
+      _dailyBudgetAlertId,
+      title,
+      body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          'budget_alerts',
+          channelName,
+          channelDescription: channelDescription,
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+        iOS: const DarwinNotificationDetails(
+          categoryIdentifier: 'budget_alert',
+        ),
+      ),
+    );
+  }
+
+  /// Shows a notification for weekly budget alert
+  Future<void> showWeeklyBudgetAlert({
+    required String title,
+    required String body,
+    required String channelName,
+    required String channelDescription,
+  }) async {
+    if (isInQuietHours()) return;
+
+    await _plugin.show(
+      _weeklyBudgetAlertId,
+      title,
+      body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          'budget_alerts',
+          channelName,
+          channelDescription: channelDescription,
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+        iOS: const DarwinNotificationDetails(
+          categoryIdentifier: 'budget_alert',
+        ),
       ),
     );
   }

@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:eco_wallet/features/settings/domain/entities/budget_preferences.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:eco_wallet/features/settings/domain/entities/budget_preferences.dart';
 
 import '../../domain/entities/transaction.dart';
 import '../../domain/usecases/add_transaction.dart';
@@ -19,6 +20,8 @@ import '../../domain/usecases/get_weekly_expense.dart';
 import '../../domain/usecases/get_monthly_expense.dart';
 import '../../domain/repositories/base_wallet_repository.dart';
 import '../../../../core/usecases/base_usecase.dart';
+import '../../../../core/services/budget_alert_service.dart';
+import '../../../../core/services/notification_service.dart';
 
 part 'wallet_event.dart';
 part 'wallet_state.dart';
@@ -39,6 +42,9 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
 
   final BaseWalletRepository walletRepository;
 
+  final BudgetAlertService budgetAlertService;
+  final NotificationService notificationService;
+
   StreamSubscription? _transactionsSubscription;
 
   WalletBloc({
@@ -55,6 +61,8 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     required this.getWeeklyExpense,
     required this.getMonthlyExpense,
     required this.walletRepository,
+    required this.budgetAlertService,
+    required this.notificationService,
   }) : super(WalletInitial()) {
     on<LoadWalletDataEvent>(_onLoadWalletData);
     on<AddTransactionEvent>(_onAddTransaction);
@@ -135,17 +143,49 @@ class WalletBloc extends Bloc<WalletEvent, BaseWalletState> {
     final weeklyExpenseResult = await getWeeklyExpense(NoParams());
     final monthlyExpenseResult = await getMonthlyExpense(event.initialDay);
 
+    final dailyExpense = dailyExpenseResult.fold((l) => 0.0, (r) => r);
+    final weeklyExpense = weeklyExpenseResult.fold((l) => 0.0, (r) => r);
+
     emit(
       TransactionAddedSuccess(
         transaction: event.transaction,
         totalBalance: totalBalance.fold((l) => 0.0, (r) => r),
         totalIncome: totalIncome.fold((l) => 0.0, (r) => r),
         totalExpense: totalExpense.fold((l) => 0.0, (r) => r),
-        dailyExpense: dailyExpenseResult.fold((l) => 0.0, (r) => r),
-        weeklyExpense: weeklyExpenseResult.fold((l) => 0.0, (r) => r),
+        dailyExpense: dailyExpense,
+        weeklyExpense: weeklyExpense,
         monthlyExpense: monthlyExpenseResult.fold((l) => 0.0, (r) => r),
       ),
     );
+
+    // Check budget limits and trigger alerts if needed
+    final alertResult = budgetAlertService.checkBudgetLimits(
+      dailyExpense: dailyExpense,
+      weeklyExpense: weeklyExpense,
+      preferences: event.budgetPreferences,
+    );
+
+    if (alertResult.shouldAlertDaily &&
+        alertResult.dailyPercentageReached != null) {
+      notificationService.showDailyBudgetAlert(
+        title: 'Daily Budget Alert ⚠️',
+        body:
+            'You\'ve reached ${alertResult.dailyPercentageReached}% of your daily budget limit',
+        channelName: 'Budget Alerts',
+        channelDescription: 'Alerts when you approach your budget limits',
+      );
+    }
+
+    if (alertResult.shouldAlertWeekly &&
+        alertResult.weeklyPercentageReached != null) {
+      notificationService.showWeeklyBudgetAlert(
+        title: 'Weekly Budget Alert ⚠️',
+        body:
+            'You\'ve reached ${alertResult.weeklyPercentageReached}% of your weekly budget limit',
+        channelName: 'Budget Alerts',
+        channelDescription: 'Alerts when you approach your budget limits',
+      );
+    }
   }
 
   Future<void> _onDeleteTransaction(

@@ -60,6 +60,7 @@ class DismissibleTransactionCard extends StatelessWidget {
                 walletBloc.add(AddTransactionEvent(
                   settingsBloc.preferences.budgetPreferences.monthStartDay,
                   transaction,
+                  budgetPreferences: settingsBloc.preferences.budgetPreferences,
                 ));
               },
             ),
