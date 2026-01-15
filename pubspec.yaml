@@ -1,7 +1,7 @@
 name: eco_wallet
 description: A Financial Management App built with Clean Architecture and BLoC.
 publish_to: "none"
-version: 1.0.43+42
+version: 1.0.44+43
 
 environment:
   sdk: ">=3.2.0 <4.0.0"
