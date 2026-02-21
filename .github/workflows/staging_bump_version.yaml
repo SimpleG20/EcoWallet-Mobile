@@ -1,0 +1,59 @@
+name: Staging Version Bump
+
+on:
+  push:
+    branches:
+      - staging
+
+env:
+  FLUTTER_VERSION: '3.19.0'
+
+permissions:
+  contents: write
+
+jobs:
+  bump-version:
+    name: Bump Patch Version
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci: version bump')"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: staging
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Install Cider (Versioning Tool)
+        run: dart pub global activate cider
+
+      - name: Bump Patch Version
+        run: |
+          cider bump patch --bump-build
+          if [ $? -ne 0 ]; then
+            echo "cider bump patch failed. Aborting version bump."
+            exit 1
+          fi
+
+      - name: Commit and Push Version Bump
+        run: |
+          set -e
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          NEW_VERSION=$(cider version)
+
+          git add pubspec.yaml
+          
+          if ! git diff --cached --quiet; then
+            git commit -m "ci: version bump to $NEW_VERSION [skip ci]"
+            git push origin staging
+          else
+            echo "No changes to commit. Skipping commit and push."
+          fi

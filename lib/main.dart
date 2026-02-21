@@ -1,122 +1,222 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'core/router/app_router.dart';
+import 'core/services/auto_backup_service.dart';
+import 'core/services/notification_service.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/settings/domain/enums/color_blind_mode.dart';
+import 'features/settings/domain/enums/font_size_preference.dart';
+import 'features/settings/presentation/bloc/settings_bloc.dart';
+import 'features/user/presentation/bloc/user_bloc.dart';
+import 'features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'injection_container.dart' as di;
+import 'core/theme/app_theme.dart';
+import '/l10n/app_localizations.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    await di.init();
+    await di.sl<NotificationService>().init();
+    // Dispatch AppStartedEvent immediately after DI initialization
+    di.sl<AuthBloc>().add(AppStartedEvent());
+    runApp(const EcoWalletApp());
+  } catch (e) {
+    // Log the error for debugging
+    debugPrint('Failed to initialize app: $e');
+    runApp(const ErrorApp());
+  }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class EcoWalletApp extends StatelessWidget {
+  const EcoWalletApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>.value(value: di.sl<AuthBloc>()),
+        BlocProvider<UserBloc>.value(value: di.sl<UserBloc>()),
+        BlocProvider<SettingsBloc>.value(value: di.sl<SettingsBloc>()),
+        BlocProvider<WalletBloc>(create: (_) => di.sl<WalletBloc>()),
+      ],
+      child: const _AuthUserSyncWrapper(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+/// Wrapper widget that synchronizes AuthBloc and UserBloc states.
+/// It checks the initial auth state and continues listening for future changes.
+class _AuthUserSyncWrapper extends StatefulWidget {
+  const _AuthUserSyncWrapper();
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<_AuthUserSyncWrapper> createState() => _AuthUserSyncWrapperState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
+  bool _backupChecked = false;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  @override
+  void initState() {
+    super.initState();
+    // Check if already authenticated on startup
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _syncUserFromAuthState(context.read<AuthBloc>().state);
     });
+  }
+
+  void _syncUserFromAuthState(BaseAuthState state) {
+    if (state is AuthAuthenticatedState) {
+      context.read<UserBloc>().add(LoadUserEvent(id: state.userId));
+      context.read<SettingsBloc>().add(LoadSettingsEvent());
+
+      // Trigger backup check after settings are loaded
+      if (!_backupChecked) {
+        _scheduleBackupCheck(context, state.userId);
+      }
+    }
+  }
+
+  /// Schedules a backup check after settings and wallet data are loaded.
+  Future<void> _scheduleBackupCheck(BuildContext context, String userId) async {
+    _backupChecked = true;
+
+    final settingsBloc = context.read<SettingsBloc>();
+    await settingsBloc.stream
+        .firstWhere((state) => state is SettingsLoadedState);
+
+    final settingsState = settingsBloc.state;
+    if (settingsState is! SettingsLoadedState) return;
+
+    final walletBloc = di.sl<WalletBloc>()..add(LoadWalletDataEvent());
+    await walletBloc.stream.firstWhere((state) => state is WalletLoaded);
+
+    final walletState = walletBloc.state;
+    if (walletState is! WalletLoaded) return;
+
+    final autoBackupService = di.sl<AutoBackupService>();
+    final backupPath = await autoBackupService.checkAndPerformBackupIfDue(
+      userId: userId,
+      transactions: walletState.transactions,
+      dataPreferences: settingsState.preferences.dataPreferences,
+    );
+
+    if (backupPath != null) {
+      debugPrint('[App] Automatic backup created: $backupPath');
+
+      final loc = AppLocalizations.of(context)!;
+      // Show notification
+      final notificationService = di.sl<NotificationService>();
+      await notificationService.showBackupCompleteNotification(
+        title: loc.ntfBackupCompleteTitle,
+        body: loc.ntfBackupCompleteBody,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+    return BlocListener<AuthBloc, BaseAuthState>(
+      listener: (context, state) => _syncUserFromAuthState(state),
+      child: BlocBuilder<SettingsBloc, BaseSettingsState>(
+        buildWhen: (previous, current) =>
+            _conditionsToRebuild(previous, current),
+        builder: (context, settingsState) => MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            textScaler: TextScaler.linear(
+              _getTextScaleFactor(settingsState),
             ),
-          ],
+          ),
+          child: ColorFiltered(
+            colorFilter: AppTheme.getColorFilter(
+              settingsState is SettingsLoadedState
+                  ? settingsState
+                      .preferences.appearancePreferences.colorBlindMode
+                  : ColorBlindMode.none,
+            ),
+            child: MaterialApp.router(
+              title: 'EcoWallet',
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: settingsState is SettingsLoadedState
+                  ? settingsState
+                      .preferences.appearancePreferences.flutterThemeMode
+                  : ThemeMode.system,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en'),
+                Locale('pt'),
+              ],
+              routerConfig: di.sl<AppRouter>().router,
+            ),
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  double _getTextScaleFactor(BaseSettingsState state) {
+    if (state is SettingsLoadedState) {
+      return AppTheme.getTextScaleFactor(
+          state.preferences.appearancePreferences.fontSize);
+    }
+    return AppTheme.getTextScaleFactor(FontSizePreference.medium);
+  }
+
+  bool _conditionsToRebuild(
+      BaseSettingsState previous, BaseSettingsState current) {
+    if (previous != current) return true;
+
+    if (previous is SettingsLoadedState && current is SettingsLoadedState) {
+      if (previous.preferences != current.preferences) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+}
+
+class ErrorApp extends StatelessWidget {
+  const ErrorApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'EcoWallet - Error',
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                const SizedBox(height: 16),
+                const Text(
+                  'Failed to initialize app',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Please restart the app. If the problem persists, contact support.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
