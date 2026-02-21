@@ -6,115 +6,96 @@ A comprehensive Financial Management App built with Flutter, demonstrating **Cle
 [![Dart](https://img.shields.io/badge/Dart-3.0+-blue.svg)](https://dart.dev/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## 🎯 Project Overview
+## 🎯 Module Purpose & Overview
 
-EcoWallet is a feature-rich financial management application that helps users track income and expenses with a clean, intuitive interface. The project emphasizes:
+EcoWallet is a feature-rich financial management application that helps users track income and expenses with a clean, intuitive interface. The primary objective is to deliver a scalable, testable, and robust local-first application while following Solid and Clean Architecture principles.
 
-- **Clean Architecture** for maintainability and testability
-- **BLoC Pattern** for predictable state management
+The project emphasizes:
+- **Feature-First Clean Architecture** for maintainability and scalability
+- **BLoC Pattern** for predictable, reactive state management
 - **Offline-First** approach using SQLite/Drift
-- **Functional Error Handling** with fpdart
-- **Dark Mode** support
-- **Type-Safe** code generation with Freezed
+- **Functional Error Handling** with `fpdart`
+- **Dependency Injection** with `get_it` and `injectable`
+- **Declarative Navigation** with `go_router`
+- **Data Protection** and automatic encrypted backups
 
 ## ✨ Features
 
-- 📊 **Transaction Management**: Add, view, and delete income/expense transactions
-- 💵 **Balance Tracking**: Real-time balance calculation and display
-- 🗂️ **Category Organization**: Predefined categories for income and expenses
-- 📅 **Date Filtering**: View transactions by date range
-- 🌙 **Dark Mode**: Beautiful light and dark theme support
-- 💾 **Offline-First**: All data stored locally with SQLite/Drift
+- 📊 **Transaction Management**: Add, view, and delete income/expense/reservation transactions
+- 💵 **Balance & Wallet Tracking**: Real-time balance calculation and multi-wallet UI concepts
+- 🗂️ **Dashboard & Charts**: Visual data representation using `fl_chart`
+- ⚙️ **Settings & Preferences**: Customizable UI scaling, Color Blind Mode, Dark/Light Themes
+- 🌙 **Localization**: Fully localized in English and Portuguese
+- 💾 **Automated Backups**: Local database backups triggered automatically based on state changes
 - 🎨 **Modern UI**: Clean, intuitive interface with Material Design 3
 
 ## 🏗️ Architecture
 
-This project follows **Clean Architecture** principles with three main layers:
+This project follows a **Feature-First Clean Architecture** approach. Instead of grouping by layer globally, the application is divided by functional features, and each feature is subdivided into standard architecture layers:
 
-### 1. Domain Layer (Business Logic)
-- **Entities**: Core business objects (Transaction)
-- **Repositories**: Abstract interfaces for data operations
-- **Use Cases**: Business logic encapsulation
+### Feature Layers
+1. **Domain Layer (Business Logic)**
+   - **Entities**: Core business objects
+   - **Repositories**: Abstract interfaces for data operations
+   - **Use Cases**: Business logic encapsulation, returning `Either` from `fpdart`
+   - **Enums/Types**: Domain-specific states
 
-### 2. Data Layer
-- **Models**: Data transfer objects with Freezed
-- **Repositories**: Concrete implementations
-- **Data Sources**: Local database with Drift
+2. **Data Layer**
+   - **Models**: Data transfer objects with Equatable/JsonSerializable
+   - **Repositories**: Concrete implementations mapping Database to Domain
+   - **Data Sources**: Local database definitions (Drift/SQLite)
 
-### 3. Presentation Layer
-- **BLoC**: State management using flutter_bloc
-- **Screens**: UI components
-- **Widgets**: Reusable UI elements
+3. **Presentation Layer**
+   - **BLoC**: State management reacting to events and yielding states
+   - **Screens**: UI views driven by BlocBuilder/BlocListener
+   - **Widgets**: Reusable presentational components
 
+### Directory Structure
 ```
 lib/
 ├── core/
-│   ├── constants/     # App-wide constants
-│   ├── di/            # Dependency injection
-│   ├── error/         # Error handling
-│   ├── usecase/       # Base use case
-│   └── utils/         # Utility functions
-├── domain/
-│   ├── entities/      # Business entities
-│   ├── repositories/  # Repository interfaces
-│   └── usecases/      # Business use cases
-├── data/
-│   ├── datasources/   # Local database
-│   ├── models/        # Data models
-│   └── repositories/  # Repository implementations
-└── presentation/
-    ├── blocs/         # State management
-    ├── screens/       # UI screens
-    └── widgets/       # Reusable widgets
+│   ├── config/        # App configuration & environment
+│   ├── constants/     # Global constants and styles
+│   ├── database/      # Core Drift DB setup
+│   ├── errors/        # Failure and Exception classes
+│   ├── presentation/  # Core UI widgets & layouts
+│   ├── router/        # GoRouter configuration
+│   ├── services/      # Global services (Notifications, Backups)
+│   ├── theme/         # Material 3 Theme configurations
+│   └── usecases/      # Base UseCase definitions
+├── features/
+│   ├── auth/          # Global authentication state
+│   ├── home/          # Main dashboard & navigation
+│   ├── login/         # Login presentation
+│   ├── register/      # Registration presentation
+│   ├── settings/      # App preferences & theming
+│   ├── transactions/  # Transaction CRUD operations
+│   ├── user/          # User profile management
+│   └── wallet/        # Wallet balances and accounts
+├── l10n/              # ARB files for localization
+├── injection_container.dart # GetIt & Injectable setup
+└── main.dart          # Entry point
 ```
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack & Dependencies
 
-- **Flutter** - UI framework
-- **Dart** - Programming language
-- **flutter_bloc** - State management
-- **Drift** - Type-safe SQLite database
-- **fpdart** - Functional programming and error handling
-- **get_it** - Dependency injection
-- **Freezed** - Code generation for immutable classes
-- **google_fonts** - Typography
-- **fl_chart** - Data visualization (ready for charts)
+- **Framework**: [Flutter](https://flutter.dev/) (Material 3)
+- **State Management**: [flutter_bloc](https://pub.dev/packages/flutter_bloc)
+- **Navigation**: [go_router](https://pub.dev/packages/go_router)
+- **Database**: [sqflite](https://pub.dev/packages/sqflite) & [drift](https://pub.dev/packages/drift)
+- **Functional Programming**: [fpdart](https://pub.dev/packages/fpdart)
+- **Dependency Injection**: [get_it](https://pub.dev/packages/get_it) & [injectable](https://pub.dev/packages/injectable)
+- **Code Generation**: [drift_dev](https://pub.dev/packages/drift_dev)
+- **UI/UX**: [fl_chart](https://pub.dev/packages/fl_chart) & [google_fonts](https://pub.dev/packages/google_fonts)
 
-## 📦 Dependencies
-
-```yaml
-dependencies:
-  # State Management
-  flutter_bloc: ^8.1.3
-  
-  # Functional Programming
-  fpdart: ^1.1.0
-  
-  # Database
-  drift: ^2.14.1
-  sqlite3_flutter_libs: ^0.5.18
-  
-  # Dependency Injection
-  get_it: ^7.6.4
-  
-  # Code Generation
-  freezed_annotation: ^2.4.1
-  
-  # UI
-  google_fonts: ^6.1.0
-  fl_chart: ^0.65.0
-```
-
-## 🚀 Getting Started
+## 🚀 Getting Started (Usage Examples)
 
 ### Prerequisites
+- Flutter SDK (≥ 3.2.0 < 4.0.0)
+- Android Studio / VS Code with Flutter extensions
+- Android/iOS Emulator or physical device
 
-- Flutter SDK (3.0 or higher)
-- Dart SDK (3.0 or higher)
-- Android Studio / VS Code
-- Android/iOS device or emulator
-
-### Installation
+### Installation & Build
 
 1. **Clone the repository**
    ```bash
@@ -127,87 +108,52 @@ dependencies:
    flutter pub get
    ```
 
-3. **Run code generation**
+3. **Run Code Generation** (Important for DI and Drift)
    ```bash
-   flutter pub run build_runner build --delete-conflicting-outputs
+   dart run build_runner build --delete-conflicting-outputs
    ```
+   *(During active development, run: `dart run build_runner watch --delete-conflicting-outputs`)*
 
-4. **Run the app**
+4. **Run the App**
    ```bash
    flutter run
    ```
 
-## 🧪 Testing
-
-Run tests with:
+### 🧪 Testing
+The architecture enforces Test-Driven Development (TDD) principles. Run unit and widget tests using:
 ```bash
 flutter test
-```
-
-Run tests with coverage:
-```bash
 flutter test --coverage
 ```
 
-## 📝 Code Generation
+## � Scaling/Extension Guide
 
-This project uses code generation for:
-- **Drift**: Database code generation
-- **Freezed**: Immutable model generation (future)
-- **Injectable**: Dependency injection (future)
+As the application grows, adhere to the following principles to maintain a robust and scalable architecture:
 
-To generate code:
-```bash
-flutter pub run build_runner build --delete-conflicting-outputs
-```
+1. **Adding a New Feature**:
+   - Create a new folder under `lib/features/`.
+   - Scaffold the structure: `domain`, `data`, `presentation`.
+   - Start by defining the `Entities` and `UseCases` in testing before wiring up the `Data` and `Presentation` layers.
+   - Run `build_runner` to register new `@Injectable` dependencies or Drift adjustments.
 
-To watch for changes:
-```bash
-flutter pub run build_runner watch --delete-conflicting-outputs
-```
+2. **Adding Third-Party or System Integration (e.g., Cloud Sync)**:
+   - Encapsulate the external library behind an interface located in a specific feature's `domain/repositories` or `core/services`.
+   - Implement the concrete class in the `data/` layer.
+   - This ensures the UI and UseCases remain entirely decoupled from specific network or database vendor packages.
 
-## 🎨 UI/UX
-
-The app features a modern, clean design with:
-- Material Design 3 components
-- Smooth animations and transitions
-- Responsive layouts
-- Accessible color schemes
-- Dark mode support
-
-## 📱 Screenshots
-
-## 🔜 Future Enhancements
-
-- [ ] Budget planning and tracking
-- [ ] Expense analytics with charts
-- [ ] Recurring transactions
-- [ ] Export data to CSV/PDF
-- [ ] Cloud sync (Firebase)
-- [ ] Biometric authentication
-- [ ] Multi-currency support
-- [ ] Receipt scanning with OCR
+3. **Global State changes**:
+   - Define global states (like settings or user session) as feature Blocs and mount them high in the widget tree (in `main.dart`'s `MultiBlocProvider`).
+   - Listen to them downstream using standard `BlocBuilder` without directly fetching from local storage.
 
 ## 🤝 Contributing
-
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👤 Author
-
 **SimpleG20**
-
 - GitHub: [@SimpleG20](https://github.com/SimpleG20)
 
-## 🙏 Acknowledgments
-
-- Flutter team for the amazing framework
-- All open-source contributors whose packages made this possible
-- Clean Architecture principles by Robert C. Martin
-
 ---
-
 ⭐ If you found this project helpful, please give it a star!
