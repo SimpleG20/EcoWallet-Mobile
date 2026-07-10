@@ -6,41 +6,41 @@ import 'package:eco_wallet/features/user/domain/usecases/get_current_user.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'core/database/db_helper.dart';
+import 'package:eco_wallet/core/database/db_helper.dart';
 
-import 'core/router/app_router.dart';
-import 'features/auth/presentation/bloc/auth_bloc.dart';
-import 'features/auth/data/datasources/base_auth_data_source.dart';
-import 'features/auth/data/repositories/auth_repository_impl.dart';
-import 'features/auth/data/datasources/auth_local_data_source.dart';
-import 'features/auth/domain/usecases/auth_usecases.dart';
-import 'features/auth/domain/repositories/base_auth_repository.dart';
+import 'package:eco_wallet/core/router/app_router.dart';
+import 'package:eco_wallet/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:eco_wallet/features/auth/data/datasources/base_auth_data_source.dart';
+import 'package:eco_wallet/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:eco_wallet/features/auth/data/datasources/auth_local_data_source.dart';
+import 'package:eco_wallet/features/auth/domain/usecases/auth_usecases.dart';
+import 'package:eco_wallet/features/auth/domain/repositories/base_auth_repository.dart';
 
-import 'features/settings/presentation/bloc/settings_bloc.dart';
-import 'features/settings/data/datasources/base_settings_data_source.dart';
-import 'features/settings/data/repositories/settings_repository_impl.dart';
-import 'features/settings/data/datasources/settings_local_data_source.dart';
-import 'features/settings/domain/usecases/get_user_preferences.dart';
-import 'features/settings/domain/usecases/update_user_preferences.dart';
-import 'features/settings/domain/repositories/base_setting_repository.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/data/datasources/base_settings_data_source.dart';
+import 'package:eco_wallet/features/settings/data/repositories/settings_repository_impl.dart';
+import 'package:eco_wallet/features/settings/data/datasources/settings_local_data_source.dart';
+import 'package:eco_wallet/features/settings/domain/usecases/get_user_preferences.dart';
+import 'package:eco_wallet/features/settings/domain/usecases/update_user_preferences.dart';
+import 'package:eco_wallet/features/settings/domain/repositories/base_setting_repository.dart';
 
-import 'features/transactions/domain/usecases/transactions_usescases.dart';
-import 'features/transactions/presentation/bloc/transactions_history_bloc.dart';
+import 'package:eco_wallet/features/transactions/domain/usecases/transactions_usescases.dart';
+import 'package:eco_wallet/features/transactions/presentation/bloc/transactions_history_bloc.dart';
 
-import 'features/user/domain/usecases/user_usecases.dart';
-import 'features/user/domain/repositories/base_user_repository.dart';
-import 'features/user/data/datasources/base_user_data_source.dart';
-import 'features/user/data/repositories/user_repository_impl.dart';
-import 'features/user/data/datasources/user_local_data_source.dart';
+import 'package:eco_wallet/features/user/domain/usecases/user_usecases.dart';
+import 'package:eco_wallet/features/user/domain/repositories/base_user_repository.dart';
+import 'package:eco_wallet/features/user/data/datasources/base_user_data_source.dart';
+import 'package:eco_wallet/features/user/data/repositories/user_repository_impl.dart';
+import 'package:eco_wallet/features/user/data/datasources/user_local_data_source.dart';
 
-import 'features/user/presentation/bloc/user_bloc.dart';
-import 'features/wallet/data/datasources/base_wallet_local_data_source.dart';
-import 'features/wallet/data/datasources/wallet_local_data_source_impl.dart';
-import 'features/wallet/data/repositories/wallet_repository_impl.dart';
+import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
+import 'package:eco_wallet/features/wallet/data/datasources/base_wallet_local_data_source.dart';
+import 'package:eco_wallet/features/wallet/data/datasources/wallet_local_data_source_impl.dart';
+import 'package:eco_wallet/features/wallet/data/repositories/wallet_repository_impl.dart';
 
-import 'features/wallet/presentation/bloc/wallet_bloc.dart';
-import 'features/wallet/domain/usecases/wallet_usecases.dart';
-import 'features/wallet/domain/repositories/base_wallet_repository.dart';
+import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:eco_wallet/features/wallet/domain/usecases/wallet_usecases.dart';
+import 'package:eco_wallet/features/wallet/domain/repositories/base_wallet_repository.dart';
 
 final sl = GetIt.instance;
 

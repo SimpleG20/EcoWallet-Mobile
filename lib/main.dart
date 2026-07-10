@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'core/router/app_router.dart';
-import 'core/services/auto_backup_service.dart';
-import 'core/services/notification_service.dart';
-import 'features/auth/presentation/bloc/auth_bloc.dart';
-import 'features/settings/domain/enums/color_blind_mode.dart';
-import 'features/settings/domain/enums/font_size_preference.dart';
-import 'features/settings/presentation/bloc/settings_bloc.dart';
-import 'features/user/presentation/bloc/user_bloc.dart';
-import 'features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:eco_wallet/core/router/app_router.dart';
+import 'package:eco_wallet/core/services/auto_backup_service.dart';
+import 'package:eco_wallet/core/services/notification_service.dart';
+import 'package:eco_wallet/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:eco_wallet/features/settings/domain/enums/color_blind_mode.dart';
+import 'package:eco_wallet/features/settings/domain/enums/font_size_preference.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
+import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
 import 'injection_container.dart' as di;
-import 'core/theme/app_theme.dart';
-import '/l10n/app_localizations.dart';
+import 'package:eco_wallet/core/theme/app_theme.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -86,8 +86,7 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
     _backupChecked = true;
 
     final settingsBloc = context.read<SettingsBloc>();
-    await settingsBloc.stream
-        .firstWhere((state) => state is SettingsLoadedState);
+    await settingsBloc.stream.firstWhere((state) => state is SettingsLoadedState);
 
     final settingsState = settingsBloc.state;
     if (settingsState is! SettingsLoadedState) return;
@@ -123,8 +122,7 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
     return BlocListener<AuthBloc, BaseAuthState>(
       listener: (context, state) => _syncUserFromAuthState(state),
       child: BlocBuilder<SettingsBloc, BaseSettingsState>(
-        buildWhen: (previous, current) =>
-            _conditionsToRebuild(previous, current),
+        buildWhen: (previous, current) => _conditionsToRebuild(previous, current),
         builder: (context, settingsState) => MediaQuery(
           data: MediaQuery.of(context).copyWith(
             textScaler: TextScaler.linear(
@@ -134,8 +132,7 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
           child: ColorFiltered(
             colorFilter: AppTheme.getColorFilter(
               settingsState is SettingsLoadedState
-                  ? settingsState
-                      .preferences.appearancePreferences.colorBlindMode
+                  ? settingsState.preferences.appearancePreferences.colorBlindMode
                   : ColorBlindMode.none,
             ),
             child: MaterialApp.router(
@@ -143,8 +140,7 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
               themeMode: settingsState is SettingsLoadedState
-                  ? settingsState
-                      .preferences.appearancePreferences.flutterThemeMode
+                  ? settingsState.preferences.appearancePreferences.flutterThemeMode
                   : ThemeMode.system,
               localizationsDelegates: const [
                 AppLocalizations.delegate,
@@ -166,14 +162,12 @@ class _AuthUserSyncWrapperState extends State<_AuthUserSyncWrapper> {
 
   double _getTextScaleFactor(BaseSettingsState state) {
     if (state is SettingsLoadedState) {
-      return AppTheme.getTextScaleFactor(
-          state.preferences.appearancePreferences.fontSize);
+      return AppTheme.getTextScaleFactor(state.preferences.appearancePreferences.fontSize);
     }
     return AppTheme.getTextScaleFactor(FontSizePreference.medium);
   }
 
-  bool _conditionsToRebuild(
-      BaseSettingsState previous, BaseSettingsState current) {
+  bool _conditionsToRebuild(BaseSettingsState previous, BaseSettingsState current) {
     if (previous != current) return true;
 
     if (previous is SettingsLoadedState && current is SettingsLoadedState) {
