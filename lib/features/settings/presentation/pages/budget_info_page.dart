@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eco_wallet/core/utils/app_formatters.dart';
 import 'package:eco_wallet/core/utils/app_validators.dart';
 
-import '../bloc/settings_bloc.dart';
-import '../widgets/settings_widgets.dart';
-import '../../domain/entities/budget_preferences.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../core/presentation/widgets/core_widgets.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_widgets.dart';
+import 'package:eco_wallet/features/settings/domain/entities/budget_preferences.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/core/presentation/widgets/core_widgets.dart';
 
 class BudgetInfoPage extends StatefulWidget {
   const BudgetInfoPage({super.key});

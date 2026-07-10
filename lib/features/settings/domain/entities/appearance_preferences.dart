@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import '../enums/settings_enums.dart';
+import 'package:eco_wallet/features/settings/domain/enums/settings_enums.dart';
 
 /// Entity representing user appearance preferences.
 ///

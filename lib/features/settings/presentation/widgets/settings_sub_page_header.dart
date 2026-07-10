@@ -2,7 +2,7 @@ import 'package:eco_wallet/features/settings/presentation/widgets/settings_confi
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
 class SettingsSubPageHeader extends StatelessWidget {
   final String title;

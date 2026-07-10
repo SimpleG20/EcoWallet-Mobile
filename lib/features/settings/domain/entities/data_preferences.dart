@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../enums/settings_enums.dart';
+import 'package:eco_wallet/features/settings/domain/enums/settings_enums.dart';
 
 /// Entity representing data management preferences.
 class DataPreferences extends Equatable {

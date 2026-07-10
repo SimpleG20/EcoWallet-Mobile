@@ -2,11 +2,11 @@ import 'package:eco_wallet/features/settings/domain/entities/notification_prefer
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/settings_bloc.dart';
-import '../widgets/settings_widgets.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../injection_container.dart' as di;
-import '../../../../core/services/notification_service.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_widgets.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/injection_container.dart' as di;
+import 'package:eco_wallet/core/services/notification_service.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});

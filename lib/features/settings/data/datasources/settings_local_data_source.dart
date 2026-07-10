@@ -1,12 +1,12 @@
 import 'package:sqflite/sqflite.dart';
 
-import 'base_settings_data_source.dart';
+import 'package:eco_wallet/features/settings/data/datasources/base_settings_data_source.dart';
 
-import '../model/settings_data_model.dart';
-import '../../domain/entities/user_preferences.dart';
+import 'package:eco_wallet/features/settings/data/model/settings_data_model.dart';
+import 'package:eco_wallet/features/settings/domain/entities/user_preferences.dart';
 
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/database/db_helper.dart';
+import 'package:eco_wallet/core/errors/exceptions.dart';
+import 'package:eco_wallet/core/database/db_helper.dart';
 
 class SettingsLocalDataSource implements BaseSettingsDataSource {
   final DbHelper dbHelper;

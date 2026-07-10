@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/presentation/widgets/user_avatar_circle.dart';
-import '../../../../core/router/app_routes.dart';
-import '../bloc/settings_bloc.dart';
-import '../widgets/settings_container.dart';
-import '../widgets/settings_option_item.dart';
+import 'package:eco_wallet/core/presentation/widgets/user_avatar_circle.dart';
+import 'package:eco_wallet/core/router/app_routes.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_container.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_option_item.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

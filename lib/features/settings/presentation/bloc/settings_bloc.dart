@@ -2,13 +2,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../domain/entities/user_preferences.dart';
-import '../../domain/usecases/get_user_preferences.dart';
-import '../../domain/usecases/update_user_preferences.dart';
-import '../../data/model/settings_data_model.dart';
-import '../../../user/domain/entities/user.dart';
-import '../../../user/domain/usecases/get_current_user.dart';
-import '../../../../core/usecases/base_usecase.dart';
+import 'package:eco_wallet/features/settings/domain/entities/user_preferences.dart';
+import 'package:eco_wallet/features/settings/domain/usecases/get_user_preferences.dart';
+import 'package:eco_wallet/features/settings/domain/usecases/update_user_preferences.dart';
+import 'package:eco_wallet/features/settings/data/model/settings_data_model.dart';
+import 'package:eco_wallet/features/user/domain/entities/user.dart';
+import 'package:eco_wallet/features/user/domain/usecases/get_current_user.dart';
+import 'package:eco_wallet/core/usecases/base_usecase.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
