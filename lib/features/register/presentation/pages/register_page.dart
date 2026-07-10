@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/constants/ui_data.dart';
-import '../../../auth/presentation/bloc/auth_bloc.dart';
-import '/core/utils/app_validators.dart';
-import '../../../../l10n/app_localizations.dart';
+import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:eco_wallet/core/utils/app_validators.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
-import '../../../../core/presentation/widgets/password_field.dart';
-import '../../../../core/presentation/widgets/any_text_field.dart';
-import '../../../../core/presentation/widgets/or_divider.dart';
+import 'package:eco_wallet/core/presentation/widgets/password_field.dart';
+import 'package:eco_wallet/core/presentation/widgets/any_text_field.dart';
+import 'package:eco_wallet/core/presentation/widgets/or_divider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

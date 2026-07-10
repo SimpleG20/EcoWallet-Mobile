@@ -5,13 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:eco_wallet/core/utils/app_validators.dart';
 
-import '../../../auth/presentation/bloc/auth_bloc.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../core/router/app_routes.dart';
-import '../../../../core/constants/ui_data.dart';
-import '../../../../core/presentation/widgets/or_divider.dart';
-import '../../../../core/presentation/widgets/any_text_field.dart';
-import '../../../../core/presentation/widgets/password_field.dart';
+import 'package:eco_wallet/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/core/router/app_routes.dart';
+import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/core/presentation/widgets/or_divider.dart';
+import 'package:eco_wallet/core/presentation/widgets/any_text_field.dart';
+import 'package:eco_wallet/core/presentation/widgets/password_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
