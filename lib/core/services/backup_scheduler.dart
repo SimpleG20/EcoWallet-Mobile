@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../features/settings/domain/enums/backup_frequency.dart';
-import 'backup_service.dart';
+import 'package:eco_wallet/features/settings/domain/enums/backup_frequency.dart';
+import 'package:eco_wallet/core/services/backup_service.dart';
 
 /// Service responsible for scheduling and executing automatic backups
 /// based on user-configured frequency.

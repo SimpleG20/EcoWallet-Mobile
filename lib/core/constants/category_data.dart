@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 
-import '../enums/enums.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
 
 /// Model class containing the display information for a category.
 class CategoryDisplayInfo {

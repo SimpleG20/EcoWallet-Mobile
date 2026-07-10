@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../enums/enums.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
 
 /// Defines the raw palette based on the provided CSS variables.
 /// OKLCH values have been pre-converted to sRGB Color objects for performance.

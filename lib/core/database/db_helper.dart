@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'db_seeds.dart';
+import 'package:eco_wallet/core/database/db_seeds.dart';
 
 class DbHelper {
   static Database? _database;

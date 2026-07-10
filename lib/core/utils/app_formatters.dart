@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-import '../../features/settings/domain/enums/currency_format.dart';
+import 'package:eco_wallet/features/settings/domain/enums/currency_format.dart';
 
 class AppFormatters {
   /// Formats currency with the user's preferred display format.
