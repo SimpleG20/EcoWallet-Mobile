@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
-import '../../domain/usecases/import_data.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/features/settings/domain/usecases/import_data.dart';
 
 /// Dialog for import options.
 /// Returns a map with 'mode' (ImportMode), 'password' (String?), and 'needsPassword' (bool),

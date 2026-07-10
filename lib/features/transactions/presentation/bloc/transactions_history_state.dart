@@ -1,7 +1,7 @@
 import 'package:eco_wallet/features/transactions/domain/entities/transactions_filter.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
 abstract class BaseTransactionsHistoryState extends Equatable {
   const BaseTransactionsHistoryState();

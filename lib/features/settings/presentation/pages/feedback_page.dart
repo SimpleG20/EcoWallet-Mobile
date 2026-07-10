@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/settings_sub_page_header.dart';
-import '../widgets/settings_section_list.dart';
-import '../widgets/settings_section_title.dart';
-import '../../../../l10n/app_localizations.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_sub_page_header.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_section_list.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_section_title.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
 enum EFeedbackCategory { bug, suggestion, compliment, other }
 

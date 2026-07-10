@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
 
 class SensitiveText extends StatelessWidget {
   final String text;

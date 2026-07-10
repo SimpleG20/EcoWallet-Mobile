@@ -2,12 +2,12 @@ import 'package:eco_wallet/features/auth/domain/usecases/check_auth_status.dart'
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/usecases/base_usecase.dart';
-import '../../domain/entities/sign_in_params.dart';
-import '../../domain/entities/sign_up_params.dart';
-import '../../domain/usecases/log_out.dart';
-import '../../domain/usecases/sign_in.dart';
-import '../../domain/usecases/sign_up.dart';
+import 'package:eco_wallet/core/usecases/base_usecase.dart';
+import 'package:eco_wallet/features/auth/domain/entities/sign_in_params.dart';
+import 'package:eco_wallet/features/auth/domain/entities/sign_up_params.dart';
+import 'package:eco_wallet/features/auth/domain/usecases/log_out.dart';
+import 'package:eco_wallet/features/auth/domain/usecases/sign_in.dart';
+import 'package:eco_wallet/features/auth/domain/usecases/sign_up.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

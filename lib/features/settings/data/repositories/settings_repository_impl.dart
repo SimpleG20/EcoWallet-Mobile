@@ -1,11 +1,11 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../model/settings_data_model.dart';
-import '../datasources/base_settings_data_source.dart';
-import '../../domain/entities/user_preferences.dart';
-import '../../domain/repositories/base_setting_repository.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/errors/base_failure.dart';
+import 'package:eco_wallet/features/settings/data/model/settings_data_model.dart';
+import 'package:eco_wallet/features/settings/data/datasources/base_settings_data_source.dart';
+import 'package:eco_wallet/features/settings/domain/entities/user_preferences.dart';
+import 'package:eco_wallet/features/settings/domain/repositories/base_setting_repository.dart';
+import 'package:eco_wallet/core/errors/exceptions.dart';
+import 'package:eco_wallet/core/errors/base_failure.dart';
 
 class SettingsRepositoryImpl implements BaseSettingRepository {
   final BaseSettingsDataSource dataSource;

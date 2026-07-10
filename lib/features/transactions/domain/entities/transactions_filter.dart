@@ -1,10 +1,10 @@
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-import '../../../wallet/domain/entities/transaction.dart';
-import '../../../../core/enums/enums.dart';
-import '../../../../core/constants/transaction_type_data.dart';
-import '../../../../core/constants/category_data.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
+import 'package:eco_wallet/core/constants/transaction_type_data.dart';
+import 'package:eco_wallet/core/constants/category_data.dart';
 
 class TransactionFilter {
   final ETransactionType? type;

@@ -1,12 +1,12 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'base_auth_data_source.dart';
-import '../../../user/data/model/user_model.dart';
-import '../../../../core/constants/keys.dart';
-import '../../../../core/database/db_helper.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/utils/password_utils.dart';
+import 'package:eco_wallet/features/auth/data/datasources/base_auth_data_source.dart';
+import 'package:eco_wallet/features/user/data/model/user_model.dart';
+import 'package:eco_wallet/core/constants/keys.dart';
+import 'package:eco_wallet/core/database/db_helper.dart';
+import 'package:eco_wallet/core/errors/exceptions.dart';
+import 'package:eco_wallet/core/utils/password_utils.dart';
 
 class AuthLocalDataSource implements BaseAuthDataSource {
   final DbHelper dbHelper;

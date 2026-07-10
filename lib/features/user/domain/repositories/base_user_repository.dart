@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../entities/user.dart';
-import '../../../../core/errors/base_failure.dart';
+import 'package:eco_wallet/features/user/domain/entities/user.dart';
+import 'package:eco_wallet/core/errors/base_failure.dart';
 
 abstract class BaseUserRepository {
   Future<Either<BaseFailure, User>> getCurrentUser();

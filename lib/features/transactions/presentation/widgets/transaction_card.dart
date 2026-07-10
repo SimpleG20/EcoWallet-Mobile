@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:eco_wallet/core/utils/app_formatters.dart';
 
-import '../../../settings/domain/entities/appearance_preferences.dart';
-import '../../../wallet/domain/entities/transaction.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../core/enums/enums.dart';
-import '../../../../core/constants/category_data.dart';
+import 'package:eco_wallet/features/settings/domain/entities/appearance_preferences.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
+import 'package:eco_wallet/core/constants/category_data.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({

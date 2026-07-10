@@ -1,8 +1,8 @@
 import 'package:eco_wallet/features/settings/domain/enums/font_size_preference.dart';
 import 'package:flutter/material.dart';
-import '../../features/settings/domain/enums/color_blind_mode.dart';
-import 'app_colors.dart';
-import 'extra_colors.dart';
+import 'package:eco_wallet/features/settings/domain/enums/color_blind_mode.dart';
+import 'package:eco_wallet/core/theme/app_colors.dart';
+import 'package:eco_wallet/core/theme/extra_colors.dart';
 
 class AppTheme {
   // Private constructor

@@ -1,9 +1,9 @@
 import 'package:fpdart/fpdart.dart';
 
-import '../entities/sign_up_params.dart';
-import '../repositories/base_auth_repository.dart';
-import '../../../../core/errors/base_failure.dart';
-import '../../../../core/usecases/base_usecase.dart';
+import 'package:eco_wallet/features/auth/domain/entities/sign_up_params.dart';
+import 'package:eco_wallet/features/auth/domain/repositories/base_auth_repository.dart';
+import 'package:eco_wallet/core/errors/base_failure.dart';
+import 'package:eco_wallet/core/usecases/base_usecase.dart';
 
 class SignUp implements BaseUsecase<void, SignUpParams> {
   final BaseAuthRepository repository;

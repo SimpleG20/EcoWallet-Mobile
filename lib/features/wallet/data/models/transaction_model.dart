@@ -1,7 +1,7 @@
 import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 import 'package:eco_wallet/core/database/db_seeds.dart';
 
-import '../../../../core/enums/enums.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
 
 /// Data model for Transaction with database serialization.
 class TransactionModel extends Transaction {

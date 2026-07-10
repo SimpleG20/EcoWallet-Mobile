@@ -9,11 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:eco_wallet/core/constants/category_data.dart';
 
-import '../bloc/transactions_history_bloc.dart';
-import '../bloc/transactions_history_event.dart';
-import '../../domain/entities/transactions_filter.dart';
-import '../../../../core/enums/enums.dart';
-import '../../../../core/utils/app_formatters.dart';
+import 'package:eco_wallet/features/transactions/presentation/bloc/transactions_history_bloc.dart';
+import 'package:eco_wallet/features/transactions/presentation/bloc/transactions_history_event.dart';
+import 'package:eco_wallet/features/transactions/domain/entities/transactions_filter.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
+import 'package:eco_wallet/core/utils/app_formatters.dart';
 
 class TransactionFilterModal extends StatefulWidget {
   final TransactionFilter currentFilter;

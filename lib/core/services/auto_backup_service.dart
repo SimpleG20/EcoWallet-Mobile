@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../features/settings/domain/entities/data_preferences.dart';
-import '../../../features/wallet/data/models/transaction_model.dart';
-import '../../../features/wallet/domain/entities/transaction.dart';
-import 'backup_scheduler.dart';
-import 'backup_service.dart';
+import 'package:eco_wallet/features/settings/domain/entities/data_preferences.dart';
+import 'package:eco_wallet/features/wallet/data/models/transaction_model.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/core/services/backup_scheduler.dart';
+import 'package:eco_wallet/core/services/backup_service.dart';
 
 /// Service that handles automatic backup on app startup.
 /// Checks if backup is due based on user preferences and triggers backup if needed.

@@ -1,5 +1,5 @@
-import '../entities/weekly_transaction_data.dart';
-import '../../../wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/home/domain/entities/weekly_transaction_data.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
 /// Use case to calculate weekly transaction aggregation.
 ///

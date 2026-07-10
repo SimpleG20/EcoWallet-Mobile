@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/add_transaction_modal.dart';
-import '../widgets/home_widgets.dart';
-import '../widgets/skeletons/home_page_skeleton.dart';
-import '../../domain/entities/eco_data.dart';
-import '../../domain/entities/weekly_transaction_data.dart';
-import '../../domain/usecases/calculate_weekly_transactions.dart';
-import '../../../wallet/domain/entities/transaction.dart';
-import '../../../wallet/presentation/bloc/wallet_bloc.dart';
-import '../../../settings/presentation/bloc/settings_bloc.dart';
-import '../../../../core/enums/enums.dart';
-import '../../../../core/presentation/controllers/navigation_cubit.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../injection_container.dart' as di;
+import 'package:eco_wallet/features/home/presentation/widgets/add_transaction_modal.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/home_widgets.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/skeletons/home_page_skeleton.dart';
+import 'package:eco_wallet/features/home/domain/entities/eco_data.dart';
+import 'package:eco_wallet/features/home/domain/entities/weekly_transaction_data.dart';
+import 'package:eco_wallet/features/home/domain/usecases/calculate_weekly_transactions.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
+import 'package:eco_wallet/core/presentation/controllers/navigation_cubit.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/injection_container.dart' as di;
 
 /// Main home page of the application.
 ///
@@ -248,7 +248,7 @@ class _HeaderSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 HomeHeader(
-                  welcomeText: loc.welcome,
+                  welcomeText: 'Olá', //loc.welcome,
                   titleText: loc.appTitle,
                 ),
                 const SizedBox(height: 20),

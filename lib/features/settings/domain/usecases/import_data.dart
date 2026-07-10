@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/errors/base_failure.dart';
-import '../../../../core/services/backup_service.dart';
-import '../../../wallet/data/datasources/base_wallet_local_data_source.dart';
-import '../../../wallet/data/models/transaction_model.dart';
-import '../../../wallet/domain/entities/transaction.dart';
-import '../../../../core/enums/enums.dart';
-import '../../../../core/database/db_seeds.dart';
+import 'package:eco_wallet/core/errors/base_failure.dart';
+import 'package:eco_wallet/core/services/backup_service.dart';
+import 'package:eco_wallet/features/wallet/data/datasources/base_wallet_local_data_source.dart';
+import 'package:eco_wallet/features/wallet/data/models/transaction_model.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
+import 'package:eco_wallet/core/database/db_seeds.dart';
 
 /// Result of an import operation.
 class ImportResult {

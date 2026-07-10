@@ -2,12 +2,12 @@ import 'package:eco_wallet/features/settings/domain/entities/settings_entities.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/settings_bloc.dart';
-import '../widgets/settings_widgets.dart';
-import '../../domain/enums/settings_enums.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../core/presentation/widgets/switch_row.dart';
-import '../../../../core/presentation/widgets/dropdown_row.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_widgets.dart';
+import 'package:eco_wallet/features/settings/domain/enums/settings_enums.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/core/presentation/widgets/switch_row.dart';
+import 'package:eco_wallet/core/presentation/widgets/dropdown_row.dart';
 
 class AppearancePage extends StatefulWidget {
   const AppearancePage({super.key});

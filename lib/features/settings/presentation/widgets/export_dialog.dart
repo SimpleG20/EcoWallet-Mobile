@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
 /// Dialog for export options.
 /// Returns a map with 'encrypted' (bool) and 'password' (String?) if user confirms,

@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entities/user.dart';
-import '../../domain/usecases/get_user.dart';
-import '../../domain/usecases/delete_user.dart';
-import '../../domain/usecases/update_user.dart';
-import '../../../auth/presentation/bloc/auth_bloc.dart';
+import 'package:eco_wallet/features/user/domain/entities/user.dart';
+import 'package:eco_wallet/features/user/domain/usecases/get_user.dart';
+import 'package:eco_wallet/features/user/domain/usecases/delete_user.dart';
+import 'package:eco_wallet/features/user/domain/usecases/update_user.dart';
+import 'package:eco_wallet/features/auth/presentation/bloc/auth_bloc.dart';
 
 part 'user_state.dart';
 part 'user_event.dart';

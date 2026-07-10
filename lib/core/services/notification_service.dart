@@ -9,7 +9,7 @@ import 'package:eco_wallet/injection_container.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:eco_wallet/features/settings/domain/entities/notification_preferences.dart';
 
-import '../config/app_config.dart';
+import 'package:eco_wallet/core/config/app_config.dart';
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin _plugin =

@@ -6,19 +6,19 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/settings_bloc.dart';
-import '../widgets/export_dialog.dart';
-import '../widgets/import_dialog.dart';
-import '../widgets/settings_widgets.dart';
-import '../../domain/usecases/import_data.dart';
-import '../../domain/enums/backup_frequency.dart';
-import '../../domain/entities/data_preferences.dart';
-import '../../../user/presentation/bloc/user_bloc.dart';
-import '../../../wallet/data/models/transaction_model.dart';
-import '../../../wallet/presentation/bloc/wallet_bloc.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../core/services/backup_service.dart';
-import '../../../../core/presentation/widgets/core_widgets.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/export_dialog.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/import_dialog.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_widgets.dart';
+import 'package:eco_wallet/features/settings/domain/usecases/import_data.dart';
+import 'package:eco_wallet/features/settings/domain/enums/backup_frequency.dart';
+import 'package:eco_wallet/features/settings/domain/entities/data_preferences.dart';
+import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
+import 'package:eco_wallet/features/wallet/data/models/transaction_model.dart';
+import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/core/services/backup_service.dart';
+import 'package:eco_wallet/core/presentation/widgets/core_widgets.dart';
 
 class ManageDataPage extends StatefulWidget {
   const ManageDataPage({super.key});

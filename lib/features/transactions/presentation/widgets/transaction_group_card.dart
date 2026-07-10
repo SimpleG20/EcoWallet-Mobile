@@ -3,13 +3,13 @@ import 'package:eco_wallet/features/settings/domain/entities/settings_entities.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'transaction_card.dart';
-import '../../domain/entities/transaction_group.dart';
-import '../../../settings/presentation/bloc/settings_bloc.dart';
-import '../../../wallet/presentation/bloc/wallet_bloc.dart';
-import '../../../home/presentation/widgets/add_transaction_modal.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../core/utils/app_formatters.dart';
+import 'package:eco_wallet/features/transactions/presentation/widgets/transaction_card.dart';
+import 'package:eco_wallet/features/transactions/domain/entities/transaction_group.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/add_transaction_modal.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/core/utils/app_formatters.dart';
 
 class TransactionGroupCard extends StatelessWidget {
   final TransactionGroup transactionGroup;

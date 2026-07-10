@@ -1,6 +1,6 @@
 import 'package:eco_wallet/core/utils/carbon_calculator.dart';
 
-import '../../../wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
 class EcoData {
   final double carbonFootprint;

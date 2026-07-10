@@ -1,4 +1,4 @@
-import '../../../user/data/model/user_model.dart';
+import 'package:eco_wallet/features/user/data/model/user_model.dart';
 
 abstract class BaseAuthDataSource {
   /// Authenticates a user with email and password.

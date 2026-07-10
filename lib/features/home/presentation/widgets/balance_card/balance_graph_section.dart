@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/ui_data.dart';
-import '../../../../../l10n/app_localizations.dart';
-import '../../../domain/entities/weekly_transaction_data.dart';
-import 'weekly_bar_chart.dart';
+import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/features/home/domain/entities/weekly_transaction_data.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/balance_card/weekly_bar_chart.dart';
 
 /// Graph section of the balance card showing weekly transaction overview.
 class BalanceGraphSection extends StatelessWidget {

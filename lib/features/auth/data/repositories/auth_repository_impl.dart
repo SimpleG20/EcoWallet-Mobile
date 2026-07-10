@@ -2,14 +2,14 @@ import 'package:fpdart/fpdart.dart';
 
 import 'package:uuid/uuid.dart';
 
-import '../datasources/base_auth_data_source.dart';
-import '../../domain/entities/sign_in_params.dart';
-import '../../domain/entities/sign_up_params.dart';
-import '../../domain/repositories/base_auth_repository.dart';
-import '../../../user/domain/entities/user.dart';
-import '../../../user/data/model/user_model.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/errors/base_failure.dart';
+import 'package:eco_wallet/features/auth/data/datasources/base_auth_data_source.dart';
+import 'package:eco_wallet/features/auth/domain/entities/sign_in_params.dart';
+import 'package:eco_wallet/features/auth/domain/entities/sign_up_params.dart';
+import 'package:eco_wallet/features/auth/domain/repositories/base_auth_repository.dart';
+import 'package:eco_wallet/features/user/domain/entities/user.dart';
+import 'package:eco_wallet/features/user/data/model/user_model.dart';
+import 'package:eco_wallet/core/errors/exceptions.dart';
+import 'package:eco_wallet/core/errors/base_failure.dart';
 
 class AuthRepositoryImpl implements BaseAuthRepository {
   final BaseAuthDataSource dataSource;

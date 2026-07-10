@@ -5,9 +5,9 @@ import 'package:eco_wallet/core/utils/app_validators.dart';
 import 'package:eco_wallet/core/utils/app_formatters.dart';
 import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
 
-import '../../../../l10n/app_localizations.dart';
-import '../../../user/domain/entities/user.dart';
-import '../widgets/settings_widgets.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/features/user/domain/entities/user.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_widgets.dart';
 
 class PersonalPage extends StatefulWidget {
   const PersonalPage({super.key});

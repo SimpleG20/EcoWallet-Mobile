@@ -1,8 +1,8 @@
 import 'package:eco_wallet/core/usecases/base_usecase.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../../../core/errors/base_failure.dart';
-import '../../../wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/core/errors/base_failure.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
 class SearchQueryTransactions
     extends BaseUsecase<List<Transaction>, SearchQueryParams> {

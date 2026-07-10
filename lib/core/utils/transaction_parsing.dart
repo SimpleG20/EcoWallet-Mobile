@@ -1,5 +1,5 @@
-import '../../features/wallet/domain/entities/transaction.dart';
-import '../enums/enums.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
 
 class TransactionParsingUtils {
   /// Parses a Transaction from a JSON map, handling legacy formats.

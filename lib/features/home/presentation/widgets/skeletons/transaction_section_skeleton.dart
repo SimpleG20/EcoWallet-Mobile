@@ -1,7 +1,7 @@
 import 'package:eco_wallet/core/presentation/widgets/shimmers/shimmer_text.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/presentation/widgets/shimmers/shimmer_container.dart';
+import 'package:eco_wallet/core/presentation/widgets/shimmers/shimmer_container.dart';
 
 class TransactionSectionSkeleton extends StatelessWidget {
   const TransactionSectionSkeleton({super.key});

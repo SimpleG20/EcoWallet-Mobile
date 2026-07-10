@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import '../../domain/entities/user_preferences.dart';
+import 'package:eco_wallet/features/settings/domain/entities/user_preferences.dart';
 
-import 'data_preferences_model.dart';
-import 'budget_preferences_model.dart';
-import 'appearance_preferences_model.dart';
-import 'notification_preferences_model.dart';
+import 'package:eco_wallet/features/settings/data/model/data_preferences_model.dart';
+import 'package:eco_wallet/features/settings/data/model/budget_preferences_model.dart';
+import 'package:eco_wallet/features/settings/data/model/appearance_preferences_model.dart';
+import 'package:eco_wallet/features/settings/data/model/notification_preferences_model.dart';
 
 class UserPreferencesModel extends UserPreferences {
   UserPreferencesModel({

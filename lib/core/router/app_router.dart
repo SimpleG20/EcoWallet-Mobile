@@ -19,8 +19,8 @@ import 'package:eco_wallet/features/login/presentation/pages/login_page.dart';
 import 'package:eco_wallet/features/register/presentation/pages/register_page.dart';
 import 'package:eco_wallet/features/transactions/presentation/pages/transactions_page.dart';
 
-import 'app_routes.dart';
-import 'go_router_refresh_stream.dart';
+import 'package:eco_wallet/core/router/app_routes.dart';
+import 'package:eco_wallet/core/router/go_router_refresh_stream.dart';
 
 class AppRouter {
   final AuthBloc authBloc;

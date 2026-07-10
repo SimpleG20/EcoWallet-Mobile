@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eco_wallet/core/utils/password_utils.dart';
 import 'package:eco_wallet/core/utils/app_validators.dart';
 
-import '../bloc/settings_bloc.dart';
-import '../widgets/settings_widgets.dart';
-import '../../../user/presentation/bloc/user_bloc.dart';
-import '../../../../l10n/app_localizations.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_widgets.dart';
+import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
 enum EPasswordStates {
   changePasswords,

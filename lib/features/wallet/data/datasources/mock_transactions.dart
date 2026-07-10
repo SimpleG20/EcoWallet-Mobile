@@ -1,5 +1,5 @@
-import '../../../../core/enums/enums.dart';
-import '../../domain/entities/transaction.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 import 'package:uuid/uuid.dart';
 
 // Mock transactions for testing or seeding

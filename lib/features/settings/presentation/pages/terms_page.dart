@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/settings_sub_page_header.dart';
-import '../../../../l10n/app_localizations.dart';
+import 'package:eco_wallet/features/settings/presentation/widgets/settings_sub_page_header.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
 class TermsPage extends StatelessWidget {
   const TermsPage({super.key});

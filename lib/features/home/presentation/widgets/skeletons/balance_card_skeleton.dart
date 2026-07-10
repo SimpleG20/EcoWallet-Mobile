@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/ui_data.dart';
-import '../../../../../core/presentation/widgets/shimmers/shimmer_circle.dart';
-import '../../../../../core/presentation/widgets/shimmers/shimmer_text.dart';
+import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/core/presentation/widgets/shimmers/shimmer_circle.dart';
+import 'package:eco_wallet/core/presentation/widgets/shimmers/shimmer_text.dart';
 
 class BalanceCardSkeleton extends StatelessWidget {
   const BalanceCardSkeleton({super.key});
