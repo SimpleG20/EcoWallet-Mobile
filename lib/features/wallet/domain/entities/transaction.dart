@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/enums/enums.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
 
 /// Represents a financial transaction (income or expense).
 class Transaction extends Equatable {

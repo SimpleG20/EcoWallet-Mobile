@@ -5,10 +5,10 @@ import 'package:fpdart/fpdart.dart';
 import 'package:eco_wallet/core/errors/exceptions.dart';
 import 'package:eco_wallet/core/errors/base_failure.dart';
 
-import '../../domain/entities/transaction.dart';
-import '../../domain/repositories/base_wallet_repository.dart';
-import '../datasources/base_wallet_local_data_source.dart';
-import '../models/transaction_model.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/domain/repositories/base_wallet_repository.dart';
+import 'package:eco_wallet/features/wallet/data/datasources/base_wallet_local_data_source.dart';
+import 'package:eco_wallet/features/wallet/data/models/transaction_model.dart';
 
 class WalletRepositoryImpl implements BaseWalletRepository {
   final BaseWalletLocalDataSource dataSource;

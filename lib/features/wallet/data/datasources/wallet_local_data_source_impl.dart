@@ -2,8 +2,8 @@ import 'package:eco_wallet/core/database/db_helper.dart';
 import 'package:eco_wallet/core/errors/exceptions.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../models/transaction_model.dart';
-import 'base_wallet_local_data_source.dart';
+import 'package:eco_wallet/features/wallet/data/models/transaction_model.dart';
+import 'package:eco_wallet/features/wallet/data/datasources/base_wallet_local_data_source.dart';
 
 class WalletLocalDataSourceImpl implements BaseWalletLocalDataSource {
   final DbHelper dbHelper;

@@ -3,7 +3,7 @@ import 'package:eco_wallet/core/usecases/base_usecase.dart';
 import 'package:eco_wallet/features/wallet/domain/repositories/base_wallet_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
 class AddTransaction implements BaseUsecase<Unit, Transaction> {
   final BaseWalletRepository repository;
