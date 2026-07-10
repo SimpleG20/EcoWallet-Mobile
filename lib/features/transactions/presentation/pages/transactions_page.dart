@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/l10n/app_localizations.dart';
-import '../bloc/transactions_history_bloc.dart';
-import '../bloc/transactions_history_event.dart';
-import '../bloc/transactions_history_state.dart';
-import '../widgets/transaction_filter_modal.dart';
-import '../widgets/transaction_group_card.dart';
-import '../../domain/entities/transaction_group.dart';
-import '../../domain/entities/transactions_filter.dart';
-import '../../../wallet/domain/entities/transaction.dart';
-import '../../../home/presentation/widgets/add_transaction_modal.dart';
-import '../../../../injection_container.dart' as di;
-import '../../../../core/enums/enums.dart';
-import '../../../../core/utils/app_formatters.dart';
-import '../../../../core/presentation/widgets/page_header.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/features/transactions/presentation/bloc/transactions_history_bloc.dart';
+import 'package:eco_wallet/features/transactions/presentation/bloc/transactions_history_event.dart';
+import 'package:eco_wallet/features/transactions/presentation/bloc/transactions_history_state.dart';
+import 'package:eco_wallet/features/transactions/presentation/widgets/transaction_filter_modal.dart';
+import 'package:eco_wallet/features/transactions/presentation/widgets/transaction_group_card.dart';
+import 'package:eco_wallet/features/transactions/domain/entities/transaction_group.dart';
+import 'package:eco_wallet/features/transactions/domain/entities/transactions_filter.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/add_transaction_modal.dart';
+import 'package:eco_wallet/injection_container.dart' as di;
+import 'package:eco_wallet/core/enums/enums.dart';
+import 'package:eco_wallet/core/utils/app_formatters.dart';
+import 'package:eco_wallet/core/presentation/widgets/page_header.dart';
 
 /// Main page for the Wallet feature displaying balance, actions, and transactions.
 ///

@@ -1,4 +1,4 @@
-import '../../../wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
 
 class FilterTransactions {
   List<Transaction> call(FilterParams params) {

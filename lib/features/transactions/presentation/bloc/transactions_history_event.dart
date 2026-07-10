@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../domain/entities/transactions_filter.dart';
+import 'package:eco_wallet/features/transactions/domain/entities/transactions_filter.dart';
 
 abstract class TransactionsHistoryEvent extends Equatable {}
 

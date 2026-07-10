@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:eco_wallet/features/wallet/domain/repositories/base_wallet_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'transactions_history_event.dart';
-import 'transactions_history_state.dart';
-import '/core/usecases/base_usecase.dart';
-import '../../domain/entities/transactions_filter.dart';
-import '../../domain/usecases/filter_transactions.dart';
-import '../../domain/usecases/search_query_transactions.dart';
-import '../../../wallet/domain/entities/transaction.dart';
-import '../../../wallet/domain/usecases/get_transactions.dart';
+import 'package:eco_wallet/features/transactions/presentation/bloc/transactions_history_event.dart';
+import 'package:eco_wallet/features/transactions/presentation/bloc/transactions_history_state.dart';
+import 'package:eco_wallet/core/usecases/base_usecase.dart';
+import 'package:eco_wallet/features/transactions/domain/entities/transactions_filter.dart';
+import 'package:eco_wallet/features/transactions/domain/usecases/filter_transactions.dart';
+import 'package:eco_wallet/features/transactions/domain/usecases/search_query_transactions.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/domain/usecases/get_transactions.dart';
 
 class TransactionsHistoryBloc
     extends Bloc<TransactionsHistoryEvent, BaseTransactionsHistoryState> {
