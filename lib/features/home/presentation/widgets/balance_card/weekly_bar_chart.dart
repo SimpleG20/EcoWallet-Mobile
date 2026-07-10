@@ -2,9 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../core/constants/ui_data.dart';
-import '../../../../../l10n/app_localizations.dart';
-import '../../../domain/entities/weekly_transaction_data.dart';
+import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/features/home/domain/entities/weekly_transaction_data.dart';
 
 /// Stateful bar chart widget for displaying weekly transaction data with
 /// interactive tooltips that show the value when a bar is tapped.

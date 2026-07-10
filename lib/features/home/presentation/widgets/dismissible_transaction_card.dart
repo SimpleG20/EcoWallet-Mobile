@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../l10n/app_localizations.dart';
-import '../../../settings/domain/entities/settings_entities.dart';
-import '../../../settings/presentation/bloc/settings_bloc.dart';
-import '../../../wallet/domain/entities/transaction.dart';
-import '../../../wallet/presentation/bloc/wallet_bloc.dart';
-import 'transaction_card.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/features/settings/domain/entities/settings_entities.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/transaction_card.dart';
 
 class DismissibleTransactionCard extends StatelessWidget {
   final Transaction transaction;

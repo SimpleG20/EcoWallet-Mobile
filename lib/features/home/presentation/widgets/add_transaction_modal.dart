@@ -4,15 +4,15 @@ import 'package:uuid/uuid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../settings/presentation/bloc/settings_bloc.dart';
-import '../../../user/presentation/bloc/user_bloc.dart';
-import '/core/utils/app_formatters.dart';
-import '/core/utils/app_validators.dart';
-import '/core/constants/category_data.dart';
-import '/features/wallet/domain/entities/transaction.dart';
-import '../../../wallet/presentation/bloc/wallet_bloc.dart';
-import '../../../../core/enums/enums.dart';
-import '../../../../l10n/app_localizations.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/user/presentation/bloc/user_bloc.dart';
+import 'package:eco_wallet/core/utils/app_formatters.dart';
+import 'package:eco_wallet/core/utils/app_validators.dart';
+import 'package:eco_wallet/core/constants/category_data.dart';
+import 'package:eco_wallet/features/wallet/domain/entities/transaction.dart';
+import 'package:eco_wallet/features/wallet/presentation/bloc/wallet_bloc.dart';
+import 'package:eco_wallet/core/enums/enums.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
 
 class AddTransactionModal extends StatefulWidget {
   const AddTransactionModal(

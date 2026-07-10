@@ -2,7 +2,7 @@ import 'package:eco_wallet/features/home/domain/entities/eco_data.dart';
 import 'package:eco_wallet/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_colors.dart';
+import 'package:eco_wallet/core/theme/app_colors.dart';
 
 class EcoFootprintCard extends StatelessWidget {
   const EcoFootprintCard({super.key, required this.ecoData});

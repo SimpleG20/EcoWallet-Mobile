@@ -1,11 +1,11 @@
 import 'package:eco_wallet/features/settings/domain/entities/settings_entities.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/constants/ui_data.dart';
-import '../../../../../core/presentation/widgets/sensitive_text.dart';
-import '../../../../../core/utils/app_formatters.dart';
-import '../../../../../l10n/app_localizations.dart';
-import '../../../../settings/domain/enums/currency_format.dart';
+import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/core/presentation/widgets/sensitive_text.dart';
+import 'package:eco_wallet/core/utils/app_formatters.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/features/settings/domain/enums/currency_format.dart';
 
 /// Main section of the balance card showing total balance and monthly savings.
 class BalanceMainSection extends StatelessWidget {

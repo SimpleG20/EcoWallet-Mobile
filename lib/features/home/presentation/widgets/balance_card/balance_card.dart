@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/constants/ui_data.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../settings/domain/entities/settings_entities.dart';
-import '../../../../settings/presentation/bloc/settings_bloc.dart';
-import '../../../domain/entities/weekly_transaction_data.dart';
-import '../../../domain/enum/balance_section.dart';
-import 'balance_main_section.dart';
-import 'balance_graph_section.dart';
+import 'package:eco_wallet/core/constants/ui_data.dart';
+import 'package:eco_wallet/core/theme/app_colors.dart';
+import 'package:eco_wallet/features/settings/domain/entities/settings_entities.dart';
+import 'package:eco_wallet/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:eco_wallet/features/home/domain/entities/weekly_transaction_data.dart';
+import 'package:eco_wallet/features/home/domain/enum/balance_section.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/balance_card/balance_main_section.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/balance_card/balance_graph_section.dart';
 
 /// Card widget displaying total balance and weekly transaction overview.
 ///

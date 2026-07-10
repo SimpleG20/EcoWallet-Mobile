@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/presentation/controllers/navigation_cubit.dart';
-import 'home_page.dart';
-import '/l10n/app_localizations.dart';
-import '../../../settings/presentation/pages/settings_page.dart';
-import '../../../transactions/presentation/pages/transactions_page.dart';
+import 'package:eco_wallet/core/presentation/controllers/navigation_cubit.dart';
+import 'package:eco_wallet/features/home/presentation/pages/home_page.dart';
+import 'package:eco_wallet/l10n/app_localizations.dart';
+import 'package:eco_wallet/features/settings/presentation/pages/settings_page.dart';
+import 'package:eco_wallet/features/transactions/presentation/pages/transactions_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

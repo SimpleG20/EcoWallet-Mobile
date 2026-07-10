@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'balance_card_skeleton.dart';
-import 'eco_footprint_skeleton.dart';
-import 'home_actions_buttons_skeleton.dart';
-import 'home_header_skeleton.dart';
-import 'transaction_section_skeleton.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/skeletons/balance_card_skeleton.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/skeletons/eco_footprint_skeleton.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/skeletons/home_actions_buttons_skeleton.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/skeletons/home_header_skeleton.dart';
+import 'package:eco_wallet/features/home/presentation/widgets/skeletons/transaction_section_skeleton.dart';
 
 class HomePageSkeleton extends StatelessWidget {
   const HomePageSkeleton({super.key});
