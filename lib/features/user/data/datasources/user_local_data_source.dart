@@ -2,9 +2,9 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:eco_wallet/core/database/db_helper.dart';
 import 'package:eco_wallet/core/errors/exceptions.dart';
-import 'base_user_data_source.dart';
-import '../model/user_model.dart';
-import '../../domain/entities/user.dart';
+import 'package:eco_wallet/features/user/data/datasources/base_user_data_source.dart';
+import 'package:eco_wallet/features/user/data/model/user_model.dart';
+import 'package:eco_wallet/features/user/domain/entities/user.dart';
 
 class UserLocalDataSource implements BaseUserDataSource {
   final DbHelper dbHelper;

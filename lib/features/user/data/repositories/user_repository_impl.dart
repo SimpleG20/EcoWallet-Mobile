@@ -3,10 +3,10 @@ import 'package:eco_wallet/core/errors/exceptions.dart';
 import 'package:eco_wallet/features/auth/data/datasources/base_auth_data_source.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../model/user_model.dart';
-import '../datasources/base_user_data_source.dart';
-import '../../domain/entities/user.dart';
-import '../../domain/repositories/base_user_repository.dart';
+import 'package:eco_wallet/features/user/data/model/user_model.dart';
+import 'package:eco_wallet/features/user/data/datasources/base_user_data_source.dart';
+import 'package:eco_wallet/features/user/domain/entities/user.dart';
+import 'package:eco_wallet/features/user/domain/repositories/base_user_repository.dart';
 
 class UserRepositoryImpl implements BaseUserRepository {
   final BaseUserDataSource dataSource;
